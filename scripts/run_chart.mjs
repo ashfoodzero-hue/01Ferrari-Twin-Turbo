@@ -14,6 +14,8 @@
 //   GET /api/calendar       USD economic calendar for gold (data/calendar/upcoming.json, fetch_calendar.mjs) + each release's MEASURED gold reaction
 //   GET /api/monitor        IN-TRADE monitor for the open Matrix trade: live chance of TP1 / TP2 (the position formula — measured calibrated
 //                           on 13 y + the live strategy, trade_monitor_study.json); the fitted model and the close advice are shown ONLY if validated
+//   GET /api/forward        the PAPER FORWARD TEST of BUY_D1-x (data/inv90/forward/ledger.jsonl + forward_summary.json, written by the hourly
+//                           forward hook) — every signal joined with its resolve; read-only, never a live order
 //   GET /api/matrix         the FERRARI MATRIX paper trade box (data/master/matrix_state.json, written by matrix_tick.mjs) + its verdict
 // Series: the live stream symbols (src/data/symbols.js) · DXY = rebuilt from its six pairs (src/data/dxy.js, validated vs the
 // official daily close: median |diff| 0.032 %) · WTI = CL front-month futures, which Polygon serves 10 MIN DELAYED on our plan —
@@ -224,6 +226,18 @@ async function news() {
   })
 }
 
+// ── PAPER FORWARD TEST (BUY_D1-x, docs/INVESTIGATION_90WR_2026-10-11.md) — the ledger is the only source; nothing is recomputed here ──
+function forward() {
+  const dir = path.join(TURBO.root, 'data', 'inv90', 'forward'); let lines = [], summary = null
+  try { lines = fs.readFileSync(path.join(dir, 'ledger.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
+  try { summary = JSON.parse(fs.readFileSync(path.join(dir, 'forward_summary.json'), 'utf8')) } catch {}
+  const res = new Map(lines.filter((e) => e.type === 'resolve').map((e) => [e.id, e]))
+  const trades = lines.filter((e) => e.type === 'signal').map((s) => { const r = res.get(s.id)
+    return { id: s.id, t: s.t, side: 'BUY', entry: s.entry_ask, target: s.target, stop: s.stop, score: s.score, thr: s.thr, late_min: s.late_min ?? 0,
+      status: r ? (r.net > 0 ? 'WIN' : 'LOSS') : 'OPEN', why: r?.why ?? null, exit_t: r?.exit_t ?? null, exit: r?.exit ?? null, net: r?.net ?? null } })
+  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: 'paper forward test — 0.2×ATR1d target / 2×ATR1d stop, 7-day horizon; research candidate, NOT validated (0/67 passed the gate)' }
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     const u = new URL(req.url, 'http://127.0.0.1'), sym = (u.searchParams.get('sym') || 'XAUUSD').toUpperCase(), tf = u.searchParams.get('tf') || '15m'
@@ -237,6 +251,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/calendar') return send(res, 200, calendar())
     if (u.pathname === '/api/fvg') { if (!FVG_TF[tf]) return send(res, 200, { tf, marks: [], note: 'strong FVGs are marked on 3m, 15m and 1h only' }); return send(res, 200, await fvgMarks(tf)) }
     if (u.pathname === '/api/gamma') return send(res, 200, gamma())
+    if (u.pathname === '/api/forward') return send(res, 200, forward())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
     if (!isSeries(sym)) return send(res, 400, { error: 'unknown symbol', symbols: [...SYMBOLS.map((s) => s.sym), ...Object.keys(DERIVED)] })
