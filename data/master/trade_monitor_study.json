@@ -1,0 +1,605 @@
+{
+ "at": "2026-10-09T14:35:19.527Z",
+ "rules": {
+  "split": "2023-01-01",
+  "stride_min": 3,
+  "max_min": 480,
+  "features": [
+   "bias",
+   "logit(position)",
+   "log(1+minutes)",
+   "MAE (R)",
+   "MFE (R)",
+   "DXY for the trade",
+   "silver for the trade",
+   "log activity"
+  ]
+ },
+ "phases": {
+  "1": {
+   "train_n": 490458,
+   "diagnostic": {
+    "train_brier": {
+     "model": 0.15208,
+     "random_walk": 0.15694
+    },
+    "train_brier_3000it": 0.15208
+   },
+   "coefficients": {
+    "bias": 0.1536,
+    "logit(position)": 1.1803,
+    "log(1+minutes)": -0.0962,
+    "MAE (R)": 0.1332,
+    "MFE (R)": 0.0199,
+    "DXY for the trade": -0.0091,
+    "silver for the trade": -0.1136,
+    "log activity": 0.0612
+   },
+   "oos_A13": {
+    "n": 185812,
+    "brier_model": 0.1966,
+    "brier_random_walk": 0.19422,
+    "brier_constant": 0.26232,
+    "calibration": [
+     {
+      "bin": "0-10%",
+      "n": 19322,
+      "predicted": 0.064,
+      "observed": 0.086
+     },
+     {
+      "bin": "10-20%",
+      "n": 35523,
+      "predicted": 0.151,
+      "observed": 0.205
+     },
+     {
+      "bin": "20-30%",
+      "n": 33772,
+      "predicted": 0.249,
+      "observed": 0.309
+     },
+     {
+      "bin": "30-40%",
+      "n": 28368,
+      "predicted": 0.348,
+      "observed": 0.396
+     },
+     {
+      "bin": "40-50%",
+      "n": 21833,
+      "predicted": 0.448,
+      "observed": 0.496
+     },
+     {
+      "bin": "50-60%",
+      "n": 16700,
+      "predicted": 0.547,
+      "observed": 0.584
+     },
+     {
+      "bin": "60-70%",
+      "n": 12602,
+      "predicted": 0.647,
+      "observed": 0.675
+     },
+     {
+      "bin": "70-80%",
+      "n": 8898,
+      "predicted": 0.747,
+      "observed": 0.751
+     },
+     {
+      "bin": "80-90%",
+      "n": 6013,
+      "predicted": 0.846,
+      "observed": 0.834
+     },
+     {
+      "bin": "90-100%",
+      "n": 2781,
+      "predicted": 0.938,
+      "observed": 0.906
+     }
+    ],
+    "calibrated": true,
+    "valid": false,
+    "coin_flip_calibration": [
+     {
+      "bin": "0-10%",
+      "n": 9227,
+      "predicted": 0.066,
+      "observed": 0.057
+     },
+     {
+      "bin": "10-20%",
+      "n": 26625,
+      "predicted": 0.154,
+      "observed": 0.146
+     },
+     {
+      "bin": "20-30%",
+      "n": 32469,
+      "predicted": 0.251,
+      "observed": 0.251
+     },
+     {
+      "bin": "30-40%",
+      "n": 31019,
+      "predicted": 0.349,
+      "observed": 0.343
+     },
+     {
+      "bin": "40-50%",
+      "n": 27156,
+      "predicted": 0.449,
+      "observed": 0.433
+     },
+     {
+      "bin": "50-60%",
+      "n": 21777,
+      "predicted": 0.548,
+      "observed": 0.542
+     },
+     {
+      "bin": "60-70%",
+      "n": 16844,
+      "predicted": 0.647,
+      "observed": 0.639
+     },
+     {
+      "bin": "70-80%",
+      "n": 11417,
+      "predicted": 0.746,
+      "observed": 0.74
+     },
+     {
+      "bin": "80-90%",
+      "n": 6846,
+      "predicted": 0.845,
+      "observed": 0.831
+     },
+     {
+      "bin": "90-100%",
+      "n": 2432,
+      "predicted": 0.934,
+      "observed": 0.912
+     }
+    ]
+   },
+   "oos_W2": {
+    "n": 67295,
+    "brier_model": 0.20513,
+    "brier_random_walk": 0.20147,
+    "brier_constant": 0.28853,
+    "calibration": [
+     {
+      "bin": "0-10%",
+      "n": 4624,
+      "predicted": 0.061,
+      "observed": 0.093
+     },
+     {
+      "bin": "10-20%",
+      "n": 9842,
+      "predicted": 0.153,
+      "observed": 0.204
+     },
+     {
+      "bin": "20-30%",
+      "n": 11707,
+      "predicted": 0.25,
+      "observed": 0.313
+     },
+     {
+      "bin": "30-40%",
+      "n": 10560,
+      "predicted": 0.348,
+      "observed": 0.424
+     },
+     {
+      "bin": "40-50%",
+      "n": 9029,
+      "predicted": 0.449,
+      "observed": 0.512
+     },
+     {
+      "bin": "50-60%",
+      "n": 7319,
+      "predicted": 0.547,
+      "observed": 0.591
+     },
+     {
+      "bin": "60-70%",
+      "n": 5704,
+      "predicted": 0.647,
+      "observed": 0.685
+     },
+     {
+      "bin": "70-80%",
+      "n": 4114,
+      "predicted": 0.748,
+      "observed": 0.74
+     },
+     {
+      "bin": "80-90%",
+      "n": 2976,
+      "predicted": 0.846,
+      "observed": 0.831
+     },
+     {
+      "bin": "90-100%",
+      "n": 1420,
+      "predicted": 0.939,
+      "observed": 0.909
+     }
+    ],
+    "calibrated": true,
+    "valid": false,
+    "coin_flip_calibration": [
+     {
+      "bin": "0-10%",
+      "n": 2473,
+      "predicted": 0.064,
+      "observed": 0.068
+     },
+     {
+      "bin": "10-20%",
+      "n": 6761,
+      "predicted": 0.155,
+      "observed": 0.158
+     },
+     {
+      "bin": "20-30%",
+      "n": 10488,
+      "predicted": 0.252,
+      "observed": 0.252
+     },
+     {
+      "bin": "30-40%",
+      "n": 11457,
+      "predicted": 0.349,
+      "observed": 0.357
+     },
+     {
+      "bin": "40-50%",
+      "n": 10376,
+      "predicted": 0.449,
+      "observed": 0.47
+     },
+     {
+      "bin": "50-60%",
+      "n": 9192,
+      "predicted": 0.549,
+      "observed": 0.565
+     },
+     {
+      "bin": "60-70%",
+      "n": 7130,
+      "predicted": 0.648,
+      "observed": 0.66
+     },
+     {
+      "bin": "70-80%",
+      "n": 5065,
+      "predicted": 0.747,
+      "observed": 0.744
+     },
+     {
+      "bin": "80-90%",
+      "n": 3161,
+      "predicted": 0.845,
+      "observed": 0.832
+     },
+     {
+      "bin": "90-100%",
+      "n": 1192,
+      "predicted": 0.935,
+      "observed": 0.914
+     }
+    ]
+   },
+   "valid": false
+  },
+  "2": {
+   "train_n": 32208,
+   "diagnostic": {
+    "train_brier": {
+     "model": 0.19612,
+     "random_walk": 0.20658
+    },
+    "train_brier_3000it": 0.19612
+   },
+   "coefficients": {
+    "bias": 0.45,
+    "logit(position)": 1.2862,
+    "log(1+minutes)": -0.1834,
+    "MAE (R)": 0.3981,
+    "MFE (R)": -0.0514,
+    "DXY for the trade": 0.0735,
+    "silver for the trade": 0.0537,
+    "log activity": 0.0948
+   },
+   "oos_A13": {
+    "n": 37849,
+    "brier_model": 0.20992,
+    "brier_random_walk": 0.20287,
+    "brier_constant": 0.2503,
+    "calibration": [
+     {
+      "bin": "0-10%",
+      "n": 1806,
+      "predicted": 0.059,
+      "observed": 0.107
+     },
+     {
+      "bin": "10-20%",
+      "n": 2594,
+      "predicted": 0.152,
+      "observed": 0.254
+     },
+     {
+      "bin": "20-30%",
+      "n": 3254,
+      "predicted": 0.252,
+      "observed": 0.368
+     },
+     {
+      "bin": "30-40%",
+      "n": 4010,
+      "predicted": 0.352,
+      "observed": 0.485
+     },
+     {
+      "bin": "40-50%",
+      "n": 4921,
+      "predicted": 0.451,
+      "observed": 0.543
+     },
+     {
+      "bin": "50-60%",
+      "n": 5573,
+      "predicted": 0.55,
+      "observed": 0.595
+     },
+     {
+      "bin": "60-70%",
+      "n": 5761,
+      "predicted": 0.649,
+      "observed": 0.67
+     },
+     {
+      "bin": "70-80%",
+      "n": 4705,
+      "predicted": 0.747,
+      "observed": 0.747
+     },
+     {
+      "bin": "80-90%",
+      "n": 3386,
+      "predicted": 0.846,
+      "observed": 0.83
+     },
+     {
+      "bin": "90-100%",
+      "n": 1839,
+      "predicted": 0.941,
+      "observed": 0.912
+     }
+    ],
+    "calibrated": false,
+    "valid": false,
+    "coin_flip_calibration": [
+     {
+      "bin": "0-10%",
+      "n": 388,
+      "predicted": 0.065,
+      "observed": 0.044
+     },
+     {
+      "bin": "10-20%",
+      "n": 1226,
+      "predicted": 0.156,
+      "observed": 0.13
+     },
+     {
+      "bin": "20-30%",
+      "n": 2088,
+      "predicted": 0.252,
+      "observed": 0.215
+     },
+     {
+      "bin": "30-40%",
+      "n": 3057,
+      "predicted": 0.353,
+      "observed": 0.328
+     },
+     {
+      "bin": "40-50%",
+      "n": 4700,
+      "predicted": 0.453,
+      "observed": 0.464
+     },
+     {
+      "bin": "50-60%",
+      "n": 6859,
+      "predicted": 0.552,
+      "observed": 0.553
+     },
+     {
+      "bin": "60-70%",
+      "n": 8271,
+      "predicted": 0.65,
+      "observed": 0.625
+     },
+     {
+      "bin": "70-80%",
+      "n": 6254,
+      "predicted": 0.746,
+      "observed": 0.751
+     },
+     {
+      "bin": "80-90%",
+      "n": 3759,
+      "predicted": 0.844,
+      "observed": 0.854
+     },
+     {
+      "bin": "90-100%",
+      "n": 1247,
+      "predicted": 0.936,
+      "observed": 0.94
+     }
+    ]
+   },
+   "oos_W2": {
+    "n": 17815,
+    "brier_model": 0.2139,
+    "brier_random_walk": 0.20486,
+    "brier_constant": 0.25036,
+    "calibration": [
+     {
+      "bin": "0-10%",
+      "n": 814,
+      "predicted": 0.057,
+      "observed": 0.162
+     },
+     {
+      "bin": "10-20%",
+      "n": 1232,
+      "predicted": 0.152,
+      "observed": 0.322
+     },
+     {
+      "bin": "20-30%",
+      "n": 1531,
+      "predicted": 0.251,
+      "observed": 0.384
+     },
+     {
+      "bin": "30-40%",
+      "n": 1855,
+      "predicted": 0.352,
+      "observed": 0.49
+     },
+     {
+      "bin": "40-50%",
+      "n": 2151,
+      "predicted": 0.451,
+      "observed": 0.542
+     },
+     {
+      "bin": "50-60%",
+      "n": 2538,
+      "predicted": 0.55,
+      "observed": 0.606
+     },
+     {
+      "bin": "60-70%",
+      "n": 2704,
+      "predicted": 0.649,
+      "observed": 0.678
+     },
+     {
+      "bin": "70-80%",
+      "n": 2377,
+      "predicted": 0.747,
+      "observed": 0.746
+     },
+     {
+      "bin": "80-90%",
+      "n": 1693,
+      "predicted": 0.847,
+      "observed": 0.836
+     },
+     {
+      "bin": "90-100%",
+      "n": 920,
+      "predicted": 0.941,
+      "observed": 0.913
+     }
+    ],
+    "calibrated": false,
+    "valid": false,
+    "coin_flip_calibration": [
+     {
+      "bin": "0-10%",
+      "n": 221,
+      "predicted": 0.065,
+      "observed": 0.063
+     },
+     {
+      "bin": "10-20%",
+      "n": 573,
+      "predicted": 0.155,
+      "observed": 0.194
+     },
+     {
+      "bin": "20-30%",
+      "n": 979,
+      "predicted": 0.254,
+      "observed": 0.313
+     },
+     {
+      "bin": "30-40%",
+      "n": 1526,
+      "predicted": 0.352,
+      "observed": 0.339
+     },
+     {
+      "bin": "40-50%",
+      "n": 2214,
+      "predicted": 0.453,
+      "observed": 0.486
+     },
+     {
+      "bin": "50-60%",
+      "n": 3149,
+      "predicted": 0.551,
+      "observed": 0.568
+     },
+     {
+      "bin": "60-70%",
+      "n": 3674,
+      "predicted": 0.65,
+      "observed": 0.636
+     },
+     {
+      "bin": "70-80%",
+      "n": 3039,
+      "predicted": 0.747,
+      "observed": 0.757
+     },
+     {
+      "bin": "80-90%",
+      "n": 1830,
+      "predicted": 0.844,
+      "observed": 0.857
+     },
+     {
+      "bin": "90-100%",
+      "n": 610,
+      "predicted": 0.934,
+      "observed": 0.941
+     }
+    ]
+   },
+   "valid": false
+  }
+ },
+ "close_advice": {
+  "theta": 0.35,
+  "train_gain": 0.2452,
+  "oos_A13_gain": 0.0089,
+  "oos_A13_lb": -0.2257,
+  "oos_W2_gain": -0.2258,
+  "triggered_share_A13": 0.895,
+  "shown": false
+ },
+ "verdict": {
+  "monitor_valid": false,
+  "phase1_valid": false,
+  "phase2_valid": false,
+  "close_advice_shown": false
+ }
+}

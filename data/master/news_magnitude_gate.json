@@ -1,0 +1,121 @@
+{
+ "generated_utc": "2026-08-21T11:34:44.430Z",
+ "cells": [
+  {
+   "H": 1,
+   "nBig": 1616,
+   "nQuiet": 1983,
+   "meanBig": 1.985,
+   "meanQuiet": 1.8739,
+   "ratio": 1.0593,
+   "welchP": 0.037855,
+   "mwP": 0.012662,
+   "p": 0.037855,
+   "survives": false
+  },
+  {
+   "H": 3,
+   "nBig": 1665,
+   "nQuiet": 2048,
+   "meanBig": 1.6246,
+   "meanQuiet": 1.5073,
+   "ratio": 1.0779,
+   "welchP": 0.81784,
+   "mwP": 0.393923,
+   "p": 0.81784,
+   "survives": false
+  },
+  {
+   "H": 5,
+   "nBig": 1659,
+   "nQuiet": 2043,
+   "meanBig": 1.5479,
+   "meanQuiet": 1.3737,
+   "ratio": 1.1268,
+   "welchP": 0.079659,
+   "mwP": 0.106821,
+   "p": 0.106821,
+   "survives": false
+  },
+  {
+   "H": 10,
+   "nBig": 1669,
+   "nQuiet": 2057,
+   "meanBig": 1.432,
+   "meanQuiet": 1.2304,
+   "ratio": 1.1639,
+   "welchP": 0.291525,
+   "mwP": 0.724727,
+   "p": 0.724727,
+   "survives": false
+  },
+  {
+   "H": 15,
+   "nBig": 1671,
+   "nQuiet": 2054,
+   "meanBig": 1.3365,
+   "meanQuiet": 1.1556,
+   "ratio": 1.1565,
+   "welchP": 0.852903,
+   "mwP": 0.839589,
+   "p": 0.852903,
+   "survives": false
+  },
+  {
+   "H": 30,
+   "nBig": 1672,
+   "nQuiet": 2052,
+   "meanBig": 1.208,
+   "meanQuiet": 1.0482,
+   "ratio": 1.1525,
+   "welchP": 0.451669,
+   "mwP": 0.471232,
+   "p": 0.471232,
+   "survives": false
+  },
+  {
+   "H": 60,
+   "nBig": 1670,
+   "nQuiet": 2056,
+   "meanBig": 1.0924,
+   "meanQuiet": 0.9361,
+   "ratio": 1.167,
+   "welchP": 0.004481,
+   "mwP": 0.006497,
+   "p": 0.006497,
+   "survives": true
+  }
+ ],
+ "perYear": {
+  "horizon": 15,
+  "ratios": {
+   "2016": 1.253,
+   "2017": 1.355,
+   "2018": 0.906,
+   "2019": 1.041,
+   "2020": 1.161,
+   "2021": 1.21,
+   "2022": 1.029,
+   "2023": 1.018,
+   "2024": 1.126,
+   "2025": 0.91,
+   "2026": 1.152
+  },
+  "yearsUp": 9,
+  "yearsPowered": 11
+ },
+ "surviving": [
+  {
+   "H": 60,
+   "nBig": 1670,
+   "nQuiet": 2056,
+   "meanBig": 1.0924,
+   "meanQuiet": 0.9361,
+   "ratio": 1.167,
+   "welchP": 0.004481,
+   "mwP": 0.006497,
+   "p": 0.006497,
+   "survives": true
+  }
+ ]
+}

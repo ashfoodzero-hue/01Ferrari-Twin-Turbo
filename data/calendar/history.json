@@ -1,0 +1,9066 @@
+{
+ "at": "2026-10-11T02:00:02.070Z",
+ "note": "official release times (FOMC + Board speeches from the Fed; CPI / NFP / PPI / JOLTS from BLS; Retail Sales from Census/ALFRED) — used by study_event_reaction.mjs",
+ "events": [
+  {
+   "type": "FED_GOV",
+   "t": 1226016000000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1228157100000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1228317300000,
+   "who": "Governor Randall S. Kroszner speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1228407300000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1228426200000,
+   "who": "Governor Randall S. Kroszner speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1228721400000,
+   "who": "Governor Randall S. Kroszner speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1231851600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1234363800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1234795200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1234980000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1235494800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1236456900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1236688200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1237564800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1238427000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1238774400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1239037200000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1239709200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1239985800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1241703000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1242084600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1243015200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1244119500000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1244478600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1244650500000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1245069900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1245103200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1245172500000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1245243600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1246039200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1247144400000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1250863200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1251210600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1252931700000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1253898900000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1253926800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1255030500000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1255042800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1255964400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1256144400000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1256301000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1257192000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1257811200000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1257885000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1258391700000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1260207900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1260366000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1260470700000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1262532600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1262628000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1265220000000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1265225400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1266534000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1267209000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1268952000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1269090000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1269617400000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1269640800000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1270053000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1270661400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1270729800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1270773000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1270780200000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1271169900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1271199600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1271707200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1271859300000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1272376800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1272733200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1273152600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1273325400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1274833800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1275265500000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1275578100000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1275999900000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1276113600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1276724700000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1277743500000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1277902800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1278943200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1278969300000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1279197000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1280758500000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1282917600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1283352300000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1284737400000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1285333200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1285360200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1285871400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1286235000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1286822700000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1287144900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1287518400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1287529200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1288009800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1289248200000,
+   "who": "Governor Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1289568900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1289597700000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1290218400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1290218400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1291212600000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1291316400000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1294425000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1294522200000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1296685800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1296754200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1297476000000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1298034000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1298658600000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1299114000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1299250800000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1300896000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1301009400000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1301589900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1301958900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1302187500000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1302538500000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1302786000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1303993800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1304094600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1304602200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1304681400000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1305034200000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1305244800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1305550800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1306239900000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1306978500000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1307118600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1307475900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1307635800000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1308076200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1309363200000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1314367200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1314892800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1315503000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1316090700000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1316108700000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1317042900000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1317243600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1317733200000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1318958100000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1319148000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1319223600000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1319292000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1320426000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1320849000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1320858900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1320944400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1321035300000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1322584200000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1325871600000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1325872800000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1325958000000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1326471000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1326754800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1328895000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1329400800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1330615800000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1331733600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1332524700000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1332763200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1332877500000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1334013300000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1334066400000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1334186100000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1334259000000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1334336400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1335960000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1336656600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1337088600000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1339027200000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1339513920000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1342792800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1343084400000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1343133900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1344258000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1344364200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1346421600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1349109000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1349456400000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1349901000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1349940600000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1349964000000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1350188400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1352475000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1352838600000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1353003600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1353431700000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1354122900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1354312800000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1354635900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1355760000000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1357306200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1357331400000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1357830000000
+  },
+  {
+   "type": "PPI",
+   "t": 1358256600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1358256600000
+  },
+  {
+   "type": "CPI",
+   "t": 1358343000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1359572400000
+  },
+  {
+   "type": "NFP",
+   "t": 1359725400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1360071000000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1360247400000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1360605600000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1360681200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1360762200000
+  },
+  {
+   "type": "PPI",
+   "t": 1361367000000
+  },
+  {
+   "type": "CPI",
+   "t": 1361453400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1361546100000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1361575800000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1362072600000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1362193200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1362402000000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1362420900000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1362749400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1362790800000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1363096800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1363177800000
+  },
+  {
+   "type": "PPI",
+   "t": 1363264200000
+  },
+  {
+   "type": "CPI",
+   "t": 1363350600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1363802400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1363956300000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1364231700000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1365085800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1365109200000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1365165000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1365462900000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1365516000000
+  },
+  {
+   "type": "PPI",
+   "t": 1365769800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1365769800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1365784200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1366115400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1366138800000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1366203600000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1366312500000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1366387200000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1367431200000
+  },
+  {
+   "type": "NFP",
+   "t": 1367584200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1367598600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1367935200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1368126900000,
+   "who": "Governor Elizabeth A. Duke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1368192600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1368448200000
+  },
+  {
+   "type": "PPI",
+   "t": 1368621000000
+  },
+  {
+   "type": "CPI",
+   "t": 1368707400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1368721800000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1368889200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1370196000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1370224200000,
+   "who": "Vice Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1370521800000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1370608200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1370959200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1371126600000
+  },
+  {
+   "type": "PPI",
+   "t": 1371213000000
+  },
+  {
+   "type": "CPI",
+   "t": 1371558600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1371664800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1372343400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1372420800000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1372801500000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1373027400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1373378400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1373487000000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1373632200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1373891400000
+  },
+  {
+   "type": "CPI",
+   "t": 1373977800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1374080400000,
+   "who": "Governor Sarah Bloom Raskin speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1375293600000
+  },
+  {
+   "type": "NFP",
+   "t": 1375446600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1375797600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1376397000000
+  },
+  {
+   "type": "PPI",
+   "t": 1376483400000
+  },
+  {
+   "type": "CPI",
+   "t": 1376569800000
+  },
+  {
+   "type": "NFP",
+   "t": 1378470600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1378821600000
+  },
+  {
+   "type": "PPI",
+   "t": 1379075400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1379075400000
+  },
+  {
+   "type": "CPI",
+   "t": 1379421000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1379527200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1379695200000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1380204600000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1380742200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1380821400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1380893400000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1381503600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1381798800000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1382115600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1382128200000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1382445000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1382623200000
+  },
+  {
+   "type": "PPI",
+   "t": 1383049800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1383049800000
+  },
+  {
+   "type": "CPI",
+   "t": 1383136200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1383156000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1383583200000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1383850200000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1383917400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1383942600000,
+   "who": "Chairman  Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1384387200000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1384439400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1384905600000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1384954200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1384954200000
+  },
+  {
+   "type": "PPI",
+   "t": 1385040600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1385045100000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1385132400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1385140500000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1386336600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1386687600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1386855000000
+  },
+  {
+   "type": "PPI",
+   "t": 1386941400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1387220400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1387220400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1387287000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1387393200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1388772900000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1388777400000,
+   "who": "Chairman Ben S. Bernanke speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1389360600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1389706200000
+  },
+  {
+   "type": "PPI",
+   "t": 1389792600000
+  },
+  {
+   "type": "CPI",
+   "t": 1389879000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1389970800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1391022000000
+  },
+  {
+   "type": "NFP",
+   "t": 1391779800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1392130800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1392298200000
+  },
+  {
+   "type": "PPI",
+   "t": 1392816600000
+  },
+  {
+   "type": "CPI",
+   "t": 1392903000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1393341000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1393600500000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1394047800000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1394199000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1394546400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1394713800000
+  },
+  {
+   "type": "PPI",
+   "t": 1394800200000
+  },
+  {
+   "type": "CPI",
+   "t": 1395145800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1395252000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1395444000000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1395666000000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1395775800000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1395966000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1396274100000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1396614600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1396965600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1397086200000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1397219400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1397478600000
+  },
+  {
+   "type": "CPI",
+   "t": 1397565000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1397565900000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1397665500000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1398880800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1398947400000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1399033800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1399417200000,
+   "who": "Governor Jeremy C. Stein speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1399555800000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1399644000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1399984200000
+  },
+  {
+   "type": "PPI",
+   "t": 1400070600000
+  },
+  {
+   "type": "CPI",
+   "t": 1400157000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1400191800000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1400686200000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1402044600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1402057800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1402332300000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1402408800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1402576200000
+  },
+  {
+   "type": "PPI",
+   "t": 1402662600000
+  },
+  {
+   "type": "CPI",
+   "t": 1403008200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1403114400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1403702100000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1404313200000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1404390600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1404828000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1405427400000
+  },
+  {
+   "type": "PPI",
+   "t": 1405513800000
+  },
+  {
+   "type": "CPI",
+   "t": 1406032200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1406743200000
+  },
+  {
+   "type": "NFP",
+   "t": 1406896200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1407852000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1407933000000
+  },
+  {
+   "type": "PPI",
+   "t": 1408105800000
+  },
+  {
+   "type": "CPI",
+   "t": 1408451400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1408716000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1409871600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1409920200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1410271200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1410525000000
+  },
+  {
+   "type": "PPI",
+   "t": 1410870600000
+  },
+  {
+   "type": "CPI",
+   "t": 1410957000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1410976800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1411044300000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1411478400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1412088300000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1412339400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1412690400000
+  },
+  {
+   "type": "PPI",
+   "t": 1413376200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1413376200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1413549000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1413813600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1413820800000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1413981000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1414605600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1414674000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1415298600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1415367000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1415373300000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1415388600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1415890800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1415971800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1415998800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1416317400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1416487500000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1416490200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1417539600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1417633200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1417786200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1418137200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1418304600000
+  },
+  {
+   "type": "PPI",
+   "t": 1418391000000
+  },
+  {
+   "type": "CPI",
+   "t": 1418823000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1418842800000
+  },
+  {
+   "type": "NFP",
+   "t": 1420810200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1421161200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1421242200000
+  },
+  {
+   "type": "PPI",
+   "t": 1421328600000
+  },
+  {
+   "type": "CPI",
+   "t": 1421415000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1421766000000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1422471600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1422639900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1423062000000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1423229400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1423515600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1423580400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1423747800000
+  },
+  {
+   "type": "PPI",
+   "t": 1424266200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1424296800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1424957400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1425431700000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1425648600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1425996000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1426163400000
+  },
+  {
+   "type": "PPI",
+   "t": 1426249800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1426701600000
+  },
+  {
+   "type": "CPI",
+   "t": 1427200200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1427485500000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1427978400000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1428003900000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1428064200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1428415200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1428494400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1429014600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1429014600000
+  },
+  {
+   "type": "CPI",
+   "t": 1429273800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1430330400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1430397000000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1430744400000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1430918100000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1431088200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1431439200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1431520200000
+  },
+  {
+   "type": "PPI",
+   "t": 1431606600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1431613800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1432297800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1432314000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1433253600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1433507400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1433858400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1434025800000
+  },
+  {
+   "type": "PPI",
+   "t": 1434112200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1434564000000
+  },
+  {
+   "type": "CPI",
+   "t": 1434630600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1435239600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1435755600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1435840200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1436277600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1436450400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1436545800000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1436877000000
+  },
+  {
+   "type": "PPI",
+   "t": 1436963400000
+  },
+  {
+   "type": "CPI",
+   "t": 1437136200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1438192800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1438613400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1438950600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1439388000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1439469000000
+  },
+  {
+   "type": "PPI",
+   "t": 1439555400000
+  },
+  {
+   "type": "CPI",
+   "t": 1439987400000
+  },
+  {
+   "type": "NFP",
+   "t": 1441369800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1441807200000
+  },
+  {
+   "type": "PPI",
+   "t": 1441974600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1442320200000
+  },
+  {
+   "type": "CPI",
+   "t": 1442406600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1442512800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1443128400000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1443431700000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1443639600000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1443658500000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1443789000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1444681800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1444825800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1444825800000
+  },
+  {
+   "type": "CPI",
+   "t": 1444912200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1445004000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1445263200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1445346900000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1445353200000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1446055200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1446747900000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1446816600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1446844500000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1447338600000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1447340400000
+  },
+  {
+   "type": "PPI",
+   "t": 1447421400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1447421400000
+  },
+  {
+   "type": "CPI",
+   "t": 1447767000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1447784100000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1447792200000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1448042400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1449018000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1449064800000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1449077100000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1449235800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1449586800000
+  },
+  {
+   "type": "PPI",
+   "t": 1449840600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1449840600000
+  },
+  {
+   "type": "CPI",
+   "t": 1450186200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1450292400000
+  },
+  {
+   "type": "NFP",
+   "t": 1452259800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1452610800000
+  },
+  {
+   "type": "PPI",
+   "t": 1452864600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1452864600000
+  },
+  {
+   "type": "CPI",
+   "t": 1453296600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1453921200000
+  },
+  {
+   "type": "NFP",
+   "t": 1454679000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1455030000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1455283800000
+  },
+  {
+   "type": "PPI",
+   "t": 1455715800000
+  },
+  {
+   "type": "CPI",
+   "t": 1455888600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1456499700000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1456511400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1457098200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1457373600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1458045000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1458045000000
+  },
+  {
+   "type": "CPI",
+   "t": 1458131400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1458151200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1458223200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1459268400000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1459513800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1459864800000
+  },
+  {
+   "type": "PPI",
+   "t": 1460550600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1460550600000
+  },
+  {
+   "type": "CPI",
+   "t": 1460637000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1460654100000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1461780000000
+  },
+  {
+   "type": "NFP",
+   "t": 1462537800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1462888800000
+  },
+  {
+   "type": "PPI",
+   "t": 1463142600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1463142600000
+  },
+  {
+   "type": "CPI",
+   "t": 1463488200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1463749200000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1464279300000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1464957000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1464971400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1465230600000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1465394400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1465907400000
+  },
+  {
+   "type": "PPI",
+   "t": 1465993800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1466013600000
+  },
+  {
+   "type": "CPI",
+   "t": 1466080200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1466533800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1467154800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1467981000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1468329300000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1468332000000
+  },
+  {
+   "type": "PPI",
+   "t": 1468499400000
+  },
+  {
+   "type": "CPI",
+   "t": 1468585800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1468585800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1469642400000
+  },
+  {
+   "type": "NFP",
+   "t": 1470400200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1470837600000
+  },
+  {
+   "type": "PPI",
+   "t": 1471005000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1471005000000
+  },
+  {
+   "type": "CPI",
+   "t": 1471350600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1472220000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1472819400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1473256800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1473700500000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1473942600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1473942600000
+  },
+  {
+   "type": "CPI",
+   "t": 1474029000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1474480800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1474904700000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1475157600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1475179200000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1475843400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1475870400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1476280800000
+  },
+  {
+   "type": "PPI",
+   "t": 1476448200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1476448200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1476466200000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1476793800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1477059300000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1477332000000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1478109600000
+  },
+  {
+   "type": "NFP",
+   "t": 1478262600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1478617200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1479216600000
+  },
+  {
+   "type": "PPI",
+   "t": 1479303000000
+  },
+  {
+   "type": "CPI",
+   "t": 1479389400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1479403800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1479523500000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1480441200000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1480524300000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1480685400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1480686300000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1480701600000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1481122800000
+  },
+  {
+   "type": "PPI",
+   "t": 1481722200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1481722200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1481742000000
+  },
+  {
+   "type": "CPI",
+   "t": 1481808600000
+  },
+  {
+   "type": "NFP",
+   "t": 1483709400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1483805700000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1484060400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1484265600000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1484314200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1484314200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1484665200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1484746200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1484769600000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1484874000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1485975600000
+  },
+  {
+   "type": "NFP",
+   "t": 1486128600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1486479600000
+  },
+  {
+   "type": "PPI",
+   "t": 1487079000000
+  },
+  {
+   "type": "CPI",
+   "t": 1487165400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1487165400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1487786400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1488409200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1488561300000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1488564000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1489152600000
+  },
+  {
+   "type": "PPI",
+   "t": 1489494600000
+  },
+  {
+   "type": "CPI",
+   "t": 1489581000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1489581000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1489600800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1489672800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1490273100000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1490719800000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1490733000000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1491337800000,
+   "who": "Governor Daniel K. Tarullo speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1491408000000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1491568200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1491919200000
+  },
+  {
+   "type": "PPI",
+   "t": 1492086600000
+  },
+  {
+   "type": "CPI",
+   "t": 1492173000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1492173000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1492691700000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1493399700000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1493834400000
+  },
+  {
+   "type": "NFP",
+   "t": 1493987400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1494005400000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1494338400000
+  },
+  {
+   "type": "PPI",
+   "t": 1494505800000
+  },
+  {
+   "type": "CPI",
+   "t": 1494592200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1494592200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1495495800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1496163600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1496318400000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1496406600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1496757600000
+  },
+  {
+   "type": "PPI",
+   "t": 1497357000000
+  },
+  {
+   "type": "CPI",
+   "t": 1497443400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1497443400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1497463200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1498241700000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1498471200000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1499349600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1499430600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1499781600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1499790600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1499949000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1499965200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1500035400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1500035400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1501092000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1501261200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1501849800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1502200800000
+  },
+  {
+   "type": "PPI",
+   "t": 1502368200000
+  },
+  {
+   "type": "CPI",
+   "t": 1502454600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1502800200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1503669600000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1504098900000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1504269000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1504612800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1505224800000
+  },
+  {
+   "type": "PPI",
+   "t": 1505305800000
+  },
+  {
+   "type": "CPI",
+   "t": 1505392200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1505478600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1505930400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1506436200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1506444300000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1506535200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1507144500000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1507208700000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1507293000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1507730400000
+  },
+  {
+   "type": "PPI",
+   "t": 1507811400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1507818600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1507818600000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1507897800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1507897800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1508072400000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1508365200000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1508542200000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1509559200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1509625800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1509712200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1510066800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1510083000000,
+   "who": "Chair Janet L. Yellen speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1510666200000
+  },
+  {
+   "type": "CPI",
+   "t": 1510752600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1510752600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1510767900000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1510865100000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1512739800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1513004400000
+  },
+  {
+   "type": "PPI",
+   "t": 1513085400000
+  },
+  {
+   "type": "CPI",
+   "t": 1513171800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1513191600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1513206000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1513258200000
+  },
+  {
+   "type": "NFP",
+   "t": 1515159000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1515510000000
+  },
+  {
+   "type": "PPI",
+   "t": 1515677400000
+  },
+  {
+   "type": "CPI",
+   "t": 1515763800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1515763800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1517425200000
+  },
+  {
+   "type": "NFP",
+   "t": 1517578200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1517929200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1518534000000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1518615000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1518615000000
+  },
+  {
+   "type": "PPI",
+   "t": 1518701400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1520380800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1520602200000
+  },
+  {
+   "type": "CPI",
+   "t": 1520944200000
+  },
+  {
+   "type": "PPI",
+   "t": 1521030600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1521030600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1521208800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1521655200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1522787400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1523017800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1523035800000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1523363400000
+  },
+  {
+   "type": "CPI",
+   "t": 1523449800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1523628000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1523881800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1523986200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1524139200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1525284000000
+  },
+  {
+   "type": "NFP",
+   "t": 1525437000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1525763700000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1525788000000
+  },
+  {
+   "type": "PPI",
+   "t": 1525869000000
+  },
+  {
+   "type": "CPI",
+   "t": 1525955400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1526387400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1526425200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1526649300000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1527254400000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1527786000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1527856200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1528207200000
+  },
+  {
+   "type": "CPI",
+   "t": 1528806600000
+  },
+  {
+   "type": "PPI",
+   "t": 1528893000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1528912800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1528979400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1529501400000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1530880200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1531231200000
+  },
+  {
+   "type": "PPI",
+   "t": 1531312200000
+  },
+  {
+   "type": "CPI",
+   "t": 1531398600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1531744200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1533146400000
+  },
+  {
+   "type": "NFP",
+   "t": 1533299400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1533650400000
+  },
+  {
+   "type": "PPI",
+   "t": 1533817800000
+  },
+  {
+   "type": "CPI",
+   "t": 1533904200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1534336200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1535119200000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1536323400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1536674400000
+  },
+  {
+   "type": "PPI",
+   "t": 1536755400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1536770700000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1536841800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1536928200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1537984800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1538080200000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1538498700000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1538589600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1538742600000
+  },
+  {
+   "type": "PPI",
+   "t": 1539174600000
+  },
+  {
+   "type": "CPI",
+   "t": 1539261000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1539606600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1539639000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1539698400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1539792600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1541161800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1541516400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1541703600000
+  },
+  {
+   "type": "PPI",
+   "t": 1541770200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1542121200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1542202200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1542288600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1543424400000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1543851000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1543878000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1543878000000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1544139900000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1544189400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1544202900000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1544454000000
+  },
+  {
+   "type": "PPI",
+   "t": 1544535000000
+  },
+  {
+   "type": "CPI",
+   "t": 1544621400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1544794200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1545246000000
+  },
+  {
+   "type": "NFP",
+   "t": 1546608600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1546959600000
+  },
+  {
+   "type": "CPI",
+   "t": 1547213400000
+  },
+  {
+   "type": "PPI",
+   "t": 1547559000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1548874800000
+  },
+  {
+   "type": "NFP",
+   "t": 1549027800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1549044900000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1549497600000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1549901700000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1549983600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1549993500000,
+   "who": "Chairman Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1550064600000
+  },
+  {
+   "type": "PPI",
+   "t": 1550151000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1550151000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1550854800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1550930400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1551358800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1551402900000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1551978900000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1552051800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1552100400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1552307400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1552345200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1552393800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1552394700000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1552480200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1552658400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1553104800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1553531400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1553771700000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1553779800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1553781600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1553875500000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1554121800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1554218100000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1554246900000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1554467400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1554818400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1554849900000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1554899400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1554911400000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1554985800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1554989400000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1555012800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1555590600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1556733600000
+  },
+  {
+   "type": "NFP",
+   "t": 1556886600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1556897400000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1557237600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1557318600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1557405000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1557405000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1557491400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1557491400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1557753000000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1557923400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1558023300000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1558114800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1558371900000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1558393200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1559232000000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1559234700000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1559567400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1559656500000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1559742300000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1559910600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1560175200000
+  },
+  {
+   "type": "PPI",
+   "t": 1560256200000
+  },
+  {
+   "type": "CPI",
+   "t": 1560342600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1560515400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1560967200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1561132800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1561467600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1561482000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1561961700000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1562329800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1562676300000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1562680800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1562695200000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1562848200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1562880600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1562934600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1563280200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1563296400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1564596000000
+  },
+  {
+   "type": "NFP",
+   "t": 1564749000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1565026200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1565100000000
+  },
+  {
+   "type": "PPI",
+   "t": 1565353800000
+  },
+  {
+   "type": "CPI",
+   "t": 1565699400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1565872200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1566338400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1566568800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1567614600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1567676700000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1567773000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1568124000000
+  },
+  {
+   "type": "PPI",
+   "t": 1568205000000
+  },
+  {
+   "type": "CPI",
+   "t": 1568291400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1568377800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1568829600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1569512700000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1569513600000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1569587400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1569934200000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1569936600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1570105800000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1570192200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1570212000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1570467600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1570537800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1570559400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1570629600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1570633200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1570710600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1571229000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1571252400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1571335200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1571412600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1571672400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1572458400000
+  },
+  {
+   "type": "NFP",
+   "t": 1572611400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1572627600000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1572627600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1572966000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1573231500000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1573554600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1573651800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1573727400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1573738200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1573740000000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1573824600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1574726400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1574791200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1575639000000
+  },
+  {
+   "type": "CPI",
+   "t": 1576071000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1576090800000
+  },
+  {
+   "type": "PPI",
+   "t": 1576157400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1576243800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1576594800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1576664100000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1578495600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1578574800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1578663000000
+  },
+  {
+   "type": "CPI",
+   "t": 1579008600000
+  },
+  {
+   "type": "PPI",
+   "t": 1579095000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1579181400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1579186800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1579273200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1579283100000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1580324400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1580937000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1581034500000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1581082200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1581340500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1581433200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1581441300000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1581600600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1581687000000
+  },
+  {
+   "type": "PPI",
+   "t": 1582119000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1582298100000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1582309800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1582660800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1582822800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1583501400000
+  },
+  {
+   "type": "CPI",
+   "t": 1583929800000
+  },
+  {
+   "type": "PPI",
+   "t": 1584016200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1584448200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1584453600000
+  },
+  {
+   "type": "NFP",
+   "t": 1585917000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1586268000000
+  },
+  {
+   "type": "PPI",
+   "t": 1586435400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1586440800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1586521800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1586953800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1588183200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1588705200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1588941000000
+  },
+  {
+   "type": "CPI",
+   "t": 1589286600000
+  },
+  {
+   "type": "PPI",
+   "t": 1589373000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1589374800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1589545800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1589551200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1590080400000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1590085800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1590085800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1591360200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1591711200000
+  },
+  {
+   "type": "CPI",
+   "t": 1591792200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1591812000000
+  },
+  {
+   "type": "PPI",
+   "t": 1591878600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1592310600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1592337600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1592582400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1592586000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1593693000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1594130400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1594141200000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1594384200000
+  },
+  {
+   "type": "CPI",
+   "t": 1594729800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1594749600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1594902600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1596045600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1596729600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1596803400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1597068000000
+  },
+  {
+   "type": "PPI",
+   "t": 1597149000000
+  },
+  {
+   "type": "CPI",
+   "t": 1597235400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1597345200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1597408200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1597856400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1598459400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1598533800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1598878800000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1598979600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1599222600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1599660000000
+  },
+  {
+   "type": "PPI",
+   "t": 1599741000000
+  },
+  {
+   "type": "CPI",
+   "t": 1599827400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1600259400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1600279200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1600704000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1600884000000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1601487600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1601574300000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1601578800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1601641800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1601992800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1601995200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1602592200000
+  },
+  {
+   "type": "PPI",
+   "t": 1602678600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1602680400000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1602702000000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1602774000000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1602792000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1602851400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1603122300000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1603205400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1603220400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1603284600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1604602800000
+  },
+  {
+   "type": "NFP",
+   "t": 1604669400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1605020400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1605045600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1605187800000
+  },
+  {
+   "type": "PPI",
+   "t": 1605274200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1605553200000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1605619800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1605636000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1605807000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1606842000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1607088600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1607094000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1607526000000
+  },
+  {
+   "type": "CPI",
+   "t": 1607607000000
+  },
+  {
+   "type": "PPI",
+   "t": 1607693400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1607708400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1608125400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1608145200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1608228000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1608307800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1610112600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1610121600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1610462100000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1610463600000
+  },
+  {
+   "type": "CPI",
+   "t": 1610544600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1610560800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1610568000000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1610717400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1610717400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1611774000000
+  },
+  {
+   "type": "NFP",
+   "t": 1612531800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1612882800000
+  },
+  {
+   "type": "CPI",
+   "t": 1612963800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1612983600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1613491800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1613568600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1613568600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1613653200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1614025800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1614180600000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1614189600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1614269400000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1614607500000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1614708000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1614951000000
+  },
+  {
+   "type": "CPI",
+   "t": 1615383000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1615474800000
+  },
+  {
+   "type": "PPI",
+   "t": 1615555800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1615897800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1616004000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1616082900000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1616434200000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1616454900000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1616520300000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1616528700000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1616681400000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1617030000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1617109200000,
+   "who": "Vice Chair for Supervision and Chair of the Financial Stability Board Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1617366600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1617717600000
+  },
+  {
+   "type": "PPI",
+   "t": 1617971400000
+  },
+  {
+   "type": "CPI",
+   "t": 1618317000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1618429500000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1618489800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1619632800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1620066000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1620223200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1620390600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1620741600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1620748800000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1620822600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1620824400000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1620909000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1620925200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1620995400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1621260300000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1621861200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1622037600000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1622055600000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1622570400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1622747100000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1622809800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1623160800000
+  },
+  {
+   "type": "CPI",
+   "t": 1623328200000
+  },
+  {
+   "type": "PPI",
+   "t": 1623760200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1623760200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1623866400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1624453800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1624900200000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1625229000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1625666400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1626009600000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1626179400000
+  },
+  {
+   "type": "PPI",
+   "t": 1626265800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1626438600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1627495200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1627691400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1628013600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1628085600000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1628172000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1628253000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1628517600000
+  },
+  {
+   "type": "CPI",
+   "t": 1628685000000
+  },
+  {
+   "type": "PPI",
+   "t": 1628771400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1629203400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1629221400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1630072800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1630672200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1631109600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1631206800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1631277000000
+  },
+  {
+   "type": "CPI",
+   "t": 1631622600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1631795400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1632333600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1632492000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1632761400000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1632850800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1633454100000,
+   "who": "Vice Chair for Supervision Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1633615200000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1633696200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1634047200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634051700000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1634128200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634157000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634169600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1634214600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1634301000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634549400000,
+   "who": "Governor Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634663700000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634670000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634749200000,
+   "who": "Governor Randal K. Quarles speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1634911200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1635962400000
+  },
+  {
+   "type": "NFP",
+   "t": 1636115400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1636380000000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1636385400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1636390800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1636464600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1636466400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1636551000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1636729200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1637069400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1637170800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1637336700000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1637342100000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1638216300000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1638223500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1638295200000,
+   "who": "Vice Chair Richard H. Clarida speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1638460800000,
+   "who": "Governor Randal K. Quarles speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1638538200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1638975600000
+  },
+  {
+   "type": "CPI",
+   "t": 1639143000000
+  },
+  {
+   "type": "PPI",
+   "t": 1639488600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1639575000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1639594800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1639764000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1641308400000
+  },
+  {
+   "type": "NFP",
+   "t": 1641562200000
+  },
+  {
+   "type": "CPI",
+   "t": 1641994200000
+  },
+  {
+   "type": "PPI",
+   "t": 1642080600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1642167000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1643223600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1643727600000
+  },
+  {
+   "type": "NFP",
+   "t": 1643981400000
+  },
+  {
+   "type": "CPI",
+   "t": 1644499800000
+  },
+  {
+   "type": "PPI",
+   "t": 1644931800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1645018200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1645197300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1645209000000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1645460100000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1645752300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1646400600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1646838000000
+  },
+  {
+   "type": "CPI",
+   "t": 1646919000000
+  },
+  {
+   "type": "PPI",
+   "t": 1647347400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1647433800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1647453600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1647626400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1647880200000,
+   "who": "Chair Pro Tempore Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1648127400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1648562400000
+  },
+  {
+   "type": "NFP",
+   "t": 1648816200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1649167500000,
+   "who": "Governor Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1649766600000
+  },
+  {
+   "type": "PPI",
+   "t": 1649853000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1649939400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1651586400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1651687200000
+  },
+  {
+   "type": "NFP",
+   "t": 1651840200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1651878900000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1652272200000
+  },
+  {
+   "type": "PPI",
+   "t": 1652358600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1652790600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1653409200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1653495300000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1653922800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1654092000000
+  },
+  {
+   "type": "NFP",
+   "t": 1654259400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1654275600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1654864200000
+  },
+  {
+   "type": "PPI",
+   "t": 1655209800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1655296200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1655316000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1655469900000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1655584800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1655996400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1657116000000
+  },
+  {
+   "type": "NFP",
+   "t": 1657283400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1657288800000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1657715400000
+  },
+  {
+   "type": "PPI",
+   "t": 1657801800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1657810800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1657888200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1658255700000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1658944800000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1659448800000
+  },
+  {
+   "type": "NFP",
+   "t": 1659702600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1659802500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1660134600000
+  },
+  {
+   "type": "PPI",
+   "t": 1660221000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1660739400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1660743000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1660760400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1661522400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1661796900000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1661868000000
+  },
+  {
+   "type": "NFP",
+   "t": 1662121800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1662568800000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1662573600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1662739200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1663072200000
+  },
+  {
+   "type": "PPI",
+   "t": 1663158600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1663245000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1663783200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1664374500000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1664377200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1664542800000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1664550000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1664892000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1664898300000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1665075600000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1665090000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1665145800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1665423300000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1665577800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1665596700000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1665613800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1665664200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1665750600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1665764100000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1666289100000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1667311200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1667412000000
+  },
+  {
+   "type": "NFP",
+   "t": 1667565000000
+  },
+  {
+   "type": "CPI",
+   "t": 1668087000000
+  },
+  {
+   "type": "PPI",
+   "t": 1668519000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1668605400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1668627300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1668694500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1668699600000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1669665600000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1669820400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1669829700000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1669833000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1669924800000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1669987800000
+  },
+  {
+   "type": "PPI",
+   "t": 1670592600000
+  },
+  {
+   "type": "CPI",
+   "t": 1670938200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1671044400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1671111000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1672844400000
+  },
+  {
+   "type": "NFP",
+   "t": 1673011800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1673021700000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1673359200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1673370000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1673530200000
+  },
+  {
+   "type": "PPI",
+   "t": 1674048600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1674048600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1674152100000,
+   "who": "Vice Chair Lael Brainard speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1674237600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1674325800000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1675263600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1675278000000
+  },
+  {
+   "type": "NFP",
+   "t": 1675431000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1675796400000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1675881900000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1676050200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1676293200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1676381400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1676467800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1676476800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1676554200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1676581200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1677251700000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1677511800000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1677790800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1677873600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1678287600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1678374000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1678455000000
+  },
+  {
+   "type": "CPI",
+   "t": 1678797000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1678828800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1678883400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1678883400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1679508000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1679950800000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1680093000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1680299100000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1680314400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1680616800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1680629400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1680870600000
+  },
+  {
+   "type": "CPI",
+   "t": 1681302600000
+  },
+  {
+   "type": "PPI",
+   "t": 1681389000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1681475400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1681476300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1681491600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1681837200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1682006400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1682017200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1682109300000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1683036000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1683136800000
+  },
+  {
+   "type": "NFP",
+   "t": 1683289800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1683306000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1683721800000
+  },
+  {
+   "type": "PPI",
+   "t": 1683808200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1683815400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1683874800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1683935100000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1683988200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1684184400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1684240200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1684415100000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1684501200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1684944600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1685537400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1685541600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1685554200000,
+   "who": "Governor Philip N. Jefferson speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1685709000000
+  },
+  {
+   "type": "CPI",
+   "t": 1686659400000
+  },
+  {
+   "type": "PPI",
+   "t": 1686745800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1686765600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1686832200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1686915900000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1687420800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1687442100000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1687699800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1688020200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1688652000000
+  },
+  {
+   "type": "NFP",
+   "t": 1688733000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1688997600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1689165000000
+  },
+  {
+   "type": "PPI",
+   "t": 1689251400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1689288300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1689683400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1689688800000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1690394400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1690898400000
+  },
+  {
+   "type": "NFP",
+   "t": 1691152200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1691251800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1691411400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1691670600000
+  },
+  {
+   "type": "PPI",
+   "t": 1691757000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1692102600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1692729000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1692972300000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1693317600000
+  },
+  {
+   "type": "NFP",
+   "t": 1693571400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1694178000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1694608200000
+  },
+  {
+   "type": "PPI",
+   "t": 1694694600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1694694600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1695232800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1695387000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1695393000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1695749400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1695852000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1695920400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1695931200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696257000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696266000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1696341600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696429500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1696595400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696690800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696857300000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696872600000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1696959000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697012100000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1697027400000
+  },
+  {
+   "type": "CPI",
+   "t": 1697113800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1697545800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697548800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697644800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697648400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697669700000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697720400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1697731200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1697736600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1698266100000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1698325200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1698411600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1698847200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1698861600000
+  },
+  {
+   "type": "NFP",
+   "t": 1699014600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699286400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699369200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699381800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699438500000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1699452900000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699479900000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699545600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1699556400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699883400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1699957800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1699968600000
+  },
+  {
+   "type": "PPI",
+   "t": 1700055000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1700055000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1700148900000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1700154000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1701183900000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1701186300000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1701194700000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1701417600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1701446400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1701788400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1701806400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1702042200000
+  },
+  {
+   "type": "CPI",
+   "t": 1702387800000
+  },
+  {
+   "type": "PPI",
+   "t": 1702474200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1702494000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1702560600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1704294000000
+  },
+  {
+   "type": "NFP",
+   "t": 1704461400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1704749400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1704979800000
+  },
+  {
+   "type": "PPI",
+   "t": 1705066200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1705420800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1705498200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1705500000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1705500000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1706626800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1706727600000
+  },
+  {
+   "type": "NFP",
+   "t": 1706880600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1706911200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1707321600000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1707332400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1707747600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1707831000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1707856200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1707944400000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1707980400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1708003800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1708020900000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1708090200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1708092600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1708614000000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1708639200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1708648500000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1709042700000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1709055900000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1709306100000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1709324400000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1709682300000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1709737200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1709820600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1709904600000
+  },
+  {
+   "type": "CPI",
+   "t": 1710246600000
+  },
+  {
+   "type": "PPI",
+   "t": 1710419400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1710419400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1710957600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1711377000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1711576800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1712011800000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1712066400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1712067000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1712151000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1712160600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1712176200000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1712273400000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1712320200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1712334600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1712752200000
+  },
+  {
+   "type": "PPI",
+   "t": 1712838600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1713184200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1713272400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1713445500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1714572000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1714586400000
+  },
+  {
+   "type": "NFP",
+   "t": 1714739400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1714743900000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1714828800000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715189400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715346000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715362200000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715605200000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1715689800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715692200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1715776200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1715776200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715800800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715955300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1715964000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716068700000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1716147000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716210000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716210000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716215400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716296400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716556800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1716872100000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1717509600000
+  },
+  {
+   "type": "NFP",
+   "t": 1717763400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1717776000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1718195400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1718215200000
+  },
+  {
+   "type": "PPI",
+   "t": 1718281800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1718406000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1718607600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1718672400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1718713800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1718730000000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1719212400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1719313200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1719331200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1719339000000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1719397200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1719511500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1719928800000
+  },
+  {
+   "type": "NFP",
+   "t": 1720182600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1720530900000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1720546200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1720636200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1720654200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1720701000000
+  },
+  {
+   "type": "PPI",
+   "t": 1720787400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1721133000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1721155500000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1721223300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1721346300000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1721851500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1722348000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1722448800000
+  },
+  {
+   "type": "NFP",
+   "t": 1722601800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1723306200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1723552200000
+  },
+  {
+   "type": "CPI",
+   "t": 1723638600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1723725000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1724073300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1724176800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1724421600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1724822100000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1725458400000
+  },
+  {
+   "type": "NFP",
+   "t": 1725625800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1725634800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1725976800000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1725984900000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1726057800000
+  },
+  {
+   "type": "PPI",
+   "t": 1726144200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1726576200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1726682400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1726851600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727182800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727294400000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727356500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1727356800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727361000000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727388000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727700600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1727718900000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1727791200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727795400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1727881200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1728045000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1728370800000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1728430200000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1728491400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1728563400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1728566100000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1728649800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1728666600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1728932400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1729168200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1729267800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1729688400000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1730210400000
+  },
+  {
+   "type": "NFP",
+   "t": 1730464200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1731006000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1731423600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1731504600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1731585600000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1731591000000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1731614400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1731677400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1732118400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1732122900000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1732317300000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1733170500000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1733238000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1733247300000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1733491800000
+  },
+  {
+   "type": "CPI",
+   "t": 1733923800000
+  },
+  {
+   "type": "PPI",
+   "t": 1734010200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1734442200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1734548400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1736172900000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1736262000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1736341200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1736447700000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1736515800000
+  },
+  {
+   "type": "PPI",
+   "t": 1736861400000
+  },
+  {
+   "type": "CPI",
+   "t": 1736947800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1737034200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1738177200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1738330200000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1738681200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1738715400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1738785600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1738801800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1738935000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1738938300000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1738947600000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1739305800000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1739367000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1739397900000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1739453400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1739539800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1739805600000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1739833200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1739901600000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740002400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740079800000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740088800000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740155400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740501900000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740668400000,
+   "who": "Vice Chair for Supervision Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1740674700000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1741354200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1741360500000,
+   "who": "Governor Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1741368000000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1741368600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1741701600000
+  },
+  {
+   "type": "CPI",
+   "t": 1741782600000
+  },
+  {
+   "type": "PPI",
+   "t": 1741869000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1742214600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1742407200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1742565600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1742843400000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1742906400000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1743516000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1743625800000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1743697800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1743705000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1743769800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1743780300000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1743782400000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1744036200000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1744288200000
+  },
+  {
+   "type": "PPI",
+   "t": 1744374600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1744650000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1744758600000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1744806600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1744824600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1744904700000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1745326800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1745359200000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1745415300000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1745935200000
+  },
+  {
+   "type": "NFP",
+   "t": 1746189000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1746291000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1746640800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1746784500000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1746787500000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1746804600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1746834300000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1747059900000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1747139400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1747214100000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1747228200000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1747312200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1747312200000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1747312800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1747332300000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1747658700000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1747774800000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1748016000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1748198400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1748541600000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1748822400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1748883600000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1748959200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1748970000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1749040200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1749139200000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1749213000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1749218400000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1749645000000
+  },
+  {
+   "type": "PPI",
+   "t": 1749731400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1750163400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1750269600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1750662000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1750687200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1750703400000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1750795200000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1750958100000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1751378400000
+  },
+  {
+   "type": "NFP",
+   "t": 1751545800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752167700000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1752582600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752585300000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752597900000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1752669000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752674400000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1752755400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752758100000,
+   "who": "Governor Adriana D. Kugler speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752773400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1752791400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1753187400000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1753797600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1753898400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1754049600000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1754049600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1754051400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1754756100000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1755001800000
+  },
+  {
+   "type": "PPI",
+   "t": 1755174600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1755261000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1755627000000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1755702000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1755871200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1756420200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1756908000000
+  },
+  {
+   "type": "NFP",
+   "t": 1757075400000
+  },
+  {
+   "type": "PPI",
+   "t": 1757507400000
+  },
+  {
+   "type": "CPI",
+   "t": 1757593800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1758025800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1758132000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1758556800000,
+   "who": "Governor Stephen I. Miran speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1758632400000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1758645300000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1758819600000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1758906000000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1759145400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1759226400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1759240800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1759513200000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1759845900000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1759930200000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1759959900000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1760013000000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760013300000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760028300000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760039100000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1760458800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760547600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760619600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760619600000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1760623200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1761051600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1761150900000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1761163200000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1761229500000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1761309000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1761760800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1761832500000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1762196400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1762516800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1762545600000,
+   "who": "Governor Stephen I. Miran speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1762917900000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763389800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763411700000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763479800000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763564400000,
+   "who": "Governor Stephen I. Miran speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1763645400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763654400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763731800000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1763732700000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1764077400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1764077400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1764637200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1765292400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1765393200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1765809000000,
+   "who": "Governor Stephen I. Miran speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1765891800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1765891800000
+  },
+  {
+   "type": "CPI",
+   "t": 1766064600000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1767798000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1767820200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1767965400000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1768177800000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1768311000000
+  },
+  {
+   "type": "PPI",
+   "t": 1768397400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1768397400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1768404600000,
+   "who": "Governor Stephen I. Miran speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1768579200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1768595400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1769626800000
+  },
+  {
+   "type": "PPI",
+   "t": 1769779800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1769781600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1769810400000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1770247800000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1770303600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1770397200000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1770730200000
+  },
+  {
+   "type": "NFP",
+   "t": 1770816600000
+  },
+  {
+   "type": "CPI",
+   "t": 1770989400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1771248300000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1771350300000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1771507800000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1771851600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1771942500000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1771943400000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1772199000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1772544600000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1772803800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1772803800000
+  },
+  {
+   "type": "CPI",
+   "t": 1773232200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1773327600000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1773410400000
+  },
+  {
+   "type": "PPI",
+   "t": 1773837000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1773856800000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1774114200000,
+   "who": "Chair Jerome H. Powell speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774391400000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774555200000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774564200000,
+   "who": "Governor Stephen I. Miran speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774566000000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774566600000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1774965600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774983600000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1774991400000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1775046600000
+  },
+  {
+   "type": "NFP",
+   "t": 1775219400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1775598600000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1775824200000
+  },
+  {
+   "type": "PPI",
+   "t": 1776169800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1776185100000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1776448800000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1776774600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1776796200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1777485600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1777658400000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1777989600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1777989600000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1778233500000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1778243400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1778283000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1778283000000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1778589000000
+  },
+  {
+   "type": "PPI",
+   "t": 1778675400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1778761800000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1778778000000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1778799600000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1779282900000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1779458400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1779911700000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1779926400000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1780060200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1780273800000,
+   "who": "Governor Jerome H. Powell speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1780408800000
+  },
+  {
+   "type": "NFP",
+   "t": 1780662600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1780761600000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1781094600000
+  },
+  {
+   "type": "PPI",
+   "t": 1781181000000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1781699400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1781719200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1782133200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1782324000000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1782828000000
+  },
+  {
+   "type": "NFP",
+   "t": 1782995400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1783350000000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1783422000000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1783934700000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1783960200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1784032200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1784047200000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1784055300000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "PPI",
+   "t": 1784118600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1784134800000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "RETAIL",
+   "t": 1784205000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1784242800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FOMC",
+   "t": 1785348000000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1785852000000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1785960300000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1786105800000
+  },
+  {
+   "type": "CPI",
+   "t": 1786537800000
+  },
+  {
+   "type": "PPI",
+   "t": 1786624200000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1786710600000
+  },
+  {
+   "type": "FED_CHAIR",
+   "t": 1787925600000,
+   "who": "Chairman Kevin Warsh speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1788267900000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1788271200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1788438600000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1788525000000
+  },
+  {
+   "type": "PPI",
+   "t": 1789043400000
+  },
+  {
+   "type": "CPI",
+   "t": 1789129800000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1789561800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1789581600000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1789738200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1789738200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790086800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790172300000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790616300000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "JOLTS",
+   "t": 1790690400000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790694000000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790700000000,
+   "who": "Governor Michael S. Barr speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790708400000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790796300000,
+   "who": "Governor Lisa D. Cook speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790863200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790875800000,
+   "who": "Vice Chair Philip N. Jefferson speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1790881200000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "NFP",
+   "t": 1790944200000
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1791297900000,
+   "who": "Vice Chair for Supervision Michelle W. Bowman speaks"
+  },
+  {
+   "type": "FED_GOV",
+   "t": 1791448200000,
+   "who": "Governor Christopher J. Waller speaks"
+  },
+  {
+   "type": "CPI",
+   "t": 1791981000000
+  },
+  {
+   "type": "PPI",
+   "t": 1792067400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1792067400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1793210400000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1793718000000
+  },
+  {
+   "type": "NFP",
+   "t": 1793971800000
+  },
+  {
+   "type": "CPI",
+   "t": 1794317400000
+  },
+  {
+   "type": "PPI",
+   "t": 1794576600000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1794922200000
+  },
+  {
+   "type": "JOLTS",
+   "t": 1796137200000
+  },
+  {
+   "type": "NFP",
+   "t": 1796391000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1796842800000
+  },
+  {
+   "type": "CPI",
+   "t": 1796909400000
+  },
+  {
+   "type": "PPI",
+   "t": 1797341400000
+  },
+  {
+   "type": "RETAIL",
+   "t": 1797427800000
+  },
+  {
+   "type": "FOMC",
+   "t": 1801076400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1805306400000
+  },
+  {
+   "type": "FOMC",
+   "t": 1808935200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1812564000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1816797600000
+  },
+  {
+   "type": "FOMC",
+   "t": 1821031200000
+  },
+  {
+   "type": "FOMC",
+   "t": 1824660000000
+  },
+  {
+   "type": "FOMC",
+   "t": 1828292400000
+  }
+ ]
+}

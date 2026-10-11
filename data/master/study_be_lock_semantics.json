@@ -1,0 +1,624 @@
+{
+ "at": "2026-09-15T19:43:42.175Z",
+ "tape_to": "2026-08-15T16:13:54.598Z",
+ "frozen_at": "2026-08-15T16:13:54.598Z",
+ "geo": {
+  "slAtr": 1.5,
+  "tgtR": 0.5,
+  "beR": 0.05,
+  "beLockR": 0.1
+ },
+ "modes": [
+  "level",
+  "traded",
+  "arm"
+ ],
+ "results": {
+  "level": {
+   "oos": {
+    "n": 1067,
+    "win": 209,
+    "scratch": 783,
+    "loss": 75,
+    "time": 0,
+    "dec": 284,
+    "wr": 0.7359,
+    "wilson_lb": 0.6817,
+    "net_per_trade": 0.3527,
+    "net_lb": 0.1776,
+    "net_ub": 0.534,
+    "avgR": 0.0433,
+    "scratch_gross_mean": 0.5722,
+    "sum_net": 376.32
+   },
+   "train": {
+    "n": 1520,
+    "win": 524,
+    "scratch": 820,
+    "loss": 176,
+    "time": 0,
+    "dec": 700,
+    "wr": 0.7486,
+    "wilson_lb": 0.7151,
+    "net_per_trade": 0.1973,
+    "net_lb": 0.1062,
+    "net_ub": 0.2785,
+    "avgR": 0.0321,
+    "scratch_gross_mean": 0.3416,
+    "sum_net": 299.96
+   },
+   "all": {
+    "n": 2587,
+    "win": 733,
+    "scratch": 1603,
+    "loss": 251,
+    "time": 0,
+    "dec": 984,
+    "wr": 0.7449,
+    "wilson_lb": 0.7168,
+    "net_per_trade": 0.2614,
+    "net_lb": 0.1728,
+    "net_ub": 0.3485,
+    "avgR": 0.0367,
+    "scratch_gross_mean": 0.4542,
+    "sum_net": 676.28
+   },
+   "per_fold": [
+    {
+     "fold": 0,
+     "n": 32,
+     "net": 0.2755,
+     "sum": 8.81
+    },
+    {
+     "fold": 1,
+     "n": 325,
+     "net": 0.2425,
+     "sum": 78.8
+    },
+    {
+     "fold": 2,
+     "n": 372,
+     "net": 0.1722,
+     "sum": 64.06
+    },
+    {
+     "fold": 3,
+     "n": 437,
+     "net": 0.3071,
+     "sum": 134.19
+    },
+    {
+     "fold": 4,
+     "n": 354,
+     "net": 0.0398,
+     "sum": 14.1
+    },
+    {
+     "fold": 5,
+     "n": 354,
+     "net": 0.0991,
+     "sum": 35.09
+    },
+    {
+     "fold": 6,
+     "n": 346,
+     "net": 0.14,
+     "sum": 48.44
+    },
+    {
+     "fold": 7,
+     "n": 367,
+     "net": 0.7978,
+     "sum": 292.79
+    }
+   ],
+   "cost_oos": {
+    "net_at_model": 0.3527,
+    "avgR_at_model": 0.0433,
+    "net_at_measured_session_medians": 0.1847,
+    "avgR_at_measured_session_medians": -0.008,
+    "viable_at_measured": false,
+    "break_even_flat_half_spread_usd": 0.3259,
+    "break_even_flat_half_spread_usd_net_metric": 0.536,
+    "break_even_schedule_multiple": 1.779,
+    "break_even_effective_half_spread_usd": 0.338,
+    "measured_session_medians": {
+     "LONDON": 0.34,
+     "NY_OVERLAP": 0.325,
+     "NY": 0.305,
+     "ASIAN": 0.43,
+     "ROLLOVER": 0.52,
+     "source": "polygon /v3/quotes/C:XAUUSD",
+     "at": "2026-08-16T20:16:28.926Z",
+     "quotes": 17258
+    }
+   },
+   "secs": 1
+  },
+  "traded": {
+   "oos": {
+    "n": 1067,
+    "win": 236,
+    "scratch": 735,
+    "loss": 96,
+    "time": 0,
+    "dec": 332,
+    "wr": 0.7108,
+    "wilson_lb": 0.6599,
+    "net_per_trade": 0.2846,
+    "net_lb": 0.0959,
+    "net_ub": 0.473,
+    "avgR": 0.0311,
+    "scratch_gross_mean": 0.5751,
+    "sum_net": 303.66
+   },
+   "train": {
+    "n": 1520,
+    "win": 558,
+    "scratch": 762,
+    "loss": 200,
+    "time": 0,
+    "dec": 758,
+    "wr": 0.7361,
+    "wilson_lb": 0.7036,
+    "net_per_trade": 0.1734,
+    "net_lb": 0.0815,
+    "net_ub": 0.2603,
+    "avgR": 0.023,
+    "scratch_gross_mean": 0.3435,
+    "sum_net": 263.62
+   },
+   "all": {
+    "n": 2587,
+    "win": 794,
+    "scratch": 1497,
+    "loss": 296,
+    "time": 0,
+    "dec": 1090,
+    "wr": 0.7284,
+    "wilson_lb": 0.7013,
+    "net_per_trade": 0.2193,
+    "net_lb": 0.1294,
+    "net_ub": 0.3127,
+    "avgR": 0.0263,
+    "scratch_gross_mean": 0.4572,
+    "sum_net": 567.28
+   },
+   "per_fold": [
+    {
+     "fold": 0,
+     "n": 32,
+     "net": 0.2755,
+     "sum": 8.81
+    },
+    {
+     "fold": 1,
+     "n": 324,
+     "net": 0.172,
+     "sum": 55.72
+    },
+    {
+     "fold": 2,
+     "n": 373,
+     "net": 0.1455,
+     "sum": 54.26
+    },
+    {
+     "fold": 3,
+     "n": 437,
+     "net": 0.3035,
+     "sum": 132.64
+    },
+    {
+     "fold": 4,
+     "n": 354,
+     "net": 0.0344,
+     "sum": 12.18
+    },
+    {
+     "fold": 5,
+     "n": 354,
+     "net": 0.0854,
+     "sum": 30.24
+    },
+    {
+     "fold": 6,
+     "n": 346,
+     "net": 0.0436,
+     "sum": 15.08
+    },
+    {
+     "fold": 7,
+     "n": 367,
+     "net": 0.7039,
+     "sum": 258.35
+    }
+   ],
+   "cost_oos": {
+    "net_at_model": 0.2846,
+    "avgR_at_model": 0.0311,
+    "net_at_measured_session_medians": 0.1166,
+    "avgR_at_measured_session_medians": -0.0202,
+    "viable_at_measured": false,
+    "break_even_flat_half_spread_usd": 0.2859,
+    "break_even_flat_half_spread_usd_net_metric": 0.4679,
+    "break_even_schedule_multiple": 1.5598,
+    "break_even_effective_half_spread_usd": 0.2964,
+    "measured_session_medians": {
+     "LONDON": 0.34,
+     "NY_OVERLAP": 0.325,
+     "NY": 0.305,
+     "ASIAN": 0.43,
+     "ROLLOVER": 0.52,
+     "source": "polygon /v3/quotes/C:XAUUSD",
+     "at": "2026-08-16T20:16:28.926Z",
+     "quotes": 17258
+    }
+   },
+   "secs": 0
+  },
+  "arm": {
+   "oos": {
+    "n": 1067,
+    "win": 142,
+    "scratch": 850,
+    "loss": 75,
+    "time": 0,
+    "dec": 217,
+    "wr": 0.6544,
+    "wilson_lb": 0.5889,
+    "net_per_trade": -0.0042,
+    "net_lb": -0.1725,
+    "net_ub": 0.1595,
+    "avgR": -0.0217,
+    "scratch_gross_mean": 0.284,
+    "sum_net": -4.49
+   },
+   "train": {
+    "n": 1521,
+    "win": 462,
+    "scratch": 883,
+    "loss": 176,
+    "time": 0,
+    "dec": 638,
+    "wr": 0.7241,
+    "wilson_lb": 0.6882,
+    "net_per_trade": 0.0391,
+    "net_lb": -0.0499,
+    "net_ub": 0.1242,
+    "avgR": -0.0134,
+    "scratch_gross_mean": 0.1712,
+    "sum_net": 59.52
+   },
+   "all": {
+    "n": 2588,
+    "win": 604,
+    "scratch": 1733,
+    "loss": 251,
+    "time": 0,
+    "dec": 855,
+    "wr": 0.7064,
+    "wilson_lb": 0.675,
+    "net_per_trade": 0.0213,
+    "net_lb": -0.0608,
+    "net_ub": 0.0978,
+    "avgR": -0.0168,
+    "scratch_gross_mean": 0.2266,
+    "sum_net": 55.03
+   },
+   "per_fold": [
+    {
+     "fold": 0,
+     "n": 32,
+     "net": 0.1763,
+     "sum": 5.64
+    },
+    {
+     "fold": 1,
+     "n": 325,
+     "net": 0.1453,
+     "sum": 47.24
+    },
+    {
+     "fold": 2,
+     "n": 373,
+     "net": 0.0149,
+     "sum": 5.57
+    },
+    {
+     "fold": 3,
+     "n": 437,
+     "net": 0.1243,
+     "sum": 54.34
+    },
+    {
+     "fold": 4,
+     "n": 354,
+     "net": -0.1505,
+     "sum": -53.26
+    },
+    {
+     "fold": 5,
+     "n": 354,
+     "net": -0.0739,
+     "sum": -26.14
+    },
+    {
+     "fold": 6,
+     "n": 346,
+     "net": -0.139,
+     "sum": -48.11
+    },
+    {
+     "fold": 7,
+     "n": 367,
+     "net": 0.1901,
+     "sum": 69.76
+    }
+   ],
+   "cost_oos": {
+    "net_at_model": -0.0042,
+    "avgR_at_model": -0.0217,
+    "net_at_measured_session_medians": -0.1722,
+    "avgR_at_measured_session_medians": -0.073,
+    "viable_at_measured": false,
+    "break_even_flat_half_spread_usd": 0.1117,
+    "break_even_flat_half_spread_usd_net_metric": 0.1791,
+    "break_even_schedule_multiple": 0.6096,
+    "break_even_effective_half_spread_usd": 0.1158,
+    "measured_session_medians": {
+     "LONDON": 0.34,
+     "NY_OVERLAP": 0.325,
+     "NY": 0.305,
+     "ASIAN": 0.43,
+     "ROLLOVER": 0.52,
+     "source": "polygon /v3/quotes/C:XAUUSD",
+     "at": "2026-08-16T20:16:28.926Z",
+     "quotes": 17258
+    }
+   },
+   "secs": 0
+  },
+  "traded_rest_margin_sensitivity": [
+   {
+    "margin_usd": 0,
+    "n": 1067,
+    "win": 236,
+    "scratch": 735,
+    "loss": 96,
+    "net_per_trade": 0.2846,
+    "net_lb": 0.0959,
+    "avgR": 0.0311,
+    "net_at_measured": 0.1166,
+    "avgR_at_measured": -0.0202,
+    "break_even_flat_half_spread_usd": 0.2859
+   },
+   {
+    "margin_usd": 0.1,
+    "n": 1067,
+    "win": 262,
+    "scratch": 690,
+    "loss": 115,
+    "net_per_trade": 0.2372,
+    "net_lb": 0.0455,
+    "avgR": 0.0207,
+    "net_at_measured": 0.0693,
+    "avgR_at_measured": -0.0306,
+    "break_even_flat_half_spread_usd": 0.2515
+   },
+   {
+    "margin_usd": 0.2,
+    "n": 1066,
+    "win": 302,
+    "scratch": 639,
+    "loss": 125,
+    "net_per_trade": 0.2408,
+    "net_lb": 0.0364,
+    "avgR": 0.0251,
+    "net_at_measured": 0.0728,
+    "avgR_at_measured": -0.0262,
+    "break_even_flat_half_spread_usd": 0.2658
+   },
+   {
+    "margin_usd": 0.3,
+    "n": 1066,
+    "win": 339,
+    "scratch": 593,
+    "loss": 134,
+    "net_per_trade": 0.21,
+    "net_lb": 0.0034,
+    "avgR": 0.0294,
+    "net_at_measured": 0.042,
+    "avgR_at_measured": -0.0219,
+    "break_even_flat_half_spread_usd": 0.2802
+   },
+   {
+    "margin_usd": 0.5,
+    "n": 1066,
+    "win": 427,
+    "scratch": 477,
+    "loss": 162,
+    "net_per_trade": 0.2029,
+    "net_lb": -0.0151,
+    "avgR": 0.0327,
+    "net_at_measured": 0.0349,
+    "avgR_at_measured": -0.0186,
+    "break_even_flat_half_spread_usd": 0.291
+   },
+   {
+    "margin_usd": 1,
+    "n": 1066,
+    "win": 587,
+    "scratch": 256,
+    "loss": 223,
+    "net_per_trade": 0.1734,
+    "net_lb": -0.0649,
+    "avgR": 0.0279,
+    "net_at_measured": 0.0054,
+    "avgR_at_measured": -0.0234,
+    "break_even_flat_half_spread_usd": 0.2751
+   }
+  ],
+  "traded_fill_through_sensitivity": [
+   {
+    "fill_through_usd": 0,
+    "admitted": 6009,
+    "filled": 2587,
+    "nofill": 3422,
+    "fill_share": 0.4305,
+    "n": 1067,
+    "win": 236,
+    "scratch": 735,
+    "loss": 96,
+    "net_per_trade": 0.2846,
+    "net_lb": 0.0959,
+    "avgR": 0.0311,
+    "sum_net": 303.66,
+    "avgR_at_measured": -0.0202,
+    "break_even_flat_half_spread_usd": 0.2859
+   },
+   {
+    "fill_through_usd": 0.05,
+    "admitted": 6021,
+    "filled": 2544,
+    "nofill": 3477,
+    "fill_share": 0.4225,
+    "n": 1054,
+    "win": 239,
+    "scratch": 712,
+    "loss": 103,
+    "net_per_trade": 0.2648,
+    "net_lb": 0.0706,
+    "avgR": 0.025,
+    "sum_net": 279.07,
+    "avgR_at_measured": -0.026,
+    "break_even_flat_half_spread_usd": 0.2658
+   },
+   {
+    "fill_through_usd": 0.1,
+    "admitted": 6028,
+    "filled": 2508,
+    "nofill": 3520,
+    "fill_share": 0.4161,
+    "n": 1042,
+    "win": 231,
+    "scratch": 698,
+    "loss": 113,
+    "net_per_trade": 0.218,
+    "net_lb": 0.0026,
+    "avgR": 0.0113,
+    "sum_net": 227.14,
+    "avgR_at_measured": -0.0394,
+    "break_even_flat_half_spread_usd": 0.2199
+   },
+   {
+    "fill_through_usd": 0.2,
+    "admitted": 6053,
+    "filled": 2440,
+    "nofill": 3613,
+    "fill_share": 0.4031,
+    "n": 1021,
+    "win": 229,
+    "scratch": 665,
+    "loss": 127,
+    "net_per_trade": 0.1694,
+    "net_lb": -0.043,
+    "avgR": -0.0052,
+    "sum_net": 172.98,
+    "avgR_at_measured": -0.0554,
+    "break_even_flat_half_spread_usd": 0.1647
+   },
+   {
+    "fill_through_usd": 0.3,
+    "admitted": 6068,
+    "filled": 2384,
+    "nofill": 3684,
+    "fill_share": 0.3929,
+    "n": 994,
+    "win": 220,
+    "scratch": 636,
+    "loss": 138,
+    "net_per_trade": 0.1171,
+    "net_lb": -0.112,
+    "avgR": -0.0224,
+    "sum_net": 116.45,
+    "avgR_at_measured": -0.0724,
+    "break_even_flat_half_spread_usd": 0.106
+   },
+   {
+    "fill_through_usd": 0.5,
+    "admitted": 6101,
+    "filled": 2249,
+    "nofill": 3852,
+    "fill_share": 0.3686,
+    "n": 947,
+    "win": 192,
+    "scratch": 586,
+    "loss": 169,
+    "net_per_trade": -0.0236,
+    "net_lb": -0.2723,
+    "avgR": -0.0732,
+    "sum_net": -22.34,
+    "avgR_at_measured": -0.1226,
+    "break_even_flat_half_spread_usd": 0
+   }
+  ]
+ },
+ "parity": {
+  "frozen": {
+   "n": 1067,
+   "win": 209,
+   "scratch": 783,
+   "loss": 75,
+   "net": 0.3527,
+   "wr": 0.7359,
+   "net_lb": 0.1776
+  },
+  "level": {
+   "n": 1067,
+   "win": 209,
+   "scratch": 783,
+   "loss": 75,
+   "net": 0.3527,
+   "wr": 0.7359,
+   "net_lb": 0.1776
+  },
+  "exact": true
+ },
+ "verdict": {
+  "question": "does the shipped IMPULSE_CONT edge survive the EA's real lock semantics (lock rests only after the market trades through it)?",
+  "level_net": 0.3527,
+  "traded_net": 0.2846,
+  "arm_net": -0.0042,
+  "traded_minus_level": -0.0681,
+  "arm_minus_level": -0.3569,
+  "traded_positive_lb": true,
+  "arm_positive_lb": false,
+  "traded_powered_folds_positive": [
+   [
+    5,
+    true
+   ],
+   [
+    6,
+    true
+   ],
+   [
+    7,
+    true
+   ]
+  ],
+  "phantom_share_level": 0.0499,
+  "phantom_joined": 1602,
+  "phantom_count": 80,
+  "reading": "SURVIVES under the EA semantics: traded net $0.2846/t (LB $0.0959) vs shipped $0.3527/t"
+ },
+ "provenance": [
+  "candidates_15m_full.jsonl",
+  "polygon XAUUSD 15m + 1m to tape_to",
+  "seqResolver.resolveManagedLimitSeq lockMode",
+  "execution.netDollars",
+  "impulse_cont_seq1m_gate.json (parity)"
+ ]
+}

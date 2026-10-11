@@ -1,0 +1,58 @@
+{
+ "at": "2026-10-09T09:20:06.212Z",
+ "rule": {
+  "tfMs": 900000,
+  "delayMs": 600000,
+  "window": 4,
+  "baseBars": 96,
+  "bigMult": 2,
+  "thr": 0.2
+ },
+ "window": "2024-10-20 → 2026-10-09T06:00",
+ "split": "2025-12-25",
+ "target": 10,
+ "horizon_min": 240,
+ "gc_15m_bars": 47220,
+ "train": {
+  "events": 2232,
+  "resolved": 1499,
+  "ambiguous": 1,
+  "win_share": 0.5057,
+  "win_lb": 0.4804,
+  "baseline": 0.5009,
+  "all_decisions_up_first": 0.5149,
+  "ret60_sign_agree": 0.5029,
+  "bullish": {
+   "n": 797,
+   "win": 0.5182,
+   "base": 0.5149
+  },
+  "bearish": {
+   "n": 702,
+   "win": 0.4915,
+   "base": 0.4851
+  }
+ },
+ "oos": {
+  "events": 1456,
+  "resolved": 1414,
+  "ambiguous": 3,
+  "win_share": 0.5057,
+  "win_lb": 0.4796,
+  "baseline": 0.4991,
+  "all_decisions_up_first": 0.4772,
+  "ret60_sign_agree": 0.4876,
+  "bullish": {
+   "n": 735,
+   "win": 0.5156,
+   "base": 0.4772
+  },
+  "bearish": {
+   "n": 679,
+   "win": 0.4948,
+   "base": 0.5228
+  }
+ },
+ "verdict": "NO_DIRECTION_EDGE",
+ "reading": "measured: no direction edge — the gauge shows where heavy volume closed, it does not predict gold"
+}

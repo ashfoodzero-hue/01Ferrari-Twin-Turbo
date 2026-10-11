@@ -1,0 +1,47 @@
+{
+  "at": "2026-08-12T17:14:23.759Z",
+  "config": "IMPULSE_CONT|8bar≥4×ATR direction-matched|A+ setups + trend_pullback|ALL-HOURS|sl1.5|tp0.5R|beT0.05|beL0.10 (pre-registered — gate: impulse_continuation_gate.json)",
+  "fold_caveat": "fold 0 (2003-06) UNPOWERED (dec 19 < 30, WR 94.7% positive) — quarantined per the test-power rule; 7/7 powered folds pass",
+  "shipped": {
+    "wr": 0.922,
+    "lb": 0.9003,
+    "n": 731,
+    "managed": true,
+    "net_per_trade_oos": 1.5252,
+    "net_per_trade_train": 0.8217,
+    "net_per_trade_lb": 1.3458,
+    "net_per_trade_ub": 1.7185,
+    "bootstrap": {
+      "resamples": 2000,
+      "seed": 12345
+    },
+    "outcomes_oos": {
+      "n": 1068,
+      "win": 674,
+      "scratch": 337,
+      "loss": 57,
+      "p_win": 0.6311,
+      "p_scratch": 0.3155,
+      "p_loss": 0.0534
+    },
+    "avg_risk": 5.65,
+    "per_day": 0.3055,
+    "per_year": 111.5,
+    "geometry": {
+      "sl_atr": 1.5,
+      "tgt_r": 0.5,
+      "be_trigger_r": 0.05,
+      "be_lock_r": 0.1,
+      "rr": 0.5
+    },
+    "era_r": {
+      "pre2020": 0.2232,
+      "post2020": 0.2439
+    },
+    "tradeable": true
+  },
+  "source_scripts": [
+    "measure_impulse_continuation.mjs (gate)",
+    "validate_impulse_cont_ship.mjs (this)"
+  ]
+}

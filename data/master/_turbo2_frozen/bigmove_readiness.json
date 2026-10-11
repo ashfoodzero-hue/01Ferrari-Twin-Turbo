@@ -1,0 +1,107 @@
+{
+ "at": "2026-08-07T08:41:22.948Z",
+ "K": 5,
+ "base_rate": 60.8,
+ "conditions": [
+  {
+   "name": "dens30 ≥ 3 (self-exciting)",
+   "fires": 5550,
+   "precision": 65.4,
+   "lb": 64.1,
+   "eraA": 68.4,
+   "eraB": 61.8,
+   "coverage": 82
+  },
+  {
+   "name": "dens30 ≥ 6",
+   "fires": 2635,
+   "precision": 78.4,
+   "lb": 76.8,
+   "eraA": 79.8,
+   "eraB": 76.2,
+   "coverage": 47
+  },
+  {
+   "name": "dens30 ≥ 10",
+   "fires": 1156,
+   "precision": 89.4,
+   "lb": 87.5,
+   "eraA": 87.9,
+   "eraB": 91.6,
+   "coverage": 23
+  },
+  {
+   "name": "rv10 ≥ 1.5% daily range",
+   "fires": 1852,
+   "precision": 80.9,
+   "lb": 79,
+   "eraA": 81.4,
+   "eraB": 80.1,
+   "coverage": 34
+  },
+  {
+   "name": "rv10 ≥ 2.0%",
+   "fires": 689,
+   "precision": 92.7,
+   "lb": 90.6,
+   "eraA": 91.1,
+   "eraB": 95.4,
+   "coverage": 14
+  },
+  {
+   "name": "rv10 ≥ 2.5%",
+   "fires": 296,
+   "precision": 97.6,
+   "lb": 95.2,
+   "eraA": 96.2,
+   "eraB": 100,
+   "coverage": 7
+  },
+  {
+   "name": "VIX ≥ 25",
+   "fires": 1093,
+   "precision": 74.4,
+   "lb": 71.7,
+   "eraA": 80,
+   "eraB": 67.4,
+   "coverage": 18
+  },
+  {
+   "name": "VIX ≥ 35",
+   "fires": 316,
+   "precision": 89.6,
+   "lb": 85.7,
+   "eraA": 91.9,
+   "eraB": 82.5,
+   "coverage": 6
+  },
+  {
+   "name": "dens30≥6 AND rv10≥2%",
+   "fires": 675,
+   "precision": 93.3,
+   "lb": 91.2,
+   "eraA": 91.1,
+   "eraB": 97.2,
+   "coverage": 14
+  },
+  {
+   "name": "dens30≥10 AND rv10≥2.5%",
+   "fires": 275,
+   "precision": 97.8,
+   "lb": 95.3,
+   "eraA": 96.4,
+   "eraB": 100,
+   "coverage": 6
+  },
+  {
+   "name": "CALM: dens30=0 AND rv10<1%",
+   "fires": 63,
+   "precision": 47.6,
+   "lb": 35.8,
+   "eraA": null,
+   "eraB": 47.6,
+   "coverage": 1
+  }
+ ],
+ "source": "measure_bigmove_readiness.mjs — era-split precision, causal features"
+}

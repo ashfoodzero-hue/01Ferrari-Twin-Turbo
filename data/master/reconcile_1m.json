@@ -1,0 +1,89 @@
+{
+ "at": "2026-10-11T00:20:01.120Z",
+ "window": [
+  "2026-10-09T00:20:00.000Z",
+  "2026-10-11T00:04:59.999Z"
+ ],
+ "symbols": {
+  "XAUUSD": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "XAGUSD": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "EURUSD": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "USDJPY": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "GBPUSD": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "USDCAD": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "USDSEK": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  },
+  "USDCHF": {
+   "store": 1240,
+   "rest": 1240,
+   "same": 1240,
+   "corrected": 0,
+   "missing": 0,
+   "extra": 0,
+   "missing_sample": [],
+   "extra_sample": []
+  }
+ }
+}

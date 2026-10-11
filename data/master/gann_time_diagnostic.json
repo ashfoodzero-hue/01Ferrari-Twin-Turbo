@@ -1,0 +1,247 @@
+{
+ "at": "2026-10-09T12:42:14.915Z",
+ "rule": "permutation p (shuffled durations) < 0.05/9",
+ "perms": 2000,
+ "results": {
+  "1h": {
+   "1": {
+    "oos_n": 1895,
+    "actual": 0.6253,
+    "shuffled_mean": 0.5826,
+    "shuffled_p99": 0.6077,
+    "p_value": 0.0005,
+    "verdict": "REAL_GANN_TIME"
+   },
+   "2": {
+    "oos_n": 2942,
+    "actual": 0.5235,
+    "shuffled_mean": 0.5649,
+    "shuffled_p99": 0.5839,
+    "p_value": 1,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "0.5": {
+    "oos_n": 746,
+    "actual": 0.6247,
+    "shuffled_mean": 0.5594,
+    "shuffled_p99": 0.6,
+    "p_value": 0.0005,
+    "verdict": "REAL_GANN_TIME"
+   },
+   "hazard_oos": [
+    {
+     "elapsed_bars": 4,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 8,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 12,
+     "n": 3795,
+     "hit": 0.6427
+    },
+    {
+     "elapsed_bars": 16,
+     "n": 3799,
+     "hit": 0.6081
+    },
+    {
+     "elapsed_bars": 20,
+     "n": 3802,
+     "hit": 0.5679
+    },
+    {
+     "elapsed_bars": 24,
+     "n": 3806,
+     "hit": 0.5956
+    },
+    {
+     "elapsed_bars": 28,
+     "n": 3806,
+     "hit": 0.552
+    },
+    {
+     "elapsed_bars": 32,
+     "n": 3805,
+     "hit": 0.503
+    },
+    {
+     "elapsed_bars": 36,
+     "n": 3806,
+     "hit": 0.4963
+    },
+    {
+     "elapsed_bars": 40,
+     "n": 3806,
+     "hit": 0.4672
+    }
+   ]
+  },
+  "4h": {
+   "1": {
+    "oos_n": 480,
+    "actual": 0.5104,
+    "shuffled_mean": 0.5036,
+    "shuffled_p99": 0.5511,
+    "p_value": 0.3843,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "2": {
+    "oos_n": 735,
+    "actual": 0.5048,
+    "shuffled_mean": 0.5274,
+    "shuffled_p99": 0.5683,
+    "p_value": 0.8956,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "0.5": {
+    "oos_n": 276,
+    "actual": 0.6159,
+    "shuffled_mean": 0.5072,
+    "shuffled_p99": 0.5756,
+    "p_value": 0.0005,
+    "verdict": "REAL_GANN_TIME"
+   },
+   "hazard_oos": [
+    {
+     "elapsed_bars": 4,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 8,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 12,
+     "n": 840,
+     "hit": 0.5381
+    },
+    {
+     "elapsed_bars": 16,
+     "n": 841,
+     "hit": 0.4257
+    },
+    {
+     "elapsed_bars": 20,
+     "n": 999,
+     "hit": 0.4645
+    },
+    {
+     "elapsed_bars": 24,
+     "n": 1014,
+     "hit": 0.4714
+    },
+    {
+     "elapsed_bars": 28,
+     "n": 1018,
+     "hit": 0.4725
+    },
+    {
+     "elapsed_bars": 32,
+     "n": 1018,
+     "hit": 0.4941
+    },
+    {
+     "elapsed_bars": 36,
+     "n": 1018,
+     "hit": 0.5511
+    },
+    {
+     "elapsed_bars": 40,
+     "n": 1018,
+     "hit": 0.6699
+    }
+   ]
+  },
+  "1d": {
+   "1": {
+    "oos_n": 97,
+    "actual": 0.5155,
+    "shuffled_mean": 0.5703,
+    "shuffled_p99": 0.6786,
+    "p_value": 0.8716,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "2": {
+    "oos_n": 149,
+    "actual": 0.6242,
+    "shuffled_mean": 0.5579,
+    "shuffled_p99": 0.6454,
+    "p_value": 0.041,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "0.5": {
+    "oos_n": 38,
+    "actual": 0.6316,
+    "shuffled_mean": 0.5402,
+    "shuffled_p99": 0.7353,
+    "p_value": 0.1524,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "hazard_oos": [
+    {
+     "elapsed_bars": 4,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 8,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 12,
+     "n": 169,
+     "hit": 0.5621
+    },
+    {
+     "elapsed_bars": 16,
+     "n": 167,
+     "hit": 0.5389
+    },
+    {
+     "elapsed_bars": 20,
+     "n": 167,
+     "hit": 0.5569
+    },
+    {
+     "elapsed_bars": 24,
+     "n": 168,
+     "hit": 0.5655
+    },
+    {
+     "elapsed_bars": 28,
+     "n": 169,
+     "hit": 0.5444
+    },
+    {
+     "elapsed_bars": 32,
+     "n": 168,
+     "hit": 0.5417
+    },
+    {
+     "elapsed_bars": 36,
+     "n": 168,
+     "hit": 0.5952
+    },
+    {
+     "elapsed_bars": 40,
+     "n": 167,
+     "hit": 0.5808
+    }
+   ]
+  }
+ },
+ "real": [
+  "1h 0.5×",
+  "1h 1×",
+  "4h 0.5×"
+ ],
+ "verdict": "SOME_GANN_TIME_IS_REAL"
+}

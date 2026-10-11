@@ -1,0 +1,74 @@
+{
+ "generated_utc": "2026-10-08T16:14:38.902Z",
+ "fires": 22,
+ "rescored": 22,
+ "before": {
+  "classes": {
+   "SCRATCH": 9,
+   "—": 11,
+   "WIN": 1,
+   "LOSS": 1
+  },
+  "pnl": -23.32
+ },
+ "after": {
+  "classes": {
+   "SCRATCH": 10,
+   "—": 11,
+   "LOSS": 1
+  },
+  "pnl": -0.84
+ },
+ "changed": 7,
+ "changes": [
+  {
+   "id": "IMPULSE_CONT@1787145300000",
+   "t": "2026-08-19T13:15",
+   "side": "BUY",
+   "before": "SCRATCH -1.1",
+   "after": "SCRATCH 1.906"
+  },
+  {
+   "id": "IMPULSE_CONT@1787149800000",
+   "t": "2026-08-19T14:30",
+   "side": "BUY",
+   "before": "SCRATCH 0.83",
+   "after": "SCRATCH 2.18"
+  },
+  {
+   "id": "IMPULSE_CONT@1787238900000",
+   "t": "2026-08-20T15:15",
+   "side": "BUY",
+   "before": "SCRATCH -1.47",
+   "after": "SCRATCH 1.77"
+  },
+  {
+   "id": "IMPULSE_CONT@1788251400000",
+   "t": "2026-09-01T08:30",
+   "side": "SELL",
+   "before": "TARGET 8.1",
+   "after": "SCRATCH 1.619"
+  },
+  {
+   "id": "IMPULSE_CONT@1788252300000",
+   "t": "2026-09-01T08:45",
+   "side": "SELL",
+   "before": "SCRATCH -1.65",
+   "after": "SCRATCH 1.6"
+  },
+  {
+   "id": "IMPULSE_CONT@1788525900000",
+   "t": "2026-09-04T12:45",
+   "side": "SELL",
+   "before": "SCRATCH -14.15",
+   "after": "SCRATCH 2.122"
+  },
+  {
+   "id": "IMPULSE_CONT@1789378200000",
+   "t": "2026-09-14T09:30",
+   "side": "SELL",
+   "before": "SCRATCH -0.43",
+   "after": "SCRATCH 1.404"
+  }
+ ]
+}

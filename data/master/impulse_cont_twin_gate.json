@@ -1,0 +1,324 @@
+{
+  "at": "2026-10-08T16:37:55.371Z",
+  "config": "IMPULSE_CONT|8bar≥4×ATR direction-matched|A+ setups + trend_pullback|ALL-HOURS|sl1.5|tp0.5R|beT0.05|beL0.10 (pre-registered — gate: impulse_continuation_gate.json)",
+  "fold_caveat": "fold 0 (2003-06) UNPOWERED (dec 19 < 30, WR 94.7% positive) — quarantined per the test-power rule; 7/7 powered folds pass",
+  "shipped": {
+    "wr": 0.4706,
+    "lb": 0.3932,
+    "n": 153,
+    "managed": true,
+    "net_per_trade_oos": -0.0653,
+    "net_per_trade_train": -0.1964,
+    "net_per_trade_lb": -0.4748,
+    "net_per_trade_ub": 0.3128,
+    "bootstrap": {
+      "resamples": 2000,
+      "seed": 12345
+    },
+    "outcomes_oos": {
+      "n": 638,
+      "win": 72,
+      "scratch": 485,
+      "loss": 81,
+      "p_win": 0.1129,
+      "p_scratch": 0.7602,
+      "p_loss": 0.127
+    },
+    "avg_risk": 7.94,
+    "per_day": 0.3087,
+    "per_year": 112.7,
+    "geometry": {
+      "sl_atr": 1.5,
+      "tgt_r": 0.5,
+      "be_trigger_r": 0.05,
+      "be_lock_r": 0.1,
+      "rr": 0.5
+    },
+    "era_r": {
+      "pre2020": -0.0816,
+      "post2020": -0.0107
+    },
+    "fills": {
+      "candidates_admitted": 3566,
+      "filled": 1491,
+      "nofill": 2075,
+      "notrade": 0,
+      "fill_share": 0.4181,
+      "note": "candidates that passed the impulse filter and the one-at-a-time rule; NOFILL = the maker limit never filled inside the 8-bar window (the trial journals these as EXPIRED)"
+    }
+  },
+  "source_scripts": [
+    "measure_impulse_continuation.mjs (gate)",
+    "validate_impulse_cont_ship.mjs (this)"
+  ],
+  "resolution": {
+    "seq_all": true,
+    "lock_mode": "traded",
+    "bid_ask": true
+  },
+  "bid_ask": {
+    "spread": "measured — data/master/spread_table.json",
+    "lookups": {
+      "live": 0,
+      "cell": 30810,
+      "year": 0
+    },
+    "cost": "stop/time slippage only (spread inside the fills)"
+  },
+  "seq_gate": true,
+  "sequenced_share": 1,
+  "seq_power": {
+    "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+    "m1_start": "2013-07-14T21:00:00.000Z",
+    "sequenced_era_only": true,
+    "era_fires": 1491,
+    "era_fires_pessimistic": 0,
+    "train_seq": {
+      "n": 853,
+      "win": 81,
+      "scratch": 610,
+      "loss": 162,
+      "dec": 243,
+      "wr": 0.3333,
+      "net": -0.1964,
+      "avgR": -0.0773,
+      "powered": true
+    },
+    "oos_seq": {
+      "n": 638,
+      "win": 72,
+      "scratch": 485,
+      "loss": 81,
+      "dec": 153,
+      "wr": 0.4706,
+      "net": -0.0653,
+      "avgR": 0.0017,
+      "powered": true
+    },
+    "folds_seq": [
+      {
+        "fold": 0,
+        "n": 196,
+        "dec": 51,
+        "wr": 0.4118,
+        "net": -0.0483,
+        "avgR": -0.0306,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 1,
+        "n": 162,
+        "dec": 58,
+        "wr": 0.3276,
+        "net": -0.3124,
+        "avgR": -0.1259,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 2,
+        "n": 163,
+        "dec": 46,
+        "wr": 0.2174,
+        "net": -0.2341,
+        "avgR": -0.1258,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 3,
+        "n": 194,
+        "dec": 49,
+        "wr": 0.3673,
+        "net": -0.0588,
+        "avgR": -0.044,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 4,
+        "n": 138,
+        "dec": 39,
+        "wr": 0.3333,
+        "net": -0.4196,
+        "avgR": -0.0758,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 5,
+        "n": 192,
+        "dec": 39,
+        "wr": 0.3846,
+        "net": -0.0399,
+        "avgR": -0.0104,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 6,
+        "n": 235,
+        "dec": 69,
+        "wr": 0.5362,
+        "net": 0.0576,
+        "avgR": 0.0087,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 7,
+        "n": 211,
+        "dec": 45,
+        "wr": 0.4444,
+        "net": -0.2253,
+        "avgR": 0.005,
+        "powered": true,
+        "pass": false
+      }
+    ],
+    "powered_folds": "1/8",
+    "criteria": [
+      {
+        "id": "C1_evidence",
+        "pass": true,
+        "evaluable": true,
+        "detail": "sequenced OOS decisive n=153 (need ≥100)"
+      },
+      {
+        "id": "C2_oos_ci",
+        "pass": false,
+        "evaluable": true,
+        "detail": "bootstrap 95% LB $-0.4748/t"
+      },
+      {
+        "id": "C3_walk_forward",
+        "pass": false,
+        "evaluable": true,
+        "detail": "sequenced TRAIN net $-0.1964/t (dec 243)"
+      },
+      {
+        "id": "C4_folds",
+        "pass": false,
+        "evaluable": true,
+        "detail": "1/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+      }
+    ],
+    "failed": [
+      "C2_oos_ci",
+      "C3_walk_forward",
+      "C4_folds"
+    ],
+    "unevaluable": [],
+    "verdict": "SHADOW"
+  },
+  "twin_gate": true,
+  "tape": "twin Polygon 1m store → 15m resampled, 2013-07-14 → tape_to",
+  "tape_to": "2026-10-08T15:45:00Z",
+  "verdict": "SHADOW",
+  "money_path": "every bar sequenced on 1m (seqAll) · EA lock semantics (traded) · bars BID, ask-side orders clear the MEASURED Polygon spread (spread_table.json) · cost = stop/time slippage only",
+  "attribution": [
+    {
+      "file": "revalidate_A_polygon1m_oldcost.json",
+      "resolution": {
+        "seq_all": false,
+        "lock_mode": "level",
+        "bid_ask": false
+      },
+      "oos_net": 0.2241,
+      "oos_lb": -0.14,
+      "oos_ub": 0.5417,
+      "train_net": 0.0674,
+      "wr": 0.7037,
+      "n_dec": 162,
+      "verdict": "SHADOW",
+      "failed": [
+        "C2_oos_ci"
+      ]
+    },
+    {
+      "file": "revalidate_B_seqall_oldcost.json",
+      "resolution": {
+        "seq_all": true,
+        "lock_mode": "level",
+        "bid_ask": false
+      },
+      "oos_net": 0.1493,
+      "oos_lb": -0.2093,
+      "oos_ub": 0.4679,
+      "train_net": 0.0441,
+      "wr": 0.6615,
+      "n_dec": 130,
+      "verdict": "SHADOW",
+      "failed": [
+        "C2_oos_ci"
+      ]
+    },
+    {
+      "file": "revalidate_D_seqall_traded_oldcost.json",
+      "resolution": {
+        "seq_all": true,
+        "lock_mode": "traded",
+        "bid_ask": false
+      },
+      "oos_net": 0.1264,
+      "oos_lb": -0.2496,
+      "oos_ub": 0.449,
+      "train_net": -0.0163,
+      "wr": 0.6456,
+      "n_dec": 158,
+      "verdict": "SHADOW",
+      "failed": [
+        "C2_oos_ci",
+        "C3_walk_forward",
+        "C4_folds"
+      ]
+    },
+    {
+      "file": "revalidate_C_moneypath.json",
+      "resolution": {
+        "seq_all": true,
+        "lock_mode": "traded",
+        "bid_ask": true
+      },
+      "oos_net": -0.0653,
+      "oos_lb": -0.4748,
+      "oos_ub": 0.3128,
+      "train_net": -0.1964,
+      "wr": 0.4706,
+      "n_dec": 153,
+      "verdict": "SHADOW",
+      "failed": [
+        "C2_oos_ci",
+        "C3_walk_forward",
+        "C4_folds"
+      ]
+    }
+  ],
+  "source_diagnostic": {
+    "file": "diagnose_revalidation_source.json",
+    "turbo2_tape_same_window": {
+      "oos_net": 0.5477,
+      "ci": [
+        0.2389,
+        0.8308
+      ],
+      "train_net": 0.0763
+    },
+    "twin_tape_same_end": {
+      "oos_net": 0.1626,
+      "ci": [
+        -0.1944,
+        0.4929
+      ],
+      "train_net": 0.0657
+    },
+    "candidate_overlap": {
+      "twin": 228297,
+      "turbo2": 233489,
+      "both": 155717
+    },
+    "finding": "same window/folds/code: Turbo2 (Dukascopy) tape passes C2, the twin Polygon tape does not — the edge is FEED-SENSITIVE at the scale of its BE geometry"
+  },
+  "supersedes": "_turbo2_frozen/impulse_cont_seq1m_gate.json (23y Dukascopy tape, level semantics, assumed session spread — WR 73.59% / +$0.3527/t)"
+}

@@ -1,0 +1,30 @@
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+loaded 308,680 bars in 8625ms (2013-07-14 → 2026-10-08)
+  window 1 [2013-07-14→2015-03-27] +28663 cand (24s)
+  window 2 [2015-03-29→2016-12-02] +29643 cand (29s)
+  window 3 [2016-12-02→2018-08-15] +28830 cand (22s)
+  window 4 [2018-08-15→2020-05-29] +31115 cand (19s)
+  window 5 [2020-05-29→2022-03-11] +29957 cand (17s)
+  window 6 [2022-03-11→2023-11-14] +30763 cand (16s)
+  window 7 [2023-11-14→2025-07-25] +30805 cand (23s)
+  window 8 [2025-07-25→2026-10-08] +22626 cand (17s)
+
+wrote 232,402 candidates → C:\01Ferrari Twin Turbo\data\master\candidates_15m_full.jsonl
+{
+  "symbol": "XAUUSD",
+  "tf": "15m",
+  "base": "polygon 1m (twin store), resampled",
+  "history_from": "2013-07-14T22:00:00.000Z",
+  "method": "windowed",
+  "win": 40000,
+  "pad": 2000,
+  "windows": 8,
+  "bars": 308680,
+  "from": 1373839200000,
+  "to": 1791474300000,
+  "from_iso": "2013-07-14",
+  "to_iso": "2026-10-08",
+  "candidates": 232402,
+  "gen_seconds": 168
+}
+EXIT=0

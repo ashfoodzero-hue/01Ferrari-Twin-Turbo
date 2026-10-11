@@ -1,0 +1,674 @@
+{
+ "at": "2026-10-09T19:40:34.355Z",
+ "tape_to": "2026-10-09T06:00:00.000Z",
+ "book": "FERRARI_MATRIX_ONEMISS",
+ "verdict": "SHADOW",
+ "gates": {
+  "C1_C4": false,
+  "S1_spread_x1_5": false
+ },
+ "failed": [
+  "C1_C4",
+  "S1_spread_x1_5"
+ ],
+ "params": {
+  "tf": "3m",
+  "tfMs": 180000,
+  "look": 45,
+  "ext": 1.272,
+  "int886": 0.886,
+  "cushionAtr": 1.5,
+  "slPad": 0.5,
+  "minReward": 10,
+  "rr": 2,
+  "tp2Mult": 1.5,
+  "pivot": 5,
+  "dxyEma": 10,
+  "wtiDelayMs": 600000,
+  "horizonMin": 1440,
+  "maxMiss": 1
+ },
+ "primary": {
+  "arm": "PRIMARY one-miss, with WTI, 2y",
+  "window": "2024-10-10 → 2026-10-09T06:00",
+  "signals": 39704,
+  "trades": 6729,
+  "per_day": 9.23,
+  "outcomes_all": {
+   "TP1+TP2": 1025,
+   "TP1+TIME": 10,
+   "SL": 5155,
+   "TP1+BE": 533,
+   "TIME": 6
+  },
+  "oos": {
+   "n": 2828,
+   "dec": 2587,
+   "wr": 0.1794,
+   "wr_lb": 0.1651,
+   "net": -1.5043,
+   "lb": -2.063,
+   "ub": -0.9111,
+   "avgR": -0.4074
+  },
+  "train": {
+   "n": 3901,
+   "net": -0.3526
+  },
+  "by_side": {
+   "BUY": {
+    "n": 6582,
+    "net": -0.8424
+   },
+   "SELL": {
+    "n": 147,
+    "net": -0.5806
+   }
+  },
+  "by_year": {
+   "2024": {
+    "n": 583,
+    "net": -0.381
+   },
+   "2025": {
+    "n": 3191,
+    "net": -0.328
+   },
+   "2026": {
+    "n": 2955,
+    "net": -1.476
+   }
+  },
+  "avg_risk": 4.81,
+  "avg_reward": 13.15,
+  "seq_power": {
+   "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+   "m1_start": "2024-10-10T00:00:00.000Z",
+   "sequenced_era_only": true,
+   "era_fires": 6729,
+   "era_fires_pessimistic": 0,
+   "train_seq": {
+    "n": 3901,
+    "win": 577,
+    "scratch": 292,
+    "loss": 3032,
+    "dec": 3609,
+    "wr": 0.1599,
+    "net": -0.3526,
+    "avgR": -0.1742,
+    "powered": true
+   },
+   "oos_seq": {
+    "n": 2828,
+    "win": 464,
+    "scratch": 241,
+    "loss": 2123,
+    "dec": 2587,
+    "wr": 0.1794,
+    "net": -1.5043,
+    "avgR": -0.4074,
+    "powered": true
+   },
+   "folds_seq": [
+    {
+     "fold": 0,
+     "n": 634,
+     "dec": 606,
+     "wr": 0.1221,
+     "net": -0.3615,
+     "avgR": -0.2803,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 1,
+     "n": 694,
+     "dec": 650,
+     "wr": 0.1569,
+     "net": -0.015,
+     "avgR": -0.0985,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 2,
+     "n": 940,
+     "dec": 875,
+     "wr": 0.1589,
+     "net": -0.4816,
+     "avgR": -0.1413,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 3,
+     "n": 728,
+     "dec": 671,
+     "wr": 0.1535,
+     "net": -0.4004,
+     "avgR": -0.2152,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 4,
+     "n": 905,
+     "dec": 807,
+     "wr": 0.197,
+     "net": -0.4329,
+     "avgR": -0.1592,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 5,
+     "n": 845,
+     "dec": 765,
+     "wr": 0.2261,
+     "net": -1.46,
+     "avgR": -0.2134,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 6,
+     "n": 962,
+     "dec": 883,
+     "wr": 0.154,
+     "net": -1.7141,
+     "avgR": -0.5183,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 7,
+     "n": 1021,
+     "dec": 939,
+     "wr": 0.1651,
+     "net": -1.3434,
+     "avgR": -0.4634,
+     "powered": true,
+     "pass": false
+    }
+   ],
+   "powered_folds": "0/8",
+   "criteria": [
+    {
+     "id": "C1_evidence",
+     "pass": true,
+     "evaluable": true,
+     "detail": "sequenced OOS decisive n=2587 (need ≥100)"
+    },
+    {
+     "id": "C2_oos_ci",
+     "pass": false,
+     "evaluable": true,
+     "detail": "bootstrap 95% LB $-2.0630/t"
+    },
+    {
+     "id": "C3_walk_forward",
+     "pass": false,
+     "evaluable": true,
+     "detail": "sequenced TRAIN net $-0.3526/t (dec 3609)"
+    },
+    {
+     "id": "C4_folds",
+     "pass": false,
+     "evaluable": true,
+     "detail": "0/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+    }
+   ],
+   "failed": [
+    "C2_oos_ci",
+    "C3_walk_forward",
+    "C4_folds"
+   ],
+   "unevaluable": [],
+   "verdict": "SHADOW"
+  }
+ },
+ "s1": {
+  "arm": "S1 spread x 1.5 (one-miss)",
+  "window": "2024-10-10 → 2026-10-09T06:00",
+  "signals": 39704,
+  "trades": 6785,
+  "per_day": 9.3,
+  "outcomes_all": {
+   "TP1+TP2": 1019,
+   "TP1+TIME": 10,
+   "SL": 5198,
+   "TP1+BE": 552,
+   "TIME": 6
+  },
+  "oos": {
+   "n": 2853,
+   "dec": 2598,
+   "wr": 0.1759,
+   "wr_lb": 0.1617,
+   "net": -1.9464,
+   "lb": -2.4828,
+   "ub": -1.3862,
+   "avgR": -0.539
+  },
+  "train": {
+   "n": 3932,
+   "net": -0.573
+  },
+  "by_side": {
+   "BUY": {
+    "n": 6633,
+    "net": -1.162
+   },
+   "SELL": {
+    "n": 152,
+    "net": -0.6472
+   }
+  },
+  "by_year": {
+   "2024": {
+    "n": 585,
+    "net": -0.525
+   },
+   "2025": {
+    "n": 3216,
+    "net": -0.561
+   },
+   "2026": {
+    "n": 2984,
+    "net": -1.909
+   }
+  },
+  "avg_risk": 4.8,
+  "avg_reward": 13.14,
+  "seq_power": {
+   "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+   "m1_start": "2024-10-10T00:00:00.000Z",
+   "sequenced_era_only": true,
+   "era_fires": 6785,
+   "era_fires_pessimistic": 0,
+   "train_seq": {
+    "n": 3932,
+    "win": 578,
+    "scratch": 297,
+    "loss": 3057,
+    "dec": 3635,
+    "wr": 0.159,
+    "net": -0.573,
+    "avgR": -0.2876,
+    "powered": true
+   },
+   "oos_seq": {
+    "n": 2853,
+    "win": 457,
+    "scratch": 255,
+    "loss": 2141,
+    "dec": 2598,
+    "wr": 0.1759,
+    "net": -1.9464,
+    "avgR": -0.539,
+    "powered": true
+   },
+   "folds_seq": [
+    {
+     "fold": 0,
+     "n": 636,
+     "dec": 608,
+     "wr": 0.1217,
+     "net": -0.5128,
+     "avgR": -0.3802,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 1,
+     "n": 700,
+     "dec": 656,
+     "wr": 0.1555,
+     "net": -0.248,
+     "avgR": -0.2627,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 2,
+     "n": 944,
+     "dec": 879,
+     "wr": 0.1581,
+     "net": -0.7265,
+     "avgR": -0.2612,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 3,
+     "n": 739,
+     "dec": 678,
+     "wr": 0.1519,
+     "net": -0.6127,
+     "avgR": -0.323,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 4,
+     "n": 913,
+     "dec": 814,
+     "wr": 0.1966,
+     "net": -0.6734,
+     "avgR": -0.2408,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 5,
+     "n": 850,
+     "dec": 765,
+     "wr": 0.2222,
+     "net": -1.9033,
+     "avgR": -0.306,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 6,
+     "n": 972,
+     "dec": 889,
+     "wr": 0.1507,
+     "net": -2.1553,
+     "avgR": -0.6523,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 7,
+     "n": 1031,
+     "dec": 944,
+     "wr": 0.1621,
+     "net": -1.7849,
+     "avgR": -0.6244,
+     "powered": true,
+     "pass": false
+    }
+   ],
+   "powered_folds": "0/8",
+   "criteria": [
+    {
+     "id": "C1_evidence",
+     "pass": true,
+     "evaluable": true,
+     "detail": "sequenced OOS decisive n=2598 (need ≥100)"
+    },
+    {
+     "id": "C2_oos_ci",
+     "pass": false,
+     "evaluable": true,
+     "detail": "bootstrap 95% LB $-2.4828/t"
+    },
+    {
+     "id": "C3_walk_forward",
+     "pass": false,
+     "evaluable": true,
+     "detail": "sequenced TRAIN net $-0.5730/t (dec 3635)"
+    },
+    {
+     "id": "C4_folds",
+     "pass": false,
+     "evaluable": true,
+     "detail": "0/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+    }
+   ],
+   "failed": [
+    "C2_oos_ci",
+    "C3_walk_forward",
+    "C4_folds"
+   ],
+   "unevaluable": [],
+   "verdict": "SHADOW"
+  }
+ },
+ "report": {
+  "no_wti_13y": {
+   "arm": "REPORT one-miss without WTI, 13y",
+   "window": "2013-07-21 → 2026-10-09T06:00",
+   "signals": 409644,
+   "trades": 26044,
+   "per_day": 5.4,
+   "outcomes_all": {
+    "TIME": 338,
+    "SL": 21741,
+    "TP1+TP2": 2481,
+    "TP1+BE": 1192,
+    "TP1+TIME": 292
+   },
+   "oos": {
+    "n": 14762,
+    "dec": 13900,
+    "wr": 0.136,
+    "wr_lb": 0.1304,
+    "net": -0.6206,
+    "lb": -0.7563,
+    "ub": -0.476,
+    "avgR": -0.2549
+   },
+   "train": {
+    "n": 11282,
+    "net": -0.6676
+   },
+   "by_side": {
+    "BUY": {
+     "n": 25352,
+     "net": -0.6385
+    },
+    "SELL": {
+     "n": 692,
+     "net": -0.7327
+    }
+   },
+   "by_year": {
+    "2013": {
+     "n": 760,
+     "net": -0.693
+    },
+    "2014": {
+     "n": 1249,
+     "net": -0.693
+    },
+    "2015": {
+     "n": 1345,
+     "net": -0.716
+    },
+    "2016": {
+     "n": 1450,
+     "net": -0.613
+    },
+    "2017": {
+     "n": 1084,
+     "net": -0.522
+    },
+    "2018": {
+     "n": 1188,
+     "net": -0.684
+    },
+    "2019": {
+     "n": 1101,
+     "net": -0.426
+    },
+    "2020": {
+     "n": 1661,
+     "net": -0.567
+    },
+    "2021": {
+     "n": 1639,
+     "net": -0.99
+    },
+    "2022": {
+     "n": 2290,
+     "net": -0.556
+    },
+    "2023": {
+     "n": 1841,
+     "net": -0.334
+    },
+    "2024": {
+     "n": 2547,
+     "net": -0.242
+    },
+    "2025": {
+     "n": 3896,
+     "net": -0.343
+    },
+    "2026": {
+     "n": 3993,
+     "net": -1.301
+    }
+   },
+   "avg_risk": 2.67,
+   "avg_reward": 11.03,
+   "seq_power": {
+    "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+    "m1_start": "2013-07-21T22:02:00.000Z",
+    "sequenced_era_only": true,
+    "era_fires": 26044,
+    "era_fires_pessimistic": 0,
+    "train_seq": {
+     "n": 11282,
+     "win": 1199,
+     "scratch": 330,
+     "loss": 9753,
+     "dec": 10952,
+     "wr": 0.1095,
+     "net": -0.6676,
+     "avgR": -0.4709,
+     "powered": true
+    },
+    "oos_seq": {
+     "n": 14762,
+     "win": 1890,
+     "scratch": 862,
+     "loss": 12010,
+     "dec": 13900,
+     "wr": 0.136,
+     "net": -0.6206,
+     "avgR": -0.2549,
+     "powered": true
+    },
+    "folds_seq": [
+     {
+      "fold": 0,
+      "n": 2300,
+      "dec": 2239,
+      "wr": 0.1014,
+      "net": -0.7017,
+      "avgR": -0.5534,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 1,
+      "n": 2223,
+      "dec": 2174,
+      "wr": 0.1003,
+      "net": -0.604,
+      "avgR": -0.5156,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 2,
+      "n": 1880,
+      "dec": 1856,
+      "wr": 0.111,
+      "net": -0.6514,
+      "avgR": -0.4942,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 3,
+      "n": 1975,
+      "dec": 1942,
+      "wr": 0.1159,
+      "net": -0.5112,
+      "avgR": -0.4508,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 4,
+      "n": 2904,
+      "dec": 2741,
+      "wr": 0.1178,
+      "net": -0.8061,
+      "avgR": -0.3699,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 5,
+      "n": 3478,
+      "dec": 3361,
+      "wr": 0.0967,
+      "net": -0.4979,
+      "avgR": -0.3004,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 6,
+      "n": 3763,
+      "dec": 3604,
+      "wr": 0.1176,
+      "net": -0.2452,
+      "avgR": -0.13,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 7,
+      "n": 7521,
+      "dec": 6935,
+      "wr": 0.1645,
+      "net": -0.8652,
+      "avgR": -0.2963,
+      "powered": true,
+      "pass": false
+     }
+    ],
+    "powered_folds": "0/8",
+    "criteria": [
+     {
+      "id": "C1_evidence",
+      "pass": true,
+      "evaluable": true,
+      "detail": "sequenced OOS decisive n=13900 (need ≥100)"
+     },
+     {
+      "id": "C2_oos_ci",
+      "pass": false,
+      "evaluable": true,
+      "detail": "bootstrap 95% LB $-0.7563/t"
+     },
+     {
+      "id": "C3_walk_forward",
+      "pass": false,
+      "evaluable": true,
+      "detail": "sequenced TRAIN net $-0.6676/t (dec 10952)"
+     },
+     {
+      "id": "C4_folds",
+      "pass": false,
+      "evaluable": true,
+      "detail": "0/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+     }
+    ],
+    "failed": [
+     "C2_oos_ci",
+     "C3_walk_forward",
+     "C4_folds"
+    ],
+    "unevaluable": [],
+    "verdict": "SHADOW"
+   }
+  }
+ }
+}

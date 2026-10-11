@@ -1,0 +1,192 @@
+{
+ "at": "2026-08-12T17:09:58.799Z",
+ "preregistered": "impulse 8-bar ≥4×ATR direction-matched · A+ setups + trend_pullback · shipped geometry · variants declared up front: KZ-only vs all-hours",
+ "variants": {
+  "KZ-ONLY": {
+   "fires": 1178,
+   "perYear": 50.6,
+   "folds": [
+    {
+     "fold": 0,
+     "n": 12,
+     "dec": 9,
+     "wr": 0.8889,
+     "avgR": 0.2105,
+     "ok": false
+    },
+    {
+     "fold": 1,
+     "n": 150,
+     "dec": 104,
+     "wr": 0.9712,
+     "avgR": 0.2964,
+     "ok": true
+    },
+    {
+     "fold": 2,
+     "n": 149,
+     "dec": 98,
+     "wr": 0.9694,
+     "avgR": 0.2822,
+     "ok": true
+    },
+    {
+     "fold": 3,
+     "n": 184,
+     "dec": 124,
+     "wr": 0.9274,
+     "avgR": 0.249,
+     "ok": true
+    },
+    {
+     "fold": 4,
+     "n": 160,
+     "dec": 129,
+     "wr": 0.9147,
+     "avgR": 0.259,
+     "ok": true
+    },
+    {
+     "fold": 5,
+     "n": 187,
+     "dec": 136,
+     "wr": 0.9118,
+     "avgR": 0.2241,
+     "ok": true
+    },
+    {
+     "fold": 6,
+     "n": 185,
+     "dec": 144,
+     "wr": 0.8611,
+     "avgR": 0.2111,
+     "ok": true
+    },
+    {
+     "fold": 7,
+     "n": 151,
+     "dec": 110,
+     "wr": 0.8909,
+     "avgR": 0.2449,
+     "ok": true
+    }
+   ],
+   "folds8of8": false,
+   "oos": {
+    "n": 523,
+    "dec": 390,
+    "wr": 0.8872,
+    "lb": 0.8519,
+    "avgR": 0.2255,
+    "netPerTrade": 1.2654
+   },
+   "train_avgR": 0.2691,
+   "oos_by_side": {
+    "sell": {
+     "wr": 0.9148,
+     "dec": 176
+    },
+    "buy": {
+     "wr": 0.8645,
+     "dec": 214
+    }
+   }
+  },
+  "ALL-HOURS": {
+   "fires": 2595,
+   "perYear": 111.5,
+   "folds": [
+    {
+     "fold": 0,
+     "n": 32,
+     "dec": 19,
+     "wr": 0.9474,
+     "avgR": 0.2129,
+     "ok": false
+    },
+    {
+     "fold": 1,
+     "n": 327,
+     "dec": 209,
+     "wr": 0.9569,
+     "avgR": 0.231,
+     "ok": true
+    },
+    {
+     "fold": 2,
+     "n": 376,
+     "dec": 229,
+     "wr": 0.9694,
+     "avgR": 0.2408,
+     "ok": true
+    },
+    {
+     "fold": 3,
+     "n": 437,
+     "dec": 272,
+     "wr": 0.9265,
+     "avgR": 0.2108,
+     "ok": true
+    },
+    {
+     "fold": 4,
+     "n": 355,
+     "dec": 230,
+     "wr": 0.9348,
+     "avgR": 0.2185,
+     "ok": true
+    },
+    {
+     "fold": 5,
+     "n": 355,
+     "dec": 240,
+     "wr": 0.9417,
+     "avgR": 0.2257,
+     "ok": true
+    },
+    {
+     "fold": 6,
+     "n": 346,
+     "dec": 248,
+     "wr": 0.8871,
+     "avgR": 0.2145,
+     "ok": true
+    },
+    {
+     "fold": 7,
+     "n": 367,
+     "dec": 243,
+     "wr": 0.9383,
+     "avgR": 0.2676,
+     "ok": true
+    }
+   ],
+   "folds8of8": false,
+   "oos": {
+    "n": 1068,
+    "dec": 731,
+    "wr": 0.922,
+    "lb": 0.9003,
+    "avgR": 0.2365,
+    "netPerTrade": 1.5252
+   },
+   "train_avgR": 0.2244,
+   "oos_by_side": {
+    "sell": {
+     "wr": 0.9508,
+     "dec": 325
+    },
+    "buy": {
+     "wr": 0.899,
+     "dec": 406
+    }
+   }
+  }
+ },
+ "overlap_kz_vs_swing": {
+  "overlap_pct": 0.428,
+  "incremental_per_year": 29,
+  "incremental_wr": 0.9135,
+  "incremental_dollars_per_year": 31
+ }
+}

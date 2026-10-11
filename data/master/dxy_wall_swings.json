@@ -1,0 +1,213 @@
+{
+ "generated_utc": "2026-10-09T08:27:21.077Z",
+ "window": "2013-07-14 → 2026-10-09, OOS from 2022-10-19",
+ "definition": "see the header of scripts/study_dxy_wall_swings.mjs",
+ "base": {
+  "train|1": {
+   "n": 208062,
+   "hit_rate": 0.0579,
+   "timeout_share": 0.8753
+  },
+  "train|-1": {
+   "n": 208062,
+   "hit_rate": 0.0668,
+   "timeout_share": 0.8753
+  },
+  "oos|1": {
+   "n": 92583,
+   "hit_rate": 0.2496,
+   "timeout_share": 0.5023
+  },
+  "oos|-1": {
+   "n": 92583,
+   "hit_rate": 0.2476,
+   "timeout_share": 0.5023
+  }
+ },
+ "results": {
+  "train": {
+   "all": {
+    "n": 1773,
+    "wins": 148,
+    "losses": 182,
+    "resolved_win_share": 0.4485,
+    "base_resolved_share": 0.5007,
+    "direction_lift_pp": -5.22,
+    "direction_p": 0.971,
+    "hit_rate": 0.0835,
+    "base": 0.0624,
+    "lift_pp": 2.1,
+    "timeouts": 1443,
+    "z": 3.66,
+    "p": 0.0001259
+   },
+   "not_yet_moved": {
+    "n": 1759,
+    "wins": 147,
+    "losses": 175,
+    "resolved_win_share": 0.4565,
+    "base_resolved_share": 0.5007,
+    "direction_lift_pp": -4.42,
+    "direction_p": 0.9438,
+    "hit_rate": 0.0836,
+    "base": 0.0625,
+    "lift_pp": 2.11,
+    "timeouts": 1437,
+    "z": 3.66,
+    "p": 0.0001259
+   },
+   "dxy_rejected_at_resistance_gold_up": {
+    "n": 870,
+    "wins": 71,
+    "losses": 106,
+    "resolved_win_share": 0.4011,
+    "base_resolved_share": 0.4646,
+    "direction_lift_pp": -6.35,
+    "direction_p": 0.9549,
+    "hit_rate": 0.0816,
+    "base": 0.0579,
+    "lift_pp": 2.37,
+    "timeouts": 693,
+    "z": 2.99,
+    "p": 0.001409
+   },
+   "dxy_rejected_at_support_gold_down": {
+    "n": 903,
+    "wins": 77,
+    "losses": 76,
+    "resolved_win_share": 0.5033,
+    "base_resolved_share": 0.5354,
+    "direction_lift_pp": -3.21,
+    "direction_p": 0.7869,
+    "hit_rate": 0.0853,
+    "base": 0.0668,
+    "lift_pp": 1.85,
+    "timeouts": 750,
+    "z": 2.23,
+    "p": 0.01296
+   }
+  },
+  "oos": {
+   "all": {
+    "n": 825,
+    "wins": 229,
+    "losses": 262,
+    "resolved_win_share": 0.4664,
+    "base_resolved_share": 0.4999,
+    "direction_lift_pp": -3.35,
+    "direction_p": 0.9313,
+    "hit_rate": 0.2776,
+    "base": 0.2486,
+    "lift_pp": 2.9,
+    "timeouts": 334,
+    "z": 1.93,
+    "p": 0.02689
+   },
+   "not_yet_moved": {
+    "n": 761,
+    "wins": 202,
+    "losses": 231,
+    "resolved_win_share": 0.4665,
+    "base_resolved_share": 0.4999,
+    "direction_lift_pp": -3.34,
+    "direction_p": 0.9179,
+    "hit_rate": 0.2654,
+    "base": 0.2486,
+    "lift_pp": 1.69,
+    "timeouts": 328,
+    "z": 1.08,
+    "p": 0.1408
+   },
+   "dxy_rejected_at_resistance_gold_up": {
+    "n": 396,
+    "wins": 98,
+    "losses": 126,
+    "resolved_win_share": 0.4375,
+    "base_resolved_share": 0.502,
+    "direction_lift_pp": -6.45,
+    "direction_p": 0.9733,
+    "hit_rate": 0.2475,
+    "base": 0.2496,
+    "lift_pp": -0.21,
+    "timeouts": 172,
+    "z": -0.1,
+    "p": 0.5392
+   },
+   "dxy_rejected_at_support_gold_down": {
+    "n": 429,
+    "wins": 131,
+    "losses": 136,
+    "resolved_win_share": 0.4906,
+    "base_resolved_share": 0.498,
+    "direction_lift_pp": -0.73,
+    "direction_p": 0.5945,
+    "hit_rate": 0.3054,
+    "base": 0.2476,
+    "lift_pp": 5.78,
+    "timeouts": 162,
+    "z": 2.77,
+    "p": 0.00278
+   }
+  }
+ },
+ "by_year": {
+  "2013": {
+   "n": 84,
+   "hit_rate": 0.095
+  },
+  "2014": {
+   "n": 185,
+   "hit_rate": 0.076
+  },
+  "2015": {
+   "n": 185,
+   "hit_rate": 0.07
+  },
+  "2016": {
+   "n": 202,
+   "hit_rate": 0.074
+  },
+  "2017": {
+   "n": 206,
+   "hit_rate": 0.024
+  },
+  "2018": {
+   "n": 211,
+   "hit_rate": 0.028
+  },
+  "2019": {
+   "n": 199,
+   "hit_rate": 0.055
+  },
+  "2020": {
+   "n": 162,
+   "hit_rate": 0.123
+  },
+  "2021": {
+   "n": 195,
+   "hit_rate": 0.154
+  },
+  "2022": {
+   "n": 186,
+   "hit_rate": 0.167
+  },
+  "2023": {
+   "n": 217,
+   "hit_rate": 0.143
+  },
+  "2024": {
+   "n": 189,
+   "hit_rate": 0.206
+  },
+  "2025": {
+   "n": 216,
+   "hit_rate": 0.38
+  },
+  "2026": {
+   "n": 161,
+   "hit_rate": 0.447
+  }
+ },
+ "verdict": "SIGNIFICANT LIFT (OOS)",
+ "direction_verdict": "NO DIRECTIONAL EDGE (OOS) — the primary lift is VOLATILITY (a $10 move in either direction becomes likelier), not direction"
+}

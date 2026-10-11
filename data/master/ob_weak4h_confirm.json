@@ -1,0 +1,242 @@
+{
+ "at": "2026-10-11T01:49:58.458Z",
+ "rule": "4h OB, displacement 1.5-2 ATR, first retest, limit at near edge, 1 R",
+ "train": {
+  "n": 692,
+  "bounce": 0.4968,
+  "control": 0.4976,
+  "money_wr": 0.4465,
+  "net": -0.738,
+  "net_lb": -1.176
+ },
+ "oos": {
+  "n": 489,
+  "bounce": 0.5638,
+  "control": 0.5154,
+  "money_wr": 0.5215,
+  "net": 1.188,
+  "net_lb": -0.462
+ },
+ "all": {
+  "n": 1181,
+  "bounce": 0.5239,
+  "control": 0.5048,
+  "money_wr": 0.4776,
+  "net": 0.059,
+  "net_lb": -0.654
+ },
+ "spread_x1_5": {
+  "n": 1162,
+  "bounce": 0.5239,
+  "control": 0.5048,
+  "money_wr": 0.4596,
+  "net": -0.095,
+  "net_lb": -0.807
+ },
+ "years": {
+  "2013": {
+   "n": 31,
+   "bounce": 0.5,
+   "control": 0.5926,
+   "money_wr": 0.5161,
+   "net": -0.395,
+   "net_lb": -2.689
+  },
+  "2014": {
+   "n": 90,
+   "bounce": 0.5114,
+   "control": 0.375,
+   "money_wr": 0.4333,
+   "net": -0.589,
+   "net_lb": -1.683
+  },
+  "2015": {
+   "n": 80,
+   "bounce": 0.5467,
+   "control": 0.5694,
+   "money_wr": 0.45,
+   "net": -0.204,
+   "net_lb": -1.318
+  },
+  "2016": {
+   "n": 86,
+   "bounce": 0.5488,
+   "control": 0.4648,
+   "money_wr": 0.4767,
+   "net": -0.419,
+   "net_lb": -1.629
+  },
+  "2017": {
+   "n": 98,
+   "bounce": 0.5056,
+   "control": 0.5333,
+   "money_wr": 0.4592,
+   "net": -0.385,
+   "net_lb": -1.275
+  },
+  "2018": {
+   "n": 115,
+   "bounce": 0.434,
+   "control": 0.5673,
+   "money_wr": 0.4,
+   "net": -0.766,
+   "net_lb": -1.52
+  },
+  "2019": {
+   "n": 86,
+   "bounce": 0.52,
+   "control": 0.4667,
+   "money_wr": 0.4884,
+   "net": -0.464,
+   "net_lb": -1.587
+  },
+  "2020": {
+   "n": 70,
+   "bounce": 0.4,
+   "control": 0.4444,
+   "money_wr": 0.3714,
+   "net": -2.491,
+   "net_lb": -4.666
+  },
+  "2021": {
+   "n": 94,
+   "bounce": 0.5055,
+   "control": 0.4778,
+   "money_wr": 0.4468,
+   "net": -0.876,
+   "net_lb": -2.514
+  },
+  "2022": {
+   "n": 102,
+   "bounce": 0.6136,
+   "control": 0.5109,
+   "money_wr": 0.5294,
+   "net": 0.476,
+   "net_lb": -0.96
+  },
+  "2023": {
+   "n": 74,
+   "bounce": 0.5,
+   "control": 0.5556,
+   "money_wr": 0.4865,
+   "net": -0.34,
+   "net_lb": -2.048
+  },
+  "2024": {
+   "n": 86,
+   "bounce": 0.6,
+   "control": 0.5063,
+   "money_wr": 0.5814,
+   "net": 1.573,
+   "net_lb": -0.501
+  },
+  "2025": {
+   "n": 100,
+   "bounce": 0.5783,
+   "control": 0.4684,
+   "money_wr": 0.58,
+   "net": 3.661,
+   "net_lb": -0.763
+  },
+  "2026": {
+   "n": 69,
+   "bounce": 0.5439,
+   "control": 0.6,
+   "money_wr": 0.4783,
+   "net": 1.236,
+   "net_lb": -7.583
+  }
+ },
+ "positive_years": "4/14",
+ "neighbours": {
+  "1.5-1.75": {
+   "n": 620,
+   "bounce": 0.5235,
+   "control": 0.4982,
+   "money_wr": 0.4742,
+   "net": 0.456,
+   "net_lb": -0.566
+  },
+  "1.75-2": {
+   "n": 561,
+   "bounce": 0.5245,
+   "control": 0.5124,
+   "money_wr": 0.4813,
+   "net": -0.379,
+   "net_lb": -1.356
+  }
+ },
+ "by_side_era": {
+  "BUY 2013-2021": {
+   "n": 395,
+   "bounce": 0.5121,
+   "control": 0.5,
+   "money_wr": 0.4684,
+   "net": -0.63,
+   "net_lb": -1.206
+  },
+  "BUY 2022-2026": {
+   "n": 243,
+   "bounce": 0.6168,
+   "control": 0.5288,
+   "money_wr": 0.572,
+   "net": 2.453,
+   "net_lb": -0.154
+  },
+  "SELL 2013-2021": {
+   "n": 355,
+   "bounce": 0.4813,
+   "control": 0.4904,
+   "money_wr": 0.4169,
+   "net": -0.82,
+   "net_lb": -1.447
+  },
+  "SELL 2022-2026": {
+   "n": 188,
+   "bounce": 0.5125,
+   "control": 0.5125,
+   "money_wr": 0.4894,
+   "net": 0.074,
+   "net_lb": -2.546
+  }
+ },
+ "frontier": {
+  "0.25R": {
+   "n": 1181,
+   "wr": 0.7409,
+   "net": -0.091
+  },
+  "0.5R": {
+   "n": 1181,
+   "wr": 0.608,
+   "net": -0.183
+  },
+  "0.75R": {
+   "n": 1181,
+   "wr": 0.5199,
+   "net": -0.252
+  },
+  "1R": {
+   "n": 1181,
+   "wr": 0.4776,
+   "net": 0.059
+  },
+  "1.5R": {
+   "n": 1181,
+   "wr": 0.4132,
+   "net": 0.411
+  },
+  "2R": {
+   "n": 1181,
+   "wr": 0.3853,
+   "net": 0.373
+  }
+ },
+ "tests": {
+  "T1_train": false,
+  "T2_years": false,
+  "T3_spread_x1_5": false,
+  "T4_neighbours": false
+ },
+ "verdict": "NOT_CONFIRMED"
+}

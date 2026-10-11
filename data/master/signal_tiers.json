@@ -1,0 +1,34 @@
+{
+ "at": 1791578700000,
+ "impulseCont": null,
+ "marketState": {
+  "state": "EQUILIBRIUM",
+  "rangeHigh": 4201.9,
+  "rangeLow": 4168.75,
+  "mid": 4185.32,
+  "pos": 0.73,
+  "allowedSide": null,
+  "canTrade": false,
+  "message": "🚫 EQUILIBRIUM $4185.32 (73% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.",
+  "waitFor": {
+   "sell": 4167.41,
+   "buy": 4203.24,
+   "needVolume": "1.4× average",
+   "plain": "Wait for a close below $4167.41 (then SELL) or above $4203.24 (then BUY) — with volume."
+  }
+ },
+ "book": "no book ships",
+ "summary": "🚫 EQUILIBRIUM $4185.32 (73% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.",
+ "published_utc": "2026-10-09T21:00:19.194Z",
+ "bars_to": "2026-10-09T20:45:00.000Z",
+ "data": {
+  "flow": "polygon forex ticks → verified 1m → resampled 15m",
+  "live": true,
+  "stale_why": null,
+  "stream_waited_ms": 159,
+  "decision_minutes": 15,
+  "decision_provenance": {
+   "tick/ca": 15
+  }
+ }
+}

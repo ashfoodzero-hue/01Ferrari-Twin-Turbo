@@ -1,0 +1,287 @@
+
+████ LEVEL RADAR 23y — daily + 4H causal levels, reach / bounce / break probabilities at every 4H close ████
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+15m bars 308681 2013-07-14 -> 2026-10-08
+pivots: 1d 1130 · 4h 6041
+  5000 decision points · 1s
+  10000 decision points · 3s
+  15000 decision points · 4s
+  20000 decision points · 5s
+
+── PLAYBOOK A-fade · ALL reached levels: {"n":9124,"win":3184,"loss":4946,"time":994,"wr":0.3916,"wilson_lb":0.3811,"net_per_trade":0.71,"net_lb":0.4845,"net_ub":0.9565,"avgR":0.1348,"sum_net":6478,"years_positive":14,"years":14,"median_lead_15m_bars":19,"per_year_n":651.7}
+── PLAYBOOK A-fade · top composite cells by net LB (n ≥ 150) ──
+  AGAINST-1d|H4+tested|dist <0.5|touch LONDON          n=  193 (13.8/yr) WR 0.55 (LB 0.477) · net $ 4.3716/t [1.8448,7.2705] · avgR 0.584 · years+ 12/14 · lead 7 bars
+  AGAINST-1d|D|dist <0.5|touch NY                      n=  153 (10.9/yr) WR 0.4155 (LB 0.3377) · net $  3.103/t [1.369,5.269] · avgR 0.2126 · years+ 9/14 · lead 7 bars
+  AGAINST-1d|H4+tested|dist <0.5|touch NY              n=  258 (18.4/yr) WR 0.4681 (LB 0.4053) · net $ 2.1928/t [0.7949,3.57] · avgR 0.3583 · years+ 12/14 · lead 8 bars
+  AGAINST-1d|D+tested|dist <0.5|touch LONDON           n=  385 (27.5/yr) WR 0.5113 (LB 0.4594) · net $ 1.8367/t [0.6584,3.1688] · avgR 0.4619 · years+ 14/14 · lead 6 bars
+  WITH-1d|D+tested|dist <0.5|touch ASIA                n=  333 (23.8/yr) WR 0.49 (LB 0.4339) · net $ 2.0037/t [0.547,3.4613] · avgR 0.3781 · years+ 13/14 · lead 14 bars
+  AGAINST-1d|D+tested|dist 0.5-1|touch LONDON          n=  243 (17.4/yr) WR 0.4483 (LB 0.3815) · net $ 1.3165/t [0.442,2.2265] · avgR 0.3053 · years+ 14/14 · lead 55 bars
+  AGAINST-1d|D+tested|dist <0.5|touch NY               n=  592 (42.3/yr) WR 0.431 (LB 0.3894) · net $ 1.1676/t [0.3527,1.9866] · avgR 0.2479 · years+ 11/14 · lead 7 bars
+  AGAINST-1d|D+tested|dist 0.5-1|touch NY              n=  312 (22.3/yr) WR 0.4453 (LB 0.3876) · net $ 1.0549/t [0.1853,1.8966] · avgR 0.3108 · years+ 10/14 · lead 28 bars
+  AGAINST-1d|D+tested|dist <0.5|touch ASIA             n=  306 (21.9/yr) WR 0.5228 (LB 0.4649) · net $  1.313/t [0.1535,2.442] · avgR 0.4611 · years+ 11/14 · lead 15 bars
+  AGAINST-1d|H4+tested|dist <0.5|touch ASIA            n=  153 (10.9/yr) WR 0.4859 (LB 0.4052) · net $ 3.4214/t [0.0847,7.2135] · avgR 0.4029 · years+ 11/14 · lead 13 bars
+  WITH-1d|D+tested|dist <0.5|touch NY                  n=  581 (41.5/yr) WR 0.3952 (LB 0.3548) · net $ 0.6359/t [-0.1073,1.44] · avgR 0.1426 · years+ 10/14 · lead 7 bars
+  WITH-1d|D+tested|dist <0.5|touch LONDON              n=  369 (26.4/yr) WR 0.3846 (LB 0.3343) · net $ 1.1422/t [-0.1406,2.4969] · avgR 0.1252 · years+ 8/14 · lead 9 bars
+── PLAYBOOK A-fade · worst cells ──
+  WITH-1d|D+tested|dist 0.5-1|touch LONDON             n=  223 WR 0.2813 · net $-0.9834/t [-1.8619,-0.1409] · years+ 5/14
+  WITH-1d|D|dist 0.5-1|touch LONDON                    n=  186 WR 0.2749 · net $-1.0997/t [-2.0107,-0.1531] · years+ 3/14
+  WITH-1d|D|dist 0.5-1|touch NY                        n=  210 WR 0.2527 · net $-1.2849/t [-2.3312,-0.199] · years+ 4/14
+  WITH-1d|D|dist <0.5|touch NY                         n=  200 WR 0.2434 · net $-1.23/t [-2.686,0.4315] · years+ 3/14
+
+── PLAYBOOK B-break · ALL reached levels: {"n":5178,"win":1308,"loss":3502,"time":368,"wr":0.2719,"wilson_lb":0.2595,"net_per_trade":-1.2185,"net_lb":-1.5143,"net_ub":-0.9098,"avgR":-0.278,"sum_net":-6309.3,"years_positive":0,"years":14,"median_lead_15m_bars":11,"per_year_n":369.9}
+── PLAYBOOK B-break · top composite cells by net LB (n ≥ 150) ──
+  WITH-1d|D+tested|dist <0.5|touch LONDON              n=  340 (24.3/yr) WR 0.304 (LB 0.2567) · net $-0.8861/t [-1.7131,0.0107] · avgR -0.1803 · years+ 5/14 · lead 4 bars
+  WITH-1d|D+tested|dist <0.5|touch NY                  n=  284 (20.3/yr) WR 0.262 (LB 0.2132) · net $ -1.088/t [-2.0017,0.029] · avgR -0.32 · years+ 3/14 · lead 5 bars
+  WITH-1d|D+tested|dist 0.5-1|touch NY                 n=  160 (11.4/yr) WR 0.2979 (LB 0.2286) · net $-0.8462/t [-2.0704,0.3687] · avgR -0.1429 · years+ 4/14 · lead 25 bars
+  AGAINST-1d|D+tested|dist 0.5-1|touch NY              n=  153 (10.9/yr) WR 0.2197 (LB 0.1575) · net $-1.0741/t [-2.404,0.6312] · avgR -0.3739 · years+ 3/14 · lead 17 bars
+  AGAINST-1d|D+tested|dist <0.5|touch NY               n=  245 (17.5/yr) WR 0.2564 (LB 0.2047) · net $-1.3792/t [-2.4673,-0.3551] · avgR -0.3315 · years+ 2/14 · lead 5 bars
+  WITH-1d|D+tested|dist <0.5|touch ASIA                n=  220 (15.7/yr) WR 0.3224 (LB 0.2634) · net $-0.8496/t [-2.4803,0.7694] · avgR -0.2076 · years+ 4/14 · lead 8 bars
+  AGAINST-1d|D+tested|dist <0.5|touch ASIA             n=  211 (15.1/yr) WR 0.2718 (LB 0.2157) · net $-1.6834/t [-3.1084,-0.3787] · avgR -0.3722 · years+ 1/14 · lead 6 bars
+  AGAINST-1d|D+tested|dist 0.5-1|touch LONDON          n=  151 (10.8/yr) WR 0.188 (LB 0.1307) · net $-2.1781/t [-3.1688,-1.1509] · avgR -0.4688 · years+ 0/14 · lead 33 bars
+  AGAINST-1d|D+tested|dist <0.5|touch LONDON           n=  301 (21.5/yr) WR 0.1565 (LB 0.1194) · net $-3.5922/t [-4.5439,-2.6497] · avgR -0.6115 · years+ 0/14 · lead 4 bars
+── PLAYBOOK B-break · worst cells ──
+  WITH-1d|D+tested|dist <0.5|touch ASIA                n=  220 WR 0.3224 · net $-0.8496/t [-2.4803,0.7694] · years+ 4/14
+  AGAINST-1d|D+tested|dist <0.5|touch ASIA             n=  211 WR 0.2718 · net $-1.6834/t [-3.1084,-0.3787] · years+ 1/14
+  AGAINST-1d|D+tested|dist 0.5-1|touch LONDON          n=  151 WR 0.188 · net $-2.1781/t [-3.1688,-1.1509] · years+ 0/14
+  AGAINST-1d|D+tested|dist <0.5|touch LONDON           n=  301 WR 0.1565 · net $-3.5922/t [-4.5439,-2.6497] · years+ 0/14
+
+HOLM over 21 A-fade cells: 6 survive
+  {"comp":"AGAINST-1d|H4+tested|dist <0.5|touch LONDON","n":193,"net":4.3716,"lb":1.8448,"avgR":0.584,"years":"12/14"}
+  {"comp":"AGAINST-1d|D|dist <0.5|touch NY","n":153,"net":3.103,"lb":1.369,"avgR":0.2126,"years":"9/14"}
+  {"comp":"AGAINST-1d|H4+tested|dist <0.5|touch NY","n":258,"net":2.1928,"lb":0.7949,"avgR":0.3583,"years":"12/14"}
+  {"comp":"AGAINST-1d|D+tested|dist <0.5|touch LONDON","n":385,"net":1.8367,"lb":0.6584,"avgR":0.4619,"years":"14/14"}
+  {"comp":"AGAINST-1d|D+tested|dist 0.5-1|touch LONDON","n":243,"net":1.3165,"lb":0.442,"avgR":0.3053,"years":"14/14"}
+  {"comp":"AGAINST-1d|D+tested|dist <0.5|touch NY","n":592,"net":1.1676,"lb":0.3527,"avgR":0.2479,"years":"11/14"}
+
+decision points 20103 (skipped 740) in 5s
+
+── REACH|4h|dist ──
+  REACH|4h|dist <0.5                                               n= 17504   72.4%  [71.8–73.1]
+  REACH|4h|dist <0.5|AGAINST-1d                                    n=  8739   70.7%  [69.8–71.7]
+  REACH|4h|dist <0.5|AGAINST-1d|AGAINST-4h                         n=  3408   71.6%  [70.1–73.1]
+  REACH|4h|dist <0.5|AGAINST-1d|MIXED-4h                           n=  3503   71.0%  [69.5–72.5]
+  REACH|4h|dist <0.5|AGAINST-1d|WITH-4h                            n=  1828   68.5%  [66.3–70.6]
+  REACH|4h|dist <0.5|WITH-1d                                       n=  8765   74.1%  [73.2–75.0]
+  REACH|4h|dist <0.5|WITH-1d|AGAINST-4h                            n=  1895   74.9%  [72.9–76.8]
+  REACH|4h|dist <0.5|WITH-1d|MIXED-4h                              n=  3456   74.5%  [73.0–75.9]
+  REACH|4h|dist <0.5|WITH-1d|WITH-4h                               n=  3414   73.4%  [71.9–74.8]
+  REACH|4h|dist 0.5-1                                              n= 16745   31.3%  [30.6–32.0]
+  REACH|4h|dist 0.5-1|AGAINST-1d                                   n=  8441   28.4%  [27.5–29.4]
+  REACH|4h|dist 0.5-1|AGAINST-1d|AGAINST-4h                        n=  3384   29.6%  [28.1–31.1]
+  REACH|4h|dist 0.5-1|AGAINST-1d|MIXED-4h                          n=  3267   28.6%  [27.1–30.2]
+  REACH|4h|dist 0.5-1|AGAINST-1d|WITH-4h                           n=  1790   25.8%  [23.8–27.8]
+  REACH|4h|dist 0.5-1|WITH-1d                                      n=  8304   34.2%  [33.2–35.2]
+  REACH|4h|dist 0.5-1|WITH-1d|AGAINST-4h                           n=  1725   34.8%  [32.6–37.1]
+  REACH|4h|dist 0.5-1|WITH-1d|MIXED-4h                             n=  3264   34.0%  [32.4–35.6]
+  REACH|4h|dist 0.5-1|WITH-1d|WITH-4h                              n=  3315   34.2%  [32.6–35.8]
+  REACH|4h|dist 1-2                                                n=  5311   10.2%  [9.4–11.0]
+  REACH|4h|dist 1-2|AGAINST-1d                                     n=  2665    9.5%  [8.5–10.7]
+  REACH|4h|dist 1-2|AGAINST-1d|AGAINST-4h                          n=  1231   10.7%  [9.1–12.6]
+  REACH|4h|dist 1-2|AGAINST-1d|MIXED-4h                            n=   948    8.9%  [7.2–10.8]
+  REACH|4h|dist 1-2|AGAINST-1d|WITH-4h                             n=   486    7.8%  [5.8–10.5]
+  REACH|4h|dist 1-2|WITH-1d                                        n=  2646   10.8%  [9.7–12.0]
+  REACH|4h|dist 1-2|WITH-1d|AGAINST-4h                             n=   461   11.3%  [8.7–14.5]
+  REACH|4h|dist 1-2|WITH-1d|MIXED-4h                               n=   957   10.5%  [8.8–12.7]
+  REACH|4h|dist 1-2|WITH-1d|WITH-4h                                n=  1228   10.8%  [9.1–12.6]
+  REACH|4h|dist 2-4                                                n=   574    1.4%  [0.7–2.7]
+  REACH|4h|dist 2-4|AGAINST-1d                                     n=   242    0.8%  [0.2–3.0]
+  REACH|4h|dist 2-4|WITH-1d                                        n=   332    1.8%  [0.8–3.9]
+  REACH|4h|dist 2-4|WITH-1d|WITH-4h                                n=   204    2.5%  [1.1–5.6]
+
+── REACH|24h|dist ──
+  REACH|24h|dist <0.5                                              n= 17504   89.9%  [89.5–90.3]
+  REACH|24h|dist <0.5|AGAINST-1d                                   n=  8739   87.6%  [86.9–88.3]
+  REACH|24h|dist <0.5|AGAINST-1d|AGAINST-4h                        n=  3408   88.5%  [87.4–89.5]
+  REACH|24h|dist <0.5|AGAINST-1d|MIXED-4h                          n=  3503   87.4%  [86.3–88.5]
+  REACH|24h|dist <0.5|AGAINST-1d|WITH-4h                           n=  1828   86.4%  [84.7–87.9]
+  REACH|24h|dist <0.5|WITH-1d                                      n=  8765   92.2%  [91.6–92.7]
+  REACH|24h|dist <0.5|WITH-1d|AGAINST-4h                           n=  1895   93.1%  [91.9–94.1]
+  REACH|24h|dist <0.5|WITH-1d|MIXED-4h                             n=  3456   92.7%  [91.7–93.5]
+  REACH|24h|dist <0.5|WITH-1d|WITH-4h                              n=  3414   91.2%  [90.3–92.1]
+  REACH|24h|dist 0.5-1                                             n= 16745   70.5%  [69.8–71.2]
+  REACH|24h|dist 0.5-1|AGAINST-1d                                  n=  8441   66.1%  [65.1–67.1]
+  REACH|24h|dist 0.5-1|AGAINST-1d|AGAINST-4h                       n=  3384   68.1%  [66.5–69.7]
+  REACH|24h|dist 0.5-1|AGAINST-1d|MIXED-4h                         n=  3267   66.3%  [64.7–67.9]
+  REACH|24h|dist 0.5-1|AGAINST-1d|WITH-4h                          n=  1790   61.9%  [59.6–64.1]
+  REACH|24h|dist 0.5-1|WITH-1d                                     n=  8304   75.0%  [74.1–76.0]
+  REACH|24h|dist 0.5-1|WITH-1d|AGAINST-4h                          n=  1725   76.3%  [74.3–78.3]
+  REACH|24h|dist 0.5-1|WITH-1d|MIXED-4h                            n=  3264   74.8%  [73.2–76.2]
+  REACH|24h|dist 0.5-1|WITH-1d|WITH-4h                             n=  3315   74.6%  [73.1–76.1]
+  REACH|24h|dist 1-2                                               n=  5311   46.5%  [45.2–47.9]
+  REACH|24h|dist 1-2|AGAINST-1d                                    n=  2665   43.4%  [41.5–45.3]
+  REACH|24h|dist 1-2|AGAINST-1d|AGAINST-4h                         n=  1231   44.6%  [41.8–47.4]
+  REACH|24h|dist 1-2|AGAINST-1d|MIXED-4h                           n=   948   41.7%  [38.6–44.8]
+  REACH|24h|dist 1-2|AGAINST-1d|WITH-4h                            n=   486   43.6%  [39.3–48.1]
+  REACH|24h|dist 1-2|WITH-1d                                       n=  2646   49.7%  [47.8–51.6]
+  REACH|24h|dist 1-2|WITH-1d|AGAINST-4h                            n=   461   49.9%  [45.4–54.4]
+  REACH|24h|dist 1-2|WITH-1d|MIXED-4h                              n=   957   48.4%  [45.2–51.5]
+  REACH|24h|dist 1-2|WITH-1d|WITH-4h                               n=  1228   50.6%  [47.8–53.4]
+  REACH|24h|dist 2-4                                               n=   574   17.8%  [14.9–21.1]
+  REACH|24h|dist 2-4|AGAINST-1d                                    n=   242   15.7%  [11.7–20.8]
+  REACH|24h|dist 2-4|WITH-1d                                       n=   332   19.3%  [15.4–23.9]
+  REACH|24h|dist 2-4|WITH-1d|WITH-4h                               n=   204   22.6%  [17.3–28.8]
+
+── REACH|24h|WITH ──
+  REACH|24h|WITH-1d|AGAINST-4h|pos HIGH3                           n=  1383   76.0%  [73.7–78.2]
+  REACH|24h|WITH-1d|AGAINST-4h|pos LOW3                            n=  1043   78.8%  [76.2–81.2]
+  REACH|24h|WITH-1d|AGAINST-4h|pos MID3                            n=  1692   85.5%  [83.7–87.1]
+  REACH|24h|WITH-1d|MIXED-4h|pos HIGH3                             n=  2857   75.0%  [73.4–76.6]
+  REACH|24h|WITH-1d|MIXED-4h|pos LOW3                              n=  2298   75.4%  [73.6–77.1]
+  REACH|24h|WITH-1d|MIXED-4h|pos MID3                              n=  2637   85.0%  [83.6–86.3]
+  REACH|24h|WITH-1d|WITH-4h|pos HIGH3                              n=  3222   71.4%  [69.8–72.9]
+  REACH|24h|WITH-1d|WITH-4h|pos LOW3                               n=  2857   75.6%  [74.0–77.1]
+  REACH|24h|WITH-1d|WITH-4h|pos MID3                               n=  2114   85.0%  [83.5–86.5]
+
+── REACH|24h|AGAINST ──
+  REACH|24h|AGAINST-1d|AGAINST-4h|pos HIGH3                        n=  3222   71.8%  [70.2–73.4]
+  REACH|24h|AGAINST-1d|AGAINST-4h|pos LOW3                         n=  2857   72.4%  [70.7–74.0]
+  REACH|24h|AGAINST-1d|AGAINST-4h|pos MID3                         n=  2114   71.8%  [69.8–73.6]
+  REACH|24h|AGAINST-1d|MIXED-4h|pos HIGH3                          n=  2857   74.0%  [72.4–75.6]
+  REACH|24h|AGAINST-1d|MIXED-4h|pos LOW3                           n=  2298   74.2%  [72.3–75.9]
+  REACH|24h|AGAINST-1d|MIXED-4h|pos MID3                           n=  2637   68.8%  [67.0–70.5]
+  REACH|24h|AGAINST-1d|WITH-4h|pos HIGH3                           n=  1383   71.2%  [68.7–73.5]
+  REACH|24h|AGAINST-1d|WITH-4h|pos LOW3                            n=  1043   73.3%  [70.5–75.8]
+  REACH|24h|AGAINST-1d|WITH-4h|pos MID3                            n=  1692   68.2%  [66.0–70.4]
+
+── FIRST24h ──
+  FIRST24h|pos HIGH3|R first                                       n=  7315   50.4%  [49.2–51.5]
+  FIRST24h|pos LOW3|R first                                        n=  6072   48.9%  [47.7–50.2]
+  FIRST24h|pos MID3|R first                                        n=  6404   47.5%  [46.3–48.7]
+  FIRST24h|session ASIA|trend1d DOWN|R first                       n=  3207   45.6%  [43.9–47.4]
+  FIRST24h|session ASIA|trend1d UP|R first                         n=  3759   50.6%  [49.0–52.2]
+  FIRST24h|session LONDON|trend1d DOWN|R first                     n=  2918   44.0%  [42.2–45.8]
+  FIRST24h|session LONDON|trend1d UP|R first                       n=  3460   54.0%  [52.4–55.7]
+  FIRST24h|session NY|trend1d DOWN|R first                         n=  2966   48.2%  [46.4–50.0]
+  FIRST24h|session NY|trend1d UP|R first                           n=  3481   50.2%  [48.6–51.9]
+  FIRST24h|trend1d DOWN|R first                                    n=  9091   46.0%  [44.9–47.0]
+  FIRST24h|trend1d DOWN|trend4h DOWN|pos LOW3|R first              n=  2783   47.4%  [45.5–49.2]
+  FIRST24h|trend1d DOWN|trend4h DOWN|pos MID3|R first              n=   963   43.6%  [40.5–46.8]
+  FIRST24h|trend1d DOWN|trend4h MIXED|pos LOW3|R first             n=  2178   50.6%  [48.5–52.7]
+  FIRST24h|trend1d DOWN|trend4h MIXED|pos MID3|R first             n=  1205   42.6%  [39.8–45.4]
+  FIRST24h|trend1d DOWN|trend4h UP|pos LOW3|R first                n=   966   47.0%  [43.9–50.1]
+  FIRST24h|trend1d DOWN|trend4h UP|pos MID3|R first                n=   812   37.4%  [34.2–40.8]
+  FIRST24h|trend1d UP|R first                                      n= 10700   51.6%  [50.6–52.5]
+  FIRST24h|trend1d UP|trend4h DOWN|pos HIGH3|R first               n=  1294   51.3%  [48.6–54.0]
+  FIRST24h|trend1d UP|trend4h DOWN|pos MID3|R first                n=   871   52.8%  [49.5–56.1]
+  FIRST24h|trend1d UP|trend4h MIXED|pos HIGH3|R first              n=  2723   51.3%  [49.4–53.2]
+  FIRST24h|trend1d UP|trend4h MIXED|pos MID3|R first               n=  1419   53.6%  [51.0–56.2]
+  FIRST24h|trend1d UP|trend4h UP|pos HIGH3|R first                 n=  3114   50.1%  [48.3–51.8]
+  FIRST24h|trend1d UP|trend4h UP|pos MID3|R first                  n=  1134   51.4%  [48.5–54.3]
+  FIRST24h|trend4h DOWN|R first                                    n=  6008   48.6%  [47.3–49.9]
+  FIRST24h|trend4h MIXED|R first                                   n=  7681   50.0%  [48.9–51.2]
+  FIRST24h|trend4h UP|R first                                      n=  6102   48.1%  [46.8–49.3]
+
+── BOUNCE|4h ──
+  BOUNCE|4h|AGAINST-1d                                             n=  4800   51.1%  [49.7–52.5]
+  BOUNCE|4h|AGAINST-1d|AGAINST-4h                                  n=  1995   51.8%  [49.6–54.0]
+  BOUNCE|4h|AGAINST-1d|MIXED-4h                                    n=  1895   50.4%  [48.1–52.6]
+  BOUNCE|4h|AGAINST-1d|WITH-4h                                     n=   910   51.0%  [47.7–54.2]
+  BOUNCE|4h|all                                                    n= 10330   48.4%  [47.4–49.4]
+  BOUNCE|4h|dist <0.5                                              n=  6307   43.2%  [42.0–44.5]
+  BOUNCE|4h|dist 0.5-1                                             n=  3566   56.3%  [54.6–57.9]
+  BOUNCE|4h|dist 1-2                                               n=   449   58.4%  [53.7–62.8]
+  BOUNCE|4h|fib no                                                 n=  5221   48.1%  [46.8–49.5]
+  BOUNCE|4h|fib no|status BROKEN                                   n=  2062   48.3%  [46.1–50.4]
+  BOUNCE|4h|fib no|status SWEPT_RECLAIMED                          n=  3159   48.1%  [46.4–49.8]
+  BOUNCE|4h|fib YES                                                n=  5109   48.7%  [47.3–50.0]
+  BOUNCE|4h|fib YES|status BROKEN                                  n=  1549   49.9%  [47.4–52.4]
+  BOUNCE|4h|fib YES|status SWEPT_RECLAIMED                         n=  3560   48.1%  [46.5–49.8]
+  BOUNCE|4h|gann no                                                n=  2581   51.5%  [49.6–53.4]
+  BOUNCE|4h|gann YES                                               n=  7749   47.4%  [46.3–48.5]
+  BOUNCE|4h|session ASIA                                           n=  2458   41.8%  [39.9–43.7]
+  BOUNCE|4h|session LATE                                           n=   671   44.3%  [40.6–48.0]
+  BOUNCE|4h|session LONDON                                         n=  3819   49.9%  [48.3–51.5]
+  BOUNCE|4h|session NY                                             n=  3382   52.4%  [50.7–54.1]
+  BOUNCE|4h|status BROKEN                                          n=  3611   49.0%  [47.3–50.6]
+  BOUNCE|4h|status SWEPT_RECLAIMED                                 n=  6719   48.1%  [46.9–49.3]
+  BOUNCE|4h|strength D                                             n=   246   50.8%  [44.6–57.0]
+  BOUNCE|4h|strength D+multi                                       n=  1746   51.1%  [48.7–53.4]
+  BOUNCE|4h|strength D+multi+tested                                n=  3899   48.6%  [47.1–50.2]
+  BOUNCE|4h|strength D+multi+tested|AGAINST-1d                     n=  1974   52.9%  [50.7–55.1]
+  BOUNCE|4h|strength D+multi+tested|WITH-1d                        n=  1925   44.3%  [42.0–46.5]
+  BOUNCE|4h|strength D+multi|AGAINST-1d                            n=   696   53.3%  [49.6–57.0]
+  BOUNCE|4h|strength D+multi|WITH-1d                               n=  1050   49.6%  [46.6–52.6]
+  BOUNCE|4h|strength D+tested                                      n=  1175   46.0%  [43.2–48.9]
+  BOUNCE|4h|strength D+tested|AGAINST-1d                           n=   523   47.6%  [43.4–51.9]
+  BOUNCE|4h|strength D+tested|WITH-1d                              n=   652   44.8%  [41.0–48.6]
+  BOUNCE|4h|strength H4                                            n=   514   50.6%  [46.3–54.9]
+  BOUNCE|4h|strength H4+multi                                      n=   563   49.4%  [45.3–53.5]
+  BOUNCE|4h|strength H4+multi+tested                               n=  1098   46.2%  [43.2–49.1]
+  BOUNCE|4h|strength H4+multi+tested|AGAINST-1d                    n=   560   49.5%  [45.3–53.6]
+  BOUNCE|4h|strength H4+multi+tested|WITH-1d                       n=   538   42.8%  [38.6–47.0]
+  BOUNCE|4h|strength H4+multi|AGAINST-1d                           n=   252   49.2%  [43.1–55.3]
+  BOUNCE|4h|strength H4+multi|WITH-1d                              n=   311   49.5%  [44.0–55.0]
+  BOUNCE|4h|strength H4+tested                                     n=  1089   46.1%  [43.2–49.1]
+  BOUNCE|4h|strength H4+tested|AGAINST-1d                          n=   554   48.4%  [44.2–52.5]
+  BOUNCE|4h|strength H4+tested|WITH-1d                             n=   535   43.7%  [39.6–48.0]
+  BOUNCE|4h|strength H4|WITH-1d                                    n=   340   52.1%  [46.8–57.3]
+  BOUNCE|4h|touch-volume <1.5x                                     n=  6731   45.8%  [44.6–47.0]
+  BOUNCE|4h|touch-volume ≥1.5x                                     n=  3599   53.2%  [51.6–54.9]
+  BOUNCE|4h|WITH-1d                                                n=  5530   46.1%  [44.8–47.4]
+  BOUNCE|4h|WITH-1d|AGAINST-4h                                     n=  1172   46.4%  [43.6–49.3]
+  BOUNCE|4h|WITH-1d|MIXED-4h                                       n=  2186   44.3%  [42.3–46.4]
+  BOUNCE|4h|WITH-1d|WITH-4h                                        n=  2172   47.7%  [45.6–49.8]
+
+── BOUNCE|24h|strength ──
+  BOUNCE|24h|strength D                                            n=   527   54.5%  [50.2–58.7]
+  BOUNCE|24h|strength D+multi                                      n=  3527   51.6%  [50.0–53.3]
+  BOUNCE|24h|strength D+multi+tested                               n=  6253   52.8%  [51.5–54.0]
+  BOUNCE|24h|strength D+multi+tested|AGAINST-1d                    n=  3259   55.9%  [54.2–57.6]
+  BOUNCE|24h|strength D+multi+tested|WITH-1d                       n=  2994   49.4%  [47.6–51.2]
+  BOUNCE|24h|strength D+multi|AGAINST-1d                           n=  1474   52.4%  [49.8–54.9]
+  BOUNCE|24h|strength D+multi|WITH-1d                              n=  2053   51.1%  [48.9–53.3]
+  BOUNCE|24h|strength D+tested                                     n=  2017   49.4%  [47.2–51.6]
+  BOUNCE|24h|strength D+tested|AGAINST-1d                          n=   866   50.7%  [47.4–54.0]
+  BOUNCE|24h|strength D+tested|WITH-1d                             n=  1151   48.4%  [45.5–51.3]
+  BOUNCE|24h|strength D|WITH-1d                                    n=   380   51.8%  [46.8–56.8]
+  BOUNCE|24h|strength H4                                           n=  1142   52.3%  [49.4–55.2]
+  BOUNCE|24h|strength H4+multi                                     n=  1084   51.7%  [48.7–54.6]
+  BOUNCE|24h|strength H4+multi+tested                              n=  1821   49.7%  [47.4–52.0]
+  BOUNCE|24h|strength H4+multi+tested|AGAINST-1d                   n=   943   52.4%  [49.2–55.6]
+  BOUNCE|24h|strength H4+multi+tested|WITH-1d                      n=   878   46.8%  [43.5–50.1]
+  BOUNCE|24h|strength H4+multi|AGAINST-1d                          n=   507   51.1%  [46.7–55.4]
+  BOUNCE|24h|strength H4+multi|WITH-1d                             n=   577   52.2%  [48.1–56.2]
+  BOUNCE|24h|strength H4+tested                                    n=  1845   48.6%  [46.3–50.8]
+  BOUNCE|24h|strength H4+tested|AGAINST-1d                         n=   980   51.6%  [48.5–54.8]
+  BOUNCE|24h|strength H4+tested|WITH-1d                            n=   865   45.1%  [41.8–48.4]
+  BOUNCE|24h|strength H4|AGAINST-1d                                n=   386   48.2%  [43.2–53.2]
+  BOUNCE|24h|strength H4|WITH-1d                                   n=   756   54.4%  [50.8–57.9]
+
+── BOUNCE|24h|status ──
+  BOUNCE|24h|status BROKEN                                         n=  7121   50.9%  [49.7–52.0]
+  BOUNCE|24h|status SWEPT_RECLAIMED                                n= 11095   51.7%  [50.8–52.7]
+
+── BOUNCE|24h|fib ──
+  BOUNCE|24h|fib no                                                n=  9523   51.2%  [50.2–52.2]
+  BOUNCE|24h|fib no|status BROKEN                                  n=  4146   50.1%  [48.6–51.7]
+  BOUNCE|24h|fib no|status SWEPT_RECLAIMED                         n=  5377   52.1%  [50.7–53.4]
+  BOUNCE|24h|fib YES                                               n=  8693   51.6%  [50.5–52.6]
+  BOUNCE|24h|fib YES|status BROKEN                                 n=  2975   51.9%  [50.1–53.7]
+  BOUNCE|24h|fib YES|status SWEPT_RECLAIMED                        n=  5718   51.4%  [50.2–52.8]
+
+── BOUNCE|24h|gann ──
+  BOUNCE|24h|gann no                                               n=  4458   54.7%  [53.3–56.2]
+  BOUNCE|24h|gann YES                                              n= 13758   50.3%  [49.5–51.2]
+
+── BOUNCE|24h|touch ──
+  BOUNCE|24h|touch-volume <1.5x                                    n= 10697   48.6%  [47.6–49.5]
+  BOUNCE|24h|touch-volume ≥1.5x                                    n=  7519   55.4%  [54.3–56.5]
+
+── BOUNCE|24h|session ──
+  BOUNCE|24h|session ASIA                                          n=  4028   42.0%  [40.5–43.5]
+  BOUNCE|24h|session LATE                                          n=   906   44.0%  [40.8–47.3]
+  BOUNCE|24h|session LONDON                                        n=  6741   52.4%  [51.2–53.6]
+  BOUNCE|24h|session NY                                            n=  6541   57.2%  [56.0–58.4]
+
+── BOUNCE|24h|WITH ──
+  BOUNCE|24h|WITH-1d                                               n=  9654   49.7%  [48.7–50.7]
+  BOUNCE|24h|WITH-1d|AGAINST-4h                                    n=  2018   48.3%  [46.1–50.5]
+  BOUNCE|24h|WITH-1d|MIXED-4h                                      n=  3780   48.0%  [46.4–49.6]
+  BOUNCE|24h|WITH-1d|WITH-4h                                       n=  3856   52.0%  [50.4–53.6]
+
+── BOUNCE|24h|AGAINST ──
+  BOUNCE|24h|AGAINST-1d                                            n=  8562   53.4%  [52.3–54.4]
+  BOUNCE|24h|AGAINST-1d|AGAINST-4h                                 n=  3625   53.5%  [51.9–55.1]
+  BOUNCE|24h|AGAINST-1d|MIXED-4h                                   n=  3287   52.6%  [50.9–54.3]
+  BOUNCE|24h|AGAINST-1d|WITH-4h                                    n=  1650   54.5%  [52.1–56.9]
+-> C:\01Ferrari Twin Turbo\data\master\level_radar_23y.json

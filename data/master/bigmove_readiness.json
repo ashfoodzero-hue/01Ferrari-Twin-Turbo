@@ -1,0 +1,89 @@
+{
+ "at": "2026-10-08T16:16:27.224Z",
+ "K": 3,
+ "base_rate": 41.8,
+ "conditions": [
+  {
+   "name": "dens30 ≥ 3 (self-exciting)",
+   "fires": 2858,
+   "precision": 47.9,
+   "lb": 46,
+   "eraA": 37.8,
+   "eraB": 54.5,
+   "coverage": 80
+  },
+  {
+   "name": "dens30 ≥ 6",
+   "fires": 1222,
+   "precision": 64.6,
+   "lb": 61.8,
+   "eraA": 54,
+   "eraB": 68.4,
+   "coverage": 46
+  },
+  {
+   "name": "dens30 ≥ 10",
+   "fires": 618,
+   "precision": 80.6,
+   "lb": 77.3,
+   "eraA": 55.4,
+   "eraB": 85,
+   "coverage": 29
+  },
+  {
+   "name": "rv10 ≥ 1.5% daily range",
+   "fires": 844,
+   "precision": 68.5,
+   "lb": 65.3,
+   "eraA": 49.6,
+   "eraB": 75.7,
+   "coverage": 34
+  },
+  {
+   "name": "rv10 ≥ 2.0%",
+   "fires": 320,
+   "precision": 83.1,
+   "lb": 78.6,
+   "eraA": 44.7,
+   "eraB": 88.3,
+   "coverage": 15
+  },
+  {
+   "name": "rv10 ≥ 2.5%",
+   "fires": 112,
+   "precision": 89.3,
+   "lb": 82.2,
+   "eraA": null,
+   "eraB": 89.3,
+   "coverage": 6
+  },
+  {
+   "name": "dens30≥6 AND rv10≥2%",
+   "fires": 307,
+   "precision": 84.4,
+   "lb": 79.9,
+   "eraA": 53.1,
+   "eraB": 88,
+   "coverage": 15
+  },
+  {
+   "name": "dens30≥10 AND rv10≥2.5%",
+   "fires": 109,
+   "precision": 89,
+   "lb": 81.7,
+   "eraA": null,
+   "eraB": 89,
+   "coverage": 6
+  },
+  {
+   "name": "CALM: dens30=0 AND rv10<1%",
+   "fires": 78,
+   "precision": 35.9,
+   "lb": 26.1,
+   "eraA": 31.7,
+   "eraB": null,
+   "coverage": 2
+  }
+ ],
+ "source": "measure_bigmove_readiness.mjs — era-split precision, causal features"
+}

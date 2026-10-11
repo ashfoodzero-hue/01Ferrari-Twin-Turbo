@@ -1,0 +1,86 @@
+{
+ "at": "2026-10-08T16:16:36.973Z",
+ "K": 5,
+ "window_days": 90,
+ "pass": false,
+ "hot_fires": 113,
+ "warm_days": 463,
+ "quiet_days": 3486,
+ "precision": 97.3,
+ "lb": 92.5,
+ "eraA": null,
+ "eraB": 97.3,
+ "phase4a_ref": {
+  "fires": 275,
+  "precision": 97.8,
+  "lb": 95.3,
+  "source": "bigmove_readiness.json"
+ },
+ "fires_within_20pct_of_ref": false,
+ "last_hot_days": [
+  {
+   "t": "2026-06-14",
+   "dens30": 43,
+   "rv10": 2.686,
+   "label": true
+  },
+  {
+   "t": "2026-06-15",
+   "dens30": 43,
+   "rv10": 2.735,
+   "label": true
+  },
+  {
+   "t": "2026-06-16",
+   "dens30": 44,
+   "rv10": 2.765,
+   "label": true
+  },
+  {
+   "t": "2026-06-17",
+   "dens30": 44,
+   "rv10": 2.715,
+   "label": true
+  },
+  {
+   "t": "2026-06-18",
+   "dens30": 49,
+   "rv10": 2.717,
+   "label": true
+  },
+  {
+   "t": "2026-06-19",
+   "dens30": 49,
+   "rv10": 2.973,
+   "label": true
+  },
+  {
+   "t": "2026-06-21",
+   "dens30": 46,
+   "rv10": 2.961,
+   "label": true
+  },
+  {
+   "t": "2026-06-22",
+   "dens30": 45,
+   "rv10": 2.666,
+   "label": true
+  },
+  {
+   "t": "2026-07-03",
+   "dens30": 57,
+   "rv10": 2.57,
+   "label": true
+  },
+  {
+   "t": "2026-07-05",
+   "dens30": 56,
+   "rv10": 2.554,
+   "label": true
+  }
+ ],
+ "source_scripts": [
+  "src/master/bigmoveReadiness.js (the shipping code)",
+  "validate_bigmove_readiness_live.mjs (this replay)"
+ ]
+}

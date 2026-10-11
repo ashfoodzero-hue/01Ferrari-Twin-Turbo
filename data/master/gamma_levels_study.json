@@ -1,0 +1,68 @@
+{
+ "at": "2026-10-09T14:30:00.623Z",
+ "days_recorded": 1,
+ "first_day": "2026-10-09",
+ "rules": {
+  "dollars": 7,
+  "min_resolved": 100
+ },
+ "all": {
+  "events": 2,
+  "resolved": 2,
+  "bounce": 1,
+  "bounce_lb": 0.3424,
+  "control": 0
+ },
+ "by_type": {
+  "call_wall": {
+   "events": 0,
+   "resolved": 0,
+   "bounce": null,
+   "bounce_lb": null,
+   "control": null
+  },
+  "put_wall": {
+   "events": 0,
+   "resolved": 0,
+   "bounce": null,
+   "bounce_lb": null,
+   "control": null
+  },
+  "flip": {
+   "events": 1,
+   "resolved": 1,
+   "bounce": 1,
+   "bounce_lb": 0.2065,
+   "control": 0
+  },
+  "magnet": {
+   "events": 1,
+   "resolved": 1,
+   "bounce": 1,
+   "bounce_lb": 0.2065,
+   "control": null
+  }
+ },
+ "verdict": "INSUFFICIENT",
+ "reading": "forward test: 2/100 resolved touches so far — context only until measured",
+ "events": [
+  {
+   "day": "2026-10-09",
+   "type": "flip",
+   "px": 4175.5,
+   "t": 1791544200000,
+   "side": "support",
+   "bounce": true,
+   "ctrl": false
+  },
+  {
+   "day": "2026-10-09",
+   "type": "magnet",
+   "px": 4189.05,
+   "t": 1791549000000,
+   "side": "resistance",
+   "bounce": true,
+   "ctrl": null
+  }
+ ]
+}

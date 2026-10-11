@@ -1,0 +1,30 @@
+
+████ LEVEL RADAR fade — 1m-SEQUENCED re-resolution (2013-07 → tape end) ████
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+15m 308682 · 1m 4572048 · candidates 9124 → in 1m span 9124
+ALL (sequenced): {"n":8949,"win":3481,"loss":5322,"time":146,"wr":0.3954,"wilson_lb":0.3853,"net_seq":0.6197,"net_seq_lb":0.3615,"net_seq_ub":0.8749,"net_15m_same_trades":0.6763,"avgR":0.1223,"years_positive":14,"years":14} · NOFILL 32
+
+per cell (n ≥ 80 in the 13y span), sequenced vs 15m on the SAME trades:
+  AGAINST-1d|H4+tested|dist <0.5|touch LONDON          n= 187 WR 0.5243 (LB 0.4526) · net SEQ $ 3.8053/t [1.3187,6.8796] vs 15m $4.2942 · avgR 0.5211 · years+ 12/14
+  AGAINST-1d|D|dist <0.5|touch NY                      n= 149 WR 0.3973 (LB 0.3215) · net SEQ $ 2.5715/t [0.6937,4.7957] vs 15m $2.8134 · avgR 0.1241 · years+ 8/14
+  AGAINST-1d|D+tested|dist <0.5|touch LONDON           n= 380 WR 0.4973 (LB 0.4469) · net SEQ $ 1.8779/t [0.6008,3.0833] vs 15m $1.8302 · avgR 0.4333 · years+ 14/14
+  WITH-1d|D+tested|dist <0.5|touch ASIA                n= 326 WR 0.478 (LB 0.4237) · net SEQ $ 1.8707/t [0.3471,3.5745] vs 15m $2.0238 · avgR 0.3428 · years+ 13/14
+  AGAINST-1d|D+tested|dist 0.5-1|touch NY              n= 308 WR 0.451 (LB 0.3962) · net SEQ $ 1.2308/t [0.1598,2.2686] vs 15m $1.0022 · avgR 0.2922 · years+ 11/14
+  AGAINST-1d|H4+tested|dist <0.5|touch NY              n= 257 WR 0.4582 (LB 0.3976) · net SEQ $ 1.6747/t [0.0917,3.1254] vs 15m $2.1796 · avgR 0.3239 · years+ 10/14
+  AGAINST-1d|D+tested|dist 0.5-1|touch LONDON          n= 239 WR 0.4473 (LB 0.3853) · net SEQ $ 1.1274/t [0.0641,2.2603] vs 15m $1.2788 · avgR 0.2896 · years+ 12/14
+  AGAINST-1d|H4+tested|dist <0.5|touch ASIA            n= 151 WR 0.483 (LB 0.4037) · net SEQ $ 3.1667/t [-0.0033,6.9753] vs 15m $3.3528 · avgR 0.369 · years+ 10/14
+  AGAINST-1d|D+tested|dist <0.5|touch NY               n= 584 WR 0.4146 (LB 0.3746) · net SEQ $ 0.8184/t [-0.0259,1.6541] vs 15m $1.0328 · avgR 0.1788 · years+ 9/14
+  WITH-1d|D+tested|dist <0.5|touch LONDON              n= 363 WR 0.3922 (LB 0.3429) · net SEQ $ 1.1246/t [-0.0552,2.4786] vs 15m $1.0805 · avgR 0.1219 · years+ 8/14
+  AGAINST-1d|D+tested|dist <0.5|touch ASIA             n= 300 WR 0.5136 (LB 0.4567) · net SEQ $ 1.0669/t [-0.1544,2.2892] vs 15m $1.1122 · avgR 0.4514 · years+ 11/14
+  AGAINST-1d|H4+tested|dist 0.5-1|touch LONDON         n= 106 WR 0.5192 (LB 0.4242) · net SEQ $  1.999/t [-0.1747,4.3128] vs 15m $1.9389 · avgR 0.5198 · years+ 10/14
+  WITH-1d|D+tested|dist <0.5|touch NY                  n= 577 WR 0.3993 (LB 0.3598) · net SEQ $ 0.6048/t [-0.235,1.3669] vs 15m $0.6334 · avgR 0.1272 · years+ 10/14
+  AGAINST-1d|D|dist <0.5|touch LONDON                  n=  97 WR 0.4948 (LB 0.3975) · net SEQ $ 1.4404/t [-0.3945,3.4491] vs 15m $1.3372 · avgR 0.4255 · years+ 11/14
+
+worst cells:
+  WITH-1d|D|dist <0.5|touch NY                         n= 198 net SEQ $-1.7031/t vs 15m $-1.4731
+  WITH-1d|H4+tested|dist <0.5|touch ASIA               n= 131 net SEQ $-1.2632/t vs 15m $-0.9897
+  AGAINST-1d|H4+tested|dist 0.5-1|touch ASIA           n=  87 net SEQ $1.2207/t vs 15m $2.7944
+  WITH-1d|D|dist 0.5-1|touch ASIA                      n= 120 net SEQ $-3.2048/t vs 15m $-2.975
+-> C:\01Ferrari Twin Turbo\data\master\level_radar_seq_validation.json
+DONE

@@ -1,0 +1,359 @@
+// ════════════════════════════════════════════════════════════════════════════════
+// paperTrader.js — forward-test the shipped tiers on live bars, with no money and no self-deception.
+//
+// Every number this system trades on is a BACKTEST. A backtest cannot tell you what your broker fills, what a news
+// candle costs, or whether the detector behaves the same on a live feed as on a cached one. Only forward data can.
+//
+// Contract:
+//   • APPEND-ONLY, IDEMPOTENT. A signal is keyed by `tier@confirmTime`. Re-running the tick never double-records.
+//   • LOOK-AHEAD-FREE. A trade is opened from bars ≤ its confirm time and resolved ONLY on bars strictly after the
+//     bar it was recorded on. The recorder stamps `recordedAtBar` and refuses to resolve on it.
+//   • PESSIMISTIC. On any bar containing both the stop and the target, the STOP wins. Gaps through the stop fill at
+//     the open (worse than the stop) and the loss is recorded at the real fill, not the intended one.
+//   • SHADOW MODE. Tiers measured net-negative (SCALP/SWING) are recorded but flagged `shadow:true` — they never
+//     count toward paper P&L. They exist to confirm, on forward data, that they really do lose.
+//
+// The report compares LIVE against the tier's own backtest claim and raises a DRIFT ALARM when the live Wilson
+// interval and the backtest interval stop overlapping. It also states how many trades are needed before the live
+// win rate means anything at all — because at ~50 signals/year, "30 sessions" proves nothing about win rate.
+// ════════════════════════════════════════════════════════════════════════════════
+import fs from 'node:fs'
+import path from 'node:path'
+
+export const PAPER_PARAMS = Object.freeze({
+  // ⚠ MEASURED, not assumed (fill_window_parity.json, 2026-08-09): the old flat 24h window was NOT "conservative".
+  // On the live 15m book, late fills (2h→24h after the signal) win 80.1% vs 85.2% and earn ΔavgR −0.070 — the
+  // paper journal would have under-read the book vs its artifact. And on 4H, 24h < the validated 8-bar window
+  // (32h), silently EXPIRING 13% of perfectly good fills. Parity by construction: 8 bars of the ENTRY TIMEFRAME,
+  // exactly what every ship validator resolved with. Never a flat wall-clock window again.
+  fillWindowBarsTf: 8,             // fill window, in entry-timeframe bars (matches the validators)
+  horizonBarsTf: 80,               // outcome horizon, in entry-timeframe bars (matches the validators)
+})
+
+const wilson = (k, n) => { if (!n) return [0, 1]; const p = k / n, z = 1.96, d = 1 + z * z / n
+  const c = (p + z * z / (2 * n)) / d, m = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d
+  return [Math.max(0, c - m), Math.min(1, c + m)] }
+
+/** Read the append-only journal. Corrupt lines are surfaced, never silently skipped. */
+export function loadJournal(file) {
+  if (!fs.existsSync(file)) return []
+  const out = []
+  const lines = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean)
+  lines.forEach((l, i) => { try { out.push(JSON.parse(l)) } catch { throw new Error(`paper journal line ${i + 1} is corrupt: ${l.slice(0, 80)}`) } })
+  return out
+}
+function rewrite(file, rows) {
+  fs.mkdirSync(path.dirname(file), { recursive: true })
+  fs.writeFileSync(file, rows.map(r => JSON.stringify(r)).join('\n') + '\n')
+}
+
+/**
+ * Record any NEW signals from a roster. Idempotent: an id already present is never re-added.
+ * @returns {{added:number, skipped:number, ids:string[]}}
+ */
+// 🔥 READINESS STAMP (2026-09-26, Ashraf: "add the dense sub-book to the app"). study_density_gate.mjs measured IMPULSE_CONT at
+// $0.87/t on days with big-move density ≥ 6 vs $0.35/t overall (8/8 folds, viable at the MEASURED spread where the whole book is
+// not) — but the LIFT is not yet powered. So the recorder stamps the causal readiness reading (dens30 / rv10 / state from
+// bigmoveReadiness, the same code the cockpit shows) on EVERY new row, fires and refusals alike, and paperReview reports a
+// record-only "dense" sub-book beside the book. Nothing is gated, nothing is sized; ctx absent ⇒ rows are byte-identical.
+const readinessStamp = (ctx) => ctx && ctx.readiness && ctx.readiness.dens30 != null
+  ? { dens30: ctx.readiness.dens30, rv10: ctx.readiness.rv10 ?? null, state: ctx.readiness.state ?? null,
+      // era-neutral reading (study_density_gate_relative): density against its own trailing-1y median — the sub-book's key
+      ...(ctx.readiness.dens_rel != null ? { dens_rel: ctx.readiness.dens_rel, dens_med1y: ctx.readiness.dens_med1y ?? null } : {}) } : null
+
+export function recordSignals(file, roster, tierStats, nowBarT, ctx = {}) {
+  const rows = loadJournal(file)
+  const readiness = readinessStamp(ctx)
+  const have = new Set(rows.map(r => r.id))
+  const SLOTS = { SWING_TRADE: 'swingTrade', TREND_CONT: 'trendCont', PULLBACK_CONT: 'pullbackCont', IMPULSE_CONT: 'impulseCont', IMPULSE_CONT_BE20: 'impulseContBe20', BIG_SWING_HTF: 'bigSwingHtf', BREAK_RETEST: 'breakRetest', OFFHOURS_REV: 'offhoursRev', H1_STRUCT: 'h1Struct', H4_STRUCT: 'h4Struct', SCALP: 'scalp', SWING: 'swing', SWEEP_DIVERGENCE: 'sweepDivergence', DIAMOND_SWING: 'diamondSwing' }
+  const ids = []
+  let added = 0, skipped = 0
+  for (const [tier, slot] of Object.entries(SLOTS)) {
+    const s = roster[slot]
+    if (!s || s.t == null) continue
+    const id = `${tier}@${s.t}`
+    if (have.has(id)) { skipped++; continue }
+    const stats = tierStats[tier]
+    // a tier the market-state gate blocked, or one the ATR gate blocked, is NOT a trade — record the refusal
+    // 🚧 THE REFUSED PLAN IS RECORDED TOO (2026-08-19, Ashraf: "record everything, so we know the reason we are
+    // missing a trade"). A refusal used to store only its REASON, so 134 of them in one week were unpriceable —
+    // we could count what the gate blocked but never say whether it saved or cost us money. The plan therefore
+    // travels in a NESTED `wouldBe` block: the miss ledger can price it, while the top-level row still carries no
+    // `entry`/`stop`/`target`, so nothing downstream can ever mistake a refusal for a trade (that invariant is
+    // asserted in smoke_paper_trader and predates this change).
+    if (s.blocked) {
+      const wouldBe = (s.entry != null && s.stop != null && s.target != null)
+        ? { entry: s.entry, stop: s.stop, target: s.target, side: s.side ?? null, atr: s.atr ?? null,
+            beTriggerR: s.beTriggerR ?? null, beLockR: s.beLockR ?? null }
+        : null
+      rows.push({ id, tier, state: 'REFUSED', why: s.blockedWhy, t: s.t, recordedAtBar: nowBarT, wouldBe, trendGate: s.trendGate ?? null, htfSweep: s.htfSweep ?? null, offHoursStart: s.offHoursStart ?? null, ...(readiness ? { readiness } : {}) })
+      added++; ids.push(id); continue
+    }
+    // 🚨 THE BE PARAMETERS ARE RECORDED BUT NOT YET APPLIED BY resolveOpen (which checks stop/target only). That
+    // makes this recorder a forward test of the UNMANAGED variant of a managed tier — measured 2026-07-24 as
+    // +$0.859/t vs the shipped +$1.179/t for SWING_TRADE, i.e. it under-reports the tier by ~27%. Writing the
+    // parameters into every row is what makes that gap VISIBLE in the journal instead of invisible in an
+    // assumption; a resolver that arms them is the fix, and until it lands the forward numbers are a FLOOR.
+    rows.push({ id, tier, state: 'PENDING', shadow: stats?.tradeable === false,
+      beTriggerR: s.beTriggerR ?? null, beLockR: s.beLockR ?? null, beApplied: false,
+      side: s.side, entry: s.entry, stop: s.stop, target: s.target, controlAgree: s.controlAgree ?? null,
+      atr: s.atr ?? null, risk: +Math.abs(s.entry - s.stop).toFixed(2),
+      tf: stats?.tf ?? '15m', t: s.t, recordedAtBar: nowBarT, reasons: s.reasons ?? [],
+      // the trend-agreement verdict travels with every row so score_forward_ledgers.mjs can judge the gate
+      // on REAL forward fires — a stamp that dies at the journal was scoring nothing (caught 2026-08-29).
+      trendGate: s.trendGate ?? null, htfSweep: s.htfSweep ?? null, offHoursStart: s.offHoursStart ?? null, ...(readiness ? { readiness } : {}) })
+    added++; ids.push(id)
+  }
+  if (added) rewrite(file, rows)
+  return { added, skipped, ids }
+}
+
+/**
+ * Advance every PENDING / OPEN trade against bars. A trade is only ever touched by bars STRICTLY AFTER the bar it
+ * was recorded on — the recorder's own bar cannot resolve it.
+ * @param {Bar[]} bars ascending 15m (or finer) bars covering the period since each trade was recorded
+ */
+/**
+ * @param {function} [opts.subBarsOf] (t, spanMs) → sub-bars inside an entry bar, from makeSubBarIndex(1m bars).
+ *   PARITY FIX 2026-08-16. Without it the fill bar is resolved by the PESSIMISTIC floor rule: no target, no MFE,
+ *   no BE arm on that bar at all. That rule is safe but it is NOT what the books were measured under — every
+ *   validator now replays the fill bar on its 1m sub-bars (src/core/seqResolver.js), which DOES credit a target
+ *   that trades after the fill minute. A recorder stricter than its own validator biases the forward test DOWN,
+ *   and the forward test is the only route IMPULSE_CONT has to promotion: it would show the book failing to
+ *   reproduce numbers it never claimed. Same units as the validator, or the comparison is meaningless — the same
+ *   lesson as the fill-WINDOW parity fix (2026-08-09), one layer deeper. With no sub-bars supplied the old
+ *   pessimistic rule applies unchanged, so nothing silently shifts when 1m coverage is missing.
+ */
+export function resolveOpen(file, bars, tfMs = { '1m': 60000, '5m': 300000, '15m': 900000, '30m': 1800000, '1h': 3600000, '2h': 7200000, '4h': 14400000 }, { subBarsOf = null } = {}) {
+  const rows = loadJournal(file)
+  if (!bars?.length) return { resolved: 0, filled: 0, expired: 0 }
+  let resolved = 0, filled = 0, expired = 0
+  for (const r of rows) {
+    if (r.state !== 'PENDING' && r.state !== 'OPEN') continue
+    const up = r.side === 'BUY'
+    const horizonMs = PAPER_PARAMS.horizonBarsTf * (tfMs[r.tf] ?? 3600000)
+    const after = bars.filter(b => b.t > r.recordedAtBar)          // strictly after — no self-resolution
+    if (!after.length) continue
+
+    // ── FILL: a limit at the wick tip.
+    // The recorder must be PESSIMISTIC ON BOTH SIDES. An earlier version filled at the bar's OPEN whenever the bar
+    // opened beyond the limit, handing back "price improvement" on 33.2% of trades — a mean +$0.652, i.e. 8.7% of R
+    // per trade — which lifted realised EV to +0.343R against the validator's +0.279R. That is a flattering fiction:
+    // if a 15m bar OPENS below a BUY limit, price crossed the limit between bars, and in a continuous market it
+    // TRADED there. You fill AT your limit. Only a genuine session gap fills better, and we do not credit that.
+    // Losses from gapping THROUGH the stop are still charged in full (see below). Never the reverse.
+    if (r.state === 'PENDING') {
+      for (const b of after) {
+        if (b.t > r.t + PAPER_PARAMS.fillWindowBarsTf * (tfMs[r.tf] ?? 3600000)) { r.state = 'EXPIRED'; r.expiredAt = b.t; expired++; break }
+        if (up ? b.l <= r.entry : b.h >= r.entry) {
+          r.fillPrice = r.entry                                         // no price improvement, ever
+          r.entrySlippage = 0
+          r.openBeyondLimit = up ? +Math.max(0, r.entry - b.o).toFixed(3) : +Math.max(0, b.o - r.entry).toFixed(3)  // recorded, never credited
+          // TRADE-THROUGH AT FILL (2026-09-16): how far beyond the limit price went on the fill bar — the touch-only fills (< ~$0.10)
+          // are the ones a real resting limit may miss and, measured, ~10× more valuable than the average fill
+          // (study_be_lock_semantics#traded_fill_through_sensitivity). Refined to the fill MINUTE by the sequenced replay below.
+          r.fillThroughUsd = up ? +Math.max(0, r.entry - b.l).toFixed(3) : +Math.max(0, b.h - r.entry).toFixed(3); r.fillThroughBasis = 'bar'
+          r.filledAt = b.t; r.state = 'OPEN'; filled++
+          break
+        }
+      }
+      if (r.state !== 'OPEN') continue
+    }
+
+    // ── OUTCOME + BREAK-EVEN management. Parity with core/outcomeResolver.resolveManagedLimit (2026-07-26): once
+    // price moves favorably by beTriggerR·risk, the stop trails to entry±beLockR·risk. A trade that then reverses
+    // exits at that BE stop = SCRATCH (a small profit if beLockR>0), NOT a full loss — this is the +$0.32/trade the
+    // shipped SWING_TRADE earns and the un-managed EA was leaving on the table. Conservative intrabar: stop checked
+    // FIRST (a gap through fills at the open), and BE arms only AFTER this bar's stop/tp resolve (no same-bar
+    // arm+exit). beTriggerR<=0 disables BE, exactly as the backtest resolver does.
+    const risk = Math.abs(r.entry - r.stop)
+    const beT = r.beTriggerR ?? 0, beL = r.beLockR ?? 0
+    const managed = beT > 0 && risk > 0
+    const beArm = up ? r.fillPrice + beT * risk : r.fillPrice - beT * risk
+    const beStop = up ? r.fillPrice + beL * risk : r.fillPrice - beL * risk
+    // 🚨 LOCK SEMANTICS = THE EA's (2026-09-14, IMPULSE_CONT@1789378200000): the shipped books arm at +0.05R and lock at
+    // +0.10R — deeper than the trigger — so at arming the lock sits BEYOND the price. MT5 rejects a SELL SL below the ask
+    // (a BUY SL above the bid) and FerrariTurbo2.mq5 retries every tick, so live the lock RESTS only once the market has
+    // traded through it. This recorder charged the next minute's open as a "gap through" a stop that could not rest
+    // (−$0.43 on a trade the EA would have scratched at +$1.40). Now: armed ⇒ the lock becomes ACTIVE only when the
+    // favourable side reaches it (lockActive); until then the original stop and target apply; the bar that activates it
+    // and closes back through it exits at the lock (the close is the last print). Measured on the frozen OOS set
+    // (study_be_lock_semantics.json): the edge survives these semantics (net $0.285/t, LB $0.096) — a close-at-market
+    // EA would not (−$0.004/t). seqResolver lockMode:'traded' is the same rule; the validator's artifacts stay 'level'.
+    let armed = false, lockActive = false
+    // 📈 IN-TRADE TELEMETRY (Ashraf 2026-08-07): record what happened DURING the trade, not just its end — MFE (max
+    // favorable excursion), MAE (max adverse), bars held, when BE armed. This is the loss-autopsy's key evidence:
+    // a loss with high MFE was a NEAR-MISS (exit management question); MFE≈0 means the entry was simply wrong.
+    let mfe = 0, mae = 0, held = 0
+    // hoisted so the sub-bar replay below stamps exactly what the bar loop stamps (one definition, one behaviour)
+    const stamp = () => { if (risk > 0) { r.mfeR = +(mfe / risk).toFixed(3); r.maeR = +(mae / risk).toFixed(3) } r.barsHeld = held }
+    for (const b of after) {
+      if (b.t < r.filledAt) continue
+      // ── PARITY 2026-08-16: the fill bar replayed on its 1m sub-bars, exactly as core/seqResolver does for the
+      // books' backtests. Fill minute: stop chargeable, target and BE-arm NOT (1m residual ambiguity stays
+      // pessimistic). Later minutes inside that bar: true sequence — stop, then target, then BE arm. Without
+      // sub-bars this block is skipped and the old floor rule below applies unchanged.
+      if (b.t === r.filledAt && subBarsOf) {
+        const subs = subBarsOf(b.t, tfMs[r.tf] ?? 900000) || []
+        let k = 0
+        while (k < subs.length && !(up ? subs[k].l <= r.fillPrice : subs[k].h >= r.fillPrice)) k++
+        if (k < subs.length) {
+          r.fillSequenced = true
+          r.fillThroughUsd = up ? +Math.max(0, r.fillPrice - subs[k].l).toFixed(3) : +Math.max(0, subs[k].h - r.fillPrice).toFixed(3); r.fillThroughBasis = 'minute'
+          held++
+          const fillK = k
+          let exit = null
+          for (; k < subs.length; k++) {
+            const m = subs[k], fillSub = k === fillK
+            if (!fillSub) mfe = Math.max(mfe, up ? m.h - r.fillPrice : r.fillPrice - m.l)
+            mae = Math.max(mae, up ? r.fillPrice - m.l : m.h - r.fillPrice)
+            const curStop = (managed && armed && lockActive) ? beStop : r.stop
+            if (up ? m.l <= curStop : m.h >= curStop) { exit = { kind: 'stop', level: curStop, open: m.o }; break }
+            if (!fillSub && (up ? m.h >= r.target : m.l <= r.target)) { exit = { kind: 'target' }; break }
+            if (managed && !armed && !fillSub && (up ? m.h >= beArm : m.l <= beArm)) { armed = true; r.beApplied = true }
+            if (managed && armed && !lockActive && !fillSub && (up ? m.h >= beStop : m.l <= beStop)) {
+              lockActive = true                                                                   // the market traded through the lock: it rests from now
+              if (up ? m.c <= beStop : m.c >= beStop) { exit = { kind: 'stop', level: beStop, open: beStop }; break }   // …and this minute closed back through it
+            }
+          }
+          if (exit) {
+            if (exit.kind === 'stop') {
+              const gapped = up ? exit.open < exit.level : exit.open > exit.level
+              r.exitPrice = gapped ? exit.open : exit.level
+              r.exitSlippage = +(up ? exit.level - r.exitPrice : r.exitPrice - exit.level).toFixed(3)
+              r.pnl = +((up ? r.exitPrice - r.fillPrice : r.fillPrice - r.exitPrice)).toFixed(3)
+              if (managed && armed && lockActive) { r.state = 'SCRATCH'; r.win = null; r.beApplied = true }
+              else { r.state = 'STOPPED'; r.win = false }
+            } else {
+              r.exitPrice = r.target; r.exitSlippage = 0; r.state = 'TARGET'; r.win = true
+              r.pnl = +((up ? r.target - r.fillPrice : r.fillPrice - r.target)).toFixed(3)
+            }
+            r.closedAt = b.t; stamp(); resolved++; break
+          }
+          continue                                  // fill bar fully consumed by the sequenced replay
+        }
+      }
+      // ── 🚨 POST-FILL BE SEQUENCE (caught LIVE 2026-09-06, IMPULSE_CONT@1788525900000): the 13:30Z bar ARMED
+      // break-even (its low crossed beArm) and then CLOSED beyond the BE stop — the stop was crossed INSIDE that
+      // bar, after arming (the close comes after the low). The bar rule below armed at the END of the bar and only
+      // checked the BE stop on the NEXT bar, whose open (4423.74) it then charged as a "gap through" 4407.47 —
+      // $16.27 of manufactured slippage, a −0.67R "SCRATCH". 15 of 45 BE exits in the journal carried >$2 of this
+      // (net −$50); hard stops 1/137. The validated resolver credits the BE price on exactly this case, and the 1m
+      // tape shows the stop trading at ~4407.8. Two-layer fix, same units as the validator:
+      //   (a) sub-bars available → replay the bar minute by minute: stop first, then target, then BE arm — the same
+      //       true sequence the fill bar already gets (nothing favourable is credited out of order);
+      //   (b) no sub-bars → after the bar arms BE, if its CLOSE is already beyond the BE stop, the stop was hit in
+      //       this bar after the arm: exit at the BE stop, slippage 0. A genuine INTER-bar gap (next bar opens
+      //       beyond the stop while this bar closed inside it) is still charged at the open, unchanged.
+      if (b.t > r.filledAt && subBarsOf) {
+        const subs = subBarsOf(b.t, tfMs[r.tf] ?? 900000) || []
+        if (subs.length) {
+          held++
+          if (b.t > r.filledAt + horizonMs) { r.state = 'TIMEOUT'; r.exitPrice = b.c; r.closedAt = b.t
+            r.pnl = +((up ? b.c - r.fillPrice : r.fillPrice - b.c)).toFixed(3); r.win = r.pnl > 0; stamp(); resolved++; break }
+          let exit = null
+          for (const m of subs) {
+            mfe = Math.max(mfe, up ? m.h - r.fillPrice : r.fillPrice - m.l)
+            mae = Math.max(mae, up ? r.fillPrice - m.l : m.h - r.fillPrice)
+            const curStop = (managed && armed && lockActive) ? beStop : r.stop
+            if (up ? m.l <= curStop : m.h >= curStop) { exit = { kind: 'stop', level: curStop, open: m.o }; break }
+            if (up ? m.h >= r.target : m.l <= r.target) { exit = { kind: 'target' }; break }
+            if (managed && !armed && (up ? m.h >= beArm : m.l <= beArm)) { armed = true; r.beApplied = true }
+            if (managed && armed && !lockActive && (up ? m.h >= beStop : m.l <= beStop)) {
+              lockActive = true
+              if (up ? m.c <= beStop : m.c >= beStop) { exit = { kind: 'stop', level: beStop, open: beStop }; break }
+            }
+          }
+          if (exit) {
+            if (exit.kind === 'stop') {
+              const gapped = up ? exit.open < exit.level : exit.open > exit.level
+              r.exitPrice = gapped ? exit.open : exit.level
+              r.exitSlippage = +(up ? exit.level - r.exitPrice : r.exitPrice - exit.level).toFixed(3)
+              r.pnl = +((up ? r.exitPrice - r.fillPrice : r.fillPrice - r.exitPrice)).toFixed(3)
+              if (managed && armed && lockActive) { r.state = 'SCRATCH'; r.win = null; r.beApplied = true }
+              else { r.state = 'STOPPED'; r.win = false }
+            } else {
+              r.exitPrice = r.target; r.exitSlippage = 0; r.state = 'TARGET'; r.win = true
+              r.pnl = +((up ? r.target - r.fillPrice : r.fillPrice - r.target)).toFixed(3)
+            }
+            r.closedAt = b.t; stamp(); resolved++; break
+          }
+          continue                                  // bar fully consumed by the sequenced replay
+        }
+      }
+      // 🚨 FILL-BAR SEQUENCE (caught LIVE 2026-08-14, SWING_TRADE@1786709700000): the fill bar OPENED AT ITS LOW
+      // below the target, rallied through the SELL limit, and this loop credited a +$5.01 "TARGET" from range that
+      // traded BEFORE the fill — while the real position was ~$9 underwater. OHLC cannot order intrabar prices, so
+      // on the fill bar the favorable side (target, MFE, BE-arm) is NOT creditable; the adverse side (stop, MAE)
+      // stays fully charged. Pessimistic on BOTH sides — same rule as core/outcomeResolver (fixed the same day).
+      const fillBar = b.t === r.filledAt
+      held++
+      if (!fillBar) mfe = Math.max(mfe, up ? b.h - r.fillPrice : r.fillPrice - b.l)
+      mae = Math.max(mae, up ? r.fillPrice - b.l : b.h - r.fillPrice)
+      // (stamp is hoisted above the loop — a second block-scoped copy here would shadow it inside the sub-bar
+      //  replay's temporal dead zone, which is exactly the ReferenceError this comment replaced.)
+      if (b.t > r.filledAt + horizonMs) { r.state = 'TIMEOUT'; r.exitPrice = b.c; r.closedAt = b.t
+        r.pnl = +((up ? b.c - r.fillPrice : r.fillPrice - b.c)).toFixed(3); r.win = r.pnl > 0; stamp(); resolved++; break }
+      const curStop = (managed && armed && lockActive) ? beStop : r.stop
+      const hitStop = up ? b.l <= curStop : b.h >= curStop
+      const hitTgt = !fillBar && (up ? b.h >= r.target : b.l <= r.target)
+      if (hitStop) {
+        const gapped = up ? b.o < curStop : b.o > curStop
+        r.exitPrice = gapped ? b.o : curStop
+        r.exitSlippage = +(up ? curStop - r.exitPrice : r.exitPrice - curStop).toFixed(3)   // >0 = worse than intended
+        r.pnl = +((up ? r.exitPrice - r.fillPrice : r.fillPrice - r.exitPrice)).toFixed(3)
+        if (managed && armed && lockActive) { r.state = 'SCRATCH'; r.win = null; r.beApplied = true }   // BE-scratch (≈ flat / small profit)
+        else { r.state = 'STOPPED'; r.win = false }
+        r.closedAt = b.t; stamp(); resolved++; break
+      }
+      if (hitTgt) { r.exitPrice = r.target; r.exitSlippage = 0; r.state = 'TARGET'; r.win = true; r.closedAt = b.t
+        r.pnl = +((up ? r.target - r.fillPrice : r.fillPrice - r.target)).toFixed(3); stamp(); resolved++; break }
+      // arm BE AFTER this bar's stop/tp resolved (never on the fill bar — pre-fill range)
+      if (managed && !armed && !fillBar && (up ? b.h >= beArm : b.l <= beArm)) { armed = true; r.beApplied = true }
+      // the lock RESTS only once this bar's favourable side has reached it (EA semantics, 2026-09-14); and if the bar then
+      // CLOSED back through it, the stop traded inside this bar after resting (the close is the last print) — exit at the
+      // lock now, never at the next bar's open (the 09-06 rule, now conditioned on the lock having been reachable).
+      if (managed && armed && !lockActive && !fillBar && (up ? b.h >= beStop : b.l <= beStop)) { lockActive = true
+        if (up ? b.c <= beStop : b.c >= beStop) {
+          r.exitPrice = beStop; r.exitSlippage = 0; r.state = 'SCRATCH'; r.win = null
+          r.pnl = +((up ? beStop - r.fillPrice : r.fillPrice - beStop)).toFixed(3)
+          r.closedAt = b.t; stamp(); resolved++; break
+        } }
+    }
+  }
+  rewrite(file, rows)
+  return { resolved, filled, expired }
+}
+
+/** Live vs backtest, per tier — with a drift alarm and an honest statement of how little we yet know. */
+export function paperStats(file, tierStats, { spread = 0.30 } = {}) {
+  const rows = loadJournal(file)
+  const out = {}
+  for (const [tier, s] of Object.entries(tierStats)) {
+    const mine = rows.filter(r => r.tier === tier)
+    const closed = mine.filter(r => r.state === 'STOPPED' || r.state === 'TARGET')
+    const w = closed.filter(r => r.win).length, n = closed.length
+    const [lo, hi] = wilson(w, n)
+    const [bLo, bHi] = wilson(Math.round(s.wr * s.n), s.n)                 // the backtest's own interval
+    const overlap = n >= 10 && !(hi < bLo || lo > bHi)
+    // trades needed before the live WR means anything: 95% CI half-width w on p
+    const nFor = halfWidth => Math.ceil(1.96 ** 2 * s.wr * (1 - s.wr) / halfWidth ** 2)
+    out[tier] = {
+      shadow: s.tradeable === false,
+      signals: mine.length, refused: mine.filter(r => r.state === 'REFUSED').length,
+      pending: mine.filter(r => r.state === 'PENDING').length, expired: mine.filter(r => r.state === 'EXPIRED').length,
+      open: mine.filter(r => r.state === 'OPEN').length, closed: n, timeouts: mine.filter(r => r.state === 'TIMEOUT').length,
+      fill_rate: mine.length ? +(mine.filter(r => r.filledAt).length / mine.filter(r => r.state !== 'REFUSED').length || 0).toFixed(3) : null,
+      live_wr: n ? +(w / n).toFixed(4) : null, live_ci: n ? [+lo.toFixed(4), +hi.toFixed(4)] : null,
+      backtest_wr: s.wr, backtest_ci: [+bLo.toFixed(4), +bHi.toFixed(4)],
+      drift_alarm: n >= 10 && !overlap,
+      mean_entry_slippage: closed.length ? +(closed.reduce((a, r) => a + (r.entrySlippage ?? 0), 0) / closed.length).toFixed(3) : null,
+      mean_exit_slippage: closed.length ? +(closed.reduce((a, r) => a + (r.exitSlippage ?? 0), 0) / closed.length).toFixed(3) : null,
+      gross_pnl_per_trade: n ? +(closed.reduce((a, r) => a + r.pnl, 0) / n).toFixed(3) : null,
+      net_pnl_per_trade: n ? +((closed.reduce((a, r) => a + r.pnl, 0) - n * spread) / n).toFixed(3) : null,
+      trades_needed_pm10pp: nFor(0.10), trades_needed_pm5pp: nFor(0.05),
+      years_to_pm10pp: s.perYear ? +(nFor(0.10) / s.perYear).toFixed(1) : null,
+    }
+  }
+  return out
+}

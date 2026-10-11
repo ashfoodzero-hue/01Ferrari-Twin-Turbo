@@ -1,0 +1,6 @@
+.env
+data/history/
+data/orderflow/
+data/calendar/release_ticks/
+node_modules/
+*.part

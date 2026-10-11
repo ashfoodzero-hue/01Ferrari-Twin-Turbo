@@ -1,0 +1,187 @@
+{
+ "at": "2026-10-11T02:01:22.631Z",
+ "pid": 6224,
+ "connected": true,
+ "coverage_from": "2026-10-10T23:51:00.000Z",
+ "last_msg_at": "2026-10-10T23:50:47.369Z",
+ "reconnects": 1,
+ "market_open": false,
+ "symbols": {
+  "XAUUSD": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "XAGUSD": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "EURUSD": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "USDJPY": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "GBPUSD": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "USDCAD": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "USDSEK": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  },
+  "USDCHF": {
+   "bid": null,
+   "ask": null,
+   "last_tick_at": null,
+   "ticks_last_60s": 0,
+   "settled_through": "2026-10-11T02:00:00.000Z",
+   "last_bar": "2026-10-09T20:59:00.000Z",
+   "late_ticks": 0,
+   "counts": {
+    "tick_ca": 0,
+    "arbiter": 0,
+    "arbiter_agree": 0,
+    "unverified": 0,
+    "refill": 0,
+    "quiet": 420,
+    "mismatch": 0,
+    "rechecked": 0,
+    "corrected": 0,
+    "late_not_in_store": 0
+   },
+   "forming": null
+  }
+ }
+}

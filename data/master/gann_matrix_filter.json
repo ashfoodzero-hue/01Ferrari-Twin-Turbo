@@ -1,0 +1,190 @@
+{
+ "at": "2026-10-09T12:38:40.357Z",
+ "tape_to": "2026-10-09T06:00:00.000Z",
+ "rules": {
+  "tfs": [
+   "1h",
+   "4h",
+   "1d"
+  ],
+  "window_bars": 3,
+  "tol_atr": 0.25,
+  "min_n": 100
+ },
+ "primary": {
+  "arm": "PRIMARY Matrix with WTI (2y)",
+  "trades": 3398,
+  "all": {
+   "oos": {
+    "n": 1327,
+    "wr": 0.2007,
+    "wr_lb": 0.179,
+    "net": -0.908,
+    "net_lb": -1.8238,
+    "net_ub": 0.0039
+   },
+   "train": {
+    "n": 2071,
+    "wr": 0.1858,
+    "wr_lb": 0.169,
+    "net": -0.2699,
+    "net_lb": -0.6206,
+    "net_ub": 0.0739
+   }
+  },
+  "filters": {
+   "NEAR_TIME_TURN": {
+    "oos": {
+     "n": 1150,
+     "wr": 0.2057,
+     "wr_lb": 0.1823,
+     "net": -0.9566,
+     "net_lb": -1.8878,
+     "net_ub": 0.0399
+    },
+    "train": {
+     "n": 1743,
+     "wr": 0.1851,
+     "wr_lb": 0.167,
+     "net": -0.2304,
+     "net_lb": -0.5873,
+     "net_ub": 0.17
+    },
+    "lift_wr": 0.005,
+    "lift_net": -0.0486,
+    "verdict": "FAIL"
+   },
+   "AT_GANN_LEVEL": {
+    "oos": {
+     "n": 681,
+     "wr": 0.1845,
+     "wr_lb": 0.1559,
+     "net": -1.1165,
+     "net_lb": -2.2065,
+     "net_ub": -0.0082
+    },
+    "train": {
+     "n": 867,
+     "wr": 0.1891,
+     "wr_lb": 0.1635,
+     "net": -0.1654,
+     "net_lb": -0.6609,
+     "net_ub": 0.3863
+    },
+    "lift_wr": -0.0162,
+    "lift_net": -0.2085,
+    "verdict": "FAIL"
+   },
+   "BOTH": {
+    "oos": {
+     "n": 597,
+     "wr": 0.1893,
+     "wr_lb": 0.1586,
+     "net": -1.0047,
+     "net_lb": -2.1174,
+     "net_ub": 0.2522
+    },
+    "train": {
+     "n": 760,
+     "wr": 0.1861,
+     "wr_lb": 0.1591,
+     "net": -0.2019,
+     "net_lb": -0.7071,
+     "net_ub": 0.3893
+    },
+    "lift_wr": -0.0114,
+    "lift_net": -0.0967,
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "report": {
+  "arm": "REPORT Matrix without WTI (13y)",
+  "trades": 17090,
+  "all": {
+   "oos": {
+    "n": 8684,
+    "wr": 0.1616,
+    "wr_lb": 0.1538,
+    "net": -0.6098,
+    "net_lb": -0.8242,
+    "net_ub": -0.3918
+   },
+   "train": {
+    "n": 8406,
+    "wr": 0.1246,
+    "wr_lb": 0.1176,
+    "net": -0.7128,
+    "net_lb": -0.8157,
+    "net_ub": -0.6048
+   }
+  },
+  "filters": {
+   "NEAR_TIME_TURN": {
+    "oos": {
+     "n": 7316,
+     "wr": 0.1617,
+     "wr_lb": 0.1531,
+     "net": -0.6082,
+     "net_lb": -0.8372,
+     "net_ub": -0.3772
+    },
+    "train": {
+     "n": 7141,
+     "wr": 0.1225,
+     "wr_lb": 0.115,
+     "net": -0.7452,
+     "net_lb": -0.8604,
+     "net_ub": -0.6365
+    },
+    "lift_wr": 0.0001,
+    "lift_net": 0.0016,
+    "verdict": "FAIL"
+   },
+   "AT_GANN_LEVEL": {
+    "oos": {
+     "n": 3995,
+     "wr": 0.1559,
+     "wr_lb": 0.1446,
+     "net": -0.5839,
+     "net_lb": -0.8623,
+     "net_ub": -0.3131
+    },
+    "train": {
+     "n": 3891,
+     "wr": 0.1239,
+     "wr_lb": 0.1138,
+     "net": -0.7415,
+     "net_lb": -0.9051,
+     "net_ub": -0.5734
+    },
+    "lift_wr": -0.0057,
+    "lift_net": 0.0259,
+    "verdict": "FAIL"
+   },
+   "BOTH": {
+    "oos": {
+     "n": 3465,
+     "wr": 0.1559,
+     "wr_lb": 0.1438,
+     "net": -0.5648,
+     "net_lb": -0.8577,
+     "net_ub": -0.2626
+    },
+    "train": {
+     "n": 3351,
+     "wr": 0.1248,
+     "wr_lb": 0.114,
+     "net": -0.7255,
+     "net_lb": -0.9048,
+     "net_ub": -0.5593
+    },
+    "lift_wr": -0.0057,
+    "lift_net": 0.045,
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "verdict": "GANN_DOES_NOT_MAKE_THE_MATRIX_PROFITABLE",
+ "passing": []
+}

@@ -1,0 +1,17 @@
+{
+  "symbol": "XAUUSD",
+  "tf": "15m",
+  "base": "polygon 1m (twin store), resampled",
+  "history_from": "2013-07-14T22:00:00.000Z",
+  "method": "windowed",
+  "win": 40000,
+  "pad": 2000,
+  "windows": 8,
+  "bars": 308680,
+  "from": 1373839200000,
+  "to": 1791474300000,
+  "from_iso": "2013-07-14",
+  "to_iso": "2026-10-08",
+  "candidates": 232402,
+  "gen_seconds": 168
+}

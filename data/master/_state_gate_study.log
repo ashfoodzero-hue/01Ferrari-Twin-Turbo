@@ -1,0 +1,24 @@
+
+████ STATE GATE on IMPULSE_CONT — Method D (validator loop, 1m-sequenced, per-arm one-at-a-time) ████
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+15m 574155 · 1m 4573849 · candidates 426228
+ALL      all      n= 2587 WR 0.7449 (LB 0.7168) net $0.2614/t [0.1728, 0.3485] avgR 0.0367 Σ$676.28 years+ 21/24
+ALL      seq_era  n= 1559 WR 0.7254 (LB 0.6788) net $0.261/t [0.1266, 0.381] avgR 0.0331 Σ$406.94 years+ 12/14
+ALL      oos      n= 1059 WR 0.7411 (LB 0.687) net $0.3602/t [0.1678, 0.5368] avgR 0.0457 Σ$381.43 years+ 9/10
+ALL      train    n= 1528 WR 0.7464 (LB 0.713) net $0.193/t [0.1064, 0.2771] avgR 0.0305 Σ$294.85 years+ 13/15
+ALLOWED  all      n= 1628 WR 0.7556 (LB 0.7191) net $0.3423/t [0.2475, 0.44] avgR 0.0542 Σ$557.27 years+ 20/24
+ALLOWED  seq_era  n= 1095 WR 0.7299 (LB 0.6744) net $0.3185/t [0.1884, 0.4384] avgR 0.0427 Σ$348.73 years+ 13/14
+ALLOWED  oos      n=  728 WR 0.7462 (LB 0.6811) net $0.4434/t [0.2609, 0.6227] avgR 0.0549 Σ$322.82 years+ 10/10
+ALLOWED  train    n=  900 WR 0.7603 (LB 0.7154) net $0.2605/t [0.15, 0.3712] avgR 0.0536 Σ$234.45 years+ 11/15
+VETOED   all      n= 1001 WR 0.7173 (LB 0.6725) net $0.0815/t [-0.0891, 0.2362] avgR -0.0001 Σ$81.54 years+ 16/24
+VETOED   seq_era  n=  483 WR 0.6917 (LB 0.6042) net $0.0621/t [-0.2683, 0.3206] avgR 0.0024 Σ$30.02 years+ 8/14
+VETOED   oos      n=  343 WR 0.7111 (LB 0.6104) net $0.1051/t [-0.3751, 0.5019] avgR 0.0186 Σ$36.05 years+ 7/10
+VETOED   train    n=  658 WR 0.719 (LB 0.6683) net $0.0691/t [-0.0613, 0.2024] avgR -0.0098 Σ$45.49 years+ 10/15
+veto reasons: {"equilibrium — waiting for confirmation":1176,"state favours BUY, signal is SELL":726,"state favours SELL, signal is BUY":771}
+  equilibrium — waiting for confirmation       n=440 net $0.0444/t [-0.1947, 0.2625]
+  state favours BUY, signal is SELL            n=250 net $0.0705/t [-0.4547, 0.466]
+  state favours SELL, signal is BUY            n=311 net $0.1427/t [-0.0715, 0.3334]
+VERDICT: UNPOWERED — the vetoed arm straddles zero; keep Turbo2 live behaviour (block) and let the journal score it
+-> C:\01Ferrari Twin Turbo\data\master\state_gate_on_impulse.json
+exit 0

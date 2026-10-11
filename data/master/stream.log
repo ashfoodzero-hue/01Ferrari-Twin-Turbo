@@ -1,0 +1,28 @@
+run_stream pid 20196 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-08T16:06:00.000Z
+run_stream pid 1812 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-08T17:12:00.000Z
+run_stream pid 20220 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-08T19:18:00.000Z
+  ⚠ stream closed (code 1012) — reconnect in 1s; minutes not covered will be refilled from REST
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T04:02:00.000Z
+  ⚠ stream closed (code 1006) — reconnect in 1s; minutes not covered will be refilled from REST
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T06:27:00.000Z
+run_stream pid 17896 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T06:43:00.000Z
+run_stream pid 7556 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T07:08:00.000Z
+  ⚠ stream closed (code 1006) — reconnect in 1s; minutes not covered will be refilled from REST
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T07:47:00.000Z
+run_stream pid 17016 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T08:55:00.000Z
+run_stream pid 24744 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T09:57:00.000Z
+run_stream pid 2456 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-09T14:02:00.000Z
+run_stream pid 11900 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-10T09:17:00.000Z
+run_stream pid 6224 — Polygon forex ticks for all symbols → verified 1m bars
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-10T19:00:00.000Z
+  ⚠ stream closed (code 1006) — reconnect in 1s; minutes not covered will be refilled from REST
+  stream: connected · all 8 symbols subscribed · full coverage from 2026-10-10T23:51:00.000Z

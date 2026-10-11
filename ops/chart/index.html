@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ferrari Twin Turbo — Live Chart</title>
+<style>
+  :root { --bg:#0d1117; --panel:#161b22; --line:#30363d; --text:#e6edf3; --muted:#8b949e; --up:#26a69a; --down:#ef5350; --accent:#d4a72c; --warn:#f0883e; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:14px/1.4 "Segoe UI", system-ui, sans-serif; display:flex; flex-direction:column; height:100vh; overflow:hidden; }
+  header { display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:10px 16px; background:var(--panel); border-bottom:1px solid var(--line); }
+  h1 { margin:0 12px 0 0; font-size:17px; font-weight:600; letter-spacing:.3px; }
+  h1 span { color:var(--accent); }
+  .group { display:flex; gap:4px; flex-wrap:wrap; }
+  button, select { background:transparent; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:4px 9px; font:inherit; font-size:13px; cursor:pointer; }
+  select { background:var(--panel); color:var(--text); padding:2px 6px; font-size:12px; }
+  button:hover { color:var(--text); }
+  button.on { background:#1f6feb22; color:var(--text); border-color:#1f6feb; }
+  .pill { padding:3px 9px; border-radius:999px; font-size:12px; font-weight:600; border:1px solid var(--line); white-space:nowrap; }
+  .pill.ok { color:var(--up); border-color:#26a69a66; } .pill.bad { color:var(--down); border-color:#ef535066; } .pill.mid { color:var(--warn); border-color:#f0883e66; }
+  #quote { margin-left:auto; font-variant-numeric:tabular-nums; font-size:15px; }
+  #quote .ask { color:var(--muted); font-size:13px; margin-left:6px; }
+  main { display:grid; grid-template-columns:minmax(0, 1fr) 390px; flex:1; min-height:0; }
+  main.nopanel { grid-template-columns:minmax(0, 1fr); } main.nopanel aside { display:none; }
+  #panelBtn.on { color:var(--text); }
+  #charts { display:grid; grid-template-rows:auto 1fr; min-height:0; min-width:0; overflow:hidden; }
+  #charts.full { grid-template-rows:auto 46% repeat(3, 1fr); }
+  #charts:not(.full) .pane.sub { display:none; }
+  #bias { display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding:6px 10px; border-bottom:1px solid var(--line); background:var(--panel); font-size:12px; }
+  .chip { border:1px solid var(--line); border-radius:6px; padding:3px 8px; background:#0d1117; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .chip b { margin-right:4px; } .chip .up { color:var(--up); font-weight:600; } .chip .dn { color:var(--down); font-weight:600; } .chip small { color:var(--muted); }
+  #bias button { margin-left:auto; background:#0d1117; color:var(--muted); border:1px solid var(--line); border-radius:6px; padding:3px 8px; cursor:pointer; font-size:12px; }
+  .ck { display:flex; justify-content:space-between; gap:6px; padding:2px 0; font-size:12px; } .ck .y { color:var(--up); } .ck .n { color:var(--down); } .ck .u { color:var(--muted); }
+  .pane { position:relative; min-height:0; border-bottom:1px solid var(--line); }
+  .ptitle { position:absolute; left:8px; top:4px; z-index:3; display:flex; gap:6px; align-items:center; font-size:12px; color:var(--muted); background:#0d1117cc; padding:2px 6px; border-radius:6px; }
+  .ptitle b { color:var(--text); }
+  .cbox { position:absolute; inset:0; }
+  #mxOverlay { position:absolute; inset:0; z-index:2; pointer-events:none; overflow:hidden; }
+  .mxbox { position:absolute; border:1.5px solid; border-radius:3px; font:600 10px/1.2 system-ui; padding:2px 5px; letter-spacing:.3px; white-space:nowrap; overflow:hidden; }
+  .mxbox.tgt { border-color:#00ff9c; background:#00ff9c1f; color:#00ff9c; box-shadow:0 0 10px #00ff9c88, inset 0 0 8px #00ff9c44; }
+  .mxbox.risk { display:flex; align-items:flex-end; border-color:#ff2e63; background:#ff2e631f; color:#ff2e63; box-shadow:0 0 10px #ff2e6388, inset 0 0 8px #ff2e6344; }
+  .cal-row { display:grid; grid-template-columns:92px 1fr; gap:6px; padding:5px 0; border-bottom:1px solid #21262d; font-size:12px; }
+  .cal-row .when { font-variant-numeric:tabular-nums; color:var(--muted); } .cal-row .when b { color:var(--text); display:block; }
+  .imp { display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; } .imp.high { background:#ef5350; } .imp.medium { background:#f0883e; } .imp.holiday { background:#8b949e; }
+  .cal-m { color:var(--muted); font-size:11px; } .cal-row.now { background:#f0883e14; }
+  .chip.alert { border-color:#f0883e; color:#f0883e; font-weight:600; }
+  .fvgbox { position:absolute; border:1px dashed; border-radius:2px; font:600 10px/1.2 system-ui; padding:1px 4px; white-space:nowrap; overflow:hidden; }
+  .fvgbox.up { border-color:#58a6ff; background:#58a6ff1a; color:#79c0ff; } .fvgbox.dn { border-color:#d2a8ff; background:#d2a8ff1a; color:#d2a8ff; }
+  .mxtag { position:absolute; font:700 10px system-ui; color:#0d1117; padding:1px 5px; border-radius:3px; white-space:nowrap; }
+  aside { background:var(--panel); border-left:1px solid var(--line); padding:14px; overflow:auto; }
+  aside h2 { font-size:12px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); margin:16px 0 6px; font-weight:600; }
+  aside h2:first-child { margin-top:0; }
+  .kv { display:flex; justify-content:space-between; gap:8px; padding:3px 0; font-variant-numeric:tabular-nums; }
+  .kv span:first-child { color:var(--muted); }
+  .msg { padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:#0d1117; font-size:13px; }
+  table { width:100%; border-collapse:collapse; font-size:12px; font-variant-numeric:tabular-nums; table-layout:fixed; }
+  td, th { overflow-wrap:break-word; }
+  aside { overflow-x:hidden; }
+  th { text-align:left; color:var(--muted); font-weight:600; padding:3px 4px; border-bottom:1px solid var(--line); }
+  td { padding:4px; border-bottom:1px solid #21262d; vertical-align:top; }
+  .red { color:var(--down); } .green { color:var(--up); } .warn { color:var(--warn); } .dim { color:var(--muted); }
+  .note { color:var(--muted); font-size:12px; margin-top:14px; }
+  .news a { color:var(--text); text-decoration:none; } .news a:hover { text-decoration:underline; } .news div { padding:5px 0; border-bottom:1px solid #21262d; font-size:12px; } .news span { color:var(--muted); display:block; font-size:11px; }
+  @media (max-width: 900px) { body { height:auto; overflow:auto; display:block; } main { grid-template-columns:minmax(0, 1fr); height:auto; } #charts, #charts.full { grid-template-rows:none; } .pane { height:200px; } .pane.main { height:70vh; } aside { border-left:0; border-top:1px solid var(--line); } #quote { margin-left:0; width:100%; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Ferrari <span>Twin Turbo</span></h1>
+  <select id="mainSel" aria-label="Main chart"></select>
+  <div class="group" id="tfs"></div>
+  <span class="pill" id="streamPill">…</span>
+  <div id="quote">—</div>
+  <button id="panelBtn" title="Show / hide the right panel">Panel ▸</button>
+</header>
+<main>
+  <div id="charts">
+    <div id="bias"><span class="dim">loading drivers…</span></div>
+    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div></div>
+    <div class="pane sub"><div class="ptitle" id="t1"></div><div class="cbox" id="c1"></div></div>
+    <div class="pane sub"><div class="ptitle" id="t2"></div><div class="cbox" id="c2"></div></div>
+    <div class="pane sub"><div class="ptitle" id="t3"></div><div class="cbox" id="c3"></div></div>
+  </div>
+  <aside>
+    <h2>📅 USD calendar — what moves gold</h2>
+    <div id="cal" class="dim">loading…</div>
+    <div class="note" id="calNote" style="margin-top:6px"></div>
+    <h2>Ferrari Matrix scalp (3m) — paper</h2>
+    <div class="msg" id="mxMsg">—</div>
+    <div class="msg" id="monMsg" style="display:none;margin-top:6px"></div>
+    <div class="note" style="margin-top:6px">Ashraf's Pine method on live data (WTI 10 min delayed, as delivered). Half closes at TP1 (stop moves to entry), half runs to TP2. The box shows while a trade is open and disappears when it ends. <b>Paper only.</b></div>
+    <h2>Market state — main (15m)</h2>
+    <div class="msg" id="stateMsg">—</div>
+    <div class="kv"><span>Range high (12h)</span><span id="rHigh">—</span></div>
+    <div class="kv"><span>Range low (12h)</span><span id="rLow">—</span></div>
+    <div class="kv"><span class="red">Bearish confirm: 15m close below</span><span class="red" id="sellT">—</span></div>
+    <div class="kv"><span class="green">Bullish confirm: 15m close above</span><span class="green" id="buyT">—</span></div>
+    <div class="kv"><span>…with volume</span><span id="needVol">—</span></div>
+    <h2>Drivers vs gold</h2>
+    <table><thead><tr><th>Market</th><th>State</th><th>15m</th><th title="Measured, out of sample: share of 15m bars moving in gold's expected direction">Agree</th><th title="Measured, out of sample: after this market confirms a break while gold has not, how often gold follows within 60 min (vs base)">Lead 60m</th></tr></thead><tbody id="drivers"></tbody></table>
+    <h2>All markets vs gold — measured (13y, out of sample)</h2>
+    <table><thead><tr><th>Market</th><th title="share of 15m bars moving in gold's direction (inverse markets counted inverted)">Moves with gold</th><th title="after the market confirms a break while gold has not: gold follows within 1 h, vs gold's base rate">Leads gold (1h)</th></tr></thead><tbody id="allMk"></tbody></table>
+    <div class="note" id="studyNote">Agreement / lead % appear only once measured on the twin's 13 years of Polygon data — never typed in.</div>
+    <h2>Macro (Polygon)</h2>
+    <div id="macro" class="dim">loading…</div>
+    <h2>News (Polygon — gold tickers)</h2>
+    <div id="news" class="dim">loading…</div>
+    <div class="note">Polygon's gold news is thin (mostly ETF articles) — not a live macro newswire. Measured: headline direction does not predict gold. Information only.</div>
+    <h2>Last decision (gold)</h2>
+    <div class="msg" id="decision">—</div>
+    <h2>Data</h2>
+    <div class="kv"><span>Last tick</span><span id="lastTick">—</span></div>
+    <div class="kv"><span>Ticks / minute</span><span id="tpm">—</span></div>
+    <div class="kv"><span>Settled through</span><span id="settled">—</span></div>
+    <div class="kv"><span>Minutes verified · mismatches · corrections</span><span id="verified">—</span></div>
+    <p class="note">Display only — nothing here places a trade. Candles are Polygon <b>bid</b> prices from the twin's verified 1m store; the last candle includes the minute still forming from live ticks. <b>DXY</b> is rebuilt live from its six pairs with the official ICE formula (close-based candles; checked against the official daily close: median difference 0.03 %). <b>WTI</b> is Polygon's crude futures, <b>10 minutes delayed</b> on our plan — shown for context, never used in a signal. Confirmation lines use the same code as the app's market-state rule. Times are UTC.</p>
+  </aside>
+</main>
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script>
+const SERIES = ['XAUUSD', 'XAGUSD', 'DXY', 'WTI', 'EURUSD', 'USDJPY', 'GBPUSD', 'USDCAD', 'USDSEK', 'USDCHF']
+const LABEL = { XAUUSD: 'Gold (XAUUSD)', XAGUSD: 'Silver (XAGUSD)', DXY: 'DXY (rebuilt)', WTI: 'WTI (delayed 10 min)' }
+const TFS = ['1m', '3m', '5m', '15m', '1h', '4h', '1d'], TFMS = { '1m': 6e4, '3m': 18e4, '5m': 3e5, '15m': 9e5, '1h': 36e5, '4h': 144e5, '1d': 864e5 }
+let st = { panes: ['XAUUSD', 'XAGUSD', 'DXY', 'WTI'], tf: '15m' }
+try { const s = JSON.parse(localStorage.getItem('twinChart2') || '{}'); if (Array.isArray(s.panes) && s.panes.length === 4 && s.panes.every((x) => SERIES.includes(x))) st.panes = s.panes; if (TFS.includes(s.tf)) st.tf = s.tf; if (typeof s.full === 'boolean') st.full = s.full; if (typeof s.gamma === 'boolean') st.gamma = s.gamma; if (typeof s.panel === 'boolean') st.panel = s.panel } catch {}
+const save = () => { try { localStorage.setItem('twinChart2', JSON.stringify(st)) } catch {} }
+const $ = (id) => document.getElementById(id)
+const dec = (p) => (p >= 1000 ? 2 : p >= 50 ? 2 : p >= 10 ? 3 : 5)
+const fmt = (p) => (p == null || !isFinite(p) ? '—' : (+p).toFixed(dec(+p)))
+const ago = (iso) => { if (!iso) return '—'; const s = Math.round((Date.now() - Date.parse(iso)) / 1000); return s < 90 ? s + ' s ago' : Math.round(s / 60) + ' min ago' }
+const ser = (b) => ({ time: Math.floor(b.t / 1000), open: b.o, high: b.h, low: b.l, close: b.c })
+const vser = (b) => ({ time: Math.floor(b.t / 1000), value: b.v || 0, color: b.c >= b.o ? '#26a69a55' : '#ef535055' })
+
+// ── four panes, one per slot ──
+const panes = [0, 1, 2, 3].map((k) => {
+  const ch = LightweightCharts.createChart($('c' + k), { autoSize: true, layout: { background: { color: '#0d1117' }, textColor: '#c9d1d9', fontSize: k ? 11 : 12 },
+    grid: { vertLines: { color: '#161b22' }, horzLines: { color: '#161b22' } }, crosshair: { mode: 0 }, rightPriceScale: { borderColor: '#30363d', minimumWidth: k ? 64 : 84, entireTextOnly: true },
+    timeScale: { borderColor: '#30363d', timeVisible: true, secondsVisible: false, visible: true } })
+  const c = ch.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderVisible: false, wickUpColor: '#26a69a', wickDownColor: '#ef5350' })
+  const v = k === 0 ? ch.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' }) : null
+  if (v) ch.priceScale('vol').applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } })
+  return { k, ch, c, v, sym: null, cur: null, lines: [], gBar: null, timer: null }
+})
+// keep the small panes on the main pane's time window (by TIME — the markets trade different hours)
+let syncing = false
+panes[0].ch.timeScale().subscribeVisibleTimeRangeChange((r) => { if (!r || syncing) return; syncing = true; for (const p of panes.slice(1)) { try { p.ch.timeScale().setVisibleRange(r) } catch {} } syncing = false })
+
+function controls() {
+  $('mainSel').innerHTML = SERIES.map((s) => `<option value="${s}" ${s === st.panes[0] ? 'selected' : ''}>${LABEL[s] || s}</option>`).join('')
+  $('mainSel').onchange = (e) => { st.panes[0] = e.target.value; save(); loadPane(panes[0], true) }
+  $('tfs').innerHTML = TFS.map((t) => `<button class="${t === st.tf ? 'on' : ''}" data-t="${t}">${t}</button>`).join('')
+  document.querySelectorAll('[data-t]').forEach((b) => (b.onclick = () => { st.tf = b.dataset.t; save(); controls(); panes.forEach((p) => loadPane(p, true)); if (typeof pollFvg === 'function') pollFvg() }))
+}
+function title(p, extra = '') {
+  const sel = p.k === 0 ? `<b>${LABEL[p.sym] || p.sym}</b>` : `<select data-pane="${p.k}">${SERIES.map((s) => `<option value="${s}" ${s === p.sym ? 'selected' : ''}>${LABEL[s] || s}</option>`).join('')}</select>`
+  $('t' + p.k).innerHTML = sel + extra
+  const s = $('t' + p.k).querySelector('select'); if (s) s.onchange = (e) => { st.panes[p.k] = e.target.value; save(); loadPane(p, true) }
+}
+async function loadPane(p, reset) {
+  const sym = st.panes[p.k], tf = st.tf
+  if (reset) { p.sym = sym; p.cur = null; p.gBar = null; p.lines.forEach((l) => p.c.removePriceLine(l)); p.lines = []; clearInterval(p.timer); p.timer = setInterval(() => loadPane(p, false), sym === 'WTI' ? 60000 : tf === '1m' ? 5000 : 15000) }
+  const r = await fetch(`/api/bars?sym=${sym}&tf=${tf}`).then((x) => x.json()).catch(() => null)
+  if (!r || r.sym !== p.sym || r.tf !== st.tf) return
+  const data = r.closed.slice(), q = r.partial
+  if (q) { if (p.cur && p.cur.t === q.t) { q.h = Math.max(q.h, p.cur.h); q.l = Math.min(q.l, p.cur.l); q.c = p.cur.c } p.cur = { ...q } } else if (p.cur && data.length && p.cur.t <= data.at(-1).t) p.cur = null
+  const all = p.cur ? [...data.filter((b) => b.t < p.cur.t), p.cur] : data
+  p.c.setData(all.map(ser)); if (p.v) p.v.setData(all.map(vser))
+  const last = all.at(-1)?.c ?? 100; p.c.applyOptions({ priceFormat: { type: 'price', precision: dec(last), minMove: 1 / 10 ** dec(last) } })
+  if (reset) { p.ch.timeScale().scrollToRealTime(); if (p.k > 0) { const r0 = panes[0].ch.timeScale().getVisibleRange(); if (r0) try { p.ch.timeScale().setVisibleRange(r0) } catch {} } }
+  title(p, r.delayed ? ' <span class="pill mid">DELAYED 10 min</span>' : '')
+}
+function setLines(p, g) {
+  p.lines.forEach((l) => p.c.removePriceLine(l)); p.lines = []
+  if (!g) return
+  const add = (price, color, t, style) => p.lines.push(p.c.createPriceLine({ price, color, lineWidth: 1, lineStyle: style, axisLabelVisible: p.k === 0, title: p.k === 0 ? t : '' }))
+  add(g.rangeHigh, '#8b949e', 'range high', 2); add(g.rangeLow, '#8b949e', 'range low', 2); add(g.sellTrigger, '#ef5350', 'bearish confirm', 1); add(g.buyTrigger, '#26a69a', 'bullish confirm', 1)
+}
+let busy = false
+async function poll() {
+  if (busy) return; busy = true
+  try {
+    const R = await Promise.all(panes.map((p) => fetch(`/api/live?sym=${p.sym}`).then((x) => x.json()).catch(() => null)))
+    R.forEach((r, k) => {
+      const p = panes[k]; if (!r || r.sym !== p.sym) return
+      const f = r.quote?.forming, ms = TFMS[st.tf]
+      if (f && !r.delayed) { const bt = Math.floor(f.t / ms) * ms
+        if (!p.cur || p.cur.t !== bt) { p.cur = { t: bt, o: f.o, h: f.h, l: f.l, c: f.c, v: f.v } } else { p.cur.h = Math.max(p.cur.h, f.h); p.cur.l = Math.min(p.cur.l, f.l); p.cur.c = f.c }
+        p.c.update(ser(p.cur)); if (p.v) p.v.update(vser(p.cur)) }
+      if (r.geometry && p.gBar !== r.geometry.barT) { setLines(p, r.geometry); p.gBar = r.geometry.barT }
+      if (k > 0) title(p, ` <span class="${stateClass(r.geometry?.state)}">${r.geometry?.state ?? ''}</span>` + (r.delayed ? ' <span class="pill mid">DELAYED 10 min</span>' : ''))
+    })
+    const r = R[0]; if (!r) throw new Error('main')
+    const q = r.quote, pill = $('streamPill')
+    pill.textContent = r.delayed ? 'DELAYED 10 min' : r.stream.live ? 'LIVE · ticks verified' : r.stream.market_open === false ? 'MARKET CLOSED' : 'STALE'
+    pill.className = 'pill ' + (r.delayed ? 'mid' : r.stream.live ? 'ok' : r.stream.market_open === false ? 'mid' : 'bad'); pill.title = r.stream.why || ''
+    $('quote').innerHTML = q ? `${LABEL[r.sym] || r.sym} <b>${fmt(q.bid)}</b>` + (q.derived ? '<span class="ask">rebuilt live</span>' : `<span class="ask">ask ${fmt(q.ask)} · spread ${(q.ask - q.bid).toFixed(dec(q.bid))}</span>`) : (LABEL[r.sym] || r.sym)
+    const g = r.geometry
+    $('stateMsg').textContent = g?.message || '—'; $('rHigh').textContent = fmt(g?.rangeHigh); $('rLow').textContent = fmt(g?.rangeLow)
+    $('sellT').textContent = fmt(g?.sellTrigger); $('buyT').textContent = fmt(g?.buyTrigger); $('needVol').textContent = g?.needVolume || '—'
+    const d = r.decision
+    $('decision').innerHTML = d ? `bar ${d.bars_to.slice(0, 16).replace('T', ' ')} UTC · ${ago(d.published)}<br>${d.summary}<br><span class="${d.data?.live ? 'green' : 'red'}">${d.data?.live ? 'data live & verified' : 'STALE — ' + (d.data?.stale_why || '')}</span>` : 'decisions are made on XAUUSD only'
+    $('lastTick').textContent = ago(q?.last_tick_at); $('tpm').textContent = q?.ticks_last_60s ?? '—'
+    $('settled').textContent = q?.settled_through ? q.settled_through.slice(11, 16) + ' UTC' : '—'
+    $('verified').textContent = q?.counts ? `${q.counts.tick_ca} · ${q.counts.mismatch} · ${q.counts.corrected}` : '—'
+  } catch (e) { $('streamPill').textContent = 'CHART SERVER OFFLINE'; $('streamPill').className = 'pill bad' } finally { busy = false }
+}
+const stateClass = (s) => (s === 'BREAKOUT_DOWN' || s === 'PREMIUM' ? 'red' : s === 'BREAKOUT_UP' || s === 'DISCOUNT' ? 'green' : 'dim')
+async function pollDrivers() {
+  const r = await fetch('/api/drivers').then((x) => x.json()).catch(() => null); if (!r) return
+  $('drivers').innerHTML = r.rows.map((x) => {
+    const m = x.measured, agree = m?.agreement_oos != null ? `${(100 * m.agreement_oos).toFixed(1)}%` : '<span class="dim">pending</span>'
+    const lead = m?.lead60 ? `${(100 * m.lead60.hit).toFixed(1)}% <span class="dim">vs ${(100 * m.lead60.base).toFixed(1)}%${m.lead60.holm ? '' : ' · n.s.'}</span>` : '<span class="dim">pending</span>'
+    return `<tr><td>${x.label}${x.delayed ? ' <span class="warn">(delayed)</span>' : ''}</td><td class="${stateClass(x.state)}">${x.state ?? '—'}</td><td class="${(x.change15m ?? 0) >= 0 ? 'green' : 'red'}">${x.change15m == null ? '—' : x.change15m.toFixed(2) + '%'}</td><td>${x.delayed ? '<span class="dim">excluded</span>' : agree}</td><td>${x.delayed ? '<span class="dim">excluded</span>' : lead}</td></tr>` }).join('')
+  if (r.study) $('studyNote').innerHTML = `Measured ${r.study.generated?.slice(0, 10)} on ${r.study.window}: ${r.study.method}`
+  $('allMk').innerHTML = (r.all || []).map((x) => `<tr><td>${x.sym}${x.sign < 0 ? ' <span class="dim">(inverse)</span>' : ''}</td><td>${x.agreement != null ? (100 * x.agreement).toFixed(1) + '%' : '—'}</td><td>${x.lead60 ? (100 * x.lead60.hit).toFixed(1) + '% <span class="dim">vs ' + (100 * x.lead60.base).toFixed(1) + '%' + (x.lead60.holm ? ' ✓' : ' · no lead') + '</span>' : '—'}</td></tr>`).join('')
+  if (r.study) $('studyNote').innerHTML += r.study.useful_leaders?.length ? ` · <b>useful leaders: ${r.study.useful_leaders.join(', ')}</b>` : ' · <b>no market leads gold</b> — they move WITH it (same time), not before it'
+}
+const esc = (t) => String(t ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+async function pollMacro() {
+  const m = await fetch('/api/macro').then((x) => x.json()).catch(() => null); if (!m) return
+  const kv = (k, v) => `<div class="kv"><span>${k}</span><span>${v ?? '—'}</span></div>`
+  $('macro').innerHTML = (m.yields ? kv(`US 10y yield (${m.yields.date})`, `${m.yields.y10}% <span class="${m.yields.d10_bp >= 0 ? 'red' : 'green'}">${m.yields.d10_bp >= 0 ? '+' : ''}${m.yields.d10_bp} bp</span>`) + kv('US 2y · 30y', `${m.yields.y2}% · ${m.yields.y30}%`) + kv('Curve 10y − 2y', m.yields.curve_10_2) : '')
+    + (m.real_10y_approx ? kv('Real 10y (approx)', m.real_10y_approx.value + '%') : '')
+    + (m.inflation ? kv(`CPI m/m (${m.inflation.date.slice(0, 7)})`, m.inflation.cpi_mom_pct + '%') : '')
+    + (m.expectations ? kv(`10y breakeven (${m.expectations.date.slice(0, 7)})`, m.expectations.breakeven_10y + '%') : '')
+    + (m.labor ? kv(`Unemployment (${m.labor.date.slice(0, 7)})`, m.labor.unemployment + '%') : '')
+}
+async function pollNews() {
+  const n = await fetch('/api/news').then((x) => x.json()).catch(() => null); if (!n) return
+  $('news').className = 'news'; $('news').innerHTML = n.items.slice(0, 10).map((x) => `<div><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a><span>${esc(x.publisher)} · ${x.published.slice(0, 16).replace('T', ' ')} UTC</span></div>`).join('') || 'no recent items'
+}
+// ── right panel show / hide (remembered) ──
+const applyPanel = () => { const show = st.panel !== false; document.querySelector('main').classList.toggle('nopanel', !show); $('panelBtn').textContent = show ? 'Panel ▸' : '◂ Panel'; $('panelBtn').classList.toggle('on', show) }
+$('panelBtn').onclick = () => { st.panel = st.panel === false; save(); applyPanel() }
+applyPanel()
+
+// ── USD CALENDAR: upcoming releases (Forex Factory + Fed + BLS + Polygon) with gold's MEASURED reaction; warning chip near high-impact ones ──
+let CAL = null
+const fmtLeft = (ms) => { const a = Math.abs(ms), h = Math.floor(a / 3600000), m = Math.floor((a % 3600000) / 60000); return (ms < 0 ? '' : 'in ') + (h >= 24 ? Math.floor(h / 24) + 'd ' + (h % 24) + 'h' : h ? h + 'h ' + m + 'm' : m + 'm') + (ms < 0 ? ' ago' : '') }
+const measLine = (m) => m ? `gold, measured ${m.n}×: 1-hour range ${m.range_x}× normal (${Math.round(100 * m.over2x)}% of times > 2×), median move $${m.median_move}; direction ≈ coin flip; first move ${m.first_move_persists ? 'tends to persist' : 'does NOT persist'}` : 'gold reaction not measured for this release'
+async function pollCal() { CAL = await fetch('/api/calendar').then((x) => x.json()).catch(() => null); calDraw() }
+function calDraw() {
+  if (!CAL) return; if (!CAL.available) { $('cal').textContent = CAL.why; return }
+  const now = Date.now(), loc = (t) => new Date(t).toLocaleString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })
+  const ev = CAL.events.filter((e) => e.t > now - 3 * 3600000).slice(0, 14)
+  $('cal').className = ''; $('cal').innerHTML = ev.map((e) => { const near = e.t - now < 30 * 60000 && e.t - now > -60 * 60000
+    const vals = [e.actual ? `<b>A ${esc(e.actual)}</b>` : null, e.forecast ? `F ${esc(e.forecast)}` : null, e.previous ? `P ${esc(e.previous)}` : null].filter(Boolean).join(' · ')
+    return `<div class="cal-row${near ? ' now' : ''}"><div class="when"><b>${fmtLeft(e.t - now)}</b>${loc(e.t)}<br>${new Date(e.t).toISOString().slice(11, 16)} UTC</div><div><span class="imp ${e.impact}"></span>${esc(e.name)} <span class="dim">${e.src}</span>${vals ? '<br>' + vals : ''}${e.impact === 'high' ? '<div class="cal-m">' + esc(measLine(e.measured)) + '</div>' : ''}</div></div>` }).join('') || 'no medium / high USD events in the next 8 days'
+  const bad = Object.entries(CAL.sources || {}).filter(([, v]) => !v.ok).map(([k]) => k), cc = (CAL.crosscheck || []).filter((c) => c.in_ff_window)
+  $('calNote').innerHTML = `USD only (Forex Factory has no XAU events). Updated ${CAL.age_min} min ago${bad.length ? ' · <span class="red">source down: ' + bad.join(', ') + '</span>' : ''} · official-time cross-check ${cc.filter((c) => c.agree).length}/${cc.length}${CAL.sources?.bls_file?.age_days > 30 ? ' · <span class="warn">BLS schedule file is ' + CAL.sources.bls_file.age_days + ' days old</span>' : ''}${(CAL.holidays || []).length ? ' · next US holiday: ' + CAL.holidays[0].date + ' ' + esc(CAL.holidays[0].name) + ' (' + CAL.holidays[0].status + ')' : ''}. Measured on 13 y: releases move gold BIG but not in a predictable direction.`
+}
+function calChip() {
+  if (!CAL?.available) return ''
+  const now = Date.now(), e = CAL.events.find((x) => x.impact === 'high' && x.t - now < 30 * 60000 && x.t - now > -60 * 60000); if (!e) return ''
+  const m = e.measured
+  return `<span class="chip alert" title="${esc(measLine(m))}">⚠ ${esc(e.name)} ${fmtLeft(e.t - now)}${m ? ` — expect ~${m.range_x}× normal range, direction unpredictable` : ''}</span>`
+}
+setInterval(pollCal, 60000); pollCal(); setInterval(calDraw, 15000)
+
+// ── compact layout: Silver / DXY / WTI as BULLISH/BEARISH chips (the full driver charts behind a toggle) + the 15m gold "whale" gauge ──
+st.full = !!st.full; const applyLayout = () => { $('charts').classList.toggle('full', st.full) }; applyLayout()
+const arrow = (d) => (d === 'BULLISH' ? '<span class="up">▲ BULL</span>' : d === 'BEARISH' ? '<span class="dn">▼ BEAR</span>' : '<span class="dim">—</span>')
+async function pollBias() {
+  const b = await fetch('/api/bias').then((x) => x.json()).catch(() => null); if (!b) return
+  const chips = b.rows.filter((r) => r.sym !== 'XAUUSD').map((r) => {
+    const g = r['15m']?.dir && r.sign_vs_gold ? ((r['15m'].dir === 'BULLISH') === (r.sign_vs_gold > 0) ? '<small>→ gold ▲</small>' : '<small>→ gold ▼</small>') : r.sym === 'WTI' ? '<small>(10 min late)</small>' : ''
+    return `<span class="chip" title="last closed candle vs EMA10 of closes"><b>${r.label}</b>3m ${arrow(r['3m']?.dir)} · 15m ${arrow(r['15m']?.dir)} ${g}</span>` })
+  const w = b.whale, ws = b.whale_study
+  const wd = !w || w.error ? '<span class="dim">unavailable</span>' : w.stale ? '<span class="dim">market closed</span>' : w.dir === 'QUIET' ? `<span class="dim">QUIET — no whale-size volume (max ${w.maxMult}× normal)</span>` : w.dir === 'MIXED' ? `<span class="dim">MIXED</span> <small>pressure ${w.pressure}</small>` : `${arrow(w.dir)} <small>pressure ${w.pressure >= 0 ? '+' : ''}${w.pressure} · ${w.big} big bar(s), up to ${w.maxMult}×</small>`
+  const wtitle = 'Where heavy CME gold-futures volume (≥ 2× normal) closed inside its 15m bar, last hour, 10 min delayed. NOT true buyer/seller data (Polygon does not give us futures trades).' + (ws ? ` Measured ${ws.window}: heavy-volume direction → gold +$10 first ${(100 * ws.oos_win).toFixed(1)}% vs ${(100 * ws.oos_base).toFixed(1)}% base (n ${ws.oos_n}) — ${ws.verdict.replace(/_/g, ' ').toLowerCase()}.` : '')
+  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + gammaChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
+  const gb = $('gmBtn'); if (gb) gb.onclick = () => { st.gamma = st.gamma === false; save(); gmKey = '?'; gmDraw(); pollBias() }
+  $('fullBtn').onclick = () => { st.full = !st.full; save(); applyLayout(); pollBias() }
+}
+setInterval(pollBias, 15000); pollBias()
+
+// ── GAMMA levels (GLD options → XAU), daily; context only until the forward test measures them ──
+let GM = null, gmLines = [], gmKey = null
+async function pollGamma() { GM = await fetch('/api/gamma').then((x) => x.json()).catch(() => null); gmDraw(); pollBias() }
+function gmDraw() {
+  const p = panes[0], key = GM?.available && p.sym === 'XAUUSD' && st.gamma !== false ? GM.at + '|' + p.sym : null
+  if (key === gmKey) return; gmKey = key
+  gmLines.forEach((l) => { try { p.c.removePriceLine(l) } catch {} }); gmLines = []
+  if (!key) return
+  const pl = (price, color, title, style, w = 1) => { if (price != null) gmLines.push(p.c.createPriceLine({ price, color, lineWidth: w, lineStyle: style, axisLabelVisible: true, title })) }
+  pl(GM.xau.call_wall, '#39d0ff', 'γ CALL WALL', 0, 2); pl(GM.xau.put_wall, '#ff5cf0', 'γ PUT WALL', 0, 2); pl(GM.xau.flip, '#ffd33d', 'γ ZERO-GAMMA flip', 1, 2)
+  for (const m of GM.xau.magnets) if (![GM.xau.call_wall, GM.xau.put_wall].includes(m.xau)) pl(m.xau, '#a371f7', 'γ magnet', 3)
+}
+function gammaChip() {
+  if (!GM) return ''
+  if (!GM.available) return `<span class="chip"><b>Gamma</b><span class="dim">not recorded yet</span></span>`
+  const pos = GM.total_net_gex >= 0, s = GM.study
+  const t = `GLD options (Polygon), snapshot ${GM.day} ${GM.at.slice(11, 16)} UTC, OI = prior close, ${(100 * GM.coverage).toFixed(1)} % of OI with greeks; GLD→XAU ×${GM.ratio.toFixed(4)} (same minute). Dealer convention assumed (long calls / short puts). ${s ? s.reading : ''}`
+  return `<span class="chip" title="${esc(t)}"><b>Gamma ${GM.day.slice(5)}</b>${pos ? '<span class="up">+ POSITIVE</span> <small>dampening</small>' : '<span class="dn">− NEGATIVE</span> <small>amplifying</small>'} <small>· flip ${fmt(GM.xau.flip)} · ${s ? (s.verdict === 'INSUFFICIENT' ? `forward test ${s.resolved}/100` : s.verdict === 'HOLDS' ? 'measured: holds' : 'measured: no edge') : 'untested'}</small> <button id="gmBtn" style="margin:0 0 0 4px;padding:0 5px">${st.gamma === false ? 'show' : 'hide'}</button></span>`
+}
+setInterval(pollGamma, 10 * 60000); pollGamma(); setInterval(gmDraw, 1000)
+
+// ── 3m STRUCTURE on the gold chart (from matrix_tick → matrix_state.structure): the walls a box needs + confirmed swing points ──
+let strLines = [], strKey = null
+function strDraw() {
+  const p = panes[0], S = MX?.structure, key = S && p.sym === 'XAUUSD' ? `${S.barT}|${st.tf}` : null
+  if (key === strKey) return; strKey = key
+  strLines.forEach((l) => { try { p.c.removePriceLine(l) } catch {} }); strLines = []; try { p.c.setMarkers([]) } catch {}
+  if (!key) return
+  const pl = (price, color, title, style) => { if (price != null && isFinite(price)) strLines.push(p.c.createPriceLine({ price, color, lineWidth: 1, lineStyle: style, axisLabelVisible: true, title })) }
+  pl(S.levels.buyLine, '#00ff9c', 'BUY wall 3m', 2); pl(S.levels.sellLine, '#ff2e63', 'SELL wall 3m', 2)
+  pl(S.lastSwingLow, '#f0883e', 'swing low (break = CHoCH)', 3); pl(S.lastSwingHigh, '#8b949e', 'swing high', 3)
+  if (st.tf === '3m') try { p.c.setMarkers(S.pivots.map((x) => ({ time: Math.floor(x.t / 1000), position: x.kind === 'H' ? 'aboveBar' : 'belowBar', color: x.kind === 'H' ? '#ff7b72' : '#56d364', shape: x.kind === 'H' ? 'arrowDown' : 'arrowUp', text: x.kind === 'H' ? 'H' : 'L' }))) } catch {}
+}
+function checklist(S) {
+  if (!S) return ''
+  const c = (v) => (v === true ? '<span class="y">✓</span>' : v === false ? '<span class="n">✗</span>' : '<span class="u">?</span>')
+  const row = (t, v) => `<div class="ck"><span>${t}</span>${c(v)}</div>`
+  return `<div style="margin-top:8px"><b>3m structure</b> <span class="dim">(bar ${new Date(S.barT).toISOString().slice(11, 16)} UTC)</span> — swing ${esc(S.swing)}</div>`
+    + `<div class="ck"><span>BUY wall ${fmt(S.levels.buyLine)} · SELL wall ${fmt(S.levels.sellLine)}</span></div>`
+    + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px"><div><b class="green">BUY needs</b>`
+    + row('low at BUY wall', S.buy.wall) + row('WTI 1h not bullish', S.buy.wti_not_bullish) + row('DXY not bullish', S.buy.dxy_not_bullish) + row('green candle', S.buy.green_candle)
+    + `</div><div><b class="red">SELL needs</b>` + row('high at SELL wall', S.sell.wall) + row('WTI 1h bullish', S.sell.wti_bullish) + row('DXY bullish', S.sell.dxy_bullish) + row('close below swing low', S.sell.close_below_swing_low) + `</div></div>`
+}
+setInterval(strDraw, 1000)
+
+// ── STRONG FVG marks (3m / 15m / 1h) — the study's exact rule; every label carries the MEASURED 13-year result ──
+let FV = null
+async function pollFvg() { if (panes[0].sym !== 'XAUUSD' || !['3m', '15m', '1h'].includes(st.tf)) { FV = null; fvgDraw(); return }
+  FV = await fetch('/api/fvg?tf=' + st.tf).then((x) => x.json()).catch(() => null); fvgDraw() }
+function fvgDraw() {
+  const ov = $('fvgOverlay'); ov.innerHTML = ''; if (!FV?.marks?.length || panes[0].sym !== 'XAUUSD' || FV.tf !== st.tf) return
+  const p = panes[0], ts = p.ch.timeScale(), W = ts.width(), m = FV.measured?.x025
+  const tag = m ? `13y: bounce ${(100 * m.bounce).toFixed(0)}% vs random ${(100 * m.control).toFixed(0)}% · ${m.net >= 0 ? '+' : ''}${m.net}$/t · n ${m.resolved}${m.resolved < 100 ? ' (too few)' : ''}` : 'unmeasured'
+  for (const f of FV.marks) {
+    let x0 = ts.timeToCoordinate(Math.floor(f.t / 1000)); if (x0 == null) x0 = 0
+    const y1 = p.c.priceToCoordinate(f.top), y2 = p.c.priceToCoordinate(f.bot); if (y1 == null || y2 == null) continue
+    const d = document.createElement('div'); d.className = 'fvgbox ' + (f.up ? 'up' : 'dn')
+    d.style.left = x0 + 'px'; d.style.width = Math.max(4, W - x0) + 'px'; d.style.top = Math.min(y1, y2) + 'px'; d.style.height = Math.max(3, Math.abs(y1 - y2)) + 'px'
+    d.textContent = `STRONG FVG ${f.up ? '▲' : '▼'} ${fmt(f.bot)}–${fmt(f.top)}${f.retested ? ' · retested' : ''} · ${tag}`; ov.appendChild(d)
+  }
+}
+setInterval(pollFvg, 20000); pollFvg(); setInterval(fvgDraw, 1000)
+
+// ── IN-TRADE MONITOR: live chance of TP1 / TP2 for the open trade (/api/monitor; what may be shown is decided by study_trade_monitor.mjs) ──
+let MON = null
+async function pollMon() {
+  if (!MX?.open) { MON = null; $('monMsg').style.display = 'none'; return }
+  MON = await fetch('/api/monitor').then((x) => x.json()).catch(() => null); if (!MON?.open) { $('monMsg').style.display = 'none'; return }
+  const el = $('monMsg'); el.style.display = ''
+  if (MON.done) { el.innerHTML = `<b>Trade finished</b> (${esc(MON.outcome)}) — the box clears at the next 3m tick`; return }
+  if (MON.error) { el.innerHTML = `<span class="red">monitor: ${esc(MON.error)}</span>`; return }
+  const pc = (x) => Math.round(100 * x) + '%', bar = (x, col) => `<span style="display:inline-block;width:90px;height:8px;background:#21262d;border-radius:4px;vertical-align:middle;margin:0 6px"><span style="display:block;height:8px;width:${Math.round(90 * x)}px;background:${col};border-radius:4px"></span></span>`
+  const c1 = MON.calibration_max_error?.tp1, c2 = MON.calibration_max_error?.tp2
+  el.innerHTML = `<b>In-trade monitor</b> · ${MON.side} · ${MON.minutes} min · ${MON.phase === 1 ? 'waiting for TP1' : 'TP1 hit — stop at entry, half running to TP2'}<br>`
+    + (MON.phase === 1 ? `Chance of TP1 ${bar(MON.p_tp1, '#00ff9c')}<b>${pc(MON.p_tp1)}</b><br>` : '')
+    + `Chance of TP2 ${bar(MON.p_tp2, '#58a6ff')}<b>${pc(MON.p_tp2)}</b>${MON.phase === 1 ? ` <span class="dim">(TP1 first, then ${pc(MON.p_tp2_after_tp1)})</span>` : ''}<br>`
+    + `<span class="dim">worst so far −$${MON.mae} · best +$${MON.mfe} · risk $${MON.risk}</span><br>`
+    + `<span class="dim">How: ${esc(MON.method)} — measured on 13 y of Matrix trades + the live strategy: accurate within ${c1 != null ? Math.round(100 * c1) : '?'} pts (TP1) / ${c2 != null ? Math.round(100 * c2) : '?'} pts (TP2). ${esc(MON.model?.note || '')}. Close advice: ${esc(MON.close_advice?.note || 'n/a')}.</span>`
+}
+setInterval(pollMon, 5000)
+
+// ── FERRARI MATRIX paper trade: neon boxes on the main pane while a trade is open (data/master/matrix_state.json via /api/matrix) ──
+let MX = null, mxLines = [], mxKey = null
+function mxDraw() {
+  const ov = $('mxOverlay'), p = panes[0]; ov.innerHTML = ''
+  const o = MX?.open, key = o && p.sym === 'XAUUSD' ? `${o.id}|${!!o.progress?.tp1Hit}|${p.sym}` : null
+  if (key !== mxKey) { mxLines.forEach((l) => { try { p.c.removePriceLine(l) } catch {} }); mxLines = []; mxKey = key
+    if (key) { const s = o.sig, pl = (price, color, title, style = 0, w = 1) => mxLines.push(p.c.createPriceLine({ price, color, lineWidth: w, lineStyle: style, axisLabelVisible: true, title }))
+      pl(s.entry, '#e6edf3', 'ENTRY ' + s.side, 0, 2); pl(s.sl, '#ff2e63', 'SL'); pl(s.tp1, '#00ff9c', 'TP1 (½)', 2); pl(s.tp2, '#00ff9c', 'TP2 (½)', 0, 2)
+      if (o.progress?.tp1Hit) pl(o.progress.fill ?? s.entry, '#f0883e', 'stop → entry', 1) } }
+  if (!key) return
+  const s = o.sig, up = s.side === 'BUY', ms = TFMS[st.tf], ts = p.ch.timeScale(), W = ts.width()
+  let x0 = ts.timeToCoordinate(Math.floor(Math.floor(s.t / ms) * ms / 1000)); if (x0 == null) x0 = 0
+  const x1 = Math.min(W, x0 + Math.max(140, W * 0.28)), y = (v) => p.c.priceToCoordinate(v)
+  const box = (cls, a, b, label) => { const ya = y(a), yb = y(b); if (ya == null || yb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls
+    d.style.left = x0 + 'px'; d.style.width = Math.max(0, x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(2, Math.abs(ya - yb)) + 'px'; d.textContent = label; ov.appendChild(d) }
+  const pips = (v) => Math.round(Math.abs(v) * 10)
+  box('tgt', s.entry, s.tp2, `SNIPER TARGET ZONE (MIN 100 PIPS) · TP1 ${fmt(s.tp1)} (+${pips(s.reward)}p) · TP2 ${fmt(s.tp2)} (+${pips(1.5 * s.reward)}p)`)
+  box('risk', s.entry, s.sl, `RISK PROTECTION ZONE (SL) ${fmt(s.sl)} (−${pips(s.risk)}p)`)
+  const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
+    t.textContent = `${s.side} ${fmt(s.entry)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
+}
+async function pollMatrix() {
+  const m = await fetch('/api/matrix').then((x) => x.json()).catch(() => null); if (!m) return
+  MX = m; const g = m.verdict === 'SHIP', o = m.open
+  const vt = g ? '<span class="pill ok">VALIDATED</span>' : `<span class="pill mid">${esc(m.verdict)}</span> backtest ${m.backtest?.oos_net != null ? (m.backtest.oos_net >= 0 ? '+' : '') + m.backtest.oos_net + ' $/oz per trade, WR ' + (100 * m.backtest.oos_wr).toFixed(1) + '%' : ''} — paper only`
+  const lc = m.last_closed ? `<div class="dim" style="margin-top:4px">last: ${m.last_closed.side} ${m.last_closed.outcome} ${m.last_closed.pnl >= 0 ? '+' : ''}${m.last_closed.pnl}/oz · ${m.last_closed.closedAt.slice(11, 16)} UTC</div>` : ''
+  $('mxMsg').innerHTML = (o ? `<b class="${o.sig.side === 'BUY' ? 'green' : 'red'}">${o.sig.side} open</b> @ ${fmt(o.sig.entry)} · SL ${fmt(o.sig.sl)} · TP1 ${fmt(o.sig.tp1)} · TP2 ${fmt(o.sig.tp2)}${o.progress?.tp1Hit ? ' · <span class="warn">TP1 hit, stop at entry</span>' : ''}<br>`
+    : (m.data_live === false ? `<span class="red">no new setups — data not live (${esc(m.data_why)})</span><br>` : 'waiting for a setup<br>')) + vt + lc + checklist(m.structure)
+  mxDraw(); strDraw(); pollMon()
+}
+panes[0].ch.timeScale().subscribeVisibleLogicalRangeChange(() => mxDraw())
+new ResizeObserver(() => mxDraw()).observe($('c0'))
+setInterval(pollMatrix, 5000); pollMatrix(); setInterval(mxDraw, 1000)
+pollMacro(); pollNews(); setInterval(pollMacro, 10 * 60000); setInterval(pollNews, 2 * 60000)
+controls(); panes.forEach((p) => loadPane(p, true)); setInterval(poll, 1000); poll(); setInterval(pollDrivers, 15000); pollDrivers()
+</script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+{
+ "at": "2026-10-09T12:44:08.164Z",
+ "rule": "permutation p (shuffled durations) < 0.05/9",
+ "perms": 2000,
+ "results": {
+  "1h": {
+   "1": {
+    "oos_n": 2709,
+    "actual": 0.6183,
+    "shuffled_mean": 0.5736,
+    "shuffled_p99": 0.5948,
+    "p_value": 0.0005,
+    "verdict": "REAL_GANN_TIME"
+   },
+   "2": {
+    "oos_n": 4281,
+    "actual": 0.5165,
+    "shuffled_mean": 0.5573,
+    "shuffled_p99": 0.5731,
+    "p_value": 1,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "0.5": {
+    "oos_n": 1142,
+    "actual": 0.62,
+    "shuffled_mean": 0.5498,
+    "shuffled_p99": 0.5828,
+    "p_value": 0.0005,
+    "verdict": "REAL_GANN_TIME"
+   },
+   "hazard_oos": [
+    {
+     "elapsed_bars": 4,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 8,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 12,
+     "n": 3795,
+     "hit": 0.6427
+    },
+    {
+     "elapsed_bars": 16,
+     "n": 3799,
+     "hit": 0.6081
+    },
+    {
+     "elapsed_bars": 20,
+     "n": 3802,
+     "hit": 0.5679
+    },
+    {
+     "elapsed_bars": 24,
+     "n": 3806,
+     "hit": 0.5956
+    },
+    {
+     "elapsed_bars": 28,
+     "n": 3806,
+     "hit": 0.552
+    },
+    {
+     "elapsed_bars": 32,
+     "n": 3805,
+     "hit": 0.503
+    },
+    {
+     "elapsed_bars": 36,
+     "n": 3806,
+     "hit": 0.4963
+    },
+    {
+     "elapsed_bars": 40,
+     "n": 3806,
+     "hit": 0.4672
+    }
+   ]
+  },
+  "4h": {
+   "1": {
+    "oos_n": 698,
+    "actual": 0.5072,
+    "shuffled_mean": 0.5186,
+    "shuffled_p99": 0.5596,
+    "p_value": 0.7516,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "2": {
+    "oos_n": 1123,
+    "actual": 0.5129,
+    "shuffled_mean": 0.5373,
+    "shuffled_p99": 0.5709,
+    "p_value": 0.9615,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "0.5": {
+    "oos_n": 411,
+    "actual": 0.6448,
+    "shuffled_mean": 0.5262,
+    "shuffled_p99": 0.5819,
+    "p_value": 0.0005,
+    "verdict": "REAL_GANN_TIME"
+   },
+   "hazard_oos": [
+    {
+     "elapsed_bars": 4,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 8,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 12,
+     "n": 840,
+     "hit": 0.5381
+    },
+    {
+     "elapsed_bars": 16,
+     "n": 841,
+     "hit": 0.4257
+    },
+    {
+     "elapsed_bars": 20,
+     "n": 999,
+     "hit": 0.4645
+    },
+    {
+     "elapsed_bars": 24,
+     "n": 1014,
+     "hit": 0.4714
+    },
+    {
+     "elapsed_bars": 28,
+     "n": 1018,
+     "hit": 0.4725
+    },
+    {
+     "elapsed_bars": 32,
+     "n": 1018,
+     "hit": 0.4941
+    },
+    {
+     "elapsed_bars": 36,
+     "n": 1018,
+     "hit": 0.5511
+    },
+    {
+     "elapsed_bars": 40,
+     "n": 1018,
+     "hit": 0.6699
+    }
+   ]
+  },
+  "1d": {
+   "1": {
+    "oos_n": 137,
+    "actual": 0.6569,
+    "shuffled_mean": 0.6207,
+    "shuffled_p99": 0.7007,
+    "p_value": 0.1734,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "2": {
+    "oos_n": 230,
+    "actual": 0.6609,
+    "shuffled_mean": 0.6158,
+    "shuffled_p99": 0.6838,
+    "p_value": 0.0695,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "0.5": {
+    "oos_n": 44,
+    "actual": 0.5,
+    "shuffled_mean": 0.5869,
+    "shuffled_p99": 0.7358,
+    "p_value": 0.9125,
+    "verdict": "ARTIFACT_OR_NOISE"
+   },
+   "hazard_oos": [
+    {
+     "elapsed_bars": 4,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 8,
+     "n": 0,
+     "hit": null
+    },
+    {
+     "elapsed_bars": 12,
+     "n": 169,
+     "hit": 0.5621
+    },
+    {
+     "elapsed_bars": 16,
+     "n": 167,
+     "hit": 0.5389
+    },
+    {
+     "elapsed_bars": 20,
+     "n": 167,
+     "hit": 0.5569
+    },
+    {
+     "elapsed_bars": 24,
+     "n": 168,
+     "hit": 0.5655
+    },
+    {
+     "elapsed_bars": 28,
+     "n": 169,
+     "hit": 0.5444
+    },
+    {
+     "elapsed_bars": 32,
+     "n": 168,
+     "hit": 0.5417
+    },
+    {
+     "elapsed_bars": 36,
+     "n": 168,
+     "hit": 0.5952
+    },
+    {
+     "elapsed_bars": 40,
+     "n": 167,
+     "hit": 0.5808
+    }
+   ]
+  }
+ },
+ "real": [
+  "1h 0.5×",
+  "1h 1×",
+  "4h 0.5×"
+ ],
+ "verdict": "SOME_GANN_TIME_IS_REAL"
+}

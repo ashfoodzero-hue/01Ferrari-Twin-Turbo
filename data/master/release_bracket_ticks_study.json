@@ -1,0 +1,316 @@
+{
+ "at": "2026-10-09T16:58:21.961Z",
+ "split": "2021-06-26",
+ "usable": 259,
+ "excluded_by_year": {
+  "2015": 1,
+  "2017": 1,
+  "2019": 4,
+  "2020": 5,
+  "2021": 32,
+  "2022": 32,
+  "2023": 32,
+  "2024": 32,
+  "2025": 21,
+  "2026": 1
+ },
+ "rules": {
+  "ks": [
+   0.25,
+   0.5
+  ],
+  "tms": [
+   1,
+   2
+  ],
+  "latency_atr": 0.02,
+  "min_quotes": 200,
+  "alpha": 0.004166666666666667
+ },
+ "cells": {
+  "FOMC|0.25|1": {
+   "type": "FOMC",
+   "k": 0.25,
+   "TM": 1,
+   "train": {
+    "n": 57,
+    "wins": 9,
+    "net": -1.919,
+    "net_lb": -2.846
+   },
+   "oos": {
+    "n": 9,
+    "wins": 1,
+    "net": -8.698,
+    "net_lb": -14.997
+   },
+   "how": {
+    "target (ticks)": 10,
+    "stop (ticks)": 55,
+    "unfilled": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "FOMC|0.25|2": {
+   "type": "FOMC",
+   "k": 0.25,
+   "TM": 2,
+   "train": {
+    "n": 57,
+    "wins": 7,
+    "net": -1.969,
+    "net_lb": -2.927
+   },
+   "oos": {
+    "n": 9,
+    "wins": 1,
+    "net": -8.301,
+    "net_lb": -15.295
+   },
+   "how": {
+    "target (ticks)": 8,
+    "stop (ticks)": 57,
+    "unfilled": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "FOMC|0.5|1": {
+   "type": "FOMC",
+   "k": 0.5,
+   "TM": 1,
+   "train": {
+    "n": 57,
+    "wins": 10,
+    "net": -2.255,
+    "net_lb": -3.251
+   },
+   "oos": {
+    "n": 9,
+    "wins": 2,
+    "net": -8.303,
+    "net_lb": -17.559
+   },
+   "how": {
+    "target (ticks)": 11,
+    "stop (ticks)": 52,
+    "unfilled": 2,
+    "target (1m)": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "FOMC|0.5|2": {
+   "type": "FOMC",
+   "k": 0.5,
+   "TM": 2,
+   "train": {
+    "n": 57,
+    "wins": 6,
+    "net": -2.437,
+    "net_lb": -3.433
+   },
+   "oos": {
+    "n": 9,
+    "wins": 1,
+    "net": -9.81,
+    "net_lb": -17.588
+   },
+   "how": {
+    "stop (ticks)": 56,
+    "target (ticks)": 7,
+    "unfilled": 2,
+    "stop (1m)": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "NFP|0.25|1": {
+   "type": "NFP",
+   "k": 0.25,
+   "TM": 1,
+   "train": {
+    "n": 85,
+    "wins": 12,
+    "net": -2.179,
+    "net_lb": -3.004
+   },
+   "oos": {
+    "n": 12,
+    "wins": 1,
+    "net": -11.307,
+    "net_lb": -17.288
+   },
+   "how": {
+    "stop (ticks)": 83,
+    "target (ticks)": 13,
+    "stop (1m)": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "NFP|0.25|2": {
+   "type": "NFP",
+   "k": 0.25,
+   "TM": 2,
+   "train": {
+    "n": 85,
+    "wins": 11,
+    "net": -2.12,
+    "net_lb": -2.97
+   },
+   "oos": {
+    "n": 12,
+    "wins": 1,
+    "net": -10.947,
+    "net_lb": -17.381
+   },
+   "how": {
+    "stop (ticks)": 84,
+    "target (ticks)": 12,
+    "stop (1m)": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "NFP|0.5|1": {
+   "type": "NFP",
+   "k": 0.5,
+   "TM": 1,
+   "train": {
+    "n": 85,
+    "wins": 15,
+    "net": -3.095,
+    "net_lb": -4.054
+   },
+   "oos": {
+    "n": 12,
+    "wins": 2,
+    "net": -12.735,
+    "net_lb": -22.668
+   },
+   "how": {
+    "stop (ticks)": 79,
+    "target (ticks)": 17,
+    "unfilled": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "NFP|0.5|2": {
+   "type": "NFP",
+   "k": 0.5,
+   "TM": 2,
+   "train": {
+    "n": 85,
+    "wins": 14,
+    "net": -2.98,
+    "net_lb": -4.064
+   },
+   "oos": {
+    "n": 12,
+    "wins": 1,
+    "net": -15.222,
+    "net_lb": -24.944
+   },
+   "how": {
+    "stop (ticks)": 80,
+    "target (ticks)": 15,
+    "unfilled": 1,
+    "stop (1m)": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "CPI|0.25|1": {
+   "type": "CPI",
+   "k": 0.25,
+   "TM": 1,
+   "train": {
+    "n": 84,
+    "wins": 9,
+    "net": -1.377,
+    "net_lb": -1.798
+   },
+   "oos": {
+    "n": 12,
+    "wins": 2,
+    "net": -12.23,
+    "net_lb": -24.737
+   },
+   "how": {
+    "target (ticks)": 11,
+    "stop (ticks)": 85
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "CPI|0.25|2": {
+   "type": "CPI",
+   "k": 0.25,
+   "TM": 2,
+   "train": {
+    "n": 84,
+    "wins": 7,
+    "net": -1.356,
+    "net_lb": -1.819
+   },
+   "oos": {
+    "n": 12,
+    "wins": 2,
+    "net": -11.304,
+    "net_lb": -25.226
+   },
+   "how": {
+    "stop (ticks)": 87,
+    "target (ticks)": 8,
+    "target (1m)": 1
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "CPI|0.5|1": {
+   "type": "CPI",
+   "k": 0.5,
+   "TM": 1,
+   "train": {
+    "n": 84,
+    "wins": 16,
+    "net": -1.511,
+    "net_lb": -2.075
+   },
+   "oos": {
+    "n": 12,
+    "wins": 2,
+    "net": -12.191,
+    "net_lb": -25.057
+   },
+   "how": {
+    "stop (ticks)": 71,
+    "target (ticks)": 16,
+    "unfilled": 4,
+    "target (1m)": 2,
+    "stop (1m)": 3
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "CPI|0.5|2": {
+   "type": "CPI",
+   "k": 0.5,
+   "TM": 2,
+   "train": {
+    "n": 84,
+    "wins": 11,
+    "net": -1.552,
+    "net_lb": -2.158
+   },
+   "oos": {
+    "n": 12,
+    "wins": 1,
+    "net": -14.25,
+    "net_lb": -25.674
+   },
+   "how": {
+    "stop (ticks)": 73,
+    "target (1m)": 6,
+    "unfilled": 4,
+    "target (ticks)": 6,
+    "stop (1m)": 7
+   },
+   "verdict": "UNDERPOWERED"
+  }
+ },
+ "passing": [],
+ "verdict": "UNDERPOWERED"
+}

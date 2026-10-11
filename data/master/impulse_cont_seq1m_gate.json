@@ -1,0 +1,189 @@
+{
+  "at": "2026-08-15T16:13:54.598Z",
+  "config": "IMPULSE_CONT|8bar≥4×ATR direction-matched|A+ setups + trend_pullback|ALL-HOURS|sl1.5|tp0.5R|beT0.05|beL0.10 (pre-registered — gate: impulse_continuation_gate.json)",
+  "fold_caveat": "fold 0 (2003-06) UNPOWERED (dec 19 < 30, WR 94.7% positive) — quarantined per the test-power rule; 7/7 powered folds pass",
+  "shipped": {
+    "wr": 0.7359,
+    "lb": 0.6817,
+    "n": 284,
+    "managed": true,
+    "net_per_trade_oos": 0.3527,
+    "net_per_trade_train": 0.1973,
+    "net_per_trade_lb": 0.1776,
+    "net_per_trade_ub": 0.534,
+    "bootstrap": {
+      "resamples": 2000,
+      "seed": 12345
+    },
+    "outcomes_oos": {
+      "n": 1067,
+      "win": 209,
+      "scratch": 783,
+      "loss": 75,
+      "p_win": 0.1959,
+      "p_scratch": 0.7338,
+      "p_loss": 0.0703
+    },
+    "avg_risk": 5.65,
+    "per_day": 0.3045,
+    "per_year": 111.1,
+    "geometry": {
+      "sl_atr": 1.5,
+      "tgt_r": 0.5,
+      "be_trigger_r": 0.05,
+      "be_lock_r": 0.1,
+      "rr": 0.5
+    },
+    "era_r": {
+      "pre2020": 0.0282,
+      "post2020": 0.0569
+    }
+  },
+  "source_scripts": [
+    "measure_impulse_continuation.mjs (gate)",
+    "validate_impulse_cont_ship.mjs (this)"
+  ],
+  "seq_gate": true,
+  "sequenced_share": 0.547,
+  "seq_power": {
+    "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+    "m1_start": "2013-07-14T21:00:00.000Z",
+    "sequenced_era_only": true,
+    "era_fires": 1559,
+    "era_fires_pessimistic": 144,
+    "train_seq": {
+      "n": 492,
+      "win": 71,
+      "scratch": 390,
+      "loss": 31,
+      "dec": 102,
+      "wr": 0.6961,
+      "net": 0.0622,
+      "avgR": 0.0112,
+      "powered": true
+    },
+    "oos_seq": {
+      "n": 1067,
+      "win": 209,
+      "scratch": 783,
+      "loss": 75,
+      "dec": 284,
+      "wr": 0.7359,
+      "net": 0.3527,
+      "avgR": 0.0433,
+      "powered": true
+    },
+    "folds_seq": [
+      {
+        "fold": 0,
+        "n": 0,
+        "dec": 0,
+        "wr": null,
+        "net": 0,
+        "avgR": 0,
+        "powered": false,
+        "pass": null
+      },
+      {
+        "fold": 1,
+        "n": 0,
+        "dec": 0,
+        "wr": null,
+        "net": 0,
+        "avgR": 0,
+        "powered": false,
+        "pass": null
+      },
+      {
+        "fold": 2,
+        "n": 0,
+        "dec": 0,
+        "wr": null,
+        "net": 0,
+        "avgR": 0,
+        "powered": false,
+        "pass": null
+      },
+      {
+        "fold": 3,
+        "n": 138,
+        "dec": 23,
+        "wr": 0.7391,
+        "net": 0.1197,
+        "avgR": 0.0271,
+        "powered": false,
+        "pass": null
+      },
+      {
+        "fold": 4,
+        "n": 354,
+        "dec": 79,
+        "wr": 0.6835,
+        "net": 0.0398,
+        "avgR": 0.005,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 5,
+        "n": 354,
+        "dec": 70,
+        "wr": 0.7286,
+        "net": 0.0991,
+        "avgR": 0.0124,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 6,
+        "n": 346,
+        "dec": 103,
+        "wr": 0.6893,
+        "net": 0.14,
+        "avgR": 0.0291,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 7,
+        "n": 367,
+        "dec": 111,
+        "wr": 0.7838,
+        "net": 0.7978,
+        "avgR": 0.0864,
+        "powered": true,
+        "pass": true
+      }
+    ],
+    "powered_folds": "4/4",
+    "criteria": [
+      {
+        "id": "C1_evidence",
+        "pass": true,
+        "evaluable": true,
+        "detail": "sequenced OOS decisive n=284 (need ≥100)"
+      },
+      {
+        "id": "C2_oos_ci",
+        "pass": true,
+        "evaluable": true,
+        "detail": "bootstrap 95% LB $0.1776/t"
+      },
+      {
+        "id": "C3_walk_forward",
+        "pass": true,
+        "evaluable": true,
+        "detail": "sequenced TRAIN net $0.0622/t (dec 102)"
+      },
+      {
+        "id": "C4_folds",
+        "pass": true,
+        "evaluable": true,
+        "detail": "4/4 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+      }
+    ],
+    "failed": [],
+    "unevaluable": [],
+    "verdict": "SHIP"
+  }
+}

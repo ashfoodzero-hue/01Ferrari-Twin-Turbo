@@ -1,0 +1,199 @@
+{
+  "at": "2026-10-08T16:09:59.419Z",
+  "config": "IMPULSE_CONT|8bar≥4×ATR direction-matched|A+ setups + trend_pullback|ALL-HOURS|sl1.5|tp0.5R|beT0.05|beL0.10 (pre-registered — gate: impulse_continuation_gate.json)",
+  "fold_caveat": "fold 0 (2003-06) UNPOWERED (dec 19 < 30, WR 94.7% positive) — quarantined per the test-power rule; 7/7 powered folds pass",
+  "shipped": {
+    "wr": 0.7037,
+    "lb": 0.6293,
+    "n": 162,
+    "managed": true,
+    "net_per_trade_oos": 0.2241,
+    "net_per_trade_train": 0.0674,
+    "net_per_trade_lb": -0.14,
+    "net_per_trade_ub": 0.5417,
+    "bootstrap": {
+      "resamples": 2000,
+      "seed": 12345
+    },
+    "outcomes_oos": {
+      "n": 660,
+      "win": 114,
+      "scratch": 498,
+      "loss": 48,
+      "p_win": 0.1727,
+      "p_scratch": 0.7545,
+      "p_loss": 0.0727
+    },
+    "avg_risk": 7.87,
+    "per_day": 0.3271,
+    "per_year": 119.4,
+    "geometry": {
+      "sl_atr": 1.5,
+      "tgt_r": 0.5,
+      "be_trigger_r": 0.05,
+      "be_lock_r": 0.1,
+      "rr": 0.5
+    },
+    "era_r": {
+      "pre2020": -0.002,
+      "post2020": 0.048
+    },
+    "fills": {
+      "candidates_admitted": 3554,
+      "filled": 1580,
+      "nofill": 1974,
+      "notrade": 0,
+      "fill_share": 0.4446,
+      "note": "candidates that passed the impulse filter and the one-at-a-time rule; NOFILL = the maker limit never filled inside the 8-bar window (the trial journals these as EXPIRED)"
+    }
+  },
+  "source_scripts": [
+    "measure_impulse_continuation.mjs (gate)",
+    "validate_impulse_cont_ship.mjs (this)"
+  ],
+  "seq_gate": true,
+  "sequenced_share": 1,
+  "seq_power": {
+    "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+    "m1_start": "2013-07-14T21:00:00.000Z",
+    "sequenced_era_only": true,
+    "era_fires": 1580,
+    "era_fires_pessimistic": 0,
+    "train_seq": {
+      "n": 920,
+      "win": 115,
+      "scratch": 747,
+      "loss": 58,
+      "dec": 173,
+      "wr": 0.6647,
+      "net": 0.0674,
+      "avgR": 0.0056,
+      "powered": true
+    },
+    "oos_seq": {
+      "n": 660,
+      "win": 114,
+      "scratch": 498,
+      "loss": 48,
+      "dec": 162,
+      "wr": 0.7037,
+      "net": 0.2241,
+      "avgR": 0.0506,
+      "powered": true
+    },
+    "folds_seq": [
+      {
+        "fold": 0,
+        "n": 208,
+        "dec": 32,
+        "wr": 0.625,
+        "net": 0.0359,
+        "avgR": 0.0023,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 1,
+        "n": 182,
+        "dec": 36,
+        "wr": 0.5833,
+        "net": -0.0271,
+        "avgR": -0.0171,
+        "powered": true,
+        "pass": false
+      },
+      {
+        "fold": 2,
+        "n": 178,
+        "dec": 36,
+        "wr": 0.6944,
+        "net": 0.0104,
+        "avgR": -0.0023,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 3,
+        "n": 205,
+        "dec": 38,
+        "wr": 0.7895,
+        "net": 0.1154,
+        "avgR": 0.0249,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 4,
+        "n": 147,
+        "dec": 31,
+        "wr": 0.6129,
+        "net": 0.2312,
+        "avgR": 0.0214,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 5,
+        "n": 194,
+        "dec": 45,
+        "wr": 0.7111,
+        "net": 0.1818,
+        "avgR": 0.0464,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 6,
+        "n": 247,
+        "dec": 70,
+        "wr": 0.7143,
+        "net": 0.173,
+        "avgR": 0.0451,
+        "powered": true,
+        "pass": true
+      },
+      {
+        "fold": 7,
+        "n": 219,
+        "dec": 47,
+        "wr": 0.6809,
+        "net": 0.3193,
+        "avgR": 0.0605,
+        "powered": true,
+        "pass": true
+      }
+    ],
+    "powered_folds": "7/8",
+    "criteria": [
+      {
+        "id": "C1_evidence",
+        "pass": true,
+        "evaluable": true,
+        "detail": "sequenced OOS decisive n=162 (need ≥100)"
+      },
+      {
+        "id": "C2_oos_ci",
+        "pass": false,
+        "evaluable": true,
+        "detail": "bootstrap 95% LB $-0.1400/t"
+      },
+      {
+        "id": "C3_walk_forward",
+        "pass": true,
+        "evaluable": true,
+        "detail": "sequenced TRAIN net $0.0674/t (dec 173)"
+      },
+      {
+        "id": "C4_folds",
+        "pass": true,
+        "evaluable": true,
+        "detail": "7/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+      }
+    ],
+    "failed": [
+      "C2_oos_ci"
+    ],
+    "unevaluable": [],
+    "verdict": "SHADOW"
+  }
+}

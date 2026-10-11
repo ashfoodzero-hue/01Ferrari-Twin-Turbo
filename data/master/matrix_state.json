@@ -1,0 +1,126 @@
+{
+ "structure": {
+  "barT": 1791579420000,
+  "close": 4192.86,
+  "atr": 1.2835374245180637,
+  "levels": {
+   "hh": 4201.9,
+   "ll": 4192.6,
+   "span": 9.299999999999272,
+   "ceiling": 4204.4295999999995,
+   "floor": 4190.0704000000005,
+   "intWall": 4193.6602,
+   "cushion": 1.9253061367770956,
+   "sellLine": 4202.504293863222,
+   "buyLine": 4195.585506136777
+  },
+  "lastSwingLow": 4192.6,
+  "lastSwingHigh": 4197.07,
+  "swing": "BEARISH (lower highs + lower lows)",
+  "pivots": [
+   {
+    "t": 1791563580000,
+    "px": 4185.03,
+    "kind": "L"
+   },
+   {
+    "t": 1791564300000,
+    "px": 4193.35,
+    "kind": "H"
+   },
+   {
+    "t": 1791565740000,
+    "px": 4187.02,
+    "kind": "L"
+   },
+   {
+    "t": 1791566280000,
+    "px": 4195.31,
+    "kind": "H"
+   },
+   {
+    "t": 1791569340000,
+    "px": 4200.43,
+    "kind": "H"
+   },
+   {
+    "t": 1791570780000,
+    "px": 4192.25,
+    "kind": "L"
+   },
+   {
+    "t": 1791571860000,
+    "px": 4201.9,
+    "kind": "H"
+   },
+   {
+    "t": 1791572220000,
+    "px": 4194.48,
+    "kind": "L"
+   },
+   {
+    "t": 1791574380000,
+    "px": 4193.73,
+    "kind": "L"
+   },
+   {
+    "t": 1791574920000,
+    "px": 4197.25,
+    "kind": "H"
+   },
+   {
+    "t": 1791575460000,
+    "px": 4192.6,
+    "kind": "L"
+   },
+   {
+    "t": 1791577260000,
+    "px": 4197.07,
+    "kind": "H"
+   }
+  ],
+  "dxy": {
+   "close": 102.2271,
+   "ema10": 102.2212,
+   "bullish": true
+  },
+  "wti": {
+   "hourT": 1791576000000,
+   "o": 91.58,
+   "c": 91.61,
+   "lastMinuteT": 1791578940000,
+   "bullish": true
+  },
+  "buy": {
+   "wall": true,
+   "wti_not_bullish": false,
+   "dxy_not_bullish": false,
+   "green_candle": false
+  },
+  "sell": {
+   "wall": false,
+   "wti_bullish": true,
+   "dxy_bullish": true,
+   "close_below_swing_low": false
+  },
+  "distToBuyLine": -2.73,
+  "distToSellLine": 9.64
+ },
+ "at": "2026-10-09T21:00:22.360Z",
+ "bar": "2026-10-09T20:57:00.000Z",
+ "data_live": true,
+ "data_why": null,
+ "verdict": {
+  "verdict": "SHADOW",
+  "oos_net": -0.908,
+  "oos_wr": 0.2007,
+  "window": "2024-10-10 → 2026-10-09T06:00"
+ },
+ "open": null,
+ "last_closed": {
+  "side": "BUY",
+  "outcome": "SL",
+  "pnl": -2.3577,
+  "closedAt": "2026-10-09T20:53:00.000Z"
+ }
+}

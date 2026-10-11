@@ -1,0 +1,312 @@
+{
+ "at": "2026-10-09T17:32:47.854Z",
+ "window": "2013-07-21 → 2026-10-09T06:00",
+ "split": "2021-06-26",
+ "results": {
+  "CPI": {
+   "events": 148,
+   "size": {
+    "median_ratio_60m": 1.68,
+    "share_over_2x": 0.331,
+    "median_ratio_pre30": 0.89,
+    "median_ratio_60_240": 1.13,
+    "median_abs_move_60m": 4.09
+   },
+   "direction_up_60m": {
+    "n": 148,
+    "share": 0.5811,
+    "lb": 0.5005
+   },
+   "persistence": {
+    "train": {
+     "n": 89,
+     "share": 0.4157,
+     "lb": 0.3189
+    },
+    "oos": {
+     "n": 59,
+     "share": 0.5085,
+     "lb": 0.3843
+    },
+    "money_oos": {
+     "n": 59,
+     "net": -0.98,
+     "net_lb": -4.011
+    },
+    "money_train": {
+     "n": 89,
+     "net": -0.52,
+     "net_lb": -1.188
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "NFP": {
+   "events": 148,
+   "size": {
+    "median_ratio_60m": 2.61,
+    "share_over_2x": 0.743,
+    "median_ratio_pre30": 1.02,
+    "median_ratio_60_240": 1.23,
+    "median_abs_move_60m": 6.4
+   },
+   "direction_up_60m": {
+    "n": 148,
+    "share": 0.5946,
+    "lb": 0.5141
+   },
+   "persistence": {
+    "train": {
+     "n": 90,
+     "share": 0.4222,
+     "lb": 0.3254
+    },
+    "oos": {
+     "n": 58,
+     "share": 0.4483,
+     "lb": 0.3275
+    },
+    "money_oos": {
+     "n": 58,
+     "net": -1.051,
+     "net_lb": -4.574
+    },
+    "money_train": {
+     "n": 90,
+     "net": -1.605,
+     "net_lb": -2.814
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "PPI": {
+   "events": 154,
+   "size": {
+    "median_ratio_60m": 1.21,
+    "share_over_2x": 0.136,
+    "median_ratio_pre30": 0.93,
+    "median_ratio_60_240": 1.01,
+    "median_abs_move_60m": 2.86
+   },
+   "direction_up_60m": {
+    "n": 154,
+    "share": 0.526,
+    "lb": 0.4474
+   },
+   "persistence": {
+    "train": {
+     "n": 92,
+     "share": 0.5761,
+     "lb": 0.4741
+    },
+    "oos": {
+     "n": 61,
+     "share": 0.5246,
+     "lb": 0.4016
+    },
+    "money_oos": {
+     "n": 62,
+     "net": 0.431,
+     "net_lb": -1.655
+    },
+    "money_train": {
+     "n": 92,
+     "net": 0.012,
+     "net_lb": -0.755
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "JOLTS": {
+   "events": 154,
+   "size": {
+    "median_ratio_60m": 1.11,
+    "share_over_2x": 0.149,
+    "median_ratio_pre30": 1.01,
+    "median_ratio_60_240": 1,
+    "median_abs_move_60m": 2.78
+   },
+   "direction_up_60m": {
+    "n": 154,
+    "share": 0.4545,
+    "lb": 0.378
+   },
+   "persistence": {
+    "train": {
+     "n": 93,
+     "share": 0.5054,
+     "lb": 0.4056
+    },
+    "oos": {
+     "n": 61,
+     "share": 0.377,
+     "lb": 0.2661
+    },
+    "money_oos": {
+     "n": 61,
+     "net": -2.161,
+     "net_lb": -5.039
+    },
+    "money_train": {
+     "n": 93,
+     "net": -0.059,
+     "net_lb": -0.93
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "FOMC": {
+   "events": 103,
+   "size": {
+    "median_ratio_60m": 5.3,
+    "share_over_2x": 0.951,
+    "median_ratio_pre30": 1.29,
+    "median_ratio_60_240": 2.26,
+    "median_abs_move_60m": 7.56
+   },
+   "direction_up_60m": {
+    "n": 103,
+    "share": 0.5437,
+    "lb": 0.4477
+   },
+   "persistence": {
+    "train": {
+     "n": 61,
+     "share": 0.6557,
+     "lb": 0.5305
+    },
+    "oos": {
+     "n": 41,
+     "share": 0.5122,
+     "lb": 0.3648
+    },
+    "money_oos": {
+     "n": 41,
+     "net": 0.547,
+     "net_lb": -5.667
+    },
+    "money_train": {
+     "n": 61,
+     "net": 1.921,
+     "net_lb": 0.443
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "RETAIL": {
+   "events": 155,
+   "size": {
+    "median_ratio_60m": 1.35,
+    "share_over_2x": 0.206,
+    "median_ratio_pre30": 0.94,
+    "median_ratio_60_240": 1.05,
+    "median_abs_move_60m": 3.21
+   },
+   "direction_up_60m": {
+    "n": 155,
+    "share": 0.529,
+    "lb": 0.4507
+   },
+   "persistence": {
+    "train": {
+     "n": 91,
+     "share": 0.5165,
+     "lb": 0.4152
+    },
+    "oos": {
+     "n": 62,
+     "share": 0.4677,
+     "lb": 0.3491
+    },
+    "money_oos": {
+     "n": 63,
+     "net": -1.003,
+     "net_lb": -3.17
+    },
+    "money_train": {
+     "n": 92,
+     "net": -0.303,
+     "net_lb": -1.064
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "FED_CHAIR": {
+   "events": 109,
+   "size": {
+    "median_ratio_60m": 1.34,
+    "share_over_2x": 0.349,
+    "median_ratio_pre30": 1,
+    "median_ratio_60_240": 1.08,
+    "median_abs_move_60m": 1.87
+   },
+   "direction_up_60m": {
+    "n": 109,
+    "share": 0.4862,
+    "lb": 0.3945
+   },
+   "persistence": {
+    "train": {
+     "n": 73,
+     "share": 0.3699,
+     "lb": 0.2682
+    },
+    "oos": {
+     "n": 36,
+     "share": 0.6667,
+     "lb": 0.5033
+    },
+    "money_oos": {
+     "n": 36,
+     "net": 1.713,
+     "net_lb": -1.004
+    },
+    "money_train": {
+     "n": 73,
+     "net": -1.626,
+     "net_lb": -3.289
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  },
+  "FED_GOV": {
+   "events": 547,
+   "size": {
+    "median_ratio_60m": 1.04,
+    "share_over_2x": 0.099,
+    "median_ratio_pre30": 1.03,
+    "median_ratio_60_240": 1.07,
+    "median_abs_move_60m": 2.02
+   },
+   "direction_up_60m": {
+    "n": 547,
+    "share": 0.5082,
+    "lb": 0.4664
+   },
+   "persistence": {
+    "train": {
+     "n": 201,
+     "share": 0.408,
+     "lb": 0.3424
+    },
+    "oos": {
+     "n": 342,
+     "share": 0.5468,
+     "lb": 0.4938
+    },
+    "money_oos": {
+     "n": 342,
+     "net": 0.225,
+     "net_lb": -0.598
+    },
+    "money_train": {
+     "n": 202,
+     "net": -0.532,
+     "net_lb": -0.963
+    },
+    "verdict": "DOES_NOT_PERSIST"
+   }
+  }
+ },
+ "persisting": []
+}

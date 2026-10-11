@@ -1,0 +1,362 @@
+
+══ P4.5 COST / FILL MODEL SMOKE ═════════════════════════════════════
+
+A) sessionSpread — UTC hour → the right session band
+  ✓ 09 UTC → London
+  ✓ 13 UTC → London/NY overlap (tightest)
+  ✓ 18 UTC → NY
+  ✓ 03 UTC → Asian
+  ✓ 21 UTC → rollover spike
+  ✓ hour wraps mod 24 (33≡9)
+  ✓ negative hour wraps (−1≡23, Asian)
+
+B) maker entry = 0; exit pays spread
+  ✓ overlap target exit: cost = 0.13 (maker entry 0 + spread, no slippage)
+
+C) stop exit pays spread + ATR-scaled slippage (capped)
+  ✓ stop, atr 4: cost = spread 0.13 + slip 0.20 = 0.33
+  ✓ stop, atr 100: slip capped at 0.30 → cost 0.43
+  ✓ time exit is a market order → slips like a stop
+
+D) scratch exit = resting limit at BE → spread only, no slippage
+  ✓ scratch (BE limit) pays spread only, even at high ATR (no slippage)
+
+E) taker-entry override adds an entry spread
+  ✓ entryMaker=false → entry also pays spread (0.26)
+
+F) netDollars subtracts the round-trip cost from the gross move
+  ✓ gross +5 target exit → net +4.87
+  ✓ gross −3 stop in Asian (spread .30 + slip .20) → net −3.50
+
+G) cost is always ≥ 0
+  ✓ no negative cost across all sessions × exit types
+
+────────────────────────────────────────────────────────────────────
+✅ COST / FILL MODEL SMOKE: ALL CHECKS PASSED (16/16)
+────────────────────────────────────────────────────────────────────
+
+── smoke_execution.mjs GREEN (0s)
+
+  ✓ 🚨 pre-fill target range is NOT a win (the live bug shape) — resolves on a LATER bar instead
+  ✓ a GENUINE V-reversal (entry touched, THEN target) IS credited on the fill bar
+  ✓ the fill sub-bar itself never credits the target (residual 1m ambiguity stays pessimistic)
+  ✓ stop is chargeable on the fill sub-bar (pessimistic both ways)
+  ✓ no sub-bar coverage → pessimistic fallback (no fill-bar tp; stop still charged), flagged seq:pessimistic
+  ✓ BE arms from a post-fill sub-bar in sequence, and a reversal then SCRATCHES at the lock
+  ✓ PHANTOM LOCK: the market only showed +0.05R — level pays the lock (+0.1R), traded keeps the original stop and LOSES on the next bar, arm closes at +0.05R
+  ✓ GENUINE LOCK: the market traded through the lock and came back — level and traded both pay the lock
+  ✓ DEFAULT = level, byte-for-byte (the shipped artifacts do not move): no lockMode ≡ lockMode:level
+  ✓ an unknown lockMode throws (never a silent default)
+  ✓ FILL-THROUGH (2026-09-15): the limit is credited only once the touch extends the margin beyond it — limit 4289.32: $3.00 still fills on the fill bar (high 4292.46), $3.50 defers the fill to the next bar (high 4304), $15 never fills (NOFILL); 0 ≡ the base rule
+  ✓ REST MARGIN (2026-09-15): with a broker stop distance the lock rests only once price is past it by that much — subsB trades 0.416 through: margin 0.3 rests (SCRATCH), margin 0.5 does not (the original stop, LOSS)
+  ✓ BID/ASK: spreadAt null is byte-identical to the default
+  ✓ BID/ASK: a BUY limit fills only when the ASK reaches it (bid ≤ entry − spread)
+  ✓ BID/ASK: a SELL target needs the ASK at the target (bid ≤ tp − spread) — a bid touch alone is not a win
+  ✓ BID/ASK: a SELL stop fires when the ASK reaches it (bid ≥ sl − spread)
+  ✓ BID/ASK: a SELL time exit buys back at the ASK close; a negative spread throws
+
+✅ SEQ RESOLVER SMOKE: 17 passed, 0 failed
+── smoke_seq_resolver.mjs GREEN (0s)
+
+
+██ PAPER TRADER SMOKE ██
+  ✓ records a signal and is IDEMPOTENT (a repeated tick adds nothing)
+  ✓ a GATE-BLOCKED signal is recorded as REFUSED, never as a trade
+  ✓ a REFUSED signal records the plan it turned down — nested, and still not a trade
+  ✓ a suppressed tier is recorded but flagged shadow:true
+  ✓ LOOK-AHEAD: the bar a trade was recorded on can never fill or resolve it
+  ✓ fills a limit at the wick tip, on a later bar
+  ✓ PESSIMISM: a bar OPENING beyond the limit gives NO price improvement (recorded, not credited)
+  ✓ STOP BEFORE TARGET: a bar containing both is a LOSS
+  ✓ PESSIMISM: a gap THROUGH the stop is charged at the open, not at the stop
+  ✓ a clean target hit pays exactly the target, no slippage
+  ✓ an untagged limit EXPIRES after the fill window and never becomes a trade
+  ✓ the fill window scales with the entry timeframe — a 4H signal is NOT expired at a 15m book's horizon
+  ✓ SELL side mirrors exactly (fill at limit, stop-first, gap charged)
+  ✓ a corrupt journal line throws — never silently skipped
+  ✓ paperStats separates shadow tiers and states how many trades are still needed
+  ✓ DRIFT ALARM fires when live and backtest intervals separate (and not before n=10)
+  ✓ 🚨 BE ARMS + SCRATCHES: a managed trade that goes favorable then reverses exits at BE, NOT a full loss
+  ✓ un-managed (beTriggerR:0) does NOT scratch — the same reversal is not a BE exit
+  ✓ 🚨 BE SEQUENCE: the arming bar closes beyond the BE stop ⇒ SCRATCH at the BE stop in THAT bar, never at the next open
+  ✓ BE SEQUENCE: a GENUINE inter-bar gap through the BE stop is still charged at the open (pessimism kept)
+  ✓ 🚨 BE SEQUENCE (1m): a post-fill bar is replayed minute by minute — arm, then stop, in true order
+  ✓ 🚨 EA LOCK SEMANTICS (2026-09-14): a PHANTOM lock — armed at +0.05R, the market never reaches the +0.10R lock — is NOT a scratch: the original stop stays and is charged
+  ✓ EA LOCK SEMANTICS: a lock that RESTED (minute closed beyond it) and is then gapped at the next open is still charged at the open (pessimism kept)
+  ✓ 🚨 LIVE CASE IMPULSE_CONT@1789378200000 (09-14): on the real minutes the EA scratches at the lock (+$1.40), not at a −$0.43 "gap"
+  ✓ TRADE-THROUGH AT FILL: without minutes the fill BAR extreme is recorded (basis "bar"); a bar that only touches the limit reads 0
+  ✓ 🚨 FILL-BAR SEQUENCE: target inside the fill bar is NOT credited (pre-fill range is not a win)
+  ✓ FILL-BAR SEQUENCE: the STOP side still resolves on the fill bar (pessimistic both ways)
+  ✓ FILL-BAR SEQUENCE: target on the NEXT bar resolves normally
+  ✓ 🚨 1m PARITY: the 2026-08-14 shape stays REFUSED when the minutes prove the target traded BEFORE the fill
+  ✓ 🚨 1m PARITY: a target that trades AFTER the fill minute IS credited (the win the floor rule was denying)
+  ✓ 🚨 1m PARITY: the stop is still charged when the minutes show it hit first (pessimism survives the upgrade)
+  ✓ 🚨 1m PARITY: no sub-bars supplied ⇒ the pessimistic floor rule is unchanged (no silent behaviour shift)
+  ✓ READINESS STAMP (2026-09-26): with ctx.readiness every new row (fire AND refusal) carries {dens30, rv10, state}; without ctx the row is unchanged
+  ✓ BID/ASK PARITY · SELL: target touched on the BID only — neither resolver credits it; through by the spread — both TARGET at the same P&L
+  ✓ BID/ASK PARITY · BUY: the limit fills only when the ASK reaches it — both NOFILL on a bid touch, both fill on a through-move
+  ✓ BID/ASK PARITY · SELL stop: the ASK reaches the stop (bid ≥ stop − spread) — both STOPPED at −risk; without spreadAt neither stops
+  ✓ BID/ASK PARITY · PROPERTY: 300 seeded random continuous 1m paths × {spread 0.6, none} — paper trader ≡ seqResolver(seqAll) on every resolved trade (outcome AND P&L)
+
+✅ PAPER TRADER SMOKE: 37 passed, 0 failed
+── smoke_paper_trader.mjs GREEN (3s)
+
+  ✓ VOCABULARY: both scratch representations are SCRATCH; TARGET=WIN; STOPPED<0=LOSS; TIMEOUT splits FLAT/LOSS; REFUSED/PENDING/OPEN = not resolved
+  ✓ ANOMALY GUARD: the 09-08 shape (SCRATCH at −0.67R) is flagged; a normal scratch and a normal loss are not
+  ✓ ON-TRACK TEST: a run at the artifact's expectation scores p≈0.5; a run far below scores p<0.05; deterministic
+  ✓ reviewTier counts SCRATCH as RESOLVED (progress), reports shares, anomalies and corrected P&L
+  ✓ sequentialFires: a fire that opens while an earlier one is still live is OVERLAPPED (skipped); no-fills never block; pending blocks
+  ✓ isFire: not refused AND has an entry — refusals, entry-less rows and null are never fires
+  ✓ CONTRACT: promotion_review imports the shared vocabulary and has no inline scratch heuristic
+  ✓ DENSE SUB-BOOK (2026-09-26): reviewTier.subBooks.dense = the sequential series of stamped fires with dens30 ≥ 6, lane rule inside the dense stream only; unstamped rows are never dense; record-only
+✅ PROMOTION-REVIEW SMOKE: 8 passed, 0 failed
+── smoke_paper_review.mjs GREEN (0s)
+
+  ✓ MERGE: only the trial tiers are inherited; the twin row wins an id collision; no fire is counted twice; sorted by t
+  ✓ CORRECTIONS: null when no audit exists; own audit wins; rows without an after.pnl are ignored
+  ✓ LOAD on fixtures: missing files read as empty, never throw, never create
+  ✓ READ-ONLY on the real parent: loading leaves Turbo2's journal byte-identical (size + mtime)
+  ✓ STATIC: promotion_review reads the trial ONLY through trialJournal.js (no inline journal path — one rule, one place)
+  ✓ RESCORE overlay: a rescored inherited row REPLACES the inherited one (source turbo2-rescored); own rows still win; a rescored id never also carries a BE-audit correction
+✅ TRIAL-JOURNAL SMOKE: 6 passed, 0 failed
+── smoke_trial_journal.mjs GREEN (0s)
+
+
+██ TICK STREAM SMOKE ██
+  ✓ BUILDER: bid OHLC + tick count; ask/spread side record; ticks of a settled minute are LATE and never rewrite it
+  ✓ SETTLE: tick = CA → write · tick ≠ CA → arbiter · CA without ticks → arbiter · before grace → wait · ticks without CA after grace → arbiter · nothing → quiet · uncovered → arbiter
+  ✓ RESAMPLE (1m only): closed buckets only — a trailing bucket without its final minute is NEVER emitted; with it, it is
+  ✓ LIVE CHECK fails closed: no heartbeat · old heartbeat · dead pid · disconnected · settled behind · symbol missing → not live; fresh+settled → live
+  ✓ loadBarsLive: a not-live status → live:false with the reason; the forming bar is never returned
+  ✓ STATIC: liveBars has NO REST tail (ticks only) · twin_tick records nothing when stale · run_twin supervises the stream
+  ✓ REAL STORES (all 8): strictly ascending, no duplicate minute in the last 3 days, every streamed line carries src+ver
+  ✓ STREAMER, every branch on fixtures (fake socket + fake REST + controlled clock, temp files): refill · tick=CA · CA≠tick → REST arbiter · no CA → REST empty → retry → UNVERIFIED · quiet · CA-only → arbiter · late tick rejected · disconnect → reconnect → refill
+  ✓ LATE TICKS → REST re-check → CORRECTION: a late quote never rewrites the store; ~1 min later the minute is re-fetched, Polygon's re-issued bar is appended as ONE correction (provenance + was), the 2nd check adds nothing, and the reader applies it
+  ✓ STATIC: every 1m read applies corrections (backfillReader.streamBars) — so every resampled timeframe inherits them
+  ✓ RECONCILE diff (pure): equal minutes counted; a re-issued minute (price OR volume) → correction; REST-only → missing; store-only → extra
+✅ TICK STREAM SMOKE: 11 passed, 0 failed
+── smoke_tick_stream.mjs GREEN (2s)
+
+
+██ LEVEL RADAR MODULE SMOKE ██
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ✓ FAITHFUL: legacy mode reproduces all 9,124 study fade candidates (level · atr4 · stop · tgt · towards|strength|dist)
+  ✓ CAUSAL pivots: every pivot is usable only after its confirming bar CLOSED (confirmT = bar i+k close); legacy is earlier by exactly one bar
+  ✓ CAUSAL daily context: the day read at a decision has ENDED by the decision (legacy reads the day still in progress)
+  ✓ TRUNCATION INVARIANCE (causal): 40 decisions are identical on the full tape and on a tape cut at the decision
+  ✓ LEGACY is NOT truncation-invariant (the look-ahead, measured): at least one decision changes when the future is cut away
+✅ LEVEL RADAR SMOKE: 5 passed, 0 failed
+── smoke_level_radar.mjs GREEN (16s)
+
+
+██ WATCHDOG SMOKE ██
+  ✓ healthy = own pid alive AND beat ≤ 3 min → do nothing
+  ✓ a FRESH beat with a DEAD pid is a dead app (the reboot case) → start
+  ✓ pid alive but beat stale (wedged) → start (the lock refuses a duplicate if it is in fact alive)
+  ✓ no heartbeat file → start
+  ✓ loop breaker: ≥ 3 restarts in the hour → HALT; a HALT marker → nothing until re-armed
+  ✓ STATIC: the watchdog never kills (no kill/taskkill/Stop-Process), spawns run_twin hidden + detached; the launcher runs it windowless
+✅ WATCHDOG SMOKE: 6 passed, 0 failed
+── smoke_watchdog.mjs GREEN (0s)
+
+
+██ LIVE CHART SERVER SMOKE ██
+  ✓ serves the page (title, the pinned chart library, the confirmation lines)
+  ✓ /api/bars 15m: closed candles only, ascending, on the 15m grid; the current bucket comes separately as partial
+  ✓ /api/live: the forming minute is flagged forming:true; levels come from marketStateGeometry (sell < low ≤ high < buy)
+  ✓ refuses unknown symbols and timeframes (400) and unknown paths (404)
+  ✓ DXY (rebuilt): closed close-based candles on the grid, the live value comes from the six pairs, structure geometry present
+  ✓ WTI: labelled DELAYED everywhere, never "live", no forming candle, last candle at least 10 min old
+  ✓ drivers: every % comes from xau_leaders.json (no number without the study); WTI excluded; macro + news answer with their source
+  ✓ STATIC: binds 127.0.0.1 only and never writes a file
+✅ LIVE CHART SMOKE: 8 passed, 0 failed
+── smoke_chart.mjs GREEN (8s)
+
+
+██ FRESHNESS CONTRACT SMOKE ██
+  ✓ contract sound: every flow has a healer key, no age bound below its cadence, no unstated exemption
+  ✓ every healer script named exists in scripts/
+  ✓ market calendar: Saturday closed · Sunday 22:00Z open · Wednesday 10:00Z open · Friday 21:30Z closed · lastMarketClose(Sat) = Fri 21:00Z
+  ✓ freshnessReport runs on the real folder and reports exactly the declared flows
+  ✓ heartbeatLive: liveness is the PID, never the file — no pid = unknowable, own pid = alive, a dead pid = gone
+
+✅ FRESHNESS CONTRACT SMOKE: 5 passed, 0 failed
+── smoke_freshness.mjs GREEN (0s)
+
+
+██ RESILIENT DNS SMOKE ██
+  ✓ a healthy host resolves to a v4 address and the answer is remembered on disk
+  ✓ 🚨 when EVERY live resolver fails, the DISK CACHE carries the request (this is the outage path)
+  ✓ 🚨 a remembered address EXPIRES — polygon rotates its single A record and a stale IP times out at 21s
+  ✓ 🚨 with no cache and no resolver, it THROWS — an outage never returns fabricated data
+  ✓ 🚨 TLS still validates against the HOSTNAME — an IP in the URL would have been a security regression
+  ✓ 🚨 the lookup hook honours autoSelectFamily ({all:true} → array), which cost 8/8 connects when it did not
+
+✅ RESILIENT DNS SMOKE: 6 passed, 0 failed
+── smoke_netresolve.mjs GREEN (1s)
+
+██ TEMPORAL-GUARANTEE SMOKE ██
+
+  ✓ no *CloseT field is assigned open + a sub-minute literal (a close is a BAR WIDTH away)
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+
+  ✓ 15m  confirm bar exposes 0 illegitimate sub-bar(s) under +1ms (expected 0)
+  ✓ 30m  confirm bar exposes 1 illegitimate sub-bar(s) under +1ms (expected 1)
+  ✓ 1h   confirm bar exposes 3 illegitimate sub-bar(s) under +1ms (expected 3)
+  ✓ 2h   confirm bar exposes 7 illegitimate sub-bar(s) under +1ms (expected 7)
+  ✓ 🛡️ 15m IMMUNITY: causal and look-ahead fill starts are IDENTICAL on a 15m entry TF (the confirm bar IS a base bar)
+  ✓ 🛡️ …and they are NOT identical on 2h — so the immunity is a property of the timeframe, not of the harness
+
+✅ TEMPORAL-GUARANTEE SMOKE: 7 passed, 0 failed
+── smoke_temporal_guarantee.mjs GREEN (2s)
+
+
+██ PRO_SWING SIGNAL SMOKE ██
+
+1 · buildProSignal plan geometry
+  ✓ UP: sl=entry−2ATR, tp=entry+0.5R [sl 1992 tp 2004]
+  ✓ UP plan ordered sl<entry<tp
+  ✓ carries BE-trigger 0.2R + managed type
+  ✓ DOWN plan ordered tp<entry<sl
+  ✓ tier/agent = PRO_SWING
+
+2 · honest validated stats
+  ✓ validated WR 0.89 (honest ~89%, NOT 97%)
+  ✓ stats: two-sided + regime-robust + deflated (the discovery)
+
+3 · latestProSignal on real bars
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ✓ valid direction (NEUTRAL)
+  ✓ tier PRO_SWING
+  ✓ card has plan + validated + tier
+  ✓ NEUTRAL now (no A+ killzone setup armed) — valid
+
+4 · filter integrity
+  ✓ every armed setup is A+ grade + killzone + displaced setup (0 found)
+
+5 · look-ahead-free
+  ✓ truncating future bars does not change a past read (causal)
+
+✅ PRO_SWING SIGNAL SMOKE: 13 passed, 0 failed
+
+── smoke_pro_signal.mjs GREEN (66s)
+
+
+██ MARKET STATE SMOKE ██
+  ✓ EQUILIBRIUM (mid-range) blocks BOTH sides and says WAIT FOR CONFIRMATION
+  ✓ break WITHOUT volume = NOT confirmed → still blocked (no guessing)
+  ✓ break WITH volume = DIRECTION CONFIRMED → only that side fires
+  ✓ HYSTERESIS: after a confirmed breakdown, BUY stays blocked (no falling-knife) until reclaim
+  ✓ HYSTERESIS releases once price RECLAIMS the broken level
+  ✓ PREMIUM → SELL only · DISCOUNT → BUY only
+  ✓ every state carries a plain-English message + causal range (excludes current bar)
+  ✓ real data: state is one of the known states and gate is coherent
+  ✓ too-few bars is safe (null, no throw)
+
+✅ MARKET STATE SMOKE: 9 passed, 0 failed
+── smoke_market_state.mjs GREEN (0s)
+
+
+██ TWIN ROSTER SMOKE ██
+  ✓ exactly ONE book is declared; tradeable ⇔ its artifact verdict is SHIP (a SHADOW verdict is never tradeable); paper-only; cites its artifact
+  ✓ the TIER_STATS record reproduces its artifact FIELD FOR FIELD (the audit_live_claims contract, local copy)
+  ✓ the traded-semantics block reproduces the MONEY-PATH artifact (traded lock · bid/ask · every bar on 1m)
+  ✓ the selection constants are the pre-registered ones (never silently re-tuned)
+  ✓ static: the roster never assigns a tier side from a raw direction field
+  ✓ emits a well-formed roster on real bars and degrades on tiny input
+  ✓ POWER: 3 distinct fire(s) found over 8 causal cut points (need ≥ 3; state agreed on 0)
+  ✓ summary names the book when it fires and says so when the state refuses it
+
+✅ TWIN ROSTER SMOKE: 8 passed, 0 failed
+── smoke_twin_roster.mjs GREEN (36s)
+
+
+██ TWIN ↔ TURBO2 PARITY SMOKE ██
+  ✓ POWER: 108 cut point(s) where BOTH emitters fired (journal fires in window: 43; quiet points agreeing on null: 16)
+  ✓ every shared fire is IDENTICAL on 14 fields and no cut point fires on one side only
+  ✓ the market-state verdict agrees (twin stateRead.agrees ⇔ Turbo2 not blocked)
+
+✅ TWIN ↔ TURBO2 PARITY: 3 passed, 0 failed
+── smoke_twin_parity.mjs GREEN (413s)
+
+
+██ READINESS GAUGE SMOKE ██
+  ✓ the parity artifact verdict is consistent with its numbers (PASS ⇔ Wilson LB ≥ 95% AND both eras ≥ 95% AND fires within ±20%)
+  ✓ the pre-registered cell is unchanged (dens30 ≥ 10 & rv10 ≥ 2.5, $50 / 2.5% legs, 30d / 10d windows)
+  ✓ computeReadiness runs on 100d of real bars and returns a state with causal features
+  ✓ liveReadiness() serves the state; a probability ONLY when the parity artifact PASSES (display law) — never a typed one
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ✓ liveDensityRelative(): dens_rel = dens30 / trailing-1y median, threshold 1.5, ONE constant shared with paperReview
+
+✅ READINESS GAUGE SMOKE: 5 passed, 0 failed
+── smoke_readiness.mjs GREEN (4s)
+
+
+████ smoke_regime_splitter ████
+
+1 · regimeBucket mapping
+  ✓ TREND_UP & MELT_UP → bull
+  ✓ TREND_DOWN & WATERFALL → bear
+  ✓ RANGE → range
+  ✓ VOLATILE_CHOP → highvol
+  ✓ unknown/null → null (uncounted)
+
+2 · regimeCoverage math (hand-computed)
+  ✓ classified = 5 (null excluded) [5]
+  ✓ counts bull2/bear1/range2/highvol0 [{"bull":2,"bear":1,"range":2,"highvol":0}]
+  ✓ fracs bull0.4/range0.4/bear0.2 [{"bull":0.4,"bear":0.2,"range":0.4,"highvol":0}]
+  ✓ sub-range [2..4] counts correct
+
+3 · buildRegimeSpannedFolds on the twin tape (Polygon 1m → 15m, 2013-07 →)
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ✓ loaded 308,742 bars
+    (built 8 folds in 2613ms)
+  ✓ produced 8 folds
+  ✓ fold0 starts at bar 0
+  ✓ last fold ends at final bar
+  ✓ folds are a contiguous non-overlapping partition
+  ✓ fold bars sum to total (308,742)
+    fold  span?  buckets(≥3%)              dates
+     0    YES   [bull,bear,highvol     ] 2013-07-14→2015-03-06  b9 b10 r0 h81
+     1    YES   [bull,bear,highvol     ] 2015-03-06→2016-10-21  b9 b9 r0 h83
+     2    YES   [bull,bear,highvol     ] 2016-10-21→2018-06-12  b9 b9 r0 h82
+     3    YES   [bull,bear,highvol     ] 2018-06-12→2020-03-04  b9 b8 r0 h82
+     4    YES   [bull,bear,highvol     ] 2020-03-04→2021-11-22  b8 b8 r1 h83
+     5    YES   [bull,bear,highvol     ] 2021-11-22→2023-07-06  b9 b8 r1 h82
+     6    YES   [bull,bear,highvol     ] 2023-07-06→2025-02-21  b9 b8 r1 h82
+     7    YES   [bull,bear,highvol     ] 2025-02-21→2026-10-09  b10 b10 r0 h79
+  ✓ EVERY fold spans ≥3 buckets AND is directionally balanced (no single-regime/one-direction fold)
+  ✓ EVERY fold contains BOTH bull AND bear regimes (the P7 anti-confound)
+  ✓ buckets across folds = bull,bear,highvol and RANGE < 3% in every 2013+ fold (got bull,bear,highvol)
+
+4 · assignFold
+  ✓ bar 0 → fold 0
+  ✓ last bar → last fold
+  ✓ fold-3 endpoints → fold 3
+  ✓ out-of-range → -1
+
+5 · causal-boundary proof (truncate-future invariance)
+  ✓ fold-3 stable regimes identical with/without future bars (causal)
+  ✓ fold-k coverage counts unchanged by truncation
+
+6 · guards
+  ✓ throws when too few bars for requested folds
+
+✅ smoke_regime_splitter: 25 passed, 0 failed
+
+── smoke_regime_splitter.mjs GREEN (28s)
+
+
+██ IMPULSE_CONT FROZEN-ARTIFACT CHECK ██
+  ✓ the validator runs on the tape truncated at the artifact's own tape end (2026-10-08T15:45:00Z) in 47s and writes ONLY the check file
+  ✓ every shipped number reproduces EXACTLY: wr, lb, n, net_per_trade_oos, net_per_trade_train, net_per_trade_lb, net_per_trade_ub, avg_risk, per_day, per_year
+  ✓ the OOS outcome table (n / win / scratch / loss and shares) reproduces exactly
+  ✓ era R and the sequenced share reproduce exactly
+  ✓ the gate verdict and its failed criteria reproduce exactly (whatever they are — the smoke pins the measurement, never a hoped-for SHIP)
+  ✓ the bid/ask lookups were all MEASURED cells (no year-level fallback, no live minutes in a historical run)
+
+✅ FROZEN-ARTIFACT CHECK: 6 passed
+── smoke_impulse_frozen.mjs GREEN (47s)
+
+✅ smoke:all — 19/19 suites green in 625s (full)
+EXIT=0

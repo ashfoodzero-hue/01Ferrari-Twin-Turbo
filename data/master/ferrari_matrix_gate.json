@@ -1,0 +1,872 @@
+{
+ "at": "2026-10-09T19:38:21.001Z",
+ "tape_to": "2026-10-09T06:00:00.000Z",
+ "book": "FERRARI_MATRIX",
+ "verdict": "SHADOW",
+ "gates": {
+  "C1_C4": false,
+  "S1_spread_x1_5": false
+ },
+ "failed": [
+  "C1_C4",
+  "S1_spread_x1_5"
+ ],
+ "params": {
+  "tf": "3m",
+  "tfMs": 180000,
+  "look": 45,
+  "ext": 1.272,
+  "int886": 0.886,
+  "cushionAtr": 1.5,
+  "slPad": 0.5,
+  "minReward": 10,
+  "rr": 2,
+  "tp2Mult": 1.5,
+  "pivot": 5,
+  "dxyEma": 10,
+  "wtiDelayMs": 600000,
+  "horizonMin": 1440
+ },
+ "primary": {
+  "arm": "PRIMARY with WTI filter (as delivered)",
+  "window": "2024-10-10 → 2026-10-09T06:00",
+  "signals": 9932,
+  "trades": 3398,
+  "per_day": 4.66,
+  "outcomes_all": {
+   "TP1+TP2": 583,
+   "SL": 2520,
+   "TP1+BE": 281,
+   "TP1+TIME": 8,
+   "TIME": 6
+  },
+  "oos": {
+   "n": 1327,
+   "dec": 1201,
+   "wr": 0.2007,
+   "wr_lb": 0.179,
+   "net": -0.908,
+   "lb": -1.8302,
+   "ub": 0.0095,
+   "avgR": -0.3032
+  },
+  "train": {
+   "n": 2071,
+   "net": -0.2699
+  },
+  "by_side": {
+   "BUY": {
+    "n": 3395,
+    "net": -0.5039
+   },
+   "SELL": {
+    "n": 3,
+    "net": -17.7135
+   }
+  },
+  "by_year": {
+   "2024": {
+    "n": 315,
+    "net": -0.215
+   },
+   "2025": {
+    "n": 1706,
+    "net": -0.269
+   },
+   "2026": {
+    "n": 1377,
+    "net": -0.898
+   }
+  },
+  "avg_risk": 5.37,
+  "avg_reward": 13.57,
+  "seq_power": {
+   "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+   "m1_start": "2024-10-10T00:00:00.000Z",
+   "sequenced_era_only": true,
+   "era_fires": 3398,
+   "era_fires_pessimistic": 0,
+   "train_seq": {
+    "n": 2071,
+    "win": 356,
+    "scratch": 155,
+    "loss": 1560,
+    "dec": 1916,
+    "wr": 0.1858,
+    "net": -0.2699,
+    "avgR": -0.113,
+    "powered": true
+   },
+   "oos_seq": {
+    "n": 1327,
+    "win": 241,
+    "scratch": 126,
+    "loss": 960,
+    "dec": 1201,
+    "wr": 0.2007,
+    "net": -0.908,
+    "avgR": -0.3032,
+    "powered": true
+   },
+   "folds_seq": [
+    {
+     "fold": 0,
+     "n": 352,
+     "dec": 337,
+     "wr": 0.1573,
+     "net": -0.1831,
+     "avgR": -0.1442,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 1,
+     "n": 388,
+     "dec": 358,
+     "wr": 0.1955,
+     "net": 0.0536,
+     "avgR": 0.0926,
+     "powered": true,
+     "pass": true
+    },
+    {
+     "fold": 2,
+     "n": 451,
+     "dec": 412,
+     "wr": 0.165,
+     "net": -0.6542,
+     "avgR": -0.2274,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 3,
+     "n": 394,
+     "dec": 370,
+     "wr": 0.1757,
+     "net": -0.3438,
+     "avgR": -0.2207,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 4,
+     "n": 486,
+     "dec": 439,
+     "wr": 0.2278,
+     "net": -0.1745,
+     "avgR": -0.0611,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 5,
+     "n": 400,
+     "dec": 353,
+     "wr": 0.2323,
+     "net": -0.4994,
+     "avgR": -0.18,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 6,
+     "n": 449,
+     "dec": 405,
+     "wr": 0.1901,
+     "net": -1.2302,
+     "avgR": -0.3143,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 7,
+     "n": 478,
+     "dec": 443,
+     "wr": 0.1851,
+     "net": -0.9474,
+     "avgR": -0.3958,
+     "powered": true,
+     "pass": false
+    }
+   ],
+   "powered_folds": "1/8",
+   "criteria": [
+    {
+     "id": "C1_evidence",
+     "pass": true,
+     "evaluable": true,
+     "detail": "sequenced OOS decisive n=1201 (need ≥100)"
+    },
+    {
+     "id": "C2_oos_ci",
+     "pass": false,
+     "evaluable": true,
+     "detail": "bootstrap 95% LB $-1.8302/t"
+    },
+    {
+     "id": "C3_walk_forward",
+     "pass": false,
+     "evaluable": true,
+     "detail": "sequenced TRAIN net $-0.2699/t (dec 1916)"
+    },
+    {
+     "id": "C4_folds",
+     "pass": false,
+     "evaluable": true,
+     "detail": "1/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+    }
+   ],
+   "failed": [
+    "C2_oos_ci",
+    "C3_walk_forward",
+    "C4_folds"
+   ],
+   "unevaluable": [],
+   "verdict": "SHADOW"
+  }
+ },
+ "s1": {
+  "arm": "S1 spread x 1.5",
+  "window": "2024-10-10 → 2026-10-09T06:00",
+  "signals": 9932,
+  "trades": 3409,
+  "per_day": 4.67,
+  "outcomes_all": {
+   "TP1+TP2": 580,
+   "SL": 2526,
+   "TP1+BE": 289,
+   "TP1+TIME": 8,
+   "TIME": 6
+  },
+  "oos": {
+   "n": 1330,
+   "dec": 1200,
+   "wr": 0.1992,
+   "wr_lb": 0.1775,
+   "net": -1.3321,
+   "lb": -2.258,
+   "ub": -0.4237,
+   "avgR": -0.3988
+  },
+  "train": {
+   "n": 2079,
+   "net": -0.4967
+  },
+  "by_side": {
+   "BUY": {
+    "n": 3406,
+    "net": -0.8078
+   },
+   "SELL": {
+    "n": 3,
+    "net": -17.7135
+   }
+  },
+  "by_year": {
+   "2024": {
+    "n": 317,
+    "net": -0.368
+   },
+   "2025": {
+    "n": 1712,
+    "net": -0.504
+   },
+   "2026": {
+    "n": 1380,
+    "net": -1.322
+   }
+  },
+  "avg_risk": 5.37,
+  "avg_reward": 13.56,
+  "seq_power": {
+   "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+   "m1_start": "2024-10-10T00:00:00.000Z",
+   "sequenced_era_only": true,
+   "era_fires": 3409,
+   "era_fires_pessimistic": 0,
+   "train_seq": {
+    "n": 2079,
+    "win": 355,
+    "scratch": 159,
+    "loss": 1565,
+    "dec": 1920,
+    "wr": 0.1849,
+    "net": -0.4967,
+    "avgR": -0.2001,
+    "powered": true
+   },
+   "oos_seq": {
+    "n": 1330,
+    "win": 239,
+    "scratch": 130,
+    "loss": 961,
+    "dec": 1200,
+    "wr": 0.1992,
+    "net": -1.3321,
+    "avgR": -0.3988,
+    "powered": true
+   },
+   "folds_seq": [
+    {
+     "fold": 0,
+     "n": 354,
+     "dec": 339,
+     "wr": 0.1563,
+     "net": -0.3443,
+     "avgR": -0.2294,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 1,
+     "n": 389,
+     "dec": 359,
+     "wr": 0.195,
+     "net": -0.1805,
+     "avgR": -0.0221,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 2,
+     "n": 451,
+     "dec": 412,
+     "wr": 0.165,
+     "net": -0.8867,
+     "avgR": -0.3093,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 3,
+     "n": 397,
+     "dec": 371,
+     "wr": 0.1752,
+     "net": -0.5738,
+     "avgR": -0.3171,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 4,
+     "n": 488,
+     "dec": 439,
+     "wr": 0.2255,
+     "net": -0.4362,
+     "avgR": -0.1244,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 5,
+     "n": 400,
+     "dec": 353,
+     "wr": 0.2323,
+     "net": -0.8957,
+     "avgR": -0.2429,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 6,
+     "n": 451,
+     "dec": 403,
+     "wr": 0.1861,
+     "net": -1.67,
+     "avgR": -0.4143,
+     "powered": true,
+     "pass": false
+    },
+    {
+     "fold": 7,
+     "n": 479,
+     "dec": 444,
+     "wr": 0.1847,
+     "net": -1.3784,
+     "avgR": -0.5144,
+     "powered": true,
+     "pass": false
+    }
+   ],
+   "powered_folds": "0/8",
+   "criteria": [
+    {
+     "id": "C1_evidence",
+     "pass": true,
+     "evaluable": true,
+     "detail": "sequenced OOS decisive n=1200 (need ≥100)"
+    },
+    {
+     "id": "C2_oos_ci",
+     "pass": false,
+     "evaluable": true,
+     "detail": "bootstrap 95% LB $-2.2580/t"
+    },
+    {
+     "id": "C3_walk_forward",
+     "pass": false,
+     "evaluable": true,
+     "detail": "sequenced TRAIN net $-0.4967/t (dec 1920)"
+    },
+    {
+     "id": "C4_folds",
+     "pass": false,
+     "evaluable": true,
+     "detail": "0/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+    }
+   ],
+   "failed": [
+    "C2_oos_ci",
+    "C3_walk_forward",
+    "C4_folds"
+   ],
+   "unevaluable": [],
+   "verdict": "SHADOW"
+  }
+ },
+ "report": {
+  "no_wti_same_2y": {
+   "arm": "REPORT without WTI, same 2y",
+   "window": "2024-10-10 → 2026-10-09T06:00",
+   "signals": 19032,
+   "trades": 4619,
+   "per_day": 6.33,
+   "outcomes_all": {
+    "TP1+TP2": 776,
+    "TP1+TIME": 12,
+    "SL": 3420,
+    "TP1+BE": 400,
+    "TIME": 11
+   },
+   "oos": {
+    "n": 1906,
+    "dec": 1728,
+    "wr": 0.1916,
+    "wr_lb": 0.1737,
+    "net": -1.5067,
+    "lb": -2.285,
+    "ub": -0.6962,
+    "avgR": -0.3326
+   },
+   "train": {
+    "n": 2713,
+    "net": -0.2383
+   },
+   "by_side": {
+    "BUY": {
+     "n": 4614,
+     "net": -0.7448
+    },
+    "SELL": {
+     "n": 5,
+     "net": -16.3984
+    }
+   },
+   "by_year": {
+    "2024": {
+     "n": 393,
+     "net": -0.098
+    },
+    "2025": {
+     "n": 2249,
+     "net": -0.26
+    },
+    "2026": {
+     "n": 1977,
+     "net": -1.465
+    }
+   },
+   "avg_risk": 5.74,
+   "avg_reward": 14.14,
+   "seq_power": {
+    "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+    "m1_start": "2024-10-10T00:00:00.000Z",
+    "sequenced_era_only": true,
+    "era_fires": 4619,
+    "era_fires_pessimistic": 0,
+    "train_seq": {
+     "n": 2713,
+     "win": 468,
+     "scratch": 222,
+     "loss": 2023,
+     "dec": 2491,
+     "wr": 0.1879,
+     "net": -0.2383,
+     "avgR": -0.107,
+     "powered": true
+    },
+    "oos_seq": {
+     "n": 1906,
+     "win": 331,
+     "scratch": 178,
+     "loss": 1397,
+     "dec": 1728,
+     "wr": 0.1916,
+     "net": -1.5067,
+     "avgR": -0.3326,
+     "powered": true
+    },
+    "folds_seq": [
+     {
+      "fold": 0,
+      "n": 434,
+      "dec": 413,
+      "wr": 0.1622,
+      "net": -0.0828,
+      "avgR": -0.0904,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 1,
+      "n": 492,
+      "dec": 451,
+      "wr": 0.1907,
+      "net": -0.0012,
+      "avgR": 0.0702,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 2,
+      "n": 630,
+      "dec": 580,
+      "wr": 0.1759,
+      "net": -0.5359,
+      "avgR": -0.2053,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 3,
+      "n": 516,
+      "dec": 474,
+      "wr": 0.1709,
+      "net": -0.5051,
+      "avgR": -0.1986,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 4,
+      "n": 641,
+      "dec": 573,
+      "wr": 0.2304,
+      "net": -0.0183,
+      "avgR": -0.0841,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 5,
+      "n": 538,
+      "dec": 478,
+      "wr": 0.2406,
+      "net": -0.7448,
+      "avgR": -0.1507,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 6,
+      "n": 659,
+      "dec": 597,
+      "wr": 0.1692,
+      "net": -1.8048,
+      "avgR": -0.4181,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 7,
+      "n": 709,
+      "dec": 653,
+      "wr": 0.1761,
+      "net": -1.8077,
+      "avgR": -0.3911,
+      "powered": true,
+      "pass": false
+     }
+    ],
+    "powered_folds": "0/8",
+    "criteria": [
+     {
+      "id": "C1_evidence",
+      "pass": true,
+      "evaluable": true,
+      "detail": "sequenced OOS decisive n=1728 (need ≥100)"
+     },
+     {
+      "id": "C2_oos_ci",
+      "pass": false,
+      "evaluable": true,
+      "detail": "bootstrap 95% LB $-2.2850/t"
+     },
+     {
+      "id": "C3_walk_forward",
+      "pass": false,
+      "evaluable": true,
+      "detail": "sequenced TRAIN net $-0.2383/t (dec 2491)"
+     },
+     {
+      "id": "C4_folds",
+      "pass": false,
+      "evaluable": true,
+      "detail": "0/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+     }
+    ],
+    "failed": [
+     "C2_oos_ci",
+     "C3_walk_forward",
+     "C4_folds"
+    ],
+    "unevaluable": [],
+    "verdict": "SHADOW"
+   }
+  },
+  "no_wti_13y": {
+   "arm": "REPORT without WTI, 13y",
+   "window": "2013-07-21 → 2026-10-09T06:00",
+   "signals": 132758,
+   "trades": 17090,
+   "per_day": 3.54,
+   "outcomes_all": {
+    "TIME": 318,
+    "SL": 13913,
+    "TP1+TP2": 1768,
+    "TP1+BE": 823,
+    "TP1+TIME": 268
+   },
+   "oos": {
+    "n": 8684,
+    "dec": 8105,
+    "wr": 0.1616,
+    "wr_lb": 0.1538,
+    "net": -0.6098,
+    "lb": -0.82,
+    "ub": -0.4041,
+    "avgR": -0.2077
+   },
+   "train": {
+    "n": 8406,
+    "net": -0.7128
+   },
+   "by_side": {
+    "BUY": {
+     "n": 17074,
+     "net": -0.6565
+    },
+    "SELL": {
+     "n": 16,
+     "net": -4.9257
+    }
+   },
+   "by_year": {
+    "2013": {
+     "n": 579,
+     "net": -0.805
+    },
+    "2014": {
+     "n": 983,
+     "net": -0.719
+    },
+    "2015": {
+     "n": 1028,
+     "net": -0.789
+    },
+    "2016": {
+     "n": 1071,
+     "net": -0.584
+    },
+    "2017": {
+     "n": 877,
+     "net": -0.431
+    },
+    "2018": {
+     "n": 918,
+     "net": -0.716
+    },
+    "2019": {
+     "n": 832,
+     "net": -0.42
+    },
+    "2020": {
+     "n": 1137,
+     "net": -0.717
+    },
+    "2021": {
+     "n": 1110,
+     "net": -1.159
+    },
+    "2022": {
+     "n": 1524,
+     "net": -0.62
+    },
+    "2023": {
+     "n": 1207,
+     "net": -0.434
+    },
+    "2024": {
+     "n": 1598,
+     "net": -0.153
+    },
+    "2025": {
+     "n": 2249,
+     "net": -0.26
+    },
+    "2026": {
+     "n": 1977,
+     "net": -1.465
+    }
+   },
+   "avg_risk": 3.11,
+   "avg_reward": 11.3,
+   "seq_power": {
+    "criteria_version": "seq-ship-v1 (pre-registered 2026-08-15, before any book was re-run)",
+    "m1_start": "2013-07-21T22:02:00.000Z",
+    "sequenced_era_only": true,
+    "era_fires": 17090,
+    "era_fires_pessimistic": 0,
+    "train_seq": {
+     "n": 8406,
+     "win": 1017,
+     "scratch": 244,
+     "loss": 7145,
+     "dec": 8162,
+     "wr": 0.1246,
+     "net": -0.7128,
+     "avgR": -0.4285,
+     "powered": true
+    },
+    "oos_seq": {
+     "n": 8684,
+     "win": 1310,
+     "scratch": 579,
+     "loss": 6795,
+     "dec": 8105,
+     "wr": 0.1616,
+     "net": -0.6098,
+     "avgR": -0.2077,
+     "powered": true
+    },
+    "folds_seq": [
+     {
+      "fold": 0,
+      "n": 1778,
+      "dec": 1732,
+      "wr": 0.1097,
+      "net": -0.7507,
+      "avgR": -0.5223,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 1,
+      "n": 1670,
+      "dec": 1626,
+      "wr": 0.1132,
+      "net": -0.6368,
+      "avgR": -0.423,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 2,
+      "n": 1481,
+      "dec": 1460,
+      "wr": 0.1274,
+      "net": -0.5823,
+      "avgR": -0.4664,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 3,
+      "n": 1509,
+      "dec": 1486,
+      "wr": 0.1373,
+      "net": -0.5278,
+      "avgR": -0.4052,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 4,
+      "n": 1968,
+      "dec": 1858,
+      "wr": 0.1362,
+      "net": -0.983,
+      "avgR": -0.3378,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 5,
+      "n": 2286,
+      "dec": 2192,
+      "wr": 0.1241,
+      "net": -0.5906,
+      "avgR": -0.2676,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 6,
+      "n": 2418,
+      "dec": 2299,
+      "wr": 0.1475,
+      "net": -0.2003,
+      "avgR": -0.1309,
+      "powered": true,
+      "pass": false
+     },
+     {
+      "fold": 7,
+      "n": 3980,
+      "dec": 3614,
+      "wr": 0.1934,
+      "net": -0.8697,
+      "avgR": -0.2198,
+      "powered": true,
+      "pass": false
+     }
+    ],
+    "powered_folds": "0/8",
+    "criteria": [
+     {
+      "id": "C1_evidence",
+      "pass": true,
+      "evaluable": true,
+      "detail": "sequenced OOS decisive n=8105 (need ≥100)"
+     },
+     {
+      "id": "C2_oos_ci",
+      "pass": false,
+      "evaluable": true,
+      "detail": "bootstrap 95% LB $-0.8200/t"
+     },
+     {
+      "id": "C3_walk_forward",
+      "pass": false,
+      "evaluable": true,
+      "detail": "sequenced TRAIN net $-0.7128/t (dec 8162)"
+     },
+     {
+      "id": "C4_folds",
+      "pass": false,
+      "evaluable": true,
+      "detail": "0/8 powered sequenced folds net>0 (need ≥67%, ≥3 powered folds)"
+     }
+    ],
+    "failed": [
+     "C2_oos_ci",
+     "C3_walk_forward",
+     "C4_folds"
+    ],
+    "unevaluable": [],
+    "verdict": "SHADOW"
+   }
+  }
+ }
+}

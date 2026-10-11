@@ -1,0 +1,2168 @@
+{
+ "at": "2026-10-09T11:02:05.195Z",
+ "window": "2013-07-21 → 2026-10-09T06:00",
+ "split": "2021-06-26",
+ "rules": {
+  "positions": [
+   {
+    "p": 0.214,
+    "name": "I0.786"
+   },
+   {
+    "p": 0.236,
+    "name": "N0.236"
+   },
+   {
+    "p": 0.382,
+    "name": "N0.382/I0.618"
+   },
+   {
+    "p": 0.5,
+    "name": "N0.5/I0.5"
+   },
+   {
+    "p": 0.618,
+    "name": "N0.618/I0.382"
+   },
+   {
+    "p": 0.764,
+    "name": "I0.236"
+   },
+   {
+    "p": 0.786,
+    "name": "N0.786"
+   }
+  ],
+  "d_atr": 0.25,
+  "cap_bars": 100,
+  "horizon_bars": 10,
+  "z": 3.17,
+  "min_resolved": 100
+ },
+ "per_tf": {
+  "1mo": {
+   "states": 14,
+   "events": 51,
+   "oos_all": {
+    "events": 19,
+    "resolved": 19,
+    "bounce": 0.1579,
+    "bounce_lb": 0.0313,
+    "control": 0.1579,
+    "trades": 19,
+    "net": -25.466,
+    "net_lb": -41.6753,
+    "net_R": -0.6925
+   },
+   "oos_expected_dir": {
+    "events": 11,
+    "resolved": 11,
+    "bounce": 0.0909,
+    "bounce_lb": 0.0076,
+    "control": 0.2727,
+    "trades": 11,
+    "net": -24.0853,
+    "net_lb": -30.0546,
+    "net_R": -0.8275
+   },
+   "oos_against_dir": {
+    "events": 8,
+    "resolved": 8,
+    "bounce": 0.25,
+    "bounce_lb": 0.0374,
+    "control": 0,
+    "trades": 8,
+    "net": -27.3643,
+    "net_lb": -60.4594,
+    "net_R": -0.5068
+   }
+  },
+  "1w": {
+   "states": 77,
+   "events": 240,
+   "oos_all": {
+    "events": 92,
+    "resolved": 92,
+    "bounce": 0.5652,
+    "bounce_lb": 0.4031,
+    "control": 0.4348,
+    "trades": 92,
+    "net": 3.2301,
+    "net_lb": -1.975,
+    "net_R": 0.0773
+   },
+   "oos_expected_dir": {
+    "events": 51,
+    "resolved": 51,
+    "bounce": 0.5882,
+    "bounce_lb": 0.3735,
+    "control": 0.4314,
+    "trades": 51,
+    "net": 3.2897,
+    "net_lb": -3.8087,
+    "net_R": 0.0888
+   },
+   "oos_against_dir": {
+    "events": 41,
+    "resolved": 41,
+    "bounce": 0.5366,
+    "bounce_lb": 0.308,
+    "control": 0.439,
+    "trades": 41,
+    "net": 3.156,
+    "net_lb": -4.3143,
+    "net_R": 0.0629
+   }
+  },
+  "1d": {
+   "states": 457,
+   "events": 1628,
+   "oos_all": {
+    "events": 593,
+    "resolved": 593,
+    "bounce": 0.4857,
+    "bounce_lb": 0.4214,
+    "control": 0.4823,
+    "trades": 590,
+    "net": -0.9357,
+    "net_lb": -2.0459,
+    "net_R": -0.0947
+   },
+   "oos_expected_dir": {
+    "events": 305,
+    "resolved": 305,
+    "bounce": 0.4689,
+    "bounce_lb": 0.3807,
+    "control": 0.4787,
+    "trades": 303,
+    "net": -1.9744,
+    "net_lb": -3.2935,
+    "net_R": -0.1267
+   },
+   "oos_against_dir": {
+    "events": 288,
+    "resolved": 288,
+    "bounce": 0.5035,
+    "bounce_lb": 0.4115,
+    "control": 0.4861,
+    "trades": 287,
+    "net": 0.1609,
+    "net_lb": -1.5387,
+    "net_R": -0.0608
+   }
+  },
+  "4h": {
+   "states": 2673,
+   "events": 9401,
+   "oos_all": {
+    "events": 3669,
+    "resolved": 3656,
+    "bounce": 0.4833,
+    "bounce_lb": 0.4572,
+    "control": 0.4939,
+    "trades": 3637,
+    "net": -0.8296,
+    "net_lb": -1.0118,
+    "net_R": -0.2274
+   },
+   "oos_expected_dir": {
+    "events": 1913,
+    "resolved": 1910,
+    "bounce": 0.4848,
+    "bounce_lb": 0.4487,
+    "control": 0.5024,
+    "trades": 1898,
+    "net": -0.9043,
+    "net_lb": -1.167,
+    "net_R": -0.2267
+   },
+   "oos_against_dir": {
+    "events": 1756,
+    "resolved": 1746,
+    "bounce": 0.4817,
+    "bounce_lb": 0.444,
+    "control": 0.4847,
+    "trades": 1739,
+    "net": -0.7481,
+    "net_lb": -1.0025,
+    "net_R": -0.2283
+   }
+  },
+  "1h": {
+   "states": 9688,
+   "events": 32816,
+   "oos_all": {
+    "events": 13189,
+    "resolved": 13149,
+    "bounce": 0.4933,
+    "bounce_lb": 0.4795,
+    "control": 0.497,
+    "trades": 13012,
+    "net": -0.6199,
+    "net_lb": -0.6728,
+    "net_R": -0.3556
+   },
+   "oos_expected_dir": {
+    "events": 6461,
+    "resolved": 6442,
+    "bounce": 0.505,
+    "bounce_lb": 0.4852,
+    "control": 0.4922,
+    "trades": 6373,
+    "net": -0.599,
+    "net_lb": -0.6701,
+    "net_R": -0.3406
+   },
+   "oos_against_dir": {
+    "events": 6728,
+    "resolved": 6707,
+    "bounce": 0.482,
+    "bounce_lb": 0.4627,
+    "control": 0.5016,
+    "trades": 6639,
+    "net": -0.64,
+    "net_lb": -0.7057,
+    "net_R": -0.37
+   }
+  },
+  "30m": {
+   "states": 18952,
+   "events": 63753,
+   "oos_all": {
+    "events": 25374,
+    "resolved": 25349,
+    "bounce": 0.5026,
+    "bounce_lb": 0.4927,
+    "control": 0.4873,
+    "trades": 24857,
+    "net": -0.5302,
+    "net_lb": -0.5557,
+    "net_R": -0.4687
+   },
+   "oos_expected_dir": {
+    "events": 12209,
+    "resolved": 12195,
+    "bounce": 0.5074,
+    "bounce_lb": 0.4931,
+    "control": 0.4894,
+    "trades": 11936,
+    "net": -0.5383,
+    "net_lb": -0.576,
+    "net_R": -0.4615
+   },
+   "oos_against_dir": {
+    "events": 13165,
+    "resolved": 13154,
+    "bounce": 0.4982,
+    "bounce_lb": 0.4844,
+    "control": 0.4854,
+    "trades": 12921,
+    "net": -0.5227,
+    "net_lb": -0.5587,
+    "net_R": -0.4753
+   }
+  },
+  "15m": {
+   "states": 37429,
+   "events": 129860,
+   "oos_all": {
+    "events": 51739,
+    "resolved": 51704,
+    "bounce": 0.4776,
+    "bounce_lb": 0.4706,
+    "control": 0.4808,
+    "trades": 50294,
+    "net": -0.5538,
+    "net_lb": -0.5677,
+    "net_R": -0.664
+   },
+   "oos_expected_dir": {
+    "events": 23855,
+    "resolved": 23839,
+    "bounce": 0.4802,
+    "bounce_lb": 0.4699,
+    "control": 0.4804,
+    "trades": 23163,
+    "net": -0.545,
+    "net_lb": -0.5647,
+    "net_R": -0.6522
+   },
+   "oos_against_dir": {
+    "events": 27884,
+    "resolved": 27865,
+    "bounce": 0.4754,
+    "bounce_lb": 0.4659,
+    "control": 0.4812,
+    "trades": 27131,
+    "net": -0.5613,
+    "net_lb": -0.579,
+    "net_R": -0.6741
+   }
+  },
+  "5m": {
+   "states": 108406,
+   "events": 390370,
+   "oos_all": {
+    "events": 157488,
+    "resolved": 157367,
+    "bounce": 0.3929,
+    "bounce_lb": 0.389,
+    "control": 0.4517,
+    "trades": 149394,
+    "net": -0.4821,
+    "net_lb": -0.4864,
+    "net_R": -0.982
+   },
+   "oos_expected_dir": {
+    "events": 73480,
+    "resolved": 73413,
+    "bounce": 0.3944,
+    "bounce_lb": 0.3887,
+    "control": 0.4532,
+    "trades": 69740,
+    "net": -0.488,
+    "net_lb": -0.4939,
+    "net_R": -0.9768
+   },
+   "oos_against_dir": {
+    "events": 84008,
+    "resolved": 83954,
+    "bounce": 0.3915,
+    "bounce_lb": 0.3862,
+    "control": 0.4504,
+    "trades": 79654,
+    "net": -0.4769,
+    "net_lb": -0.4824,
+    "net_R": -0.9866
+   }
+  },
+  "3m": {
+   "states": 177203,
+   "events": 635703,
+   "oos_all": {
+    "events": 259016,
+    "resolved": 258837,
+    "bounce": 0.3398,
+    "bounce_lb": 0.3368,
+    "control": 0.4322,
+    "trades": 242104,
+    "net": -0.4317,
+    "net_lb": -0.4342,
+    "net_R": -1.0798
+   },
+   "oos_expected_dir": {
+    "events": 119411,
+    "resolved": 119327,
+    "bounce": 0.3413,
+    "bounce_lb": 0.337,
+    "control": 0.4324,
+    "trades": 111818,
+    "net": -0.4352,
+    "net_lb": -0.4389,
+    "net_R": -1.0763
+   },
+   "oos_against_dir": {
+    "events": 139605,
+    "resolved": 139510,
+    "bounce": 0.3385,
+    "bounce_lb": 0.3345,
+    "control": 0.4321,
+    "trades": 130286,
+    "net": -0.4287,
+    "net_lb": -0.4319,
+    "net_R": -1.0828
+   }
+  }
+ },
+ "cells": {
+  "1mo|0.214": {
+   "tf": "1mo",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 3,
+    "resolved": 3,
+    "bounce": 0,
+    "bounce_lb": 0,
+    "control": 0,
+    "trades": 3,
+    "net": -23.2358,
+    "net_lb": -30.4882,
+    "net_R": -1.0139
+   },
+   "oos": {
+    "events": 2,
+    "resolved": 2,
+    "bounce": 0,
+    "bounce_lb": 0,
+    "control": 0,
+    "trades": 2,
+    "net": -29.6329,
+    "net_lb": -30.9371,
+    "net_R": -1.0102
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1mo|0.236": {
+   "tf": "1mo",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 4,
+    "resolved": 4,
+    "bounce": 0.5,
+    "bounce_lb": 0.0771,
+    "control": 0.25,
+    "trades": 4,
+    "net": 3.1041,
+    "net_lb": -19.6096,
+    "net_R": -0.0079
+   },
+   "oos": {
+    "events": 2,
+    "resolved": 2,
+    "bounce": 0,
+    "bounce_lb": 0,
+    "control": 0,
+    "trades": 2,
+    "net": -29.6329,
+    "net_lb": -30.9371,
+    "net_R": -1.0102
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1mo|0.382": {
+   "tf": "1mo",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 6,
+    "resolved": 6,
+    "bounce": 0.6667,
+    "bounce_lb": 0.175,
+    "control": 0.3333,
+    "trades": 6,
+    "net": 9.2591,
+    "net_lb": -6.3628,
+    "net_R": 0.328
+   },
+   "oos": {
+    "events": 3,
+    "resolved": 3,
+    "bounce": 0,
+    "bounce_lb": 0,
+    "control": 0,
+    "trades": 3,
+    "net": -63.3287,
+    "net_lb": -131.7319,
+    "net_R": -1.0077
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1mo|0.5": {
+   "tf": "1mo",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 5,
+    "resolved": 5,
+    "bounce": 0.6,
+    "bounce_lb": 0.1274,
+    "control": 0.2,
+    "trades": 5,
+    "net": 3.7027,
+    "net_lb": -12.9985,
+    "net_R": 0.1942
+   },
+   "oos": {
+    "events": 3,
+    "resolved": 3,
+    "bounce": 0.3333,
+    "bounce_lb": 0.0285,
+    "control": 0.3333,
+    "trades": 3,
+    "net": -9.3312,
+    "net_lb": -29.9254,
+    "net_R": -0.3403
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1mo|0.618": {
+   "tf": "1mo",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 6,
+    "resolved": 6,
+    "bounce": 0.6667,
+    "bounce_lb": 0.175,
+    "control": 0.3333,
+    "trades": 6,
+    "net": 4.9686,
+    "net_lb": -9.5633,
+    "net_R": 0.3287
+   },
+   "oos": {
+    "events": 3,
+    "resolved": 3,
+    "bounce": 0.3333,
+    "bounce_lb": 0.0285,
+    "control": 0,
+    "trades": 3,
+    "net": -9.7546,
+    "net_lb": -30.5606,
+    "net_R": -0.3402
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1mo|0.764": {
+   "tf": "1mo",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 4,
+    "resolved": 4,
+    "bounce": 0.25,
+    "bounce_lb": 0.0213,
+    "control": 0.25,
+    "trades": 4,
+    "net": -7.8299,
+    "net_lb": -19.4993,
+    "net_R": -0.5132
+   },
+   "oos": {
+    "events": 3,
+    "resolved": 3,
+    "bounce": 0.3333,
+    "bounce_lb": 0.0285,
+    "control": 0,
+    "trades": 3,
+    "net": -9.7546,
+    "net_lb": -30.5606,
+    "net_R": -0.3402
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1mo|0.786": {
+   "tf": "1mo",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 4,
+    "resolved": 4,
+    "bounce": 0.75,
+    "bounce_lb": 0.1636,
+    "control": 0,
+    "trades": 4,
+    "net": 7.5299,
+    "net_lb": -12.1533,
+    "net_R": 0.4965
+   },
+   "oos": {
+    "events": 3,
+    "resolved": 3,
+    "bounce": 0,
+    "bounce_lb": 0,
+    "control": 0.6667,
+    "trades": 3,
+    "net": -29.6049,
+    "net_lb": -30.5606,
+    "net_R": -1.0102
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.214": {
+   "tf": "1w",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 20,
+    "resolved": 20,
+    "bounce": 0.55,
+    "bounce_lb": 0.2451,
+    "control": 0.45,
+    "trades": 20,
+    "net": 0.2644,
+    "net_lb": -4.0396,
+    "net_R": -0.0189
+   },
+   "oos": {
+    "events": 16,
+    "resolved": 16,
+    "bounce": 0.5625,
+    "bounce_lb": 0.2293,
+    "control": 0.6875,
+    "trades": 16,
+    "net": 7.5574,
+    "net_lb": -5.4203,
+    "net_R": 0.1165
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.236": {
+   "tf": "1w",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 22,
+    "resolved": 22,
+    "bounce": 0.4545,
+    "bounce_lb": 0.1896,
+    "control": 0.5455,
+    "trades": 22,
+    "net": -1.4923,
+    "net_lb": -5.6027,
+    "net_R": -0.1102
+   },
+   "oos": {
+    "events": 19,
+    "resolved": 19,
+    "bounce": 0.6842,
+    "bounce_lb": 0.3398,
+    "control": 0.2632,
+    "trades": 19,
+    "net": 9.0423,
+    "net_lb": -4.2658,
+    "net_R": 0.3623
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.382": {
+   "tf": "1w",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 22,
+    "resolved": 22,
+    "bounce": 0.6818,
+    "bounce_lb": 0.3578,
+    "control": 0.4091,
+    "trades": 22,
+    "net": 2.3842,
+    "net_lb": -1.8018,
+    "net_R": 0.2599
+   },
+   "oos": {
+    "events": 16,
+    "resolved": 16,
+    "bounce": 0.375,
+    "bounce_lb": 0.1187,
+    "control": 0.5,
+    "trades": 16,
+    "net": -9.7763,
+    "net_lb": -23.6515,
+    "net_R": -0.2621
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.5": {
+   "tf": "1w",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 22,
+    "resolved": 22,
+    "bounce": 0.5,
+    "bounce_lb": 0.22,
+    "control": 0.5455,
+    "trades": 22,
+    "net": -0.4215,
+    "net_lb": -4.3982,
+    "net_R": -0.0165
+   },
+   "oos": {
+    "events": 13,
+    "resolved": 13,
+    "bounce": 0.6923,
+    "bounce_lb": 0.2924,
+    "control": 0.3846,
+    "trades": 13,
+    "net": 14.283,
+    "net_lb": 0.8741,
+    "net_R": 0.3769
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.618": {
+   "tf": "1w",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 20,
+    "resolved": 20,
+    "bounce": 0.4,
+    "bounce_lb": 0.1482,
+    "control": 0.4,
+    "trades": 20,
+    "net": -3.5543,
+    "net_lb": -7.4193,
+    "net_R": -0.3212
+   },
+   "oos": {
+    "events": 10,
+    "resolved": 10,
+    "bounce": 0.7,
+    "bounce_lb": 0.2602,
+    "control": 0.4,
+    "trades": 10,
+    "net": 6.4698,
+    "net_lb": -1.7028,
+    "net_R": 0.3925
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.764": {
+   "tf": "1w",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 21,
+    "resolved": 21,
+    "bounce": 0.2857,
+    "bounce_lb": 0.0889,
+    "control": 0.2857,
+    "trades": 21,
+    "net": -4.8786,
+    "net_lb": -8.5617,
+    "net_R": -0.4523
+   },
+   "oos": {
+    "events": 9,
+    "resolved": 9,
+    "bounce": 0.3333,
+    "bounce_lb": 0.0678,
+    "control": 0.6667,
+    "trades": 9,
+    "net": -8.1353,
+    "net_lb": -15.1539,
+    "net_R": -0.573
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1w|0.786": {
+   "tf": "1w",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 21,
+    "resolved": 21,
+    "bounce": 0.381,
+    "bounce_lb": 0.1405,
+    "control": 0.1905,
+    "trades": 21,
+    "net": -2.711,
+    "net_lb": -6.8062,
+    "net_R": -0.2593
+   },
+   "oos": {
+    "events": 9,
+    "resolved": 9,
+    "bounce": 0.5556,
+    "bounce_lb": 0.1642,
+    "control": 0.1111,
+    "trades": 9,
+    "net": -1.8102,
+    "net_lb": -11.1256,
+    "net_R": -0.1238
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.214": {
+   "tf": "1d",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 155,
+    "resolved": 155,
+    "bounce": 0.4774,
+    "bounce_lb": 0.3555,
+    "control": 0.4516,
+    "trades": 154,
+    "net": -0.8375,
+    "net_lb": -1.5774,
+    "net_R": -0.2191
+   },
+   "oos": {
+    "events": 83,
+    "resolved": 83,
+    "bounce": 0.5301,
+    "bounce_lb": 0.3628,
+    "control": 0.494,
+    "trades": 83,
+    "net": 0.9043,
+    "net_lb": -2.0305,
+    "net_R": -0.0104
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.236": {
+   "tf": "1d",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 158,
+    "resolved": 158,
+    "bounce": 0.5,
+    "bounce_lb": 0.3777,
+    "control": 0.5063,
+    "trades": 157,
+    "net": -0.7625,
+    "net_lb": -1.499,
+    "net_R": -0.2224
+   },
+   "oos": {
+    "events": 87,
+    "resolved": 87,
+    "bounce": 0.5287,
+    "bounce_lb": 0.3651,
+    "control": 0.4943,
+    "trades": 85,
+    "net": -0.5546,
+    "net_lb": -3.3565,
+    "net_R": -0.0343
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.382": {
+   "tf": "1d",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 171,
+    "resolved": 171,
+    "bounce": 0.4854,
+    "bounce_lb": 0.3684,
+    "control": 0.5556,
+    "trades": 170,
+    "net": -0.9143,
+    "net_lb": -1.6051,
+    "net_R": -0.1635
+   },
+   "oos": {
+    "events": 95,
+    "resolved": 95,
+    "bounce": 0.4737,
+    "bounce_lb": 0.3218,
+    "control": 0.4421,
+    "trades": 95,
+    "net": -0.8088,
+    "net_lb": -3.3749,
+    "net_R": -0.0761
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.5": {
+   "tf": "1d",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 161,
+    "resolved": 161,
+    "bounce": 0.4348,
+    "bounce_lb": 0.3184,
+    "control": 0.4596,
+    "trades": 161,
+    "net": -1.2331,
+    "net_lb": -1.9099,
+    "net_R": -0.321
+   },
+   "oos": {
+    "events": 99,
+    "resolved": 99,
+    "bounce": 0.4949,
+    "bounce_lb": 0.3436,
+    "control": 0.4545,
+    "trades": 99,
+    "net": -0.6931,
+    "net_lb": -3.6037,
+    "net_R": -0.1145
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.618": {
+   "tf": "1d",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 150,
+    "resolved": 150,
+    "bounce": 0.4733,
+    "bounce_lb": 0.3499,
+    "control": 0.5267,
+    "trades": 150,
+    "net": -0.7648,
+    "net_lb": -1.4587,
+    "net_R": -0.2092
+   },
+   "oos": {
+    "events": 90,
+    "resolved": 90,
+    "bounce": 0.4889,
+    "bounce_lb": 0.3316,
+    "control": 0.4556,
+    "trades": 90,
+    "net": -1.4748,
+    "net_lb": -4.6592,
+    "net_R": -0.0892
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.764": {
+   "tf": "1d",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 122,
+    "resolved": 122,
+    "bounce": 0.5,
+    "bounce_lb": 0.3621,
+    "control": 0.4754,
+    "trades": 122,
+    "net": -0.7898,
+    "net_lb": -1.5498,
+    "net_R": -0.179
+   },
+   "oos": {
+    "events": 71,
+    "resolved": 71,
+    "bounce": 0.4507,
+    "bounce_lb": 0.2815,
+    "control": 0.4507,
+    "trades": 70,
+    "net": -1.9838,
+    "net_lb": -4.5354,
+    "net_R": -0.1677
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1d|0.786": {
+   "tf": "1d",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 118,
+    "resolved": 118,
+    "bounce": 0.4831,
+    "bounce_lb": 0.3444,
+    "control": 0.4615,
+    "trades": 116,
+    "net": -1.07,
+    "net_lb": -1.851,
+    "net_R": -0.2037
+   },
+   "oos": {
+    "events": 68,
+    "resolved": 68,
+    "bounce": 0.4118,
+    "bounce_lb": 0.2462,
+    "control": 0.6176,
+    "trades": 68,
+    "net": -2.3962,
+    "net_lb": -5.2575,
+    "net_R": -0.2022
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "4h|0.214": {
+   "tf": "4h",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 854,
+    "resolved": 850,
+    "bounce": 0.52,
+    "bounce_lb": 0.4658,
+    "control": 0.4946,
+    "trades": 843,
+    "net": -0.5452,
+    "net_lb": -0.6753,
+    "net_R": -0.3993
+   },
+   "oos": {
+    "events": 563,
+    "resolved": 560,
+    "bounce": 0.4857,
+    "bounce_lb": 0.4196,
+    "control": 0.4703,
+    "trades": 559,
+    "net": -0.9234,
+    "net_lb": -1.3336,
+    "net_R": -0.2169
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|0.236": {
+   "tf": "4h",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 880,
+    "resolved": 878,
+    "bounce": 0.4806,
+    "bounce_lb": 0.4277,
+    "control": 0.5155,
+    "trades": 863,
+    "net": -0.597,
+    "net_lb": -0.7298,
+    "net_R": -0.417
+   },
+   "oos": {
+    "events": 581,
+    "resolved": 579,
+    "bounce": 0.5164,
+    "bounce_lb": 0.4509,
+    "control": 0.5052,
+    "trades": 572,
+    "net": -0.4209,
+    "net_lb": -0.8662,
+    "net_R": -0.1827
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|0.382": {
+   "tf": "4h",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 931,
+    "resolved": 928,
+    "bounce": 0.4407,
+    "bounce_lb": 0.39,
+    "control": 0.4816,
+    "trades": 914,
+    "net": -0.7351,
+    "net_lb": -0.8533,
+    "net_R": -0.5
+   },
+   "oos": {
+    "events": 607,
+    "resolved": 605,
+    "bounce": 0.4826,
+    "bounce_lb": 0.4191,
+    "control": 0.4632,
+    "trades": 602,
+    "net": -0.7949,
+    "net_lb": -1.2539,
+    "net_R": -0.2061
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|0.5": {
+   "tf": "4h",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 891,
+    "resolved": 886,
+    "bounce": 0.4876,
+    "bounce_lb": 0.4348,
+    "control": 0.5346,
+    "trades": 873,
+    "net": -0.6054,
+    "net_lb": -0.7286,
+    "net_R": -0.4455
+   },
+   "oos": {
+    "events": 556,
+    "resolved": 554,
+    "bounce": 0.4603,
+    "bounce_lb": 0.3945,
+    "control": 0.5018,
+    "trades": 553,
+    "net": -1.0876,
+    "net_lb": -1.6197,
+    "net_R": -0.2821
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|0.618": {
+   "tf": "4h",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 806,
+    "resolved": 801,
+    "bounce": 0.4769,
+    "bounce_lb": 0.4216,
+    "control": 0.4975,
+    "trades": 791,
+    "net": -0.6916,
+    "net_lb": -0.8083,
+    "net_R": -0.4758
+   },
+   "oos": {
+    "events": 509,
+    "resolved": 506,
+    "bounce": 0.4704,
+    "bounce_lb": 0.4013,
+    "control": 0.5159,
+    "trades": 504,
+    "net": -0.5148,
+    "net_lb": -0.9789,
+    "net_R": -0.2457
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|0.764": {
+   "tf": "4h",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 694,
+    "resolved": 693,
+    "bounce": 0.4993,
+    "bounce_lb": 0.4395,
+    "control": 0.5145,
+    "trades": 686,
+    "net": -0.5453,
+    "net_lb": -0.6851,
+    "net_R": -0.397
+   },
+   "oos": {
+    "events": 434,
+    "resolved": 433,
+    "bounce": 0.4804,
+    "bounce_lb": 0.4056,
+    "control": 0.4942,
+    "trades": 430,
+    "net": -1.0904,
+    "net_lb": -1.5558,
+    "net_R": -0.2302
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|0.786": {
+   "tf": "4h",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 676,
+    "resolved": 674,
+    "bounce": 0.4881,
+    "bounce_lb": 0.4277,
+    "control": 0.4865,
+    "trades": 664,
+    "net": -0.5491,
+    "net_lb": -0.6914,
+    "net_R": -0.4124
+   },
+   "oos": {
+    "events": 419,
+    "resolved": 419,
+    "bounce": 0.4845,
+    "bounce_lb": 0.4084,
+    "control": 0.5168,
+    "trades": 417,
+    "net": -1.0841,
+    "net_lb": -1.6277,
+    "net_R": -0.2364
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.214": {
+   "tf": "1h",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 3095,
+    "resolved": 3086,
+    "bounce": 0.4929,
+    "bounce_lb": 0.4644,
+    "control": 0.5101,
+    "trades": 3012,
+    "net": -0.5159,
+    "net_lb": -0.5484,
+    "net_R": -0.7045
+   },
+   "oos": {
+    "events": 2026,
+    "resolved": 2021,
+    "bounce": 0.4908,
+    "bounce_lb": 0.4557,
+    "control": 0.5035,
+    "trades": 2003,
+    "net": -0.6749,
+    "net_lb": -0.8093,
+    "net_R": -0.3633
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.236": {
+   "tf": "1h",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 3129,
+    "resolved": 3115,
+    "bounce": 0.4873,
+    "bounce_lb": 0.459,
+    "control": 0.5042,
+    "trades": 3036,
+    "net": -0.5408,
+    "net_lb": -0.5758,
+    "net_R": -0.7443
+   },
+   "oos": {
+    "events": 2065,
+    "resolved": 2058,
+    "bounce": 0.4947,
+    "bounce_lb": 0.4598,
+    "control": 0.4754,
+    "trades": 2037,
+    "net": -0.6397,
+    "net_lb": -0.7632,
+    "net_R": -0.3479
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.382": {
+   "tf": "1h",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 3180,
+    "resolved": 3168,
+    "bounce": 0.4773,
+    "bounce_lb": 0.4493,
+    "control": 0.4995,
+    "trades": 3073,
+    "net": -0.5472,
+    "net_lb": -0.5817,
+    "net_R": -0.7323
+   },
+   "oos": {
+    "events": 2113,
+    "resolved": 2105,
+    "bounce": 0.4855,
+    "bounce_lb": 0.4511,
+    "control": 0.4952,
+    "trades": 2083,
+    "net": -0.6556,
+    "net_lb": -0.7906,
+    "net_R": -0.3734
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.5": {
+   "tf": "1h",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 2953,
+    "resolved": 2940,
+    "bounce": 0.4776,
+    "bounce_lb": 0.4485,
+    "control": 0.5022,
+    "trades": 2873,
+    "net": -0.5234,
+    "net_lb": -0.5579,
+    "net_R": -0.7247
+   },
+   "oos": {
+    "events": 2021,
+    "resolved": 2013,
+    "bounce": 0.4948,
+    "bounce_lb": 0.4596,
+    "control": 0.492,
+    "trades": 1990,
+    "net": -0.582,
+    "net_lb": -0.7247,
+    "net_R": -0.3527
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.618": {
+   "tf": "1h",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 2708,
+    "resolved": 2700,
+    "bounce": 0.493,
+    "bounce_lb": 0.4625,
+    "control": 0.4974,
+    "trades": 2614,
+    "net": -0.5532,
+    "net_lb": -0.5903,
+    "net_R": -0.7518
+   },
+   "oos": {
+    "events": 1851,
+    "resolved": 1847,
+    "bounce": 0.5111,
+    "bounce_lb": 0.4743,
+    "control": 0.5024,
+    "trades": 1832,
+    "net": -0.4884,
+    "net_lb": -0.6253,
+    "net_R": -0.3159
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.764": {
+   "tf": "1h",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 2317,
+    "resolved": 2313,
+    "bounce": 0.5093,
+    "bounce_lb": 0.4764,
+    "control": 0.4974,
+    "trades": 2232,
+    "net": -0.5014,
+    "net_lb": -0.5416,
+    "net_R": -0.7048
+   },
+   "oos": {
+    "events": 1571,
+    "resolved": 1567,
+    "bounce": 0.4805,
+    "bounce_lb": 0.4408,
+    "control": 0.5128,
+    "trades": 1549,
+    "net": -0.6282,
+    "net_lb": -0.778,
+    "net_R": -0.3783
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|0.786": {
+   "tf": "1h",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 2245,
+    "resolved": 2241,
+    "bounce": 0.5087,
+    "bounce_lb": 0.4753,
+    "control": 0.4935,
+    "trades": 2168,
+    "net": -0.5322,
+    "net_lb": -0.5719,
+    "net_R": -0.7343
+   },
+   "oos": {
+    "events": 1542,
+    "resolved": 1538,
+    "bounce": 0.4948,
+    "bounce_lb": 0.4545,
+    "control": 0.5036,
+    "trades": 1518,
+    "net": -0.6719,
+    "net_lb": -0.8194,
+    "net_R": -0.3601
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.214": {
+   "tf": "30m",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 6002,
+    "resolved": 5982,
+    "bounce": 0.4876,
+    "bounce_lb": 0.4672,
+    "control": 0.4975,
+    "trades": 5698,
+    "net": -0.4828,
+    "net_lb": -0.4986,
+    "net_R": -0.9529
+   },
+   "oos": {
+    "events": 3890,
+    "resolved": 3887,
+    "bounce": 0.5037,
+    "bounce_lb": 0.4783,
+    "control": 0.4769,
+    "trades": 3792,
+    "net": -0.539,
+    "net_lb": -0.6061,
+    "net_R": -0.4732
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.236": {
+   "tf": "30m",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 6113,
+    "resolved": 6094,
+    "bounce": 0.4777,
+    "bounce_lb": 0.4575,
+    "control": 0.5017,
+    "trades": 5812,
+    "net": -0.4793,
+    "net_lb": -0.4951,
+    "net_R": -0.9427
+   },
+   "oos": {
+    "events": 3957,
+    "resolved": 3952,
+    "bounce": 0.5051,
+    "bounce_lb": 0.4799,
+    "control": 0.4783,
+    "trades": 3874,
+    "net": -0.5054,
+    "net_lb": -0.5733,
+    "net_R": -0.4486
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.382": {
+   "tf": "30m",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 6196,
+    "resolved": 6186,
+    "bounce": 0.4796,
+    "bounce_lb": 0.4595,
+    "control": 0.5006,
+    "trades": 5908,
+    "net": -0.4877,
+    "net_lb": -0.5039,
+    "net_R": -0.9515
+   },
+   "oos": {
+    "events": 4068,
+    "resolved": 4063,
+    "bounce": 0.505,
+    "bounce_lb": 0.4802,
+    "control": 0.5006,
+    "trades": 3975,
+    "net": -0.5213,
+    "net_lb": -0.5867,
+    "net_R": -0.4618
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.5": {
+   "tf": "30m",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 5847,
+    "resolved": 5842,
+    "bounce": 0.4735,
+    "bounce_lb": 0.4528,
+    "control": 0.4925,
+    "trades": 5584,
+    "net": -0.4847,
+    "net_lb": -0.5016,
+    "net_R": -0.9575
+   },
+   "oos": {
+    "events": 3831,
+    "resolved": 3824,
+    "bounce": 0.5073,
+    "bounce_lb": 0.4817,
+    "control": 0.4979,
+    "trades": 3760,
+    "net": -0.5045,
+    "net_lb": -0.575,
+    "net_R": -0.4449
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.618": {
+   "tf": "30m",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 5268,
+    "resolved": 5254,
+    "bounce": 0.4834,
+    "bounce_lb": 0.4616,
+    "control": 0.4965,
+    "trades": 5021,
+    "net": -0.4723,
+    "net_lb": -0.4897,
+    "net_R": -0.9588
+   },
+   "oos": {
+    "events": 3508,
+    "resolved": 3505,
+    "bounce": 0.4967,
+    "bounce_lb": 0.47,
+    "control": 0.4819,
+    "trades": 3443,
+    "net": -0.596,
+    "net_lb": -0.6643,
+    "net_R": -0.5066
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.764": {
+   "tf": "30m",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 4536,
+    "resolved": 4535,
+    "bounce": 0.4807,
+    "bounce_lb": 0.4573,
+    "control": 0.501,
+    "trades": 4369,
+    "net": -0.4746,
+    "net_lb": -0.4919,
+    "net_R": -0.9564
+   },
+   "oos": {
+    "events": 3092,
+    "resolved": 3090,
+    "bounce": 0.4971,
+    "bounce_lb": 0.4686,
+    "control": 0.4958,
+    "trades": 3036,
+    "net": -0.5388,
+    "net_lb": -0.6135,
+    "net_R": -0.4746
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "30m|0.786": {
+   "tf": "30m",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 4417,
+    "resolved": 4416,
+    "bounce": 0.4789,
+    "bounce_lb": 0.4552,
+    "control": 0.4913,
+    "trades": 4239,
+    "net": -0.4846,
+    "net_lb": -0.5032,
+    "net_R": -0.9684
+   },
+   "oos": {
+    "events": 3028,
+    "resolved": 3028,
+    "bounce": 0.5013,
+    "bounce_lb": 0.4726,
+    "control": 0.4791,
+    "trades": 2977,
+    "net": -0.5107,
+    "net_lb": -0.5821,
+    "net_R": -0.4783
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.214": {
+   "tf": "15m",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 11925,
+    "resolved": 11909,
+    "bounce": 0.4701,
+    "bounce_lb": 0.4556,
+    "control": 0.4885,
+    "trades": 11052,
+    "net": -0.4052,
+    "net_lb": -0.4127,
+    "net_R": -1.0947
+   },
+   "oos": {
+    "events": 7854,
+    "resolved": 7847,
+    "bounce": 0.4866,
+    "bounce_lb": 0.4687,
+    "control": 0.4756,
+    "trades": 7624,
+    "net": -0.5627,
+    "net_lb": -0.5962,
+    "net_R": -0.6553
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.236": {
+   "tf": "15m",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 12185,
+    "resolved": 12164,
+    "bounce": 0.4664,
+    "bounce_lb": 0.4521,
+    "control": 0.4803,
+    "trades": 11288,
+    "net": -0.4059,
+    "net_lb": -0.4137,
+    "net_R": -1.0955
+   },
+   "oos": {
+    "events": 7998,
+    "resolved": 7993,
+    "bounce": 0.4853,
+    "bounce_lb": 0.4676,
+    "control": 0.477,
+    "trades": 7773,
+    "net": -0.5556,
+    "net_lb": -0.5906,
+    "net_R": -0.6501
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.382": {
+   "tf": "15m",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 12749,
+    "resolved": 12733,
+    "bounce": 0.4594,
+    "bounce_lb": 0.4455,
+    "control": 0.4891,
+    "trades": 11868,
+    "net": -0.4138,
+    "net_lb": -0.4211,
+    "net_R": -1.1029
+   },
+   "oos": {
+    "events": 8254,
+    "resolved": 8247,
+    "bounce": 0.4777,
+    "bounce_lb": 0.4604,
+    "control": 0.4736,
+    "trades": 7994,
+    "net": -0.5713,
+    "net_lb": -0.604,
+    "net_R": -0.6692
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.5": {
+   "tf": "15m",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 12068,
+    "resolved": 12057,
+    "bounce": 0.4631,
+    "bounce_lb": 0.4487,
+    "control": 0.4942,
+    "trades": 11224,
+    "net": -0.4041,
+    "net_lb": -0.4118,
+    "net_R": -1.0905
+   },
+   "oos": {
+    "events": 7899,
+    "resolved": 7893,
+    "bounce": 0.4773,
+    "bounce_lb": 0.4595,
+    "control": 0.4873,
+    "trades": 7693,
+    "net": -0.542,
+    "net_lb": -0.577,
+    "net_R": -0.6591
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.618": {
+   "tf": "15m",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 10843,
+    "resolved": 10837,
+    "bounce": 0.4468,
+    "bounce_lb": 0.4317,
+    "control": 0.4944,
+    "trades": 10115,
+    "net": -0.4102,
+    "net_lb": -0.4183,
+    "net_R": -1.0965
+   },
+   "oos": {
+    "events": 7263,
+    "resolved": 7256,
+    "bounce": 0.4723,
+    "bounce_lb": 0.4538,
+    "control": 0.488,
+    "trades": 7056,
+    "net": -0.5676,
+    "net_lb": -0.6011,
+    "net_R": -0.6707
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.764": {
+   "tf": "15m",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 9282,
+    "resolved": 9275,
+    "bounce": 0.4582,
+    "bounce_lb": 0.4419,
+    "control": 0.4929,
+    "trades": 8677,
+    "net": -0.4025,
+    "net_lb": -0.4116,
+    "net_R": -1.099
+   },
+   "oos": {
+    "events": 6315,
+    "resolved": 6314,
+    "bounce": 0.4734,
+    "bounce_lb": 0.4535,
+    "control": 0.4883,
+    "trades": 6159,
+    "net": -0.5307,
+    "net_lb": -0.5675,
+    "net_R": -0.669
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|0.786": {
+   "tf": "15m",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 9069,
+    "resolved": 9061,
+    "bounce": 0.4596,
+    "bounce_lb": 0.443,
+    "control": 0.4885,
+    "trades": 8482,
+    "net": -0.4021,
+    "net_lb": -0.4112,
+    "net_R": -1.1022
+   },
+   "oos": {
+    "events": 6156,
+    "resolved": 6154,
+    "bounce": 0.4669,
+    "bounce_lb": 0.4468,
+    "control": 0.4779,
+    "trades": 5995,
+    "net": -0.5396,
+    "net_lb": -0.5782,
+    "net_R": -0.6796
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.214": {
+   "tf": "5m",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 34537,
+    "resolved": 34501,
+    "bounce": 0.4005,
+    "bounce_lb": 0.3921,
+    "control": 0.4599,
+    "trades": 30366,
+    "net": -0.2713,
+    "net_lb": -0.2761,
+    "net_R": -1.175
+   },
+   "oos": {
+    "events": 23027,
+    "resolved": 23012,
+    "bounce": 0.3956,
+    "bounce_lb": 0.3854,
+    "control": 0.4561,
+    "trades": 21824,
+    "net": -0.479,
+    "net_lb": -0.4899,
+    "net_R": -0.9769
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.236": {
+   "tf": "5m",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 35555,
+    "resolved": 35510,
+    "bounce": 0.4012,
+    "bounce_lb": 0.393,
+    "control": 0.464,
+    "trades": 31205,
+    "net": -0.272,
+    "net_lb": -0.2762,
+    "net_R": -1.1756
+   },
+   "oos": {
+    "events": 23625,
+    "resolved": 23612,
+    "bounce": 0.397,
+    "bounce_lb": 0.387,
+    "control": 0.445,
+    "trades": 22382,
+    "net": -0.4765,
+    "net_lb": -0.4863,
+    "net_R": -0.9745
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.382": {
+   "tf": "5m",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 38182,
+    "resolved": 38134,
+    "bounce": 0.4026,
+    "bounce_lb": 0.3946,
+    "control": 0.4583,
+    "trades": 33514,
+    "net": -0.2754,
+    "net_lb": -0.2798,
+    "net_R": -1.1758
+   },
+   "oos": {
+    "events": 25282,
+    "resolved": 25254,
+    "bounce": 0.3898,
+    "bounce_lb": 0.3801,
+    "control": 0.4519,
+    "trades": 23999,
+    "net": -0.4843,
+    "net_lb": -0.4951,
+    "net_R": -0.9798
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.5": {
+   "tf": "5m",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 36530,
+    "resolved": 36493,
+    "bounce": 0.4019,
+    "bounce_lb": 0.3938,
+    "control": 0.4575,
+    "trades": 32066,
+    "net": -0.2738,
+    "net_lb": -0.2791,
+    "net_R": -1.1748
+   },
+   "oos": {
+    "events": 24488,
+    "resolved": 24468,
+    "bounce": 0.3897,
+    "bounce_lb": 0.3798,
+    "control": 0.456,
+    "trades": 23241,
+    "net": -0.4763,
+    "net_lb": -0.4864,
+    "net_R": -0.9814
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.618": {
+   "tf": "5m",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 32909,
+    "resolved": 32883,
+    "bounce": 0.3998,
+    "bounce_lb": 0.3912,
+    "control": 0.4567,
+    "trades": 28832,
+    "net": -0.2717,
+    "net_lb": -0.2765,
+    "net_R": -1.1755
+   },
+   "oos": {
+    "events": 22481,
+    "resolved": 22461,
+    "bounce": 0.3931,
+    "bounce_lb": 0.3828,
+    "control": 0.449,
+    "trades": 21368,
+    "net": -0.4886,
+    "net_lb": -0.4995,
+    "net_R": -0.9882
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.764": {
+   "tf": "5m",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 27943,
+    "resolved": 27913,
+    "bounce": 0.3964,
+    "bounce_lb": 0.3872,
+    "control": 0.4569,
+    "trades": 24576,
+    "net": -0.27,
+    "net_lb": -0.2754,
+    "net_R": -1.1773
+   },
+   "oos": {
+    "events": 19541,
+    "resolved": 19527,
+    "bounce": 0.3914,
+    "bounce_lb": 0.3804,
+    "control": 0.4514,
+    "trades": 18521,
+    "net": -0.4861,
+    "net_lb": -0.4971,
+    "net_R": -0.9862
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|0.786": {
+   "tf": "5m",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 27226,
+    "resolved": 27203,
+    "bounce": 0.3998,
+    "bounce_lb": 0.3905,
+    "control": 0.461,
+    "trades": 23954,
+    "net": -0.2686,
+    "net_lb": -0.2737,
+    "net_R": -1.1777
+   },
+   "oos": {
+    "events": 19044,
+    "resolved": 19033,
+    "bounce": 0.3939,
+    "bounce_lb": 0.3827,
+    "control": 0.4524,
+    "trades": 18059,
+    "net": -0.4855,
+    "net_lb": -0.4966,
+    "net_R": -0.9898
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.214": {
+   "tf": "3m",
+   "p": 0.214,
+   "name": "I0.786",
+   "train": {
+    "events": 55783,
+    "resolved": 55741,
+    "bounce": 0.3625,
+    "bounce_lb": 0.3561,
+    "control": 0.432,
+    "trades": 47161,
+    "net": -0.2139,
+    "net_lb": -0.2174,
+    "net_R": -1.1873
+   },
+   "oos": {
+    "events": 37615,
+    "resolved": 37590,
+    "bounce": 0.3441,
+    "bounce_lb": 0.3364,
+    "control": 0.4344,
+    "trades": 35188,
+    "net": -0.4329,
+    "net_lb": -0.439,
+    "net_R": -1.0767
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.236": {
+   "tf": "3m",
+   "p": 0.236,
+   "name": "N0.236",
+   "train": {
+    "events": 57404,
+    "resolved": 57356,
+    "bounce": 0.3623,
+    "bounce_lb": 0.356,
+    "control": 0.4308,
+    "trades": 48462,
+    "net": -0.2148,
+    "net_lb": -0.2182,
+    "net_R": -1.1877
+   },
+   "oos": {
+    "events": 38716,
+    "resolved": 38692,
+    "bounce": 0.342,
+    "bounce_lb": 0.3344,
+    "control": 0.4347,
+    "trades": 36152,
+    "net": -0.4325,
+    "net_lb": -0.4388,
+    "net_R": -1.0777
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.382": {
+   "tf": "3m",
+   "p": 0.382,
+   "name": "N0.382/I0.618",
+   "train": {
+    "events": 61362,
+    "resolved": 61335,
+    "bounce": 0.3623,
+    "bounce_lb": 0.3562,
+    "control": 0.4309,
+    "trades": 51852,
+    "net": -0.2224,
+    "net_lb": -0.2261,
+    "net_R": -1.1892
+   },
+   "oos": {
+    "events": 41418,
+    "resolved": 41397,
+    "bounce": 0.3343,
+    "bounce_lb": 0.327,
+    "control": 0.4301,
+    "trades": 38724,
+    "net": -0.4376,
+    "net_lb": -0.4438,
+    "net_R": -1.0816
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.5": {
+   "tf": "3m",
+   "p": 0.5,
+   "name": "N0.5/I0.5",
+   "train": {
+    "events": 58871,
+    "resolved": 58845,
+    "bounce": 0.3656,
+    "bounce_lb": 0.3594,
+    "control": 0.4285,
+    "trades": 49882,
+    "net": -0.2221,
+    "net_lb": -0.2255,
+    "net_R": -1.1894
+   },
+   "oos": {
+    "events": 40273,
+    "resolved": 40242,
+    "bounce": 0.3401,
+    "bounce_lb": 0.3326,
+    "control": 0.4328,
+    "trades": 37611,
+    "net": -0.4279,
+    "net_lb": -0.4349,
+    "net_R": -1.0788
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.618": {
+   "tf": "3m",
+   "p": 0.618,
+   "name": "N0.618/I0.382",
+   "train": {
+    "events": 53509,
+    "resolved": 53474,
+    "bounce": 0.3591,
+    "bounce_lb": 0.3525,
+    "control": 0.4292,
+    "trades": 45357,
+    "net": -0.2197,
+    "net_lb": -0.2235,
+    "net_R": -1.1883
+   },
+   "oos": {
+    "events": 37174,
+    "resolved": 37141,
+    "bounce": 0.3351,
+    "bounce_lb": 0.3274,
+    "control": 0.431,
+    "trades": 34722,
+    "net": -0.4299,
+    "net_lb": -0.4355,
+    "net_R": -1.0812
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.764": {
+   "tf": "3m",
+   "p": 0.764,
+   "name": "I0.236",
+   "train": {
+    "events": 45475,
+    "resolved": 45436,
+    "bounce": 0.3523,
+    "bounce_lb": 0.3452,
+    "control": 0.4267,
+    "trades": 38569,
+    "net": -0.2189,
+    "net_lb": -0.2234,
+    "net_R": -1.1895
+   },
+   "oos": {
+    "events": 32299,
+    "resolved": 32278,
+    "bounce": 0.3412,
+    "bounce_lb": 0.3329,
+    "control": 0.4282,
+    "trades": 30217,
+    "net": -0.4321,
+    "net_lb": -0.439,
+    "net_R": -1.0826
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "3m|0.786": {
+   "tf": "3m",
+   "p": 0.786,
+   "name": "N0.786",
+   "train": {
+    "events": 44283,
+    "resolved": 44254,
+    "bounce": 0.3552,
+    "bounce_lb": 0.348,
+    "control": 0.4272,
+    "trades": 37538,
+    "net": -0.217,
+    "net_lb": -0.2216,
+    "net_R": -1.1887
+   },
+   "oos": {
+    "events": 31521,
+    "resolved": 31497,
+    "bounce": 0.3426,
+    "bounce_lb": 0.3341,
+    "control": 0.4342,
+    "trades": 29490,
+    "net": -0.4283,
+    "net_lb": -0.4354,
+    "net_R": -1.0803
+   },
+   "verdict": "DOES_NOT_HOLD"
+  }
+ },
+ "holding_cells": [],
+ "underpowered": [
+  "1mo I0.786",
+  "1mo N0.236",
+  "1mo N0.382/I0.618",
+  "1mo N0.5/I0.5",
+  "1mo N0.618/I0.382",
+  "1mo I0.236",
+  "1mo N0.786",
+  "1w I0.786",
+  "1w N0.236",
+  "1w N0.382/I0.618",
+  "1w N0.5/I0.5",
+  "1w N0.618/I0.382",
+  "1w I0.236",
+  "1w N0.786",
+  "1d I0.786",
+  "1d N0.236",
+  "1d N0.382/I0.618",
+  "1d N0.5/I0.5",
+  "1d N0.618/I0.382",
+  "1d I0.236",
+  "1d N0.786"
+ ],
+ "verdict": "FIB_LEVELS_DO_NOT_HOLD"
+}
