@@ -1,0 +1,285 @@
+{
+ "at": "2026-10-11T02:23:16.684Z",
+ "results": {
+  "BUY_B1|E1": {
+   "n": 339,
+   "per_day": 0.114,
+   "wr": 0.4454,
+   "wr_lb": 0.3691,
+   "net": -0.5183,
+   "net_lb": -1.4008,
+   "net_x1_5": -0.6539,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 50,
+     "wr": 0.42,
+     "net": -0.931
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 91,
+     "wr": 0.396,
+     "net": -0.432
+    },
+    "2023": {
+     "n": 87,
+     "wr": 0.46,
+     "net": -0.121
+    },
+    "2024": {
+     "n": 74,
+     "wr": 0.486,
+     "net": -0.61
+    },
+    "2025": {
+     "n": 37,
+     "wr": 0.486,
+     "net": -0.921
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "BUY_B1|E2": {
+   "n": 339,
+   "per_day": 0.114,
+   "wr": 0.8024,
+   "wr_lb": 0.7323,
+   "net": -0.2396,
+   "net_lb": -1.2111,
+   "net_x1_5": -0.3459,
+   "positive_years": "2/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 50,
+     "wr": 0.76,
+     "net": -0.549
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 91,
+     "wr": 0.78,
+     "net": -0.53
+    },
+    "2023": {
+     "n": 87,
+     "wr": 0.828,
+     "net": 0.04
+    },
+    "2024": {
+     "n": 74,
+     "wr": 0.811,
+     "net": 0.035
+    },
+    "2025": {
+     "n": 37,
+     "wr": 0.838,
+     "net": -0.315
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_B1|E1": {
+   "n": 186,
+   "per_day": 0.062,
+   "wr": 0.5108,
+   "wr_lb": 0.4058,
+   "net": -0.6742,
+   "net_lb": -2.4866,
+   "net_x1_5": -0.7127,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 121,
+     "wr": 0.545,
+     "net": -0.246
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 65,
+     "wr": 0.446,
+     "net": -1.471
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_B1|E2": {
+   "n": 186,
+   "per_day": 0.062,
+   "wr": 0.8011,
+   "wr_lb": 0.7035,
+   "net": 0.0251,
+   "net_lb": -1.8006,
+   "net_x1_5": -0.0009,
+   "positive_years": "2/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 121,
+     "wr": 0.802,
+     "net": 0.027
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 65,
+     "wr": 0.8,
+     "net": 0.021
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  }
+ }
+}

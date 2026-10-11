@@ -1,0 +1,706 @@
+{
+ "at": "2026-10-11T02:35:37.024Z",
+ "rule": "threshold from year Y-1 OOS scores: lowest with WR ≥ 92 %, mean > 0, n ≥ 30",
+ "candidates": {
+  "BUY_B1": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "BUY_B2": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "BUY_B3": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "BUY_B4": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_B1": {
+   "picks": {
+    "2017": null,
+    "2018": {
+     "q": 0.003,
+     "thr": 0.9295,
+     "prev_n": 38,
+     "prev_wr": 0.921,
+     "prev_net": 0.292
+    },
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": {
+     "q": 0.001,
+     "thr": 0.9327,
+     "prev_n": 35,
+     "prev_wr": 0.943,
+     "prev_net": 0.636
+    },
+    "2023": {
+     "q": 0.002,
+     "thr": 0.9275,
+     "prev_n": 81,
+     "prev_wr": 0.938,
+     "prev_net": 1.229
+    },
+    "2024": {
+     "q": 0.002,
+     "thr": 0.9289,
+     "prev_n": 81,
+     "prev_wr": 0.938,
+     "prev_net": 0.985
+    },
+    "2025": {
+     "q": 0.001,
+     "thr": 0.9362,
+     "prev_n": 46,
+     "prev_wr": 0.935,
+     "prev_net": 0.8
+    },
+    "2026": {
+     "q": 0.001,
+     "thr": 0.9388,
+     "prev_n": 49,
+     "prev_wr": 0.959,
+     "prev_net": 0.918
+    }
+   },
+   "n": 63,
+   "per_day": 0.021,
+   "wr": 0.873,
+   "wr_lb": 0.6905,
+   "net": -1.7982,
+   "net_lb": -17.8822,
+   "k": 58,
+   "net_x1_5": -1.7982,
+   "positive_years": "3/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 3,
+     "wr": 1,
+     "net": 0.799
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 9,
+     "wr": 1,
+     "net": 3.32
+    },
+    "2023": {
+     "n": 15,
+     "wr": 0.867,
+     "net": -0.39
+    },
+    "2024": {
+     "n": 9,
+     "wr": 0.667,
+     "net": -5.194
+    },
+    "2025": {
+     "n": 15,
+     "wr": 0.933,
+     "net": 0.167
+    },
+    "2026": {
+     "n": 12,
+     "wr": 0.833,
+     "net": -7.956
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_B2": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_B3": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_B4": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb": 0,
+   "net": 0,
+   "net_lb": null,
+   "k": 58,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "by_year": {
+    "2017": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2018": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2019": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2020": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2021": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2022": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2023": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2024": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2025": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    },
+    "2026": {
+     "n": 0,
+     "wr": null,
+     "net": null
+    }
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  }
+ }
+}

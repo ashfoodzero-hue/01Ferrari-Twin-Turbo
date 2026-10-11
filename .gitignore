@@ -4,3 +4,4 @@ data/orderflow/
 data/calendar/release_ticks/
 node_modules/
 *.part
+data/inv90/*.bin

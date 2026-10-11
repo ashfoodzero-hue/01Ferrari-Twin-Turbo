@@ -1,0 +1,19 @@
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 4,572,812
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+15m 308735
+  ⚠ XAUUSD/1h: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1h 78783
+  ⚠ XAUUSD/4h: repaired 1 provably-false print(s): 2025-11-23T20:00(l)
+4h 20914
+  ⚠ XAUUSD/1d: repaired 1 provably-false print(s): 2025-11-23T00:00(l)
+1d 4052
+  ⚠ XAUUSD/1w: repaired 2 provably-false print(s): 2026-01-25T00:00(h), 2026-02-01T00:00(l)
+1w 682
+features 51 outcomes 16
+rows 50000 2016-07-14
+rows 100000 2018-08-24
+rows 150000 2020-12-13
+rows 200000 2023-01-18
+rows 250000 2025-03-03
+done rows 287979 width 76

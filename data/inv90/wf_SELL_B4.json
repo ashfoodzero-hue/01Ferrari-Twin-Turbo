@@ -1,0 +1,586 @@
+{
+ "at": "2026-10-11T02:18:48.834Z",
+ "cand": "SELL_B4",
+ "features": [
+  "r1",
+  "r4",
+  "r16",
+  "r96",
+  "d_ema20_15m",
+  "d_ema50_15m",
+  "d_ema200_15m",
+  "d_ema20_1h",
+  "d_ema50_1h",
+  "d_ema200_1h",
+  "d_ema20_4h",
+  "d_ema50_4h",
+  "d_ema200_4h",
+  "d_ema20_1d",
+  "d_ema50_1d",
+  "d_ema200_1d",
+  "sl_1h",
+  "sl_4h",
+  "sl_1d",
+  "st_15m",
+  "st_1h",
+  "st_4h",
+  "st_1d",
+  "st_1w",
+  "rsi_15m",
+  "rsi_1h",
+  "rsi_4h",
+  "rsi_1d",
+  "bz_15m",
+  "bz_1h",
+  "adx_1h",
+  "d_vwap",
+  "pos_day",
+  "rng_day",
+  "d_pdh",
+  "d_pdl",
+  "d_pwh",
+  "d_pwl",
+  "d_asiah",
+  "d_asial",
+  "sweep_bull",
+  "sweep_bear",
+  "atr15_rel",
+  "atr1h_rel",
+  "atr1d_pct",
+  "vol_rel",
+  "hour",
+  "wday",
+  "cal_since",
+  "cal_until"
+ ],
+ "years": {
+  "2016": {
+   "train": 37217,
+   "test": 23720,
+   "base_wr_train": 0.4331,
+   "top_features": [
+    [
+     "atr1d_pct",
+     100
+    ],
+    [
+     "d_pwh",
+     67
+    ],
+    [
+     "d_ema200_1d",
+     65
+    ],
+    [
+     "adx_1h",
+     62
+    ],
+    [
+     "rsi_1d",
+     58
+    ],
+    [
+     "atr1h_rel",
+     57
+    ],
+    [
+     "rng_day",
+     53
+    ],
+    [
+     "hour",
+     50
+    ],
+    [
+     "d_pwl",
+     48
+    ],
+    [
+     "rsi_4h",
+     47
+    ]
+   ],
+   "sec": 13
+  },
+  "2017": {
+   "train": 61015,
+   "test": 23556,
+   "base_wr_train": 0.4373,
+   "top_features": [
+    [
+     "atr1d_pct",
+     110
+    ],
+    [
+     "rsi_1d",
+     80
+    ],
+    [
+     "atr1h_rel",
+     70
+    ],
+    [
+     "rsi_4h",
+     68
+    ],
+    [
+     "adx_1h",
+     65
+    ],
+    [
+     "sl_1d",
+     61
+    ],
+    [
+     "d_pdh",
+     57
+    ],
+    [
+     "d_pwh",
+     57
+    ],
+    [
+     "d_pwl",
+     56
+    ],
+    [
+     "rng_day",
+     52
+    ]
+   ],
+   "sec": 21
+  },
+  "2018": {
+   "train": 84660,
+   "test": 23599,
+   "base_wr_train": 0.4287,
+   "top_features": [
+    [
+     "atr1d_pct",
+     134
+    ],
+    [
+     "rsi_1d",
+     80
+    ],
+    [
+     "atr1h_rel",
+     72
+    ],
+    [
+     "adx_1h",
+     69
+    ],
+    [
+     "hour",
+     64
+    ],
+    [
+     "sl_1d",
+     62
+    ],
+    [
+     "rsi_4h",
+     60
+    ],
+    [
+     "d_pwh",
+     60
+    ],
+    [
+     "d_pwl",
+     59
+    ],
+    [
+     "d_ema200_1d",
+     55
+    ]
+   ],
+   "sec": 32
+  },
+  "2019": {
+   "train": 108176,
+   "test": 21438,
+   "base_wr_train": 0.4314,
+   "top_features": [
+    [
+     "atr1d_pct",
+     119
+    ],
+    [
+     "rsi_1d",
+     98
+    ],
+    [
+     "sl_1d",
+     81
+    ],
+    [
+     "d_ema200_1d",
+     79
+    ],
+    [
+     "atr1h_rel",
+     79
+    ],
+    [
+     "adx_1h",
+     74
+    ],
+    [
+     "d_pwh",
+     69
+    ],
+    [
+     "hour",
+     61
+    ],
+    [
+     "d_pwl",
+     60
+    ],
+    [
+     "sl_4h",
+     56
+    ]
+   ],
+   "sec": 37
+  },
+  "2020": {
+   "train": 129527,
+   "test": 21456,
+   "base_wr_train": 0.4293,
+   "top_features": [
+    [
+     "atr1d_pct",
+     118
+    ],
+    [
+     "adx_1h",
+     86
+    ],
+    [
+     "rsi_1d",
+     84
+    ],
+    [
+     "d_pwl",
+     75
+    ],
+    [
+     "sl_1d",
+     73
+    ],
+    [
+     "d_pwh",
+     70
+    ],
+    [
+     "d_ema200_1d",
+     67
+    ],
+    [
+     "sl_4h",
+     66
+    ],
+    [
+     "atr1h_rel",
+     60
+    ],
+    [
+     "rsi_4h",
+     58
+    ]
+   ],
+   "sec": 48
+  },
+  "2021": {
+   "train": 151003,
+   "test": 23672,
+   "base_wr_train": 0.4312,
+   "top_features": [
+    [
+     "atr1d_pct",
+     119
+    ],
+    [
+     "adx_1h",
+     75
+    ],
+    [
+     "atr1h_rel",
+     75
+    ],
+    [
+     "sl_1d",
+     74
+    ],
+    [
+     "rsi_1d",
+     71
+    ],
+    [
+     "d_ema200_1d",
+     69
+    ],
+    [
+     "rsi_4h",
+     66
+    ],
+    [
+     "sl_4h",
+     62
+    ],
+    [
+     "d_pdh",
+     57
+    ],
+    [
+     "d_pdl",
+     55
+    ]
+   ],
+   "sec": 47
+  },
+  "2022": {
+   "train": 174642,
+   "test": 24143,
+   "base_wr_train": 0.4337,
+   "top_features": [
+    [
+     "atr1d_pct",
+     115
+    ],
+    [
+     "atr1h_rel",
+     97
+    ],
+    [
+     "sl_1d",
+     83
+    ],
+    [
+     "rsi_1d",
+     77
+    ],
+    [
+     "d_ema200_1d",
+     68
+    ],
+    [
+     "adx_1h",
+     68
+    ],
+    [
+     "rsi_4h",
+     66
+    ],
+    [
+     "d_pdl",
+     64
+    ],
+    [
+     "hour",
+     58
+    ],
+    [
+     "sl_4h",
+     57
+    ]
+   ],
+   "sec": 55
+  },
+  "2023": {
+   "train": 198878,
+   "test": 23410,
+   "base_wr_train": 0.4406,
+   "top_features": [
+    [
+     "atr1d_pct",
+     118
+    ],
+    [
+     "atr1h_rel",
+     99
+    ],
+    [
+     "rsi_1d",
+     98
+    ],
+    [
+     "d_ema200_1d",
+     84
+    ],
+    [
+     "rsi_4h",
+     79
+    ],
+    [
+     "adx_1h",
+     72
+    ],
+    [
+     "d_pdl",
+     64
+    ],
+    [
+     "d_pwl",
+     63
+    ],
+    [
+     "sl_4h",
+     58
+    ],
+    [
+     "vol_rel",
+     58
+    ]
+   ],
+   "sec": 64
+  },
+  "2024": {
+   "train": 222377,
+   "test": 23701,
+   "base_wr_train": 0.4433,
+   "top_features": [
+    [
+     "atr1d_pct",
+     111
+    ],
+    [
+     "atr1h_rel",
+     86
+    ],
+    [
+     "adx_1h",
+     79
+    ],
+    [
+     "d_ema200_1d",
+     71
+    ],
+    [
+     "sl_4h",
+     66
+    ],
+    [
+     "vol_rel",
+     66
+    ],
+    [
+     "rsi_1d",
+     65
+    ],
+    [
+     "rsi_4h",
+     62
+    ],
+    [
+     "d_pwl",
+     61
+    ],
+    [
+     "d_pdl",
+     60
+    ]
+   ],
+   "sec": 73
+  },
+  "2025": {
+   "train": 245911,
+   "test": 23638,
+   "base_wr_train": 0.4432,
+   "top_features": [
+    [
+     "atr1d_pct",
+     108
+    ],
+    [
+     "rsi_4h",
+     83
+    ],
+    [
+     "d_pwl",
+     80
+    ],
+    [
+     "d_ema200_1d",
+     79
+    ],
+    [
+     "atr1h_rel",
+     76
+    ],
+    [
+     "adx_1h",
+     72
+    ],
+    [
+     "sl_1d",
+     71
+    ],
+    [
+     "rsi_1d",
+     67
+    ],
+    [
+     "sl_4h",
+     58
+    ],
+    [
+     "vol_rel",
+     57
+    ]
+   ],
+   "sec": 79
+  },
+  "2026": {
+   "train": 269549,
+   "test": 18262,
+   "base_wr_train": 0.4436,
+   "top_features": [
+    [
+     "atr1d_pct",
+     100
+    ],
+    [
+     "atr1h_rel",
+     87
+    ],
+    [
+     "rsi_4h",
+     73
+    ],
+    [
+     "adx_1h",
+     69
+    ],
+    [
+     "vol_rel",
+     69
+    ],
+    [
+     "rsi_1d",
+     68
+    ],
+    [
+     "d_ema200_1d",
+     67
+    ],
+    [
+     "d_pwh",
+     65
+    ],
+    [
+     "rng_day",
+     57
+    ],
+    [
+     "sl_4h",
+     55
+    ]
+   ],
+   "sec": 93
+  }
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "at": "2026-10-11T02:08:25.577Z",
+ "rows": 287979,
+ "width": 76,
+ "features": [
+  "r1",
+  "r4",
+  "r16",
+  "r96",
+  "d_ema20_15m",
+  "d_ema50_15m",
+  "d_ema200_15m",
+  "d_ema20_1h",
+  "d_ema50_1h",
+  "d_ema200_1h",
+  "d_ema20_4h",
+  "d_ema50_4h",
+  "d_ema200_4h",
+  "d_ema20_1d",
+  "d_ema50_1d",
+  "d_ema200_1d",
+  "sl_1h",
+  "sl_4h",
+  "sl_1d",
+  "st_15m",
+  "st_1h",
+  "st_4h",
+  "st_1d",
+  "st_1w",
+  "rsi_15m",
+  "rsi_1h",
+  "rsi_4h",
+  "rsi_1d",
+  "bz_15m",
+  "bz_1h",
+  "adx_1h",
+  "d_vwap",
+  "pos_day",
+  "rng_day",
+  "d_pdh",
+  "d_pdl",
+  "d_pwh",
+  "d_pwl",
+  "d_asiah",
+  "d_asial",
+  "sweep_bull",
+  "sweep_bear",
+  "atr15_rel",
+  "atr1h_rel",
+  "atr1d_pct",
+  "vol_rel",
+  "hour",
+  "wday",
+  "cal_since",
+  "cal_until",
+  "A"
+ ],
+ "outcomes": [
+  "BUY_B1",
+  "BUY_B2",
+  "BUY_B3",
+  "BUY_B4",
+  "SELL_B1",
+  "SELL_B2",
+  "SELL_B3",
+  "SELL_B4",
+  "BUY_B1_x1.5",
+  "BUY_B2_x1.5",
+  "BUY_B3_x1.5",
+  "BUY_B4_x1.5",
+  "SELL_B1_x1.5",
+  "SELL_B2_x1.5",
+  "SELL_B3_x1.5",
+  "SELL_B4_x1.5"
+ ],
+ "durations": [
+  "dur_BUY_B1",
+  "dur_BUY_B2",
+  "dur_BUY_B3",
+  "dur_BUY_B4",
+  "dur_SELL_B1",
+  "dur_SELL_B2",
+  "dur_SELL_B3",
+  "dur_SELL_B4"
+ ],
+ "time_col": 75,
+ "time_unit": "minutes since START",
+ "start": 1401580800000,
+ "brackets": [
+  [
+   0.25,
+   2
+  ],
+  [
+   0.5,
+   3
+  ],
+  [
+   0.5,
+   2
+  ],
+  [
+   1,
+   1
+  ]
+ ],
+ "plan": "docs/INVESTIGATION_90WR_2026-10-11.md",
+ "spread_stats": {
+  "live": 0,
+  "cell": 395099414,
+  "year": 0
+ }
+}

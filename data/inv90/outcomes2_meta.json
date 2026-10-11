@@ -1,0 +1,64 @@
+{
+ "at": "2026-10-11T02:23:54.875Z",
+ "cols": [
+  "BUY_I1_net",
+  "BUY_I1_net15",
+  "BUY_I1_dur",
+  "BUY_I1_nights",
+  "BUY_I2_net",
+  "BUY_I2_net15",
+  "BUY_I2_dur",
+  "BUY_I2_nights",
+  "BUY_D1_net",
+  "BUY_D1_net15",
+  "BUY_D1_dur",
+  "BUY_D1_nights",
+  "BUY_D2_net",
+  "BUY_D2_net15",
+  "BUY_D2_dur",
+  "BUY_D2_nights",
+  "SELL_I1_net",
+  "SELL_I1_net15",
+  "SELL_I1_dur",
+  "SELL_I1_nights",
+  "SELL_I2_net",
+  "SELL_I2_net15",
+  "SELL_I2_dur",
+  "SELL_I2_nights",
+  "SELL_D1_net",
+  "SELL_D1_net15",
+  "SELL_D1_dur",
+  "SELL_D1_nights",
+  "SELL_D2_net",
+  "SELL_D2_net15",
+  "SELL_D2_dur",
+  "SELL_D2_nights"
+ ],
+ "width": 32,
+ "brackets": [
+  [
+   "I1",
+   0.25,
+   2.5,
+   "H"
+  ],
+  [
+   "I2",
+   0.15,
+   1.5,
+   "H"
+  ],
+  [
+   "D1",
+   0.2,
+   2,
+   "D"
+  ],
+  [
+   "D2",
+   0.3,
+   3,
+   "D"
+  ]
+ ]
+}
