@@ -21,8 +21,7 @@ ok('part2 + part3 + part5c verdicts follow the gate', () => { for (const f of ['
 ok('5c two-sided trade counts equal the single-side books (the null/undefined bug stays fixed)', () => { const r = J('part5c_results.json').results; assert.equal(r.B1.n, 90); assert.equal(r.D1.n, 980) })
 ok('forward test: live-built features EQUAL the research features on the overlap (0 mismatches); ledger is append-only signal/resolve/scan', () => {
   const p = J('forward/parity.json'); assert(p.cells > 10000); assert.equal(Object.keys(p.mismatched_features).length, 0)
-  const L = fs.readFileSync(path.join(D, 'forward', 'ledger.jsonl'), 'utf8').split('
-').filter(Boolean).map((l) => JSON.parse(l)), ids = new Set()
+  const L = fs.readFileSync(path.join(D, 'forward', 'ledger.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)), ids = new Set()
   for (const e of L) { assert(['signal', 'resolve', 'scan'].includes(e.type)); if (e.type === 'signal') { assert(!ids.has(e.id), 'duplicate signal'); ids.add(e.id); assert(e.t >= Date.parse('2026-10-09T06:00:00Z')); assert(e.score >= e.thr); assert(e.stop < e.entry_ask && e.target > e.entry_ask) } }
   for (const e of L.filter((x) => x.type === 'resolve')) assert(ids.has(e.id)) })
 ok('part7_results.json: verdicts follow G1-G5 + swap label; the 92 % & 1/day flag follows its numbers', () => { for (const c of Object.values(J('part7_results.json').books)) { const g = c.G, core = g.G2_wr && g.G3_money && g.G4_years && g.G5_spread
