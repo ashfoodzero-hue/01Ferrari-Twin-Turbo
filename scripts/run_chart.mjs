@@ -16,6 +16,10 @@
 //                           on 13 y + the live strategy, trade_monitor_study.json); the fitted model and the close advice are shown ONLY if validated
 //   GET /api/forward        the PAPER FORWARD TEST of BUY_D1-x (data/inv90/forward/ledger.jsonl + forward_summary.json, written by the hourly
 //                           forward hook) — every signal joined with its resolve; read-only, never a live order
+//   GET /api/levels         S/R levels in force now for the 5m chart: PDH/PDL, P2DH/P2DL, TDH/TDL (src/master/dayLevels.js) + the 2 nearest
+//                           unbroken 1h swing highs / lows (pivot = strict extreme of 2 bars each side, last 5 days) — each with its MEASURED 13y
+//                           bounce vs a random level (day_levels_study.json); + the measured 5m order-flow result at levels (2 y CME, test-only)
+//                           and the live order-flow status (BLOCKED: no live futures trades on the current Polygon plan — red rule)
 //   GET /api/matrix         the FERRARI MATRIX paper trade box (data/master/matrix_state.json, written by matrix_tick.mjs) + its verdict
 // Series: the live stream symbols (src/data/symbols.js) · DXY = rebuilt from its six pairs (src/data/dxy.js, validated vs the
 // official daily close: median |diff| 0.032 %) · WTI = CL front-month futures, which Polygon serves 10 MIN DELAYED on our plan —
@@ -37,6 +41,7 @@ import { wtiBars, futBars } from '../src/data/wti.js'
 import { atr as atrArr } from '../src/core/indicators.js'
 import { emaStack } from '../src/master/emaLevels.js'
 import { fvgAt } from '../src/master/fvg.js'
+import { dailyStats, dayLevelsAt } from '../src/master/dayLevels.js'
 import { resolveMatrixTrade } from '../src/master/ferrariMatrix.js'
 import { liveMonitor } from '../src/master/tradeMonitor.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
@@ -226,6 +231,30 @@ async function news() {
   })
 }
 
+// ── S/R LEVELS for the 5m chart — the levels are context; every label carries the measured result, never a "will bounce" claim ──
+async function levelMarks() {
+  return cached('levels', 30000, async () => {
+    const now = Date.now(), M = (await loadBars('XAUUSD', '1m', { from: now - 12 * 86400000 })).bars.filter((b) => b.t + 60000 <= now)
+    if (!M.length) return { levels: [], note: 'no 1m data' }
+    const last = M.at(-1).c, L = dayLevelsAt(M, dailyStats(M).list, now), study = J('day_levels_study.json'), out = []
+    const meas = (k) => { const o = study?.bounce?.[k]?.oos; return o ? { bounce: o.bounce, control: o.control, net: o.net, n: o.resolved, verdict: study.bounce[k].verdict ?? study.verdict_bounce } : null }
+    if (L) for (const k of ['PDH', 'PDL', 'P2DH', 'P2DL', 'TDH', 'TDL']) if (L[k] != null) out.push({ kind: k, price: L[k], measured: meas(k) })
+    // 1h swing levels (the L-SW1H rule of study_orderflow_footprint.mjs --levels=new), from closed 1h bars
+    const H = (await loadBars('XAUUSD', '1h', { from: now - 8 * 86400000 })).bars.filter((b) => b.t + 3600000 <= now), piv = []
+    for (let j = 2; j < H.length - 2; j++) { const w = H.slice(j - 2, j + 3); if (H[j].t < now - 5 * 86400000) continue
+      const hi = w.every((x, q) => q === 2 || x.h < H[j].h), lo = w.every((x, q) => q === 2 || x.l > H[j].l)
+      if (hi && H.slice(j + 1).every((x) => x.h < H[j].h)) piv.push({ kind: 'SW1H-H', price: H[j].h, t: H[j].t })
+      if (lo && H.slice(j + 1).every((x) => x.l > H[j].l)) piv.push({ kind: 'SW1H-L', price: H[j].l, t: H[j].t }) }
+    out.push(...piv.filter((p) => p.kind === 'SW1H-H').sort((a, b) => a.price - b.price).slice(0, 2), ...piv.filter((p) => p.kind === 'SW1H-L').sort((a, b) => b.price - a.price).slice(0, 2))
+    const of = J('orderflow_footprint_study.json'), c = (f, s) => of?.cells?.[`${f}|1R|${s}`]?.oos
+    return { at: now, last, levels: out.map((x) => ({ ...x, dist: +(x.price - last).toFixed(2) })),
+      orderflow: { live: 'BLOCKED', why: 'no live gold futures trades / bid-ask on the current Polygon plan (Futures Starter = 1m bars, 10 min delayed) — red rule: no guessed delta',
+        measured_5m: of ? { aggressive_vp: c('L-VP', 'C4'), aggressive_hl: c('L-HL', 'C4'), delta_flip_vp: c('L-VP', 'C5'), delta_flip_hl: c('L-HL', 'C5'), three_plus_vp: c('L-VP', 'COUNT>=3'), three_plus_hl: c('L-HL', 'COUNT>=3') } : null,
+        source: '2 y real CME GC trades with the exchange aggressor flag (Databento, test-only), first touch of prev-day VP / H-L, 1 R, out of sample' },
+      note: '13 y XAU spot: no level type bounces more than a random level (day_levels_study.json, volume_profile_study.json); 1h swing levels: bounce not measured on spot' }
+  })
+}
+
 // ── PAPER FORWARD TEST (BUY_D1-x, docs/INVESTIGATION_90WR_2026-10-11.md) — the ledger is the only source; nothing is recomputed here ──
 function forward() {
   const dir = path.join(TURBO.root, 'data', 'inv90', 'forward'); let lines = [], summary = null
@@ -252,6 +281,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/fvg') { if (!FVG_TF[tf]) return send(res, 200, { tf, marks: [], note: 'strong FVGs are marked on 3m, 15m and 1h only' }); return send(res, 200, await fvgMarks(tf)) }
     if (u.pathname === '/api/gamma') return send(res, 200, gamma())
     if (u.pathname === '/api/forward') return send(res, 200, forward())
+    if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
     if (!isSeries(sym)) return send(res, 400, { error: 'unknown symbol', symbols: [...SYMBOLS.map((s) => s.sym), ...Object.keys(DERIVED)] })

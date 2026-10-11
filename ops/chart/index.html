@@ -89,6 +89,8 @@
     <h2>📅 USD calendar — what moves gold</h2>
     <div id="cal" class="dim">loading…</div>
     <div class="note" id="calNote" style="margin-top:6px"></div>
+    <h2>S/R levels (5m chart) — measured</h2>
+    <div class="msg" id="lvMsg">—</div>
     <h2>Forward test BUY_D1-x — paper</h2>
     <div class="msg" id="fwMsg">—</div>
     <div class="note" style="margin-top:6px">The 92 % research model, recording since 10-09 06:00 UTC, the model's frozen cutoff. Target 0.2 × daily ATR, stop 2 × daily ATR, up to 7 days. <b>Not validated</b> (0 of 67 passed the gate) — a verdict needs 100 resolved trades.</div>
@@ -343,6 +345,33 @@ function fvgDraw() {
   }
 }
 setInterval(pollFvg, 20000); pollFvg(); setInterval(fvgDraw, 1000)
+
+// ── S/R LEVELS on the 5m chart (/api/levels) — lines + the measured bounce vs random; the live order-flow status beside them ──
+let LV = null, lvLines = [], lvKey = null
+async function pollLv() { LV = await fetch('/api/levels').then((x) => x.json()).catch(() => null); lvDraw(); lvList() }
+const LVNAME = { PDH: 'prev-day high', PDL: 'prev-day low', P2DH: '2-days-ago high', P2DL: '2-days-ago low', TDH: 'today high', TDL: 'today low', 'SW1H-H': '1H swing high', 'SW1H-L': '1H swing low' }
+function lvDraw() {
+  const p = panes[0], on = LV?.levels?.length && p.sym === 'XAUUSD' && st.tf === '5m', key = on ? LV.levels.map((l) => l.kind + l.price).join('|') : null
+  if (key === lvKey) return
+  lvLines.forEach((l) => { try { p.c.removePriceLine(l) } catch {} }); lvLines = []; lvKey = key; if (!on) return
+  for (const l of LV.levels) { const m = l.measured, hi = /H$/.test(l.kind)
+    lvLines.push(p.c.createPriceLine({ price: l.price, color: hi ? '#ffa657' : '#a5d6ff', lineWidth: 1, lineStyle: 3, axisLabelVisible: true,
+      title: `${l.kind}${m ? ` ${Math.round(100 * m.bounce)}% vs rnd ${Math.round(100 * m.control)}%` : ''}` })) }
+}
+function lvList() {
+  if (!LV?.levels) { $('lvMsg').textContent = 'levels unavailable'; return }
+  const pc = (x) => (x == null ? '—' : Math.round(100 * x) + '%'), sgn = (x) => (x == null ? '—' : (x >= 0 ? '+' : '') + x.toFixed(2))
+  const rows = LV.levels.slice().sort((a, b) => b.price - a.price).map((l) => `<tr><td>${LVNAME[l.kind] ?? l.kind}</td><td>${fmt(l.price)}</td><td>${sgn(l.dist)}</td><td>${l.measured ? `${pc(l.measured.bounce)} <span class="dim">vs ${pc(l.measured.control)}</span>` : '<span class="dim">not measured</span>'}</td></tr>`).join('')
+  const o = LV.orderflow, m = o?.measured_5m, cell = (c) => (c ? `${pc(c.wr)} · ${sgn(c.net)} $ (n ${c.n})` : '—')
+  $('lvMsg').innerHTML = `<table><tr><th>level</th><th>price</th><th>dist</th><th>bounce 13y vs random</th></tr>${rows}</table>`
+    + `<div class="dim" style="margin-top:6px">${esc(LV.note)}. Lines drawn on the 5m chart only.</div>`
+    + `<div style="margin-top:8px"><b>Order flow at the level (bid/ask, aggressor, delta):</b> <span class="pill mid">LIVE ${esc(o?.live)}</span><br><span class="dim">${esc(o?.why)}</span></div>`
+    + (m ? `<table style="margin-top:6px"><tr><th>measured on 5m, 2y CME</th><th>prev-day VP</th><th>prev-day H/L</th></tr>
+      <tr><td>aggressive side</td><td>${cell(m.aggressive_vp)}</td><td>${cell(m.aggressive_hl)}</td></tr>
+      <tr><td>delta flip</td><td>${cell(m.delta_flip_vp)}</td><td>${cell(m.delta_flip_hl)}</td></tr>
+      <tr><td>3+ confirmations</td><td>${cell(m.three_plus_vp)}</td><td>${cell(m.three_plus_hl)}</td></tr></table><div class="dim">WR at 1 R out of sample — none makes money, so live order flow is not yet worth buying.</div>` : '')
+}
+setInterval(pollLv, 30000); pollLv(); setInterval(lvDraw, 1000)
 
 // ── PAPER FORWARD TEST of BUY_D1-x (/api/forward — the forward hook's ledger; nothing recomputed in the page) ──
 // box = entry → target from the signal bar to the exit (or now); the far stop (2×ATR1d) is a dashed line + its price in the label
