@@ -110,3 +110,31 @@ The question is whether confirmations add anything **beyond the level itself**.
 - Built from GC 1 h bars; ATR14(1d) from the GC daily true ranges; only levels in day D's contract.
 - Every other rule as Part 2: 5 confirmations, count ≥ 1/2/3, 1 R / 2 R, controls, gate.
 - α = 0.05/384 (all footprint batches × timeframes × cells). Reported with the per-confirmation win rate table.
+
+---
+
+## Part 5 — EVERYTHING COMBINED, pre-registered 2026-10-11 before any result (Ashraf: "combine everything together and then tell me WR")
+
+**Events** (5m, 2 y real CME):
+- Every first touch of ANY level family: prev-day VP POC/VAH/VAL, prev-day H/L, 1 h swing, strong 2+/3+ touch levels.
+- One event per (touch bar, side); its family flags are merged.
+
+**Features, all known at the close of F+1:**
+- Family flags and strong-level touches.
+- C1-C5, the confirmation count at F and at F+1.
+- Delta / volume of F and F+1; F volume ÷ the mean of the prior 20 bars; ATR ÷ its prior-100 mean.
+- Distance entry → level in ATR; side.
+- Trend: close vs EMA 240 / 600 on 5m (≈ 1 h EMA20 / 50); RSI(168) on 5m (≈ 1 h RSI14).
+- UTC hour and weekday.
+
+**Trade:** entry at the close of F+1 (every confirmation is known by then). Stop 0.5·ATR beyond the level; target 1 R; same costs, horizon and roll rule as Part 2. **WIN ⇔ net $ > 0.**
+
+**Model and walk-forward:**
+- The same GBDT (`scripts/inv90/gbdt.mjs`, 150 trees, depth 4, min leaf 30 for the smaller sample).
+- Monthly walk-forward: the model for month m is trained on events before m − 1 day. The first 9 months are training only.
+
+**Take rule:** score ≥ the 70th percentile of the model's own in-sample training scores.
+
+**Reported:**
+- WR / $ / trades per day for: ALL out-of-sample events, the TAKEN events, and the top 50 / 25 / 10 % of OOS scores (descriptive).
+- **PASS** ⇔ taken OOS n ≥ 100, mean $ bootstrap bound (α 0.05) > 0, and taken WR > ALL-events WR.

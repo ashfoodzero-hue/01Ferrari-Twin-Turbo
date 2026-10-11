@@ -141,6 +141,21 @@ for (const s of full) {
 }
 console.log(`first touches: ${events.length} (` + FAMS.map((f) => `${f} ${events.filter((e) => e.family === f).length}`).join(", ") + ")")
 const SPLIT = F[101].t + 0.6 * (F.at(-1).t - F[101].t)
+// --dump (spec Part 5, "everything combined"): every event with its causal features at the close of F+1 and the 1 R outcome of an entry
+// there → data/orderflow/events_<tf>_<levels>.json, merged by scripts/study_orderflow_combined.mjs. Nothing above changes.
+if (process.argv.includes('--dump')) {
+  const ema = (n) => { const o = new Float64Array(F.length), k = 2 / (n + 1); let e = F[0].c; for (let i = 0; i < F.length; i++) { e = F[i].c * k + e * (1 - k); o[i] = e } return o }
+  const E240 = ema(240), E600 = ema(600), RS = new Float64Array(F.length).fill(NaN); { const n = 168; let ag = 0, al = 0
+    for (let i = 1; i < F.length; i++) { const d = F[i].c - F[i - 1].c; if (i <= n) { ag += Math.max(0, d) / n; al += Math.max(0, -d) / n; if (i === n) RS[i] = al ? 100 - 100 / (1 + ag / al) : 100; continue }
+      ag = (ag * (n - 1) + Math.max(0, d)) / n; al = (al * (n - 1) + Math.max(0, -d)) / n; RS[i] = al ? 100 - 100 / (1 + ag / al) : 100 } }
+  const rows = events.map((e) => { const i = e.i, j = i + 1, a = atr[i], f0 = F[i], f1 = F[j]; let v20 = 0, a100 = 0; for (let q = i - 20; q < i; q++) v20 += F[q].v; for (let q = i - 100; q < i; q++) a100 += atr[q]
+    return { t: f0.t, i, family: e.family, short: e.short, level: e.level, c: e.c.atF1, cF: e.c.atF.count,
+      x: { dF: f0.v ? deltaOf(f0) / f0.v : 0, dF1: f1.v ? deltaOf(f1) / f1.v : 0, volRel: v20 ? f0.v / (v20 / 20) : 0, atrRel: a100 ? a / (a100 / 100) : 0, distAtr: a ? Math.abs(f1.c - e.level) / a : 0,
+        tr240: a ? (f1.c - E240[j]) / a : 0, tr600: a ? (f1.c - E600[j]) / a : 0, rsi: RS[j], hour: new Date(f1.t).getUTCHours(), wday: new Date(f1.t).getUTCDay() },
+      net1R: trade(i, j, e.level, e.short, 1) } })
+  const name = `events_${TFARG || '5m'}_${STRLV ? 'strong' : NEWLV ? 'new' : 'base'}${INFERRED ? '_inferred' : ''}.json`
+  fs.writeFileSync(path.join(DIR, name), JSON.stringify({ at: new Date().toISOString(), tf: TFARG || '5m', families: FAMS, rows })); console.log('dumped', rows.length, '→', name)
+}
 const signals = { C1: (c) => c.atF1.C1, C2: (c) => c.atF1.C2, C3: (c) => c.atF1.C3, C4: (c) => c.atF1.C4, C5: (c) => c.atF1.C5, 'COUNT>=1': (c) => c.atF1.count >= 1, 'COUNT>=2': (c) => c.atF1.count >= 2, 'COUNT>=3': (c) => c.atF1.count >= 3 }
 const entryIdx = (e, name) => { const k = name.startsWith('COUNT>=') ? +name.slice(7) : null
   if (k != null) return e.c.atF.count >= k ? e.i : e.i + 1

@@ -405,3 +405,15 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Step A** (`study_strong_levels.mjs`, 13 y spot, 0.25 ATR1d each way): ≥2 touches 48.7 % vs random 47.9 % · **≥3 touches 48.2 % vs 47.8 %** · ≥4 touches 48.7 % vs 48.3 %. All lose (−$0.88 … −$1.18/t, n 1,361-2,426 OOS) → 0/3 hold. About 4.3 strong levels per day.
   - **Step B** (`study_orderflow_footprint.mjs --tf=5m --levels=strong`, 2 y CME, 1 R): 0/32 pass. By count at ≥3-touch levels: **0 confirmations 56 % (n 41)** · 1 → 33 % · 2 → 37 % · 3+ → 48 %. All negative $; C3 trapped 50 % (n 16), C4 aggressive 48 %, C5 delta flip 44 %. Same as every earlier level family.
   - The original 5m run was re-verified byte-identical. Smoke `smoke_strong_levels` 4/4 (in smoke_all).
+
+- **(aj) 2026-10-11 — EVERYTHING COMBINED** (levels of every family + 5 confirmations + delta/volume + trend/RSI context; one GBDT, monthly walk-forward; spec Part 5; `study_orderflow_combined.mjs` → `orderflow_combined_study.json`) → **FAIL**.
+  - 1,595 merged 5m touch events, 978 out of sample. At 1 R:
+
+| Selection | WR | $ / trade | Trades |
+|---|---|---|---|
+| All | 45.2 % | −$0.95 | 978 |
+| **Taken (top 30 %)** | **45.8 %** | **−$2.06** | 273 (≈ 0.8 / weekday) |
+| Top 10 % | 46.4 % | −$1.94 | — |
+
+  - Combining adds nothing. The model leans on distance / volume / delta features, which do not rank outcomes.
+  - The `--dump` flag was added to `study_orderflow_footprint.mjs`; earlier outputs are unchanged.

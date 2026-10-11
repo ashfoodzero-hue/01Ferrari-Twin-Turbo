@@ -16,4 +16,7 @@ for (const f of ['orderflow_footprint_study.json', 'orderflow_footprint_study_in
     const S = J('data', 'master', f); assert.equal(Object.keys(S.cells).length, 32)
     for (const r of Object.values(S.cells)) assert.equal(r.verdict, r.oos.n >= 100 && r.oos.net_lb > 0 && r.train.net > 0 && r.oos.net > r.control_no_confirmation.oos.net ? 'PASS' : r.oos.n < 100 ? 'UNDERPOWERED' : 'FAIL')
   })
+await ok('orderflow_combined_study.json (everything combined, spec Part 5): verdict follows its rule; taken ⊂ OOS', () => {
+  const S = J('data', 'master', 'orderflow_combined_study.json'), r = S.results; assert(r.taken.n <= r.all_oos.n)
+  assert.equal(S.verdict, r.taken.n >= 100 && r.taken.net_lb > 0 && r.taken.wr > r.all_oos.wr ? 'PASS' : r.taken.n < 100 ? 'UNDERPOWERED' : 'FAIL') })
 console.log(process.exitCode ? '✗ ORDER-FLOW SMOKE FAILED' : `✅ ORDER-FLOW FOOTPRINT SMOKE: ${n} passed, 0 failed`)

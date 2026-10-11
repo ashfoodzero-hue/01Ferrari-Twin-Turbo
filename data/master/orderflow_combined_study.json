@@ -1,0 +1,121 @@
+{
+ "at": "2026-10-11T18:44:00.911Z",
+ "spec": "docs/ORDERFLOW_FOOTPRINT_SPEC.md Part 5",
+ "events": 1595,
+ "oos_from": "2025-07-01",
+ "features": [
+  "is_L-VP",
+  "is_L-HL",
+  "is_L-SW1H",
+  "is_L-CONF",
+  "is_L-STR2",
+  "is_L-STR3",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "count",
+  "countF",
+  "dF",
+  "dF1",
+  "volRel",
+  "atrRel",
+  "distAtr",
+  "tr240",
+  "tr600",
+  "rsi",
+  "hour",
+  "wday",
+  "short"
+ ],
+ "results": {
+  "all_oos": {
+   "n": 978,
+   "wr": 0.4519,
+   "net": -0.953,
+   "net_lb": -1.544,
+   "per_trading_day_with_events": 3.21
+  },
+  "taken": {
+   "n": 273,
+   "wr": 0.4579,
+   "net": -2.056,
+   "net_lb": -3.469,
+   "per_trading_day_with_events": 1.56,
+   "per_weekday": 0.82
+  },
+  "top50": {
+   "n": 489,
+   "wr": 0.4458,
+   "net": -1.66,
+   "net_lb": -2.616,
+   "per_trading_day_with_events": 2.06
+  },
+  "top25": {
+   "n": 244,
+   "wr": 0.4549,
+   "net": -2.559,
+   "net_lb": -4.062,
+   "per_trading_day_with_events": 1.48
+  },
+  "top10": {
+   "n": 97,
+   "wr": 0.4639,
+   "net": -1.944,
+   "net_lb": -4.032,
+   "per_trading_day_with_events": 1.14
+  }
+ },
+ "feature_usage": [
+  [
+   "distAtr",
+   1853
+  ],
+  [
+   "volRel",
+   1538
+  ],
+  [
+   "dF1",
+   1529
+  ],
+  [
+   "dF",
+   1413
+  ],
+  [
+   "atrRel",
+   1400
+  ],
+  [
+   "tr600",
+   1361
+  ],
+  [
+   "rsi",
+   1181
+  ],
+  [
+   "tr240",
+   1153
+  ],
+  [
+   "hour",
+   793
+  ],
+  [
+   "wday",
+   440
+  ],
+  [
+   "count",
+   342
+  ],
+  [
+   "countF",
+   203
+  ]
+ ],
+ "verdict": "FAIL"
+}
