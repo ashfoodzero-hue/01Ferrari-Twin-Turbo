@@ -13,7 +13,7 @@ ok('Part 4 outcome audit: 0 mismatches', () => { const a = J('audit_outcomes2.js
 for (const f of ['part1_results.json', 'part1_pooled_results.json', 'part1_pooled_x_results.json'])
   ok(`${f}: verdicts follow G1-G5`, () => { for (const c of Object.values(J(f).candidates)) { const g = c.G, core = g.G2_wr && g.G3_money && g.G4_years && g.G5_spread
     assert.equal(c.verdict, core ? (g.G1_freq ? 'PASS' : 'PASS_AT_LOWER_FREQUENCY') : 'FAIL'); assert.equal(g.G2_wr, c.wr >= 0.9 && c.wr_lb >= 0.88) } })
-for (const f of ['part4_results.json', 'part4_pooled_results.json', 'part4_pooled_x_results.json', 'part4_pooled_x_wr0.9_results.json'])
+for (const f of ['part4_results.json', 'part4_pooled_results.json', 'part4_pooled_x_results.json', 'part4_pooled_x_wr0.9_results.json', 'part4_pooled_xs_results.json'])
   ok(`${f}: verdicts follow G1-G5 (+ swap label)`, () => { for (const c of Object.values(J(f).candidates)) { const g = c.G, core = g.G2_wr && g.G3_money && g.G4_years && g.G5_spread
     if (!core) assert.equal(c.verdict, 'FAIL'); assert.equal(g.G2_wr, c.wr >= 0.9 && c.wr_lb_block >= 0.88) } })
 ok('part2 + part3 + part5c verdicts follow the gate', () => { for (const f of ['part2_results.json', 'part3_results.json', 'part5c_results.json']) for (const c of Object.values(J(f).results)) { const g = c.G
@@ -21,7 +21,10 @@ ok('part2 + part3 + part5c verdicts follow the gate', () => { for (const f of ['
 ok('5c two-sided trade counts equal the single-side books (the null/undefined bug stays fixed)', () => { const r = J('part5c_results.json').results; assert.equal(r.B1.n, 90); assert.equal(r.D1.n, 980) })
 ok('forward test: live-built features EQUAL the research features on the overlap (0 mismatches); ledger is append-only signal/resolve/scan', () => {
   const p = J('forward/parity.json'); assert(p.cells > 10000); assert.equal(Object.keys(p.mismatched_features).length, 0)
-  const L = fs.readFileSync(path.join(D, 'forward', 'ledger.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)), ids = new Set()
+  const L = fs.readFileSync(path.join(D, 'forward', 'ledger.jsonl'), 'utf8').split('
+').filter(Boolean).map((l) => JSON.parse(l)), ids = new Set()
   for (const e of L) { assert(['signal', 'resolve', 'scan'].includes(e.type)); if (e.type === 'signal') { assert(!ids.has(e.id), 'duplicate signal'); ids.add(e.id); assert(e.t >= Date.parse('2026-10-09T06:00:00Z')); assert(e.score >= e.thr); assert(e.stop < e.entry_ask && e.target > e.entry_ask) } }
   for (const e of L.filter((x) => x.type === 'resolve')) assert(ids.has(e.id)) })
+ok('part7_results.json: verdicts follow G1-G5 + swap label; the 92 % & 1/day flag follows its numbers', () => { for (const c of Object.values(J('part7_results.json').books)) { const g = c.G, core = g.G2_wr && g.G3_money && g.G4_years && g.G5_spread
+  assert.equal(c.verdict, !core ? 'FAIL' : !(c.net_swap_0_30 > 0) ? 'PASS (swap-dependent)' : g.G1_freq ? 'PASS' : 'PASS_AT_LOWER_FREQUENCY'); assert.equal(c.ashraf_target_92_and_1_per_day, c.wr >= 0.92 && c.per_day >= 1) } })
 console.log(process.exitCode ? '✗ INV90 SMOKE FAILED' : `✅ INV90 SMOKE: ${n} passed, 0 failed`)

@@ -176,21 +176,27 @@ In 2026: model 92.9 % / +$7.62 vs always-buy 81.5 % / −$12.71. A real lift, no
 - Every number above is reproducible from `scripts/inv90/*` and `data/inv90/*.json`.
 
 ---
-## FORWARD TEST of BUY_D1-x (started 2026-10-11): paper, record-only
-**What it is**
-- `scripts/inv90/forward_buyd1.mjs`.
-- **Frozen once:** a GBDT trained on all research rows. Threshold 0.9394 = the pooled rule over the 2016-2026 OOS years (top 5 % → 1,736 t, 92.28 % WR, +$2.12/t). It is never retrained.
-- **Features:** rebuilt with the SAME builders (`build_dataset --forward-from`, `build_features2 --forward`).
-- **Parity check** (`check_forward_parity.mjs` → `forward/parity.json`): 85,156 values over 1,396 overlapping bars, **0 mismatches**.
-- **Ledger** `data/inv90/forward/ledger.jsonl`: append-only, causal policy (a position counts as closed only once its exit is in the past). Idempotent on re-run.
+## Part 7: pre-registered 2026-10-11 BEFORE its first run (Ashraf: "at least 1 trade a day with 92 % WR, solid entry")
+- **7a. Stronger model:** the same features + cross-market (--x), GBDT with 400 trees, depth 5, lr 0.03, min leaf 200, row subsample 0.5. Walk-forward identical. Candidates BUY_D1 and SELL_D1. Report the pooled OOS AUC vs the Part 5b model.
+- **7b. Frequency-anchored threshold** (guarantees the asked frequency, using past data only): for year Y, threshold = the HIGHEST score whose policy trades over the pooled earlier OOS years (2016 … Y−1) average **≥ 1.0 trade per trading day**. Then measure the WR that this frequency actually gets in Y.
+  - Applied to: Part 5b BUY_D1-x scores, 7a BUY_D1, 7a SELL_D1, and a 7a two-sided D1 book.
+  - Policy, weekly block bounds and G1-G5 as Part 4.
+  - Ashraf's own target is reported beside the gate: **WR ≥ 92 % AND ≥ 1/day**.
+- **K** = 61 + 2 (7a under the pooled 92 % rule) + 4 (7b) = **67** → α = 0.05/67.
 
-**Running**
-- Scheduled in `run_twin.mjs` hourly at :20, but **active only after the next app restart**: the running process was NOT restarted ("keep the app running as is").
-- Until then it can be run by hand; it catches up.
+**Part 7 results.**
+- **7a stronger GBDT:** pooled OOS AUC BUY_D1 0.5218 vs 0.5215 (Part 5b); SELL_D1 0.5050 vs 0.5079. **Model capacity is not the bottleneck.**
+  - Pooled 92 % rule (`part4_select --pooled --sfx=_xs` → `part4_pooled_xs_results.json`): BUY_D1 n 245, 93.9 %, +$5.54/t, 0.08/day, trades only 2024-26 → FAIL. SELL_D1 no threshold.
+- **7b frequency-anchored ≥ 1/day** (`part7_freq.mjs` → `part7_results.json`): 0 / 4 pass; Ashraf's 92 % & ≥ 1/day target met by **none**.
 
-**Verdict rule (pre-registered)**
-- No verdict before 100 resolved trades (about 10 months at 0.33/day).
-- Then WR ≥ 90 % with Wilson LB ≥ 88 % and mean $ > 0.
+| Book | Trades / day | WR | $ / trade | Positive years |
+|---|---|---|---|---|
+| **BUY_D1-xs (best)** | 1.15 | 90.8 % | +$0.46 (swap 0.30: +$0.18) | 6/10 (2018, 2020, 2022, 2026 lose) |
+| BUY_D1-x | 1.28 | 90.2 % | +$0.26 | — |
+| SELL_D1-xs | — | 82.7 % | — | — |
+| Two-sided | — | 89.3 % | −$0.55 | — |
 
-**Risk shape**
-- Target ≈ $15, stop ≈ $148 per oz at the current ATR. One stop wipes out about 10 targets.
+**Measured answer to "≥ 1 trade/day at 92 %":**
+- On 12 years of XAU spot with these signals, ≥ 1/day caps at ≈ 90-91 % WR with thin, year-unstable money.
+- 92 %+ appears only at ≤ 0.33/day.
+- K = 67 candidates, 0 pass.

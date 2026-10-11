@@ -1,31 +1,31 @@
 {
- "at": "2026-10-11T10:30:11.215Z",
+ "at": "2026-10-11T14:30:15.483Z",
  "scope": "USD events only (Forex Factory has no XAU rows; USD releases are what move gold)",
  "sources": {
   "forexfactory_this_week": {
    "ok": true,
-   "at": "2026-10-11T10:30:12.057Z",
+   "at": "2026-10-11T14:30:16.388Z",
    "n": 34
   },
   "forexfactory_next_week": {
    "ok": true,
-   "at": "2026-10-11T10:30:12.740Z",
+   "at": "2026-10-11T14:30:17.387Z",
    "n": 16
   },
   "fed_fomc": {
    "ok": true,
-   "at": "2026-10-11T10:30:15.063Z",
+   "at": "2026-10-11T14:30:19.898Z",
    "n": 119
   },
   "bls_file": {
    "ok": true,
    "fetched": "2026-10-09T14:20:00Z",
-   "age_days": 1.8,
+   "age_days": 2,
    "n": 677
   },
   "polygon_holidays": {
    "ok": true,
-   "at": "2026-10-11T10:30:15.703Z",
+   "at": "2026-10-11T14:30:20.479Z",
    "n": 12
   },
   "retail_file": {
@@ -34,7 +34,7 @@
   },
   "fed_speeches": {
    "ok": true,
-   "at": "2026-10-11T10:30:16.139Z",
+   "at": "2026-10-11T14:30:21.046Z",
    "n": 1048
   }
  },
@@ -870,6 +870,16 @@
    "type": "FOMC",
    "name": "FOMC rate decision + projections & press conference",
    "t": 1796842800000,
+   "impact": "high",
+   "actual": null,
+   "forecast": null,
+   "previous": null
+  },
+  {
+   "src": "BLS",
+   "type": "CPI",
+   "name": "Consumer Price Index",
+   "t": 1796909400000,
    "impact": "high",
    "actual": null,
    "forecast": null,

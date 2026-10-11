@@ -1,12 +1,12 @@
 {
- "at": "2026-10-11T10:48:03.068Z",
+ "at": "2026-10-11T14:48:37.146Z",
  "pid": 20324,
- "cycle": 54996,
+ "cycle": 69124,
  "last_tick_bar": null,
  "mode": "run_twin",
  "stream": {
-  "live": false,
-  "why": "XAUUSD settled only through 2026-10-11T10:46:00.000Z (need 2026-10-11T10:47:00.000Z)",
+  "live": true,
+  "why": null,
   "pid": 6224,
   "restarts": 0
  },

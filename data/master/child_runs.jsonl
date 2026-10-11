@@ -465,3 +465,11 @@
 {"at":"2026-10-11T09:30:14.775Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
 {"at":"2026-10-11T10:00:15.575Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
 {"at":"2026-10-11T10:30:16.192Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T11:00:16.857Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T11:30:17.236Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T12:00:17.486Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T12:30:18.503Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources FAILED: fed_speeches · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T13:00:18.377Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 62 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T13:30:19.800Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 63 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T14:00:19.498Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 63 upcoming USD events · sources FAILED: fed_speeches · cross-check 2/2 agree\n","tail":""}
+{"at":"2026-10-11T14:30:21.112Z","script":"fetch_calendar.mjs","exit":0,"out":"  📅 calendar: 63 upcoming USD events · sources all ok · cross-check 2/2 agree\n","tail":""}

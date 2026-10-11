@@ -7,7 +7,8 @@ import path from 'node:path'
 import { TURBO } from '../../src/core/paths.js'
 import { fitBins, binAll, train, predict, usage } from './gbdt.mjs'
 
-const cand = process.argv[2], XF = process.argv.includes('--x'), DIR = path.join(TURBO.root, 'data', 'inv90')
+const cand = process.argv[2], XF = process.argv.includes('--x'), STRONG = process.argv.includes('--strong'),   // --strong: Part 7a GBDT settings
+  DIR = path.join(TURBO.root, 'data', 'inv90')
 const meta = JSON.parse(fs.readFileSync(path.join(DIR, 'dataset_meta.json'), 'utf8')), W = meta.width, n = meta.rows
 const raw = fs.readFileSync(path.join(DIR, 'dataset.bin')), D = new Float32Array(raw.buffer, raw.byteOffset, n * W)
 const T = new Float64Array(fs.readFileSync(path.join(DIR, 'dataset_times.bin')).buffer.slice(0))
@@ -31,12 +32,12 @@ for (let Y = 2016; Y <= 2026; Y++) {
   const emb = P4 && /D\d$/.test(cand) ? 9 * 86400000 : 2 * 86400000   // 7-day outcomes need a 9-day embargo
   for (let r = 0; r < n; r++) { if (!valid[r]) continue; if (T[r] < y0 - emb) trRows.push(r); else if (T[r] >= y0 && T[r] < y1) teRows.push(r) }
   if (!teRows.length) continue
-  const t0 = Date.now(), edges = fitBins(X, n, F, trRows), Xb = binAll(X, n, F, edges), model = train(Xb, n, F, y, trRows, { seed: Y })
+  const t0 = Date.now(), edges = fitBins(X, n, F, trRows), Xb = binAll(X, n, F, edges), model = train(Xb, n, F, y, trRows, STRONG ? { seed: Y, trees: 400, depth: 5, lr: 0.03, minLeaf: 200, sub: 0.5 } : { seed: Y })
   for (const r of teRows) scores[r] = predict(model, Xb, n, r)
   const u = usage(model, F), top = u.map((c, k) => [FEATS[k][0], c]).sort((a, b) => b[1] - a[1]).slice(0, 10)
   log.years[Y] = { train: trRows.length, test: teRows.length, base_wr_train: +(trRows.reduce((s, r) => s + y[r], 0) / trRows.length).toFixed(4), top_features: top, sec: Math.round((Date.now() - t0) / 1000) }
   console.log(cand, Y, JSON.stringify(log.years[Y]))
 }
-fs.writeFileSync(path.join(DIR, `scores_${cand}${XF ? '_x' : ''}.bin`), Buffer.from(scores.buffer))
-fs.writeFileSync(path.join(DIR, `wf_${cand}${XF ? '_x' : ''}.json`), JSON.stringify({ at: new Date().toISOString(), ...log }, null, 1))
+fs.writeFileSync(path.join(DIR, `scores_${cand}${XF ? '_x' : ''}${STRONG ? 's' : ''}.bin`), Buffer.from(scores.buffer))
+fs.writeFileSync(path.join(DIR, `wf_${cand}${XF ? '_x' : ''}${STRONG ? 's' : ''}.json`), JSON.stringify({ at: new Date().toISOString(), ...log }, null, 1))
 console.log('done', cand)

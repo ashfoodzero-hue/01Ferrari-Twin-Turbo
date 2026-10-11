@@ -71,7 +71,7 @@ const tick = (barT) => new Promise((resolve) => {
   })
 })
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
-let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
+let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
   execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'matrix_tick.mjs')], { timeout: 120000, maxBuffer: 8 << 20, windowsHide: true }, (err, stdout, stderr) => {
@@ -108,12 +108,6 @@ for (;;) {
       process.stdout.write(String(stdout || ''))
       execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'study_gamma_levels.mjs')], { timeout: 5 * 60000, windowsHide: true }, (e2, so2) => { gammaRunning = false
         fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'study_gamma_levels.mjs', exit: e2 ? (e2.code ?? 'killed') : 0, out: String(so2 || '').slice(-300) }) + '\n') }) }) }
-  // FORWARD TEST of the 90 % investigation's candidate BUY_D1-x (scripts/inv90/forward_buyd1.mjs) — paper, record-only, once per hour at :20.
-  // Catch-up by design (scores every closed bar since its last scan), so a missed hour loses nothing.
-  const hourKey = now - (now % 3600000)
-  if (new Date(now).getUTCMinutes() >= 20 && lastFwd !== hourKey && !fwdRunning) { fwdRunning = true; lastFwd = hourKey
-    execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs')], { timeout: 20 * 60000, windowsHide: true }, (err, stdout, stderr) => { fwdRunning = false
-      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }

@@ -5,10 +5,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { loadDataset, DIR } from './gate.mjs'
-const POOLED = process.argv.includes('--pooled'), SFX = process.argv.includes('--x') ? '_x' : '', WRQ = +((process.argv.find((a) => a.startsWith('--wr=')) || '--wr=0.92').slice(5))   // Part 6a: --wr=0.90   // --x: Part 5b scores (cross-market features)   // Part 5a: threshold from ALL earlier OOS years (2016 … Y−1)
+const POOLED = process.argv.includes('--pooled'), SFX = (process.argv.find((a) => a.startsWith('--sfx=')) || '').slice(6) || (process.argv.includes('--x') ? '_x' : ''),   // --sfx=_xs: Part 7a scores
+  WRQ = +((process.argv.find((a) => a.startsWith('--wr=')) || '--wr=0.92').slice(5))   // Part 6a: --wr=0.90   // --x: Part 5b scores (cross-market features)   // Part 5a: threshold from ALL earlier OOS years (2016 … Y−1)
 
 const ds = loadDataset(), O = JSON.parse(fs.readFileSync(path.join(DIR, 'outcomes2_meta.json'), 'utf8')), OD = new Float32Array(fs.readFileSync(path.join(DIR, 'outcomes2.bin')).buffer.slice(0))
-const oc = (r, name) => OD[r * O.width + O.cols.indexOf(name)], ALPHA = 0.05 / (WRQ !== 0.92 ? 61 : POOLED ? 59 : 36), WEEK = 7 * 86400000, DAY = 86400000, SWAP = 0.3
+const oc = (r, name) => OD[r * O.width + O.cols.indexOf(name)], ALPHA = 0.05 / (SFX === '_xs' ? 67 : WRQ !== 0.92 ? 61 : POOLED ? 59 : 36), WEEK = 7 * 86400000, DAY = 86400000, SWAP = 0.3
 const YEARS = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026], QS = [0.0005, 0.001, 0.002, 0.003, 0.005, 0.0075, 0.01, 0.015, 0.02, 0.03, 0.05, 0.075, 0.1, 0.15, 0.2, 0.3, 0.5]
 const byYear = {}; for (let r = 0; r < ds.n; r++) (byYear[new Date(ds.T[r]).getUTCFullYear()] ||= []).push(r)
 const tradingDays = new Set(YEARS.flatMap((Y) => byYear[Y]).map((r) => Math.floor(ds.T[r] / DAY))).size

@@ -1,0 +1,110 @@
+{
+ "at": "2026-10-11T14:47:53.426Z",
+ "alpha": 0.0007462686567164179,
+ "swap_per_night_sensitivity": 0.3,
+ "candidates": {
+  "BUY_D1": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": {
+     "q": 0.03,
+     "thr": 0.9735710024833679,
+     "prev_n": 877,
+     "prev_wr": 0.925
+    },
+    "2025": {
+     "q": 0.03,
+     "thr": 0.9730890989303589,
+     "prev_n": 1017,
+     "prev_wr": 0.926
+    },
+    "2026": {
+     "q": 0.05,
+     "thr": 0.966086208820343,
+     "prev_n": 1706,
+     "prev_wr": 0.921
+    }
+   },
+   "n": 245,
+   "per_day": 0.082,
+   "wr": 0.9388,
+   "wr_lb_block": 0.8495,
+   "net": 5.535,
+   "net_lb_block": -14.047,
+   "net_swap_0_30": 5.38,
+   "net_x1_5": 5.528,
+   "positive_years": "3/10",
+   "thresholds_set": 3,
+   "by_year": {
+    "2017": "0",
+    "2018": "0",
+    "2019": "0",
+    "2020": "0",
+    "2021": "0",
+    "2022": "0",
+    "2023": "0",
+    "2024": "90 t 94.4% $3.61",
+    "2025": "35 t 97.1% $12.14",
+    "2026": "120 t 92.5% $5.05"
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": true
+   },
+   "verdict": "FAIL"
+  },
+  "SELL_D1": {
+   "picks": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": null,
+    "2025": null,
+    "2026": null
+   },
+   "n": 0,
+   "per_day": 0,
+   "wr": null,
+   "wr_lb_block": null,
+   "net": 0,
+   "net_lb_block": null,
+   "net_swap_0_30": 0,
+   "net_x1_5": 0,
+   "positive_years": "0/10",
+   "thresholds_set": 0,
+   "by_year": {
+    "2017": "0",
+    "2018": "0",
+    "2019": "0",
+    "2020": "0",
+    "2021": "0",
+    "2022": "0",
+    "2023": "0",
+    "2024": "0",
+    "2025": "0",
+    "2026": "0"
+   },
+   "G": {
+    "G1_freq": false,
+    "G2_wr": false,
+    "G3_money": false,
+    "G4_years": false,
+    "G5_spread": false
+   },
+   "verdict": "FAIL"
+  }
+ }
+}
