@@ -5,3 +5,4 @@ data/calendar/release_ticks/
 node_modules/
 *.part
 data/inv90/*.bin
+data/inv90/forward/*.bin

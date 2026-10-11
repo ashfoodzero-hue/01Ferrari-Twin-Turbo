@@ -8,7 +8,10 @@ import { loadBars } from '../../src/data/backfillReader.js'
 import { atr } from '../../src/core/indicators.js'
 import { loadDataset, DIR } from './gate.mjs'
 
-const ds = loadDataset(), L = { from: Date.UTC(2013, 6, 14), to: Date.parse('2026-10-09T06:00:00Z') }, NAMES = ['xag_r1', 'xag_r4', 'xag_r16', 'eur_r4', 'eur_r16', 'jpy_r4', 'jpy_r16', 'usd_r16', 'gsr_z', 'rel_gold_xag16']
+// --forward: the SAME features for the forward rows (data/inv90/forward/dataset_times.bin), loaded to now → data/inv90/forward/features2.bin
+const FWD = process.argv.includes('--forward'), FDIR = path.join(DIR, 'forward')
+const ds = FWD ? (() => { const T = new Float64Array(fs.readFileSync(path.join(FDIR, 'dataset_times.bin')).buffer.slice(0)); return { T, n: T.length } })() : loadDataset()
+const L = { from: Date.UTC(2013, 6, 14), to: FWD ? Date.now() : Date.parse('2026-10-09T06:00:00Z') }, NAMES = ['xag_r1', 'xag_r4', 'xag_r16', 'eur_r4', 'eur_r16', 'jpy_r4', 'jpy_r16', 'usd_r16', 'gsr_z', 'rel_gold_xag16']
 const prep = async (sym, tf, ms) => { const B = (await loadBars(sym, tf, L)).bars; return { B, a: atr(B, 14), close: Float64Array.from(B.map((b) => b.t + ms)) } }
 const idx = (X, T) => { let lo = 0, hi = X.close.length; while (lo < hi) { const m = (lo + hi) >> 1; if (X.close[m] <= T) lo = m + 1; else hi = m } return lo - 1 }
 const S = { xag: await prep('XAGUSD', '15m', 900000), eur: await prep('EURUSD', '15m', 900000), jpy: await prep('USDJPY', '15m', 900000), gold: await prep('XAUUSD', '15m', 900000),
@@ -32,5 +35,5 @@ for (let r = 0; r < ds.n; r++) {
     relHist.push(d); if (relHist.length > 500) relHist.shift() }
   if (r % 50000 === 0) console.log('row', r)
 }
-fs.writeFileSync(path.join(DIR, 'features2.bin'), Buffer.from(out.buffer)); fs.writeFileSync(path.join(DIR, 'features2_meta.json'), JSON.stringify({ at: new Date().toISOString(), names: NAMES, width: NAMES.length }, null, 1))
+fs.writeFileSync(path.join(FWD ? FDIR : DIR, 'features2.bin'), Buffer.from(out.buffer)); fs.writeFileSync(path.join(FWD ? FDIR : DIR, 'features2_meta.json'), JSON.stringify({ at: new Date().toISOString(), names: NAMES, width: NAMES.length }, null, 1))
 const cover = NAMES.map((nm, k) => [nm, +(out.filter((_, q) => q % NAMES.length === k && Number.isFinite(out[q])).length / ds.n).toFixed(3)]); console.log('coverage', JSON.stringify(cover))
