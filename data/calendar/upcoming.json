@@ -1,31 +1,31 @@
 {
- "at": "2026-10-11T14:30:15.483Z",
+ "at": "2026-10-11T18:30:18.927Z",
  "scope": "USD events only (Forex Factory has no XAU rows; USD releases are what move gold)",
  "sources": {
   "forexfactory_this_week": {
    "ok": true,
-   "at": "2026-10-11T14:30:16.388Z",
+   "at": "2026-10-11T18:30:21.756Z",
    "n": 34
   },
   "forexfactory_next_week": {
    "ok": true,
-   "at": "2026-10-11T14:30:17.387Z",
+   "at": "2026-10-11T18:30:23.637Z",
    "n": 16
   },
   "fed_fomc": {
    "ok": true,
-   "at": "2026-10-11T14:30:19.898Z",
+   "at": "2026-10-11T18:30:26.407Z",
    "n": 119
   },
   "bls_file": {
    "ok": true,
    "fetched": "2026-10-09T14:20:00Z",
-   "age_days": 2,
+   "age_days": 2.2,
    "n": 677
   },
   "polygon_holidays": {
    "ok": true,
-   "at": "2026-10-11T14:30:20.479Z",
+   "at": "2026-10-11T18:30:26.988Z",
    "n": 12
   },
   "retail_file": {
@@ -34,7 +34,7 @@
   },
   "fed_speeches": {
    "ok": true,
-   "at": "2026-10-11T14:30:21.046Z",
+   "at": "2026-10-11T18:30:27.473Z",
    "n": 1048
   }
  },

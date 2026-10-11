@@ -1,0 +1,93 @@
+{
+ "at": "2026-10-11T18:36:30.220Z",
+ "window": "2013-07-28 → 2026-10-09T06:00",
+ "split": "2021-06-29",
+ "rules": {
+  "windowDays": 10,
+  "tolAtr": 0.1,
+  "side": 2,
+  "d_atr1d": 0.25,
+  "z": 2.13,
+  "min_n": 100,
+  "spec": "docs/ORDERFLOW_FOOTPRINT_SPEC.md Part 4"
+ },
+ "cells": {
+  "S2": {
+   "train": {
+    "events": 3625,
+    "resolved": 3570,
+    "bounce": 0.484,
+    "bounce_lb": 0.4662,
+    "control": 0.4946,
+    "trades": 3555,
+    "net": -0.6759,
+    "net_lb": -0.8185,
+    "net_R": -0.1831
+   },
+   "oos": {
+    "events": 2445,
+    "resolved": 2401,
+    "bounce": 0.4865,
+    "bounce_lb": 0.4648,
+    "control": 0.4793,
+    "trades": 2426,
+    "net": -0.8781,
+    "net_lb": -1.4084,
+    "net_R": -0.1038
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "S3": {
+   "train": {
+    "events": 2704,
+    "resolved": 2663,
+    "bounce": 0.4765,
+    "bounce_lb": 0.456,
+    "control": 0.4876,
+    "trades": 2651,
+    "net": -0.7548,
+    "net_lb": -0.9257,
+    "net_R": -0.2018
+   },
+   "oos": {
+    "events": 1768,
+    "resolved": 1731,
+    "bounce": 0.4824,
+    "bounce_lb": 0.4569,
+    "control": 0.4778,
+    "trades": 1754,
+    "net": -1.1778,
+    "net_lb": -1.7848,
+    "net_R": -0.1124
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "S4": {
+   "train": {
+    "events": 2095,
+    "resolved": 2065,
+    "bounce": 0.4712,
+    "bounce_lb": 0.4479,
+    "control": 0.4857,
+    "trades": 2052,
+    "net": -0.8175,
+    "net_lb": -1.0126,
+    "net_R": -0.2157
+   },
+   "oos": {
+    "events": 1375,
+    "resolved": 1349,
+    "bounce": 0.487,
+    "bounce_lb": 0.4581,
+    "control": 0.4829,
+    "trades": 1361,
+    "net": -1.0555,
+    "net_lb": -1.691,
+    "net_R": -0.1054
+   },
+   "verdict": "DOES_NOT_HOLD"
+  }
+ },
+ "strong_levels_per_day": 4.3,
+ "verdict": "STRONG_LEVELS_DO_NOT_HOLD"
+}

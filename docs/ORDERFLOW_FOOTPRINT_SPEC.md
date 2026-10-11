@@ -86,3 +86,27 @@ The question is whether confirmations add anything **beyond the level itself**.
 ## Part 3 — What is not in this test
 - Market depth / resting orders behind the best bid/ask: not in this dataset, and not available on Massive at any tier ("coming soon").
 - His discretionary judgement: he sometimes calls one cell "either big limit or trapped traders". The mechanical rules count each by its own definition.
+
+---
+
+## Part 4 — STRONG S/R levels, pre-registered 2026-10-11 before any result (Ashraf: "test first the S/R based on the strong levels and see the reaction there on 5m candles … which is meeting from the 5 requirement")
+
+**Strong level.** A level that price has already turned at several times (multi-touch). Built from closed 1 h bars:
+- **Pivot:** a 1 h high (low) strictly above (below) the 2 bars before and after it. It is known at the close of the 2nd bar after.
+- **Window:** for day D (UTC), the pivots known before D 00:00 whose bar lies in the last 10 days.
+- **Clusters:** pivots (highs and lows together, since an old resistance can become support) are grouped by price. Consecutive sorted prices within **0.1 × ATR14(1d)** join one cluster.
+- **Level price** = the cluster's median price. **Touches** = the number of pivots in it.
+- **Cells:** S2 = ≥ 2 touches, **S3 = ≥ 3 touches (the "strong" level)**, S4 = ≥ 4 touches.
+
+**Step A — the reaction on 13 y of XAU spot** (`scripts/study_strong_levels.mjs`). Exactly the day-levels method (`scripts/lib/day_level_events.mjs`):
+- Event = the first touch during day D, approached from day D's opening side.
+- Target and stop = 0.25 × ATR14(1d) each way.
+- Random-level control ±2 weeks; limit-order money path; 24 h horizon; TRAIN 60 % / OOS 40 %.
+- 3 cells → one-sided α 0.05/3 (z 2.13).
+- **HOLDS** ⇔ OOS ≥ 100, bounce Wilson LB > control, TRAIN bounce > control, OOS money LB > 0.
+
+**Step B — the 5 confirmations at the same strong levels on 5m, 2 y real CME** (`study_orderflow_footprint.mjs --levels=strong`).
+- Families L-STR2 (≥ 2 touches) and L-STR3 (≥ 3).
+- Built from GC 1 h bars; ATR14(1d) from the GC daily true ranges; only levels in day D's contract.
+- Every other rule as Part 2: 5 confirmations, count ≥ 1/2/3, 1 R / 2 R, controls, gate.
+- α = 0.05/384 (all footprint batches × timeframes × cells). Reported with the per-confirmation win rate table.

@@ -38,13 +38,14 @@ import readline from 'node:readline'
 import { TURBO } from '../src/core/paths.js'
 import { makeSpreadAt } from '../src/master/spreadModel.js'
 import { seeded } from '../src/master/bounceTest.js'
+import { hourPivots, strongLevelsForDay } from '../src/master/strongLevels.js'
 
 const INFERRED = process.argv.includes('--inferred'), DIR = path.join(TURBO.root, 'data', 'orderflow'), TICK = 0.1, DAY = 86400000
 const TFARG = (process.argv.find((a) => a.startsWith('--tf=')) || '').slice(5) || null, TF_MS = { '5m': 300000, '15m': 900000, '30m': 1800000, '1h': 3600000, '4h': 14400000 }
 if (TFARG && !TF_MS[TFARG]) { console.error('unknown --tf ' + TFARG); process.exit(1) }
 const M5 = TF_MS[TFARG || '5m']   // the footprint bar length (named M5 for the original 5m study)
-const NEWLV = process.argv.includes('--levels=new'), FAMS = NEWLV ? ['L-SW1H', 'L-CONF'] : ['L-VP', 'L-HL']
-const HEAVY_X = 3, HEAVY_MIN = 20, IMB_X = 3, IMB_MIN = 10, ZONE = 0.5, STOP = 0.5, HZ = 96 * M5, Q = NEWLV ? 0.05 / 320 : TFARG ? 0.05 / 160 : 0.05 / 32, MIN_N = 100
+const NEWLV = process.argv.includes('--levels=new'), STRLV = process.argv.includes('--levels=strong'), FAMS = STRLV ? ['L-STR2', 'L-STR3'] : NEWLV ? ['L-SW1H', 'L-CONF'] : ['L-VP', 'L-HL']   // --levels=strong: spec Part 4
+const HEAVY_X = 3, HEAVY_MIN = 20, IMB_X = 3, IMB_MIN = 10, ZONE = 0.5, STOP = 0.5, HZ = 96 * M5, Q = STRLV ? 0.05 / 384 : NEWLV ? 0.05 / 320 : TFARG ? 0.05 / 160 : 0.05 / 32, MIN_N = 100
 const spreadAt = makeSpreadAt(), rnd = seeded(20261011)
 const readJsonl = async (f) => { const out = []; for await (const l of readline.createInterface({ input: fs.createReadStream(f), crlfDelay: Infinity })) if (l) out.push(JSON.parse(l)); return out }
 const F5 = await readJsonl(path.join(DIR, 'gc_5m_footprints.jsonl')), M = await readJsonl(path.join(DIR, 'gc_1m.jsonl'))
@@ -69,7 +70,7 @@ const heavy = new Float64Array(F.length); { const CAP = 5000, hist = new Int32Ar
   for (let i = 0; i < F.length; i++) { if (i >= 100) { let half = total / 2, acc = 0, med = 0; for (let v = 1; v <= CAP; v++) { acc += hist[v]; if (acc >= half) { med = v; break } } heavy[i] = Math.max(HEAVY_MIN, HEAVY_X * med); add(i - 100, -1) } else heavy[i] = Infinity; add(i, 1) } }
 
 // daily stats + previous-day levels (UTC days; ≥ 600 one-minute bars)
-const days = new Map(); for (const b of M) { const d = Math.floor(b.t / DAY) * DAY; const s = days.get(d) ?? { d, n: 0, h: -Infinity, l: Infinity }; s.n++; s.h = Math.max(s.h, b.h); s.l = Math.min(s.l, b.l); days.set(d, s) }
+const days = new Map(); for (const b of M) { const d = Math.floor(b.t / DAY) * DAY; const s = days.get(d) ?? { d, n: 0, h: -Infinity, l: Infinity }; s.n++; s.h = Math.max(s.h, b.h); s.l = Math.min(s.l, b.l); s.c = b.c; days.set(d, s) }
 const vpOf = new Map(); for (const b of F) { const d = Math.floor(b.t / DAY) * DAY; let m = vpOf.get(d); if (!m) vpOf.set(d, (m = new Map())); for (const [p, x, y] of cellsOf(b)) m.set(p, (m.get(p) || 0) + x + y) }
 const profile = (m) => { const keys = [...m.keys()].sort((a, b) => a - b), tot = keys.reduce((s, k) => s + m.get(k), 0); if (!tot) return null
   let poc = keys[0]; for (const k of keys) if (m.get(k) > m.get(poc)) poc = k
@@ -78,12 +79,17 @@ const profile = (m) => { const keys = [...m.keys()].sort((a, b) => a - b), tot =
 const dayList = [...days.values()].sort((a, b) => a.d - b.d), full = dayList.filter((s) => s.n >= 600)
 const prevFull = (d) => { let r = null; for (const s of full) { if (s.d >= d) break; r = s } return r }
 // 1 h bars from the GC 1m bars (one contract per bar; a mixed hour is dropped) and their swing pivots (L-SW1H, --levels=new)
-const H1 = []; if (NEWLV) { let cur = null, bad = false; const close = () => { if (cur && !bad) H1.push(cur); cur = null; bad = false }
+const H1 = []; if (NEWLV || STRLV) { let cur = null, bad = false; const close = () => { if (cur && !bad) H1.push(cur); cur = null; bad = false }
   for (const b of M) { const k = Math.floor(b.t / 3600000) * 3600000; if (cur && cur.t !== k) close()
     if (!cur) cur = { t: k, iid: b.iid, h: b.h, l: b.l }; if (b.iid !== cur.iid) bad = true; cur.h = Math.max(cur.h, b.h); cur.l = Math.min(cur.l, b.l) } close() }
 const PIV = []; for (let j = 2; j < H1.length - 2; j++) { const w = H1.slice(j - 2, j + 3); if (w.some((x) => x.iid !== H1[j].iid)) continue
   if (w.every((x, q) => q === 2 || x.h < H1[j].h)) PIV.push({ j, hi: true, p: H1[j].h, iid: H1[j].iid, known: H1[j + 2].t + 3600000 })
   if (w.every((x, q) => q === 2 || x.l > H1[j].l)) PIV.push({ j, hi: false, p: H1[j].l, iid: H1[j].iid, known: H1[j + 2].t + 3600000 }) }
+// --levels=strong (spec Part 4): multi-touch 1h pivot clusters (src/master/strongLevels.js) on GC, same contract as day D; ATR14(1d) from the
+// true ranges of the full GC days before D
+const SPIV = STRLV ? hourPivots(H1, (j0, j1) => H1.slice(j0, j1 + 1).every((x) => x.iid === H1[j0].iid)).map((p, k) => ({ ...p, iid: H1.find((x) => x.t === p.t).iid })) : []
+function gcAtr1d(d) { const prev = full.filter((x) => x.d < d).slice(-15); if (prev.length < 15) return null; let s = 0; for (let k = 1; k < 15; k++) s += Math.max(prev[k].h - prev[k].l, Math.abs(prev[k].h - prev[k - 1].c), Math.abs(prev[k].l - prev[k - 1].c)); return s / 14 }
+function strongFams(d, iid) { const L = strongLevelsForDay(SPIV, d, gcAtr1d(d), (p) => p.iid === iid); return { 'L-STR2': L.filter((x) => x.touches >= 2).map((x) => x.price), 'L-STR3': L.filter((x) => x.touches >= 3).map((x) => x.price) } }
 function swingLevels(d, iid) {
   const unbroken = (v) => { for (let q = v.j + 1; q < H1.length && H1[q].t < d; q++) if (v.hi ? H1[q].h >= v.p : H1[q].l <= v.p) return false; return true }
   const live = PIV.filter((v) => v.iid === iid && v.known <= d && H1[v.j].t >= d - 5 * DAY && unbroken(v))
@@ -125,7 +131,7 @@ for (const s of full) {
   const vp = vpOf.get(P.d) ? profile(vpOf.get(P.d)) : null
   let i0 = lb(FT, d); const iEnd = lb(FT, d + DAY); if (i0 >= F.length || i0 < 1) continue
   const vpl = vp ? [vp.poc, vp.vah, vp.val] : [], a0 = atr[i0 - 1]
-  const fam = NEWLV ? { 'L-SW1H': swingLevels(d, F[i0].iid), 'L-CONF': [P.h, P.l].filter((x) => a0 > 0 && vpl.some((v) => Math.abs(v - x) <= ZONE * a0)) }
+  const fam = STRLV ? strongFams(d, F[i0].iid) : NEWLV ? { 'L-SW1H': swingLevels(d, F[i0].iid), 'L-CONF': [P.h, P.l].filter((x) => a0 > 0 && vpl.some((v) => Math.abs(v - x) <= ZONE * a0)) }
     : { 'L-VP': vpl, 'L-HL': [P.h, P.l] }
   for (const [family, levels] of Object.entries(fam)) for (const level of levels) {
     for (let i = Math.max(i0, 101); i < iEnd - 1; i++) { const b = F[i]; if (!(b.l <= level && b.h >= level)) continue
@@ -168,5 +174,5 @@ console.log('DIAGNOSTIC by confirmation count (1 R, both halves): ' + JSON.strin
 const pass = Object.entries(cells).filter(([, r]) => r.verdict === 'PASS').map(([k]) => k)
 const out = { timeframe: TFARG || '5m', diagnostic_by_count: diag, at: new Date().toISOString(), side_source: INFERRED ? 'inferred' : 'exchange', split: new Date(SPLIT).toISOString().slice(0, 10), touches: events.length, rules: 'docs/ORDERFLOW_FOOTPRINT_SPEC.md Part 2', cells, passing: pass,
   verdict: pass.length ? 'SOME_CONFIRMATIONS_PASS' : 'NO_CONFIRMATION_PASSES' }
-fs.writeFileSync(path.join(TURBO.master, 'orderflow_footprint_study' + (TFARG ? '_' + TFARG : '') + (NEWLV ? '_newlevels' : '') + (INFERRED ? '_inferred' : '') + '.json'), JSON.stringify(out, null, 1))
+fs.writeFileSync(path.join(TURBO.master, 'orderflow_footprint_study' + (TFARG ? '_' + TFARG : '') + (STRLV ? '_strong' : NEWLV ? '_newlevels' : '') + (INFERRED ? '_inferred' : '') + '.json'), JSON.stringify(out, null, 1))
 console.log(`\n=> ORDER-FLOW FOOTPRINT ${out.timeframe} (${out.side_source} sides): ${out.verdict}${pass.length ? ' — ' + pass.join(', ') : ''}`)
