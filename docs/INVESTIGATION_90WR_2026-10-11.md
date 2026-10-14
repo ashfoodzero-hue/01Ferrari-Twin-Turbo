@@ -200,3 +200,24 @@ In 2026: model 92.9 % / +$7.62 vs always-buy 81.5 % / −$12.71. A real lift, no
 - On 12 years of XAU spot with these signals, ≥ 1/day caps at ≈ 90-91 % WR with thin, year-unstable money.
 - 92 %+ appears only at ≤ 0.33/day.
 - K = 67 candidates, 0 pass.
+
+## FORWARD TEST of BUY_D1-x (started 2026-10-11): paper, record-only
+**What it is**
+- `scripts/inv90/forward_buyd1.mjs`.
+- **Frozen once:** a GBDT trained on all research rows. Threshold 0.9394 = the pooled rule over the 2016-2026 OOS years (top 5 % → 1,736 t, 92.28 % WR, +$2.12/t). It is never retrained.
+- **Features:** rebuilt with the SAME builders (`build_dataset --forward-from`, `build_features2 --forward`).
+- **Parity check** (`check_forward_parity.mjs` → `forward/parity.json`): 85,156 values over 1,396 overlapping bars, **0 mismatches**.
+- **Ledger** `data/inv90/forward/ledger.jsonl`: append-only, causal policy (a position counts as closed only once its exit is in the past). Idempotent on re-run.
+
+**Running**
+- Scheduled in `run_twin.mjs` hourly at :20, but **active only after the next app restart**: the running process was NOT restarted ("keep the app running as is").
+- Until then it can be run by hand; it catches up.
+
+**Verdict rule (pre-registered)**
+- No verdict before 100 resolved trades (about 10 months at 0.33/day).
+- Then WR ≥ 90 % with Wilson LB ≥ 88 % and mean $ > 0.
+
+**Risk shape**
+- Target ≈ $15, stop ≈ $148 per oz at the current ATR. One stop wipes out about 10 targets.
+
+> **Restored 2026-10-14.** This section, `forward_buyd1.mjs`, the `--forward` modes of `build_dataset` / `build_features2` and the hourly hook in `run_twin.mjs` were accidentally reverted by commit 58676fd (a `git add -A` over a stale working copy). Because of that, the hook never ran: the ledger stayed at its 2026-10-11 manual run until this restore.

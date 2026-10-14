@@ -1,25 +1,25 @@
 {
- "at": "2026-10-09T14:30:00.623Z",
- "days_recorded": 1,
+ "at": "2026-10-13T14:30:11.046Z",
+ "days_recorded": 3,
  "first_day": "2026-10-09",
  "rules": {
   "dollars": 7,
   "min_resolved": 100
  },
  "all": {
-  "events": 2,
-  "resolved": 2,
+  "events": 4,
+  "resolved": 4,
   "bounce": 1,
-  "bounce_lb": 0.3424,
+  "bounce_lb": 0.5101,
   "control": 0
  },
  "by_type": {
   "call_wall": {
-   "events": 0,
-   "resolved": 0,
-   "bounce": null,
-   "bounce_lb": null,
-   "control": null
+   "events": 1,
+   "resolved": 1,
+   "bounce": 1,
+   "bounce_lb": 0.2065,
+   "control": 0
   },
   "put_wall": {
    "events": 0,
@@ -29,10 +29,10 @@
    "control": null
   },
   "flip": {
-   "events": 1,
-   "resolved": 1,
+   "events": 2,
+   "resolved": 2,
    "bounce": 1,
-   "bounce_lb": 0.2065,
+   "bounce_lb": 0.3424,
    "control": 0
   },
   "magnet": {
@@ -40,12 +40,21 @@
    "resolved": 1,
    "bounce": 1,
    "bounce_lb": 0.2065,
-   "control": null
+   "control": 0
   }
  },
  "verdict": "INSUFFICIENT",
- "reading": "forward test: 2/100 resolved touches so far — context only until measured",
+ "reading": "forward test: 4/100 resolved touches so far — context only until measured",
  "events": [
+  {
+   "day": "2026-10-09",
+   "type": "call_wall",
+   "px": 4199.96,
+   "t": 1791569400000,
+   "side": "resistance",
+   "bounce": true,
+   "ctrl": false
+  },
   {
    "day": "2026-10-09",
    "type": "flip",
@@ -53,7 +62,7 @@
    "t": 1791544200000,
    "side": "support",
    "bounce": true,
-   "ctrl": false
+   "ctrl": null
   },
   {
    "day": "2026-10-09",
@@ -62,7 +71,16 @@
    "t": 1791549000000,
    "side": "resistance",
    "bounce": true,
-   "ctrl": null
+   "ctrl": false
+  },
+  {
+   "day": "2026-10-12",
+   "type": "flip",
+   "px": 4168.22,
+   "t": 1791815700000,
+   "side": "resistance",
+   "bounce": true,
+   "ctrl": false
   }
  ]
 }

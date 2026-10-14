@@ -14,6 +14,7 @@ import { TURBO } from '../src/core/paths.js'
 import { marketOpen } from '../src/core/freshness.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { streamStatus } from '../src/data/tickStream.js'
+import { reconcilePlan } from '../src/core/reconcilePlan.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const HB = path.join(TURBO.master, 'live_heartbeat.json')
@@ -54,7 +55,8 @@ const shutdown = () => { try { streamChild?.kill() } catch { /* */ } try { chart
 process.on('SIGINT', shutdown); process.on('SIGTERM', shutdown)
 
 // ── 2. the bar-aligned paper tick ───────────────────────────────────────────────────────────────────────────────
-let cycle = 0, lastTickBar = null, ticking = false, lastBeat = 0, lastReconcile = null, reconciling = false
+let cycle = 0, lastTickBar = null, ticking = false, lastBeat = 0, lastReconcile = null, reconciling = false, reconAttempted = false
+const STARTED_AT = Date.now(), readJson = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return null } }
 const beat = (extra = {}) => {
   const s = streamStatus({ pidAlive })
   fs.writeFileSync(HB, JSON.stringify({ at: new Date().toISOString(), pid: process.pid, cycle, last_tick_bar: lastTickBar, mode: 'run_twin',
@@ -71,7 +73,7 @@ const tick = (barT) => new Promise((resolve) => {
   })
 })
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
-let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false
+let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
   execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'matrix_tick.mjs')], { timeout: 120000, maxBuffer: 8 << 20, windowsHide: true }, (err, stdout, stderr) => {
@@ -88,11 +90,12 @@ for (;;) {
   ensureStream(); await ensureChart()
   if (marketOpen(last3m - 1) && now - last3m >= 4000 && !matrixTicking && (lastMatrixBar == null || lastMatrixBar < last3m)) matrixTick(last3m)
   if (marketOpen(lastClose - 1) && now - lastClose >= TICK_OFFSET_MS && !ticking && (lastTickBar == null || Date.parse(lastTickBar) < lastClose)) await tick(lastClose)
-  // nightly reconciliation of the 1m store vs Polygon's current bars (corrections.js) — once per UTC day at 00:20
-  const day = new Date(now).toISOString().slice(0, 10)
-  if (new Date(now).getUTCHours() === 0 && new Date(now).getUTCMinutes() >= 20 && lastReconcile !== day && !reconciling) { reconciling = true; lastReconcile = day
-    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'reconcile_1m.mjs'), '2'], { timeout: 15 * 60000, windowsHide: true }, (err, stdout) => { reconciling = false
-      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'reconcile_1m.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-600) }) + '\n') }) }
+  // reconciliation of the 1m store vs Polygon's current bars (corrections.js) — WHEN and HOW FAR BACK: src/core/reconcilePlan.js (every app
+  // start, daily, retry after a failure; ≥ 7 days back). The exit code is real (1 = a symbol failed) and is logged.
+  const rp = reconcilePlan({ now, startedAt: STARTED_AT, state: readJson(path.join(TURBO.master, 'reconcile_state.json')), running: reconciling, attemptedThisStart: reconAttempted, lastAttemptAt: lastReconcile })
+  if (rp.run) { reconciling = true; reconAttempted = true; lastReconcile = now
+    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'reconcile_1m.mjs'), String(rp.days)], { timeout: 30 * 60000, windowsHide: true }, (err, stdout, stderr) => { reconciling = false
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'reconcile_1m.mjs', why: rp.why, days: rp.days, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-600), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // USD economic calendar (fetch_calendar.mjs): every 30 min, plus 2 and 6 min after each HIGH-impact release (to capture the actual value)
   if (!calRunning) { let due = Date.now() - lastCal >= 30 * 60000
     if (!due) try { const up = JSON.parse(fs.readFileSync(path.join(here, '..', 'data', 'calendar', 'upcoming.json'), 'utf8'))
@@ -108,6 +111,12 @@ for (;;) {
       process.stdout.write(String(stdout || ''))
       execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'study_gamma_levels.mjs')], { timeout: 5 * 60000, windowsHide: true }, (e2, so2) => { gammaRunning = false
         fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'study_gamma_levels.mjs', exit: e2 ? (e2.code ?? 'killed') : 0, out: String(so2 || '').slice(-300) }) + '\n') }) }) }
+  // FORWARD TEST of the 90 % investigation's candidate BUY_D1-x (scripts/inv90/forward_buyd1.mjs) — paper, record-only, once per hour at :20.
+  // Catch-up by design (scores every closed bar since its last scan), so a missed hour loses nothing.
+  const hourKey = now - (now % 3600000)
+  if (new Date(now).getUTCMinutes() >= 20 && lastFwd !== hourKey && !fwdRunning) { fwdRunning = true; lastFwd = hourKey
+    execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs')], { timeout: 20 * 60000, windowsHide: true }, (err, stdout, stderr) => { fwdRunning = false
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }

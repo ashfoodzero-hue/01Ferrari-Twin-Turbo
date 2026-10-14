@@ -616,3 +616,1948 @@ run_twin pid 15164 — tick stream (all symbols) + twin_tick 3s after every 15m 
 
 ── 2026-10-10T18:59:54.851Z watchdog start (pid 15164 is dead (beat 400 min old)) ──
 run_twin pid 20324 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+
+── 2026-10-11T21:55:07.552Z watchdog start (pid 20324 is dead (beat 185 min old)) ──
+run_twin pid 7664 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+  bars: ticks (stream live, settled) (25936 × 15m from 1m ticks, last 2026-10-11T22:00:00.000Z; decision bar 14/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.32 (61% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 15 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25937 × 15m from 1m ticks, last 2026-10-11T22:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.32 (58% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 30 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25938 × 15m from 1m ticks, last 2026-10-11T22:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.32 (54% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 45 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25939 × 15m from 1m ticks, last 2026-10-11T22:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.32 (53% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 60 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25940 × 15m from 1m ticks, last 2026-10-11T23:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.32 (65% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 75 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25941 × 15m from 1m ticks, last 2026-10-11T23:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 90 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25942 × 15m from 1m ticks, last 2026-10-11T23:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 105 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25943 × 15m from 1m ticks, last 2026-10-11T23:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.32 (65% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 120 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4191.66 · SL 4186.78 · TP1 4201.66 · TP2 4206.66 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (25944 × 15m from 1m ticks, last 2026-10-12T00:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (1.2×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 135 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ⬛ matrix BUY closed: TP1+TP2 +11.7846/oz — box removed
+  bars: ticks (stream live, settled) (25945 × 15m from 1m ticks, last 2026-10-12T00:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 150 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25946 × 15m from 1m ticks, last 2026-10-12T00:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 165 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25947 × 15m from 1m ticks, last 2026-10-12T00:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 180 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25948 × 15m from 1m ticks, last 2026-10-12T01:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 195 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25949 × 15m from 1m ticks, last 2026-10-12T01:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 210 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25950 × 15m from 1m ticks, last 2026-10-12T01:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4192.83 (69% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 225 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25951 × 15m from 1m ticks, last 2026-10-12T01:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 240 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25952 × 15m from 1m ticks, last 2026-10-12T02:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 255 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25953 × 15m from 1m ticks, last 2026-10-12T02:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 270 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25954 × 15m from 1m ticks, last 2026-10-12T02:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 285 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25955 × 15m from 1m ticks, last 2026-10-12T02:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4198.78 (65% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 300 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4204.53 · SL 4202.62 · TP1 4214.53 · TP2 4219.53 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (25956 × 15m from 1m ticks, last 2026-10-12T03:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4198.78 (63% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 315 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -2.7101/oz — box removed
+  🟩 matrix BUY @ 4203.58 · SL 4200.87 · TP1 4213.58 · TP2 4218.58 (SHADOW)
+  bars: ticks (stream live, settled) (25957 × 15m from 1m ticks, last 2026-10-12T03:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4198.78 (63% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 330 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (25958 × 15m from 1m ticks, last 2026-10-12T03:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4198.78 (70% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 345 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (25959 × 15m from 1m ticks, last 2026-10-12T03:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4198.78 (62% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 360 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -3.4428/oz — box removed
+  bars: ticks (stream live, settled) (25960 × 15m from 1m ticks, last 2026-10-12T04:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4200.45 (45% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 375 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4200.50 · SL 4197.43 · TP1 4210.50 · TP2 4215.50 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -3.7348/oz — box removed
+  bars: ticks (stream live, settled) (25961 × 15m from 1m ticks, last 2026-10-12T04:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4200.73 (49% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 390 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4200.54 · SL 4196.93 · TP1 4210.54 · TP2 4215.54 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (25962 × 15m from 1m ticks, last 2026-10-12T04:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4200.73 (41% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 405 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -4.1934/oz — box removed
+  bars: ticks (stream live, settled) (25963 × 15m from 1m ticks, last 2026-10-12T04:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4200.73 (31% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 420 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25964 × 15m from 1m ticks, last 2026-10-12T05:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 435 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25965 × 15m from 1m ticks, last 2026-10-12T05:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 450 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25966 × 15m from 1m ticks, last 2026-10-12T05:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 465 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25967 × 15m from 1m ticks, last 2026-10-12T05:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4198.07 (31% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 480 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25968 × 15m from 1m ticks, last 2026-10-12T06:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 495 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25969 × 15m from 1m ticks, last 2026-10-12T06:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 510 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25970 × 15m from 1m ticks, last 2026-10-12T06:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 525 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25971 × 15m from 1m ticks, last 2026-10-12T06:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 540 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25972 × 15m from 1m ticks, last 2026-10-12T07:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 555 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25973 × 15m from 1m ticks, last 2026-10-12T07:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 570 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25974 × 15m from 1m ticks, last 2026-10-12T07:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 585 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4182.48 · SL 4179.14 · TP1 4192.48 · TP2 4197.48 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (25975 × 15m from 1m ticks, last 2026-10-12T07:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 600 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -4.0663/oz — box removed
+  bars: ticks (stream live, settled) (25976 × 15m from 1m ticks, last 2026-10-12T08:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (1.1×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 615 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25977 × 15m from 1m ticks, last 2026-10-12T08:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 630 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25978 × 15m from 1m ticks, last 2026-10-12T08:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 645 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ⛔ matrix: no new trade — data not live (XAUUSD settled only through 2026-10-12T08:52:00.000Z (need 2026-10-12T08:53:00.000Z))
+  bars: ticks (stream live, settled) (25979 × 15m from 1m ticks, last 2026-10-12T08:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 660 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25980 × 15m from 1m ticks, last 2026-10-12T09:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 675 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25981 × 15m from 1m ticks, last 2026-10-12T09:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 690 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25982 × 15m from 1m ticks, last 2026-10-12T09:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (1.0×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 705 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25983 × 15m from 1m ticks, last 2026-10-12T09:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 720 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25984 × 15m from 1m ticks, last 2026-10-12T10:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 735 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25985 × 15m from 1m ticks, last 2026-10-12T10:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 750 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25986 × 15m from 1m ticks, last 2026-10-12T10:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 765 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25987 × 15m from 1m ticks, last 2026-10-12T10:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 780 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25988 × 15m from 1m ticks, last 2026-10-12T11:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 795 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25989 × 15m from 1m ticks, last 2026-10-12T11:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 810 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25990 × 15m from 1m ticks, last 2026-10-12T11:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 825 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25991 × 15m from 1m ticks, last 2026-10-12T11:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 840 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4171.38 · SL 4166.80 · TP1 4181.38 · TP2 4186.38 (SHADOW)
+  bars: ticks (stream live, settled) (25992 × 15m from 1m ticks, last 2026-10-12T12:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 855 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -5.263/oz — box removed
+  bars: ticks (stream live, settled) (25993 × 15m from 1m ticks, last 2026-10-12T12:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (1.1×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 870 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25994 × 15m from 1m ticks, last 2026-10-12T12:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 885 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25995 × 15m from 1m ticks, last 2026-10-12T12:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 900 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25996 × 15m from 1m ticks, last 2026-10-12T13:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4185.76 (27% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 915 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25997 × 15m from 1m ticks, last 2026-10-12T13:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4184.32 (33% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 930 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25998 × 15m from 1m ticks, last 2026-10-12T13:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4184.32 (31% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 945 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (25999 × 15m from 1m ticks, last 2026-10-12T13:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4184.32 (29% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 960 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26000 × 15m from 1m ticks, last 2026-10-12T14:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4184.32 (25% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 975 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4163.70 · SL 4158.01 · TP1 4175.08 · TP2 4180.77 (SHADOW)
+  γ gamma 2026-10-12: POSITIVE · call wall 4145.47 · put wall 4254.56 · flip 4168.22 (XAU) · OI cov 97.5 %
+  bars: ticks (stream live, settled) (26001 × 15m from 1m ticks, last 2026-10-12T14:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 990 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26002 × 15m from 1m ticks, last 2026-10-12T14:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,005 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26003 × 15m from 1m ticks, last 2026-10-12T14:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,020 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26004 × 15m from 1m ticks, last 2026-10-12T15:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4181.31 (30% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,035 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26005 × 15m from 1m ticks, last 2026-10-12T15:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,050 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26006 × 15m from 1m ticks, last 2026-10-12T15:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4181.31 (26% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,065 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26007 × 15m from 1m ticks, last 2026-10-12T15:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,080 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26008 × 15m from 1m ticks, last 2026-10-12T16:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,095 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26009 × 15m from 1m ticks, last 2026-10-12T16:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,110 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+
+── 2026-10-12T16:42:28.722Z watchdog start (pid 7664 is dead (beat 1 min old)) ──
+run_twin pid 12728 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+  bars: ticks (stream live, settled) (26009 × 15m from 1m ticks, last 2026-10-12T16:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,121 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  gamma: today already recorded
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26010 × 15m from 1m ticks, last 2026-10-12T16:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,125 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26011 × 15m from 1m ticks, last 2026-10-12T16:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,140 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26012 × 15m from 1m ticks, last 2026-10-12T17:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.19 (34% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,155 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26013 × 15m from 1m ticks, last 2026-10-12T17:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4173.54 (32% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,170 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26014 × 15m from 1m ticks, last 2026-10-12T17:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4173.54 (38% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,185 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26015 × 15m from 1m ticks, last 2026-10-12T17:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4173.54 (42% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,200 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26016 × 15m from 1m ticks, last 2026-10-12T18:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4173.54 (44% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,215 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26017 × 15m from 1m ticks, last 2026-10-12T18:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4171.32 (52% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,230 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26018 × 15m from 1m ticks, last 2026-10-12T18:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4171.32 (43% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,245 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26019 × 15m from 1m ticks, last 2026-10-12T18:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4171.32 (39% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,260 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26020 × 15m from 1m ticks, last 2026-10-12T19:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4171.32 (35% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,275 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26021 × 15m from 1m ticks, last 2026-10-12T19:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4171.32 (36% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,290 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26022 × 15m from 1m ticks, last 2026-10-12T19:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4171.32 (36% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,305 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26023 × 15m from 1m ticks, last 2026-10-12T19:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4169.56 (49% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,320 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26024 × 15m from 1m ticks, last 2026-10-12T20:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.99 (56% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,335 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26025 × 15m from 1m ticks, last 2026-10-12T20:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (63% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,350 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T20:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (61% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,365 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — XAUUSD settled only through 2026-10-12T20:58:00.000Z (need 2026-10-12T20:59:00.000Z) (26025 × 15m from 1m ticks, last 2026-10-12T20:30:00.000Z; decision bar 14/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (XAUUSD settled only through 2026-10-12T20:58:00.000Z (need 2026-10-12T20:59:00.000Z))
+  ⛔ STALE — no fire recorded: XAUUSD settled only through 2026-10-12T20:58:00.000Z (need 2026-10-12T20:59:00.000Z)
+  ⏱ fill bars sequenced on 1,379 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+
+── 2026-10-12T21:50:07.685Z watchdog start (pid 12728 is dead (beat 44 min old)) ──
+run_twin pid 5476 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+  gamma: today already recorded
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T22:00:00.000Z; decision bar 14/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (69% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,393 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T22:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (75% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T22:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (67% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T22:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (57% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T23:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4167.28 (52% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T23:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T23:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-12T23:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4165.93 (70% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ⬛ matrix BUY closed: TP1+BE +5.381/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T00:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4165.19 (33% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4166.83 · SL 4160.16 · TP1 4180.17 · TP2 4186.84 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T00:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4165.19 (48% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T00:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4165.19 (28% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -7.4201/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T00:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4157.41 · SL 4152.93 · TP1 4167.41 · TP2 4172.41 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T01:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4164.6 (61% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ⬛ matrix BUY closed: TP1+BE +4.4999/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T01:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T01:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4156.69 · SL 4151.52 · TP1 4167.03 · TP2 4172.20 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -6.0527/oz — box removed
+  🟩 matrix BUY @ 4152.17 · SL 4149.87 · TP1 4162.17 · TP2 4167.17 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T01:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4163.9 (53% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ⬛ matrix BUY closed: TP1+TP2 +11.8496/oz — box removed
+  🟩 matrix BUY @ 4164.64 · SL 4149.87 · TP1 4194.18 · TP2 4208.95 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T02:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4163.07 (68% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T02:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T02:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T02:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (1.3×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T03:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T03:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: BREAKOUT_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T03:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T03:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (1.1×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T04:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T04:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T04:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T04:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T05:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T05:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T05:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T05:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T06:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T06:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: TREND_UP (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T06:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (71% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  🚨 matrix_tick 1: : 'EPERM',
+  syscall: 'rename',
+  path: 'C:\\01Ferrari Twin Turbo\\data\\master\\matrix_state.json.tmp',
+  dest: 'C:\\01Ferrari Twin Turbo\\data\\master\\matrix_state.json'
+}
+
+Node.js v24.14.1
+
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T06:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T07:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T07:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+
+── 2026-10-13T07:52:23.146Z watchdog start (pid 5476 is dead (beat 10 min old)) ──
+run_twin pid 16360 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: STALE — XAUUSD settled only through 2026-10-13T07:41:00.000Z (need 2026-10-13T07:44:00.000Z) (26025 × 15m from 1m ticks, last 2026-10-13T07:15:00.000Z; decision bar 12/15 minutes, all verified)
+  state: PREMIUM (tradeable) · ⛔ STALE DATA — no signal (XAUUSD settled only through 2026-10-13T07:41:00.000Z (need 2026-10-13T07:44:00.000Z))
+  ⛔ STALE — no fire recorded: XAUUSD settled only through 2026-10-13T07:41:00.000Z (need 2026-10-13T07:44:00.000Z)
+  ⏱ fill bars sequenced on 1,417 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T07:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (74% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T08:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T08:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T08:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (75% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T08:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (72% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T09:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (73% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T09:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (65% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T09:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (68% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T09:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (72% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T10:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (66% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T10:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (65% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T10:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (60% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T10:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (62% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T11:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (67% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T11:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (66% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T11:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (72% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: STALE — stream disconnected (26025 × 15m from 1m ticks, last 2026-10-13T11:30:00.000Z; decision bar 5/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,399 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T12:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (72% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T12:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (73% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T12:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (68% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T12:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (58% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T13:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (52% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,395 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T13:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: PREMIUM (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T13:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (53% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T13:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4175.31 (37% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ⬛ matrix BUY closed: TP1+BE +14.2858/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T14:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  γ gamma 2026-10-13: POSITIVE · call wall 4146.18 · put wall 4146.18 · flip 4169.37 (XAU) · OI cov 97.7 %
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T14:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T14:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T14:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4166.33 · SL 4164.02 · TP1 4176.33 · TP2 4181.33 (SHADOW)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T15:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -2.96/oz — box removed
+  🟩 matrix BUY @ 4164.67 · SL 4162.54 · TP1 4174.67 · TP2 4179.67 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T15:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ⬛ matrix BUY closed: SL -2.7482/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T15:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T15:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4159.03 · SL 4154.36 · TP1 4169.03 · TP2 4174.03 (SHADOW)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T16:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T16:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T16:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -5.2542/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T16:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (0.9×). WAIT for a volume close.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4154.88 · SL 4149.52 · TP1 4165.60 · TP2 4170.96 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T17:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T17:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T17:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -5.917/oz — box removed
+  🟩 matrix BUY @ 4148.15 · SL 4146.20 · TP1 4158.15 · TP2 4163.15 (SHADOW)
+  bars: STALE — XAUUSD settled only through 2026-10-13T17:58:00.000Z (need 2026-10-13T17:59:00.000Z) (26025 × 15m from 1m ticks, last 2026-10-13T17:30:00.000Z; decision bar 14/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · ⛔ STALE DATA — no signal (XAUUSD settled only through 2026-10-13T17:58:00.000Z (need 2026-10-13T17:59:00.000Z))
+  ⛔ STALE — no fire recorded: XAUUSD settled only through 2026-10-13T17:58:00.000Z (need 2026-10-13T17:59:00.000Z)
+  ⏱ fill bars sequenced on 1,410 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T18:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T18:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.18 (28% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T18:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.18 (31% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ▣ matrix BUY open · TP1 hit (stop at entry)
+  ⬛ matrix BUY closed: TP1+TP2 +12.1013/oz — box removed
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T18:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.18 (35% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T19:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.18 (34% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T19:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.18 (39% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T19:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.11 (37% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T19:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.11 (36% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T20:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.11 (33% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T20:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4170.11 (27% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T20:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26026 × 15m from 1m ticks, last 2026-10-13T20:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4168.63 (32% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: STALE — XAUUSD settled only through 2026-10-13T22:13:00.000Z (need 2026-10-13T22:14:00.000Z) (26026 × 15m from 1m ticks, last 2026-10-13T21:15:00.000Z; decision bar 13/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (XAUUSD settled only through 2026-10-13T22:13:00.000Z (need 2026-10-13T22:14:00.000Z))
+  ⛔ STALE — no fire recorded: XAUUSD settled only through 2026-10-13T22:13:00.000Z (need 2026-10-13T22:14:00.000Z)
+  ⏱ fill bars sequenced on 1,395 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-13T22:15:00.000Z; decision bar 13/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4168.63 (32% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-13T22:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4168.63 (33% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4161.18 · SL 4158.40 · TP1 4171.18 · TP2 4176.18 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4168.63 (33% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26026 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 3/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26025 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26024 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26023 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26022 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26021 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26020 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26019 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26018 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26017 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26016 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26015 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26014 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26013 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26012 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26011 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26010 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26009 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26008 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26007 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26006 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26005 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26004 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26003 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26002 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26001 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (26000 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (25999 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (25998 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — stream disconnected (25997 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (stream disconnected)
+  ⛔ STALE — no fire recorded: stream disconnected
+  ⏱ fill bars sequenced on 1,397 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: STALE — XAUUSD settled only through 2026-10-13T23:02:00.000Z (need 2026-10-14T06:44:00.000Z) (25996 × 15m from 1m ticks, last 2026-10-13T22:45:00.000Z; decision bar 0/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · ⛔ STALE DATA — no signal (XAUUSD settled only through 2026-10-13T23:02:00.000Z (need 2026-10-14T06:44:00.000Z))
+  ⛔ STALE — no fire recorded: XAUUSD settled only through 2026-10-13T23:02:00.000Z (need 2026-10-14T06:44:00.000Z)
+  ⏱ fill bars sequenced on 1,860 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ⬛ matrix BUY closed: SL -3.4857/oz — box removed
+  🟩 matrix BUY @ 4148.06 · SL 4144.59 · TP1 4158.06 · TP2 4163.06 (SHADOW)
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T06:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T07:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,396 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ⬛ matrix BUY closed: SL -4.2295/oz — box removed
+  ⛔ matrix: no new trade — data not live (XAUUSD settled only through 2026-10-14T07:22:00.000Z (need 2026-10-14T07:23:00.000Z))
+
+── 2026-10-14T07:49:34.172Z watchdog start (pid 16360 is dead (beat 24 min old)) ──
+run_twin pid 21316 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+  ⛔ matrix: no new trade — data not live (XAUUSD settled only through 2026-10-14T07:24:00.000Z (need 2026-10-14T07:47:00.000Z))
+  bars: STALE — XAUUSD settled only through 2026-10-14T07:24:00.000Z (need 2026-10-14T07:44:00.000Z) (26025 × 15m from 1m ticks, last 2026-10-14T07:00:00.000Z; decision bar 0/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · ⛔ STALE DATA — no signal (XAUUSD settled only through 2026-10-14T07:24:00.000Z (need 2026-10-14T07:44:00.000Z))
+  ⛔ STALE — no fire recorded: XAUUSD settled only through 2026-10-14T07:24:00.000Z (need 2026-10-14T07:44:00.000Z)
+  ⏱ fill bars sequenced on 1,430 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T07:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T08:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: EQUILIBRIUM (wait) · 🚫 EQUILIBRIUM $4156.79 (36% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T08:15:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T08:30:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T08:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  🟩 matrix BUY @ 4144.67 · SL 4140.43 · TP1 4154.67 · TP2 4159.67 (SHADOW)
+
+── 2026-10-14T09:14:23.971Z watchdog start (pid 21316 is dead (beat 1 min old)) ──
+run_twin pid 3484 — tick stream (all symbols) + twin_tick 3s after every 15m close + matrix_tick 4s after every 3m close, while the market is open
+  ▣ matrix BUY open · TP1 not yet
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T08:45:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,407 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  bars: ticks (stream live, settled) (26027 × 15m from 1m ticks, last 2026-10-14T09:00:00.000Z; decision bar 15/15 minutes, all verified)
+  state: DISCOUNT (tradeable) · no live signal
+  ⏱ fill bars sequenced on 1,394 1m sub-bars (validator parity)
+  ⏱ bid/ask: spread lookups {"live":0,"cell":0,"year":0} (live = the stream's measured minute spread)
+  journal: +0 new (0 already recorded) · resolved this tick: 0
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet
+  ▣ matrix BUY open · TP1 not yet

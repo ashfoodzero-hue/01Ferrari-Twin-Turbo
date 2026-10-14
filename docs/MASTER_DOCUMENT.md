@@ -417,3 +417,20 @@ without duplications … only use the real Win results, and ignore the rest."
 
   - Combining adds nothing. The model leans on distance / volume / delta features, which do not rank outcomes.
   - The `--dump` flag was added to `study_orderflow_footprint.mjs`; earlier outputs are unchanged.
+
+- **(ak) 2026-10-14 — Feed audit + "refresh after every restart" made reliable.**
+  - **Forward test was never running.**
+    - Commit 58676fd (`git add -A` over a stale working copy) had reverted the parallel session's forward-test work: `forward_buyd1.mjs` deleted, the `--forward` modes of `build_dataset` / `build_features2`, the hourly hook in `run_twin`, and the doc section.
+    - It was restored exactly from efddef6 (nothing changed those files after), then caught up: 3 signals / 3 resolved / 3 wins.
+    - The hook was verified running on schedule (09:23 UTC, exit 0).
+    - Root cause of an earlier corrupt smoke line, also confirmed: Python heredoc edits turn an escaped newline into a real newline. Both new cases were fixed with exact edits; all 206 scripts pass `node --check`.
+  - **Restarts:** the PC slept 10-13 10:42-10:52 and 10-14 10:26-10:49 (local), and rebooted on 10-12. The watchdog (5 min) relaunched the app each time and the stream refilled from the last stored minute. 7-day completeness vs Polygon: **0 missing minutes on all 8 markets**.
+  - **Reconcile fixed** (`src/core/reconcilePlan.js`, smoke `smoke_reconcile_plan` 4/4). Measured problems: it ran only at 00:20-00:59 UTC (skipped when the PC was asleep or off); it looked back only 2 days; and a DNS failure on 10-14 was logged as success. **Now:**
+    - it runs at every app start (after 2 min) + daily whenever the last success is ≥ 20 h old + retries every 30 min after a failure;
+    - window ≥ 7 days (+ the days since the last success, max 30);
+    - real exit code, with `reconcile_state.json` + `reconcile_history.jsonl`.
+    - Verified live: it fired by itself at the restart ("app start", 8 days, exit 0).
+  - **Polygon re-issued the minutes of 2026-10-06 … 10-11** (gold avg $0.12, max $1.85; about a third of the minutes; also FX / silver). Probe (`probe_history_revisions.mjs`, read-only): 2014-03-12, 2019-06-11, 2022-11-15, 2024-03-12, 2025-06-10, 2026-09-15, 10-01, 10-02, 10-05, 10-12, 10-13 all 0 differences.
+    - All revised minutes are now corrected (append-only corrections). Re-probe = 0 differences.
+    - Studies on the frozen tape include about 3 revised days out of 13 years (immaterial). The forward test's 3 signals of 10-09 were scored on pre-revision bars; the append-only ledger is not rewritten.
+  - **Not back-fillable by nature:** GLD options open interest (Polygon serves today only) — a day the PC is off through the US session has no gamma snapshot. Paper decisions are live-only.

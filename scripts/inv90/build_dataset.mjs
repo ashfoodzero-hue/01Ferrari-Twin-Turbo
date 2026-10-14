@@ -11,8 +11,11 @@ import { loadBars } from '../../src/data/backfillReader.js'
 import { atr, ema, rsi, adx } from '../../src/core/indicators.js'
 import { makeSpreadAt } from '../../src/master/spreadModel.js'
 
-const OUT = path.join(TURBO.root, 'data', 'inv90'); fs.mkdirSync(OUT, { recursive: true })
-const TO = Date.parse(process.env.TURBO_VAL_TO || '2026-10-09T06:00:00Z'), START = Date.UTC(2014, 5, 1), LOAD = Date.UTC(2013, 6, 14)
+// --forward-from=<ISO> (2026-10-11, forward test): the SAME feature code on live data from that time to now — no outcome simulation (NaN), only
+// fully closed 15m bars (≥ 30 s after their close), written to data/inv90/forward/. The research dataset (no flag) is unchanged.
+const FWD = (process.argv.find((a) => a.startsWith('--forward-from=')) || '').slice(15) || null
+const OUT = path.join(TURBO.root, 'data', 'inv90', ...(FWD ? ['forward'] : [])); fs.mkdirSync(OUT, { recursive: true })
+const TO = FWD ? Date.now() : Date.parse(process.env.TURBO_VAL_TO || '2026-10-09T06:00:00Z'), START = FWD ? Date.parse(FWD) : Date.UTC(2014, 5, 1), LOAD = Date.UTC(2013, 6, 14)
 const DAY = 86400000, H24 = DAY, BR = [[0.25, 2], [0.5, 3], [0.5, 2], [1, 1]], spread = makeSpreadAt()
 const load = async (tf) => (await loadBars('XAUUSD', tf, { from: LOAD, to: TO })).bars
 const M = await load('1m'), N = M.length
@@ -65,7 +68,7 @@ const B15 = TF['15m'].B, rows = [], times = []
 let vwD = -1, vwPV = 0, vwV = 0, dayH = -Infinity, dayL = Infinity, asH = -Infinity, asL = Infinity, mk = 0
 const a15 = TF['15m'].a, a1d = TF['1d'].a
 for (let i = 100; i < B15.length; i++) {
-  const T = TF['15m'].close[i]; if (T < START || T + H24 > TO) continue
+  const T = TF['15m'].close[i]; if (T < START || (FWD ? T > Date.now() - 30000 : T + H24 > TO)) continue
   const k0 = lbT(mt, T); if (k0 <= 0 || k0 >= N || mt[k0 - 1] < T - 900000) continue   // the last minute of the bar must exist
   // advance the day accumulators through minute k0-1
   for (; mk < k0; mk++) { const d = Math.floor(mt[mk] / DAY) * DAY; if (d !== vwD) { vwD = d; vwPV = 0; vwV = 0; dayH = -Infinity; dayL = Infinity; asH = -Infinity; asL = Infinity }
@@ -97,8 +100,8 @@ for (let i = 100; i < B15.length; i++) {
   f[q++] = A
   if (q !== FEAT.length) throw new Error('feature count ' + q)
   let o = FEAT.length
-  for (const m of [1, 1.5]) for (const up of [true, false]) { sim(k0, T, c, up, A, m, f, o, m === 1 ? FEAT.length + OUTC.length + (up ? 0 : 4) : -1); o += 4 }
-  o += DUR.length
+  if (!FWD) for (const m of [1, 1.5]) for (const up of [true, false]) { sim(k0, T, c, up, A, m, f, o, m === 1 ? FEAT.length + OUTC.length + (up ? 0 : 4) : -1); o += 4 }
+  if (!FWD) o += DUR.length; else o = FEAT.length + OUTC.length + DUR.length
   f[o] = (T - START) / 60000   // minutes since START (exact in Float32 up to 2^24 min ≈ 31 y)
   rows.push(f); times.push(T); if (rows.length % 50000 === 0) console.log('rows', rows.length, new Date(T).toISOString().slice(0, 10))
 }

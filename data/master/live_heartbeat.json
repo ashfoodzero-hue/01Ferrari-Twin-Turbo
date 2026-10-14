@@ -1,14 +1,14 @@
 {
- "at": "2026-10-11T18:44:02.481Z",
- "pid": 20324,
- "cycle": 82939,
- "last_tick_bar": null,
+ "at": "2026-10-14T09:33:17.305Z",
+ "pid": 14064,
+ "cycle": 185,
+ "last_tick_bar": "2026-10-14T09:30:00.000Z",
  "mode": "run_twin",
  "stream": {
-  "live": false,
-  "why": "XAUUSD settled only through 2026-10-11T18:42:00.000Z (need 2026-10-11T18:43:00.000Z)",
-  "pid": 6224,
+  "live": true,
+  "why": null,
+  "pid": 25088,
   "restarts": 0
  },
- "market_open": false
+ "market_open": true
 }

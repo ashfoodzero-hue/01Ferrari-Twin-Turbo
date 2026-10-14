@@ -2,7 +2,7 @@
 // whole ranges — measured); the store is append-only, so every minute Polygon now serves differently gets a CORRECTION line
 // (src/data/corrections.js, ver 'reconcile'); minutes missing on either side are REPORTED, never invented. Window: the last N days up to
 // 15 minutes ago (the newest minutes belong to the streamer's own late re-check). Output: data/master/reconcile_1m.json.
-// Run by run_twin.mjs at 00:20 UTC; by hand: node scripts/reconcile_1m.mjs [days=2]
+// Run by run_twin.mjs when src/core/reconcilePlan.js says so (every app start + daily + retries; window ≥ 7 days); by hand: node scripts/reconcile_1m.mjs [days=2]
 import '../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -26,3 +26,12 @@ for (const s of SYMBOLS) {
 }
 fs.writeFileSync(path.join(TURBO.master, 'reconcile_1m.json'), JSON.stringify(out, null, 1))
 for (const [k, v] of Object.entries(out.symbols)) console.log(k.padEnd(7), JSON.stringify(v))
+// STATE for src/core/reconcilePlan.js (2026-10-14): success only when EVERY symbol was reconciled; any error → failedAt + exit code 1,
+// so run_twin logs the failure and retries (before: a DNS failure was logged as exit 0 and never retried)
+const SFILE = path.join(TURBO.master, 'reconcile_state.json'), errs = Object.entries(out.symbols).filter(([, v]) => v.error).map(([k]) => k)
+let st = {}; try { st = JSON.parse(fs.readFileSync(SFILE, 'utf8')) } catch { /* first run */ }
+if (errs.length) Object.assign(st, { failedAt: now, failedSymbols: errs, lastError: out.symbols[errs[0]].error })
+else Object.assign(st, { okAt: now, coveredFrom: from, coveredTo: to, days: DAYS, corrected: Object.values(out.symbols).reduce((a, v) => a + (v.corrected || 0), 0), missing: Object.values(out.symbols).reduce((a, v) => a + (v.missing || 0), 0) })
+fs.writeFileSync(SFILE, JSON.stringify(st, null, 1))
+fs.appendFileSync(path.join(TURBO.master, 'reconcile_history.jsonl'), JSON.stringify({ at: out.at, days: DAYS, ok: !errs.length, errors: errs, corrected: st.corrected, missing: st.missing }) + '\n')
+if (errs.length) { console.error(`reconcile FAILED for ${errs.join(', ')} — will retry`); process.exitCode = 1 }

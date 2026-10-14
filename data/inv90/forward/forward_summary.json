@@ -1,14 +1,14 @@
 {
- "at": "2026-10-11T10:47:51.818Z",
+ "at": "2026-10-14T09:32:09.572Z",
  "candidate": "BUY_D1-x",
  "cutoff": "2026-10-09T06:00:00.000Z",
  "threshold": 0.939437747001648,
- "scanned_to": "2026-10-09T20:45:00.000Z",
- "signals": 2,
- "resolved": 1,
- "open": 1,
+ "scanned_to": "2026-10-14T09:15:00.000Z",
+ "signals": 3,
+ "resolved": 3,
+ "open": 0,
  "wr": 1,
- "wilson_lb": 0.2065,
+ "wilson_lb": 0.4385,
  "net_mean": 14.79,
- "verdict": "NO VERDICT YET (1/100 resolved)"
+ "verdict": "NO VERDICT YET (3/100 resolved)"
 }
