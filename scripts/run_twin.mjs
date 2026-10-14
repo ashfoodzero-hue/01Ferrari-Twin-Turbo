@@ -104,6 +104,7 @@ for (;;) {
       execFile(process.execPath, [path.join(here, 'fetch_calendar.mjs')], { timeout: 3 * 60000, windowsHide: true }, (err, stdout, stderr) => { calRunning = false
         fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'fetch_calendar.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) } }
   // GLD gamma levels: once per US weekday at/after 14:30 UTC (gamma_snapshot.mjs skips a day already recorded), then the forward test
+  const day = new Date(now).toISOString().slice(0, 10)   // UTC day key (restored 2026-10-14: the reconcile rewrite had dropped it → crash loop from 14:30 UTC)
   const wd = new Date(now).getUTCDay(), mins = new Date(now).getUTCHours() * 60 + new Date(now).getUTCMinutes()
   if (wd >= 1 && wd <= 5 && mins >= 14 * 60 + 30 && lastGamma !== day && !gammaRunning) { gammaRunning = true; lastGamma = day
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'gamma_snapshot.mjs')], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => {

@@ -434,3 +434,13 @@ without duplications … only use the real Win results, and ignore the rest."
     - All revised minutes are now corrected (append-only corrections). Re-probe = 0 differences.
     - Studies on the frozen tape include about 3 revised days out of 13 years (immaterial). The forward test's 3 signals of 10-09 were scored on pre-revision bars; the append-only ledger is not rewritten.
   - **Not back-fillable by nature:** GLD options open interest (Polygon serves today only) — a day the PC is off through the US session has no gamma snapshot. Paper decisions are live-only.
+
+- **(al) 2026-10-14 — CRASH LOOP from 14:30 UTC, caused by (ak), fixed.**
+  - **Cause:** the reconcile rewrite in `run_twin.mjs` removed `const day = …`, which the GLD gamma schedule still used.
+  - **Effect:** a ReferenceError at the first loop after 14:30 UTC. The watchdog restarted the app every 5 min (14:34, 14:39, 14:44); each restart died before the stream settled bars; the chart froze at 14:34. The breaker then halted at 14:49 ("3 restarts in the last hour"), as designed.
+  - **Fix:** `day` restored. The halt marker was removed after the fix. Because the breaker's hour window was still full, the app was started by hand exactly like the watchdog (ledger row actor 'claude').
+  - **Verified:**
+    - stream gap 14:29-14:52 refilled on all 8 pairs + DXY (0 gaps 14:00-14:53);
+    - bars advancing each minute;
+    - the gamma step (the crashing path) ran: 10-14 NEGATIVE, flip 4162.8.
+  - **Lesson:** `node --check` cannot catch a missing variable. After editing `run_twin.mjs`, every time-gated branch (gamma 14:30 UTC, calendar, forward :20, reconcile) must be exercised.
