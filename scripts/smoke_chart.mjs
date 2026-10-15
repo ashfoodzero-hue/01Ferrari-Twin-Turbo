@@ -17,7 +17,7 @@ for (let i = 0; i < 40; i++) { try { await fetch(BASE + '/api/symbols'); break }
 try {
   await ok('serves the page (title, the pinned chart library, the confirmation lines)', async () => {
     const r = await get('/'); assert.equal(r.status, 200)
-    assert(r.body.includes('<title>Ferrari Twin Turbo — Live Chart</title>') && r.body.includes('lightweight-charts@4.1.3') && r.body.includes('bearish confirm'))
+    assert(r.body.includes('<title>Ferrari Twin Turbo — Live Chart</title>') && r.body.includes('lightweight-charts@4.1.3') && r.body.includes('SELL TRIGGER · 15m close below') && r.body.includes('BUY TRIGGER · 15m close above'))   // labels renamed 2026-10-15
   })
   await ok('/api/bars 15m: closed candles only, ascending, on the 15m grid; the current bucket comes separately as partial', async () => {
     const r = (await get('/api/bars?sym=XAUUSD&tf=15m')).body, now = Date.now()
