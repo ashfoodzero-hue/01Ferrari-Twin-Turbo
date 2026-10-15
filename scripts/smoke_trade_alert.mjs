@@ -19,7 +19,7 @@ console.log('\n██ TRADE ALERT SMOKE ██')
 await ok('SCALP card: ENTRY, SL, TP1, TP2, TP3 in side order; only TP3 is labelled reference', async () => {
   for (const s of [buy, sell]) { const a = scalpSetup(s), up = s.side === 'BUY'
     assert(up ? a.sl < a.entry && a.entry < a.tp1 && a.tp1 < a.tp2 && a.tp2 < a.tp3 : a.sl > a.entry && a.entry > a.tp1 && a.tp1 > a.tp2 && a.tp2 > a.tp3)
-    const txt = formatSetupAlert(a); for (const k of ['TRADE SETUP READY — SCALP', 'ENTRY <b>4150.00', 'SL <b>', 'TP1 <b>', 'TP2 <b>', 'TP3 <b>']) assert(txt.includes(k), k)
+    const txt = formatSetupAlert(a); assert(txt.startsWith('🏎🏎 <b>FERRARI TWIN TURBO</b>'), 'the first line must name the app (shared group)'); for (const k of ['TRADE SETUP READY — SCALP', 'ENTRY <b>4150.00', 'SL <b>', 'TP1 <b>', 'TP2 <b>', 'TP3 <b>']) assert(txt.includes(k), k)
     assert.equal((txt.match(/reference — not in the measured exit/g) || []).length, 1) }
   assert(formatSetupAlert(scalpSetup(buy)).includes('TP3 <b>4180.00</b> <i>(reference'))
 })

@@ -33,6 +33,7 @@ export function formatSetupAlert(a) {
   const dir = a.side === 'BUY' ? '🟢 <b>BUY</b>' : '🔴 <b>SELL</b>'
   const tp = (k, label) => `${label} <b>${f2(a[k])}</b>${a.reference.includes(k) ? ' <i>(reference — not in the measured exit)</i>' : ''}`
   return [
+    `🏎🏎 <b>FERRARI TWIN TURBO</b> 🏎🏎`,   // Ashraf 2026-10-16: the Twin shares Turbo 2's group — the first line names the app
     `🚨 <b>TRADE SETUP READY — ${a.kind}</b> · XAUUSD`,
     `${dir} · ${a.name}`,
     `ENTRY <b>${f2(a.entry)}</b>`,
