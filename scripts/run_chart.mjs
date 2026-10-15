@@ -43,6 +43,7 @@ import { emaStack } from '../src/master/emaLevels.js'
 import { fvgAt } from '../src/master/fvg.js'
 import { dailyStats, dayLevelsAt } from '../src/master/dayLevels.js'
 import { resolveMatrixTrade } from '../src/master/ferrariMatrix.js'
+import { retestSetups } from '../src/master/retestSetup.js'
 import { liveMonitor } from '../src/master/tradeMonitor.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
 import { quotesFile } from '../src/core/paths.js'
@@ -255,6 +256,23 @@ async function levelMarks() {
   })
 }
 
+// ── RETEST setups of the last 24 h (src/master/retestSetup.js) — DISPLAY ONLY, labelled with the measured 13 y result; resolved at 1 R / 2 R
+// on closed 1m bids (SELL buys back at the ask = bid + measured spread), stop first inside a minute ──
+async function retestBoxes() {
+  return cached('retest', 20000, async () => {
+    const now = Date.now(), B = (await loadBars('XAUUSD', '3m', { from: now - 3 * 86400000 })).bars.filter((b) => b.t + 180000 <= now)
+    const M = (await loadBars('XAUUSD', '1m', { from: now - 2 * 86400000 })).bars.filter((b) => b.t + 60000 <= now), sp = makeSpreadAt()
+    const study = J('retest_scalp_study.json')?.cells?.['base|1R']?.oos
+    const boxes = retestSetups(B).filter((s) => s.t >= now - 86400000).map((s) => { const sell = s.side === 'SELL', R = s.risk, tp1 = sell ? s.entry - R : s.entry + R, tp2 = sell ? s.entry - 2 * R : s.entry + 2 * R
+      let status = 'OPEN', exitT = null
+      for (const b of M) { if (b.t < s.t) continue; const spr = sp(b.t)
+        if (sell ? b.h + spr >= s.sl : b.l <= s.sl) { status = 'LOSS'; exitT = b.t; break }
+        if (sell ? b.l + spr <= tp1 : b.h >= tp1) { status = 'TP1'; exitT = b.t; break } }
+      return { ...s, tp1: +tp1.toFixed(2), tp2: +tp2.toFixed(2), status, exitT } })
+    return { at: now, boxes, measured: study ? { wr: study.wr, net: study.net, n: study.n } : null, note: 'unvalidated: 13 y OOS 37 % WR at 1 R, −$0.59/trade' }
+  })
+}
+
 // ── PAPER FORWARD TEST (BUY_D1-x, docs/INVESTIGATION_90WR_2026-10-11.md) — the ledger is the only source; nothing is recomputed here ──
 function forward(arm) {   // arm 'freq' (2026-10-15) = the ≈ 1 trade/day arm in data/inv90/forward_freq/; default = the 92 % arm
   const dir = path.join(TURBO.root, 'data', 'inv90', arm === 'freq' ? 'forward_freq' : 'forward'); let lines = [], summary = null
@@ -281,6 +299,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/fvg') { if (!FVG_TF[tf]) return send(res, 200, { tf, marks: [], note: 'strong FVGs are marked on 3m, 15m and 1h only' }); return send(res, 200, await fvgMarks(tf)) }
     if (u.pathname === '/api/gamma') return send(res, 200, gamma())
     if (u.pathname === '/api/forward') return send(res, 200, forward(u.searchParams.get('arm')))
+    if (u.pathname === '/api/retest') return send(res, 200, await retestBoxes())
     if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }

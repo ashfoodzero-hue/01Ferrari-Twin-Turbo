@@ -112,10 +112,10 @@ for (;;) {
       process.stdout.write(String(stdout || ''))
       execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'study_gamma_levels.mjs')], { timeout: 5 * 60000, windowsHide: true }, (e2, so2) => { gammaRunning = false
         fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'study_gamma_levels.mjs', exit: e2 ? (e2.code ?? 'killed') : 0, out: String(so2 || '').slice(-300) }) + '\n') }) }) }
-  // FORWARD TEST of the 90 % investigation's candidate BUY_D1-x (scripts/inv90/forward_buyd1.mjs) — paper, record-only, once per hour at :20.
-  // Catch-up by design (scores every closed bar since its last scan), so a missed hour loses nothing.
-  const hourKey = now - (now % 3600000)
-  if (new Date(now).getUTCMinutes() >= 20 && lastFwd !== hourKey && !fwdRunning) { fwdRunning = true; lastFwd = hourKey
+  // FORWARD TEST of the 90 % investigation's candidates (scripts/inv90/forward_buyd1.mjs, arm 1 then arm 2) — paper, record-only, every 15 min
+  // at 5 min past each 15m close (2026-10-15, Ashraf: neon boxes "fire faster"; was hourly at :20). Catch-up by design, so a missed run loses nothing.
+  const qKey = now - (now % 900000)
+  if (now - qKey >= 5 * 60000 && lastFwd !== qKey && !fwdRunning) { fwdRunning = true; lastFwd = qKey
     execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs')], { timeout: 20 * 60000, windowsHide: true }, (err, stdout, stderr) => {
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
       // arm 2 (2026-10-15): the ≈ 1 trade/day arm, right after arm 1 on the features arm 1 just rebuilt (--no-build); only if arm 1 succeeded

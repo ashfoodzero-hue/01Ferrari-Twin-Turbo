@@ -46,6 +46,12 @@
   .chip.alert { border-color:#f0883e; color:#f0883e; font-weight:600; }
   .fvgbox { position:absolute; border:1px dashed; border-radius:2px; font:600 10px/1.2 system-ui; padding:1px 4px; white-space:nowrap; overflow:hidden; }
   .fvgbox.up { border-color:#58a6ff; background:#58a6ff1a; color:#79c0ff; } .fvgbox.dn { border-color:#d2a8ff; background:#d2a8ff1a; color:#d2a8ff; }
+  .nbox { position:absolute; border:1.5px solid; border-radius:3px; font:700 10px/1.2 system-ui; padding:2px 5px; white-space:nowrap; overflow:visible; }
+  .nbox.gold { border-color:#ffd23f; background:#ffd23f1c; color:#ffd23f; box-shadow:0 0 10px #ffd23f88, inset 0 0 8px #ffd23f44; }
+  .nbox.cyan { border-color:#3ff0ff; background:#3ff0ff1c; color:#3ff0ff; box-shadow:0 0 10px #3ff0ff88, inset 0 0 8px #3ff0ff44; }
+  .nbox.violet { border-color:#c77dff; background:#c77dff1a; color:#c77dff; box-shadow:0 0 10px #c77dff88, inset 0 0 8px #c77dff44; border-style:dashed; }
+  .nbox.done { opacity:.45; box-shadow:none; }
+  .ntag { position:absolute; font:800 10px system-ui; color:#0d1117; padding:1px 6px; border-radius:3px; white-space:nowrap; box-shadow:0 0 8px #0008; }
   .fwbox { position:absolute; border:1.5px solid #e3b341; background:#e3b3411a; border-radius:3px; font:600 10px/1.2 system-ui; color:#e3b341; padding:1px 4px; white-space:nowrap; overflow:visible; }
   .fwbox.win { border-color:#3fb950; background:#3fb9501f; color:#56d364; } .fwbox.loss { border-color:#f85149; background:#f851491f; color:#ff7b72; }
   .fwstop { position:absolute; border-top:1px dashed #f85149; height:0; font:600 9px system-ui; color:#ff7b72; white-space:nowrap; }
@@ -80,7 +86,7 @@
 <main>
   <div id="charts">
     <div id="bias"><span class="dim">loading drivers…</span></div>
-    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div><div id="fwOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div></div>
+    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div><div id="fwOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="rtOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div></div>
     <div class="pane sub"><div class="ptitle" id="t1"></div><div class="cbox" id="c1"></div></div>
     <div class="pane sub"><div class="ptitle" id="t2"></div><div class="cbox" id="c2"></div></div>
     <div class="pane sub"><div class="ptitle" id="t3"></div><div class="cbox" id="c3"></div></div>
@@ -396,17 +402,37 @@ function fwDraw() {
     let x0 = xOf(t.t); if (x0 == null) continue
     let x1 = t.exit_t ? xOf(t.exit_t) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 60)
     const ya = y(t.entry), yb = y(t.target); if (ya == null || yb == null) continue
-    const d = document.createElement('div'); d.className = 'fwbox' + (t.status === 'WIN' ? ' win' : t.status === 'LOSS' ? ' loss' : '')
+    // NEON box (2026-10-15, Ashraf: "build the neon boxes … name the box type"): gold = FWD 92 % (swing), cyan = FWD1 1/day (swing);
+    // each label carries its type, its backtest record and the live tally; a finished trade stays faintly with its result
+    const fr = FW.k === 'freq', S = FW.summary, live = S?.resolved ? `live ${Math.round(S.wr * S.resolved)}/${S.resolved}` : 'live 0/0'
+    const d = document.createElement('div'); d.className = 'nbox ' + (fr ? 'cyan' : 'gold') + (t.status !== 'OPEN' ? ' done' : '')
     d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(3, Math.abs(ya - yb)) + 'px'
-    ov.appendChild(d)
-    const tag = document.createElement('div'); tag.className = 'mxtag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : FW.k === 'freq' ? '#39c5cf' : '#e3b341'
-    tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (FW.k === 'freq' ? 30 : 15)) + 'px'
-    tag.textContent = `${FW.k === 'freq' ? 'FWD1' : 'FWD'} BUY ${fmt(t.entry)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)}`
+    d.textContent = `TP ${fmt(t.target)}`; ov.appendChild(d)
+    const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : fr ? '#3ff0ff' : '#ffd23f'
+    tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (fr ? 30 : 15)) + 'px'
+    tag.textContent = `${fr ? 'FWD1 1/DAY (swing)' : 'FWD 92% (swing)'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)} · ${fr ? 'bt 90.4%' : 'bt 92.0%'} · ${live} · paper`
     ov.appendChild(tag)
     const ys = y(t.stop); if (ys != null && ys > 0 && ys < H) { const l = document.createElement('div'); l.className = 'fwstop'; l.style.left = x0 + 'px'; l.style.width = (x1 - x0) + 'px'; l.style.top = ys + 'px'; l.textContent = 'FWD SL ' + fmt(t.stop); ov.appendChild(l) }
   }
 }
 setInterval(pollFw, 60000); pollFw(); setInterval(fwDraw, 1000)
+
+// ── RETEST box (violet, dashed = UNVALIDATED): break → retest → rejection 3m setups of the last 24 h (/api/retest, src/master/retestSetup.js) ──
+let RT = null
+async function pollRt() { RT = await fetch('/api/retest').then((x) => x.json()).catch(() => null); rtDraw() }
+function rtDraw() {
+  const ov = $('rtOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!RT?.boxes?.length || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
+  const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
+  const rec = RT.measured ? `13y ${Math.round(100 * RT.measured.wr)}% WR ${RT.measured.net >= 0 ? '+' : ''}${RT.measured.net}$/t` : 'unmeasured'
+  for (const b of RT.boxes) { const x0 = xOf(b.t); if (x0 == null) continue; let x1 = b.exitT ? xOf(b.exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 50)
+    const ya = y(b.sl), yb = y(b.tp2); if (ya == null || yb == null) continue
+    const d = document.createElement('div'); d.className = 'nbox violet' + (b.status !== 'OPEN' ? ' done' : '')
+    d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(3, Math.abs(ya - yb)) + 'px'; ov.appendChild(d)
+    const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = b.status === 'TP1' ? '#3fb950' : b.status === 'LOSS' ? '#f85149' : '#c77dff'
+    tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - 15) + 'px'
+    tag.textContent = `RETEST ${b.side} ${fmt(b.entry)} · SL ${fmt(b.sl)} · TP1 ${fmt(b.tp1)} · TP2 ${fmt(b.tp2)} · ${b.status} · UNVALIDATED (${rec})`; ov.appendChild(tag) }
+}
+setInterval(pollRt, 30000); pollRt(); setInterval(rtDraw, 1000)
 
 // ── IN-TRADE MONITOR: live chance of TP1 / TP2 for the open trade (/api/monitor; what may be shown is decided by study_trade_monitor.mjs) ──
 let MON = null
@@ -445,7 +471,7 @@ function mxDraw() {
   box('tgt', s.entry, s.tp2, `SNIPER TARGET ZONE (MIN 100 PIPS) · TP1 ${fmt(s.tp1)} (+${pips(s.reward)}p) · TP2 ${fmt(s.tp2)} (+${pips(1.5 * s.reward)}p)`)
   box('risk', s.entry, s.sl, `RISK PROTECTION ZONE (SL) ${fmt(s.sl)} (−${pips(s.risk)}p)`)
   const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
-    t.textContent = `${s.side} ${fmt(s.entry)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
+    t.textContent = `MATRIX SCALP ${s.side} ${fmt(s.entry)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
 }
 async function pollMatrix() {
   const m = await fetch('/api/matrix').then((x) => x.json()).catch(() => null); if (!m) return
