@@ -452,3 +452,18 @@ without duplications … only use the real Win results, and ignore the rest."
   - Cause: the average stop is about $2.40, so the spread is a large share, and retests break more than they hold.
   - Whales: 2 y only and no standalone edge. Gamma: no historical OI, so it cannot be backtested.
   - Checkpoint tag `checkpoint-2026-10-15-app-settings`. No live app change.
+
+- **(an) 2026-10-15 — WALL DEFENSE as a trade: 0/8 PASS.** Spec `docs/WALL_DEFENSE_MONEY_SPEC.md` (pre-registered); study `study_wall_defense_money.mjs` → `wall_defense_money.json`.
+  - The event engine is copied from Turbo 2's `validate_wall_defense.mjs`. **Replication:** hold rate all / defense / attack = 60.4 / 71.4 / 51.2 % (Turbo 2: 60.4 / 71.5 / ~49) → faithful.
+  - Money (OOS):
+
+| Version | WR | $ / trade | Trades / day |
+|---|---|---|---|
+| DEFENSE, bounce target | 60.1 % | −$0.49 | 5.0 |
+| STRONG, bounce target | 62.7 % | −$0.49 | 1.3 |
+| STRONG + DXY + silver | 62.6 % | −$0.53 | — |
+| DEFENSE 1 R | 42.9 % | −$0.56 | — |
+| ATTACK reference 1 R | 41.9 % | −$0.55 | — |
+
+  - DEFENSE ≈ ATTACK in money → the close-based hold label does not monetize: intrabar wick stops, a 3-bar decision lag, the spread.
+  - The hold rate stays CONTEXT only (as in Turbo 2).
