@@ -55,7 +55,7 @@ try {
   await ok('/api/matrix: the paper box comes from matrix_state.json with its backtest verdict; the page draws the neon zones only while a trade is open', async () => {
     const m = (await get('/api/matrix')).body; assert(typeof m.verdict === 'string' && m.verdict.length > 0)
     if (m.open) { const s = m.open.sig; assert(['BUY', 'SELL'].includes(s.side)); assert(s.side === 'BUY' ? s.sl < s.entry && s.entry < s.tp1 && s.tp1 < s.tp2 : s.sl > s.entry && s.entry > s.tp1 && s.tp1 > s.tp2); assert(s.reward >= 10 - 1e-9) }
-    const page = (await get('/')).body; assert(page.includes('SNIPER TARGET ZONE (MIN 100 PIPS)') && page.includes('RISK PROTECTION ZONE (SL)') && page.includes("if (!key) return"))
+    const page = (await get('/')).body; assert(page.includes('SCALP TARGET ZONE') && page.includes('SCALP SL ZONE') && page.includes("if (!key) return"))   // box names SCALP / SWING TRADE (2026-10-15)
   })
   await ok('/api/bias: Silver/DXY/WTI BULLISH|BEARISH from CLOSED candles; the whale gauge quotes its measured study, never a bare direction', async () => {
     const b = (await get('/api/bias')).body; assert.deepEqual(b.rows.map((r) => r.sym), ['XAUUSD', 'XAGUSD', 'DXY', 'WTI'])

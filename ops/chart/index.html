@@ -97,10 +97,10 @@
     <div class="note" id="calNote" style="margin-top:6px"></div>
     <h2>S/R levels (5m chart) — measured</h2>
     <div class="msg" id="lvMsg">—</div>
-    <h2>Forward tests (2 arms) — paper</h2>
+    <h2>SWING TRADES (forward test, 2 arms) — paper</h2>
     <div class="msg" id="fwMsg">—</div>
     <div class="note" style="margin-top:6px">Two research arms, recording since 10-09 06:00 UTC (frozen cutoff): FWD = the 92 % model (≈ 1 trade / 3 days, backtest 92.0 %); FWD1 = the ≈ 1 trade/day arm (backtest 90.4 %, +$0.42/t). Target 0.2 × daily ATR, stop 2 × daily ATR, up to 7 days. <b>Not validated</b> (0 of 67 passed the gate) — a verdict needs 100 resolved trades.</div>
-    <h2>Ferrari Matrix scalp (3m) — paper</h2>
+    <h2>SCALP — Ferrari Matrix (3m) — paper</h2>
     <div class="msg" id="mxMsg">—</div>
     <div class="msg" id="monMsg" style="display:none;margin-top:6px"></div>
     <div class="note" style="margin-top:6px">Ashraf's Pine method on live data (WTI 10 min delayed, as delivered). Half closes at TP1 (stop moves to entry), half runs to TP2. The box shows while a trade is open and disappears when it ends. <b>Paper only.</b></div>
@@ -396,7 +396,7 @@ function fwDraw() {
   const xOf = (t) => { const x = ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000)); return x }
   const head = document.createElement('div'); head.className = 'fwhead'
   head.textContent = FWS.map((FW) => { const done = FW.trades.filter((t) => t.status !== 'OPEN'), w = done.filter((t) => t.status === 'WIN').length
-    return `${FW.k === 'freq' ? 'FWD1' : 'FWD'} ${FW.candidate}: ${FW.trades.length} sig · ${done.length} res${done.length ? ` · WR ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · paper, no verdict before 100 resolved'
+    return `${FW.k === 'freq' ? 'SWING TRADE 1/day' : 'SWING TRADE 92%'}: ${FW.trades.length} sig · ${done.length} res${done.length ? ` · WR ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · paper, no verdict before 100 resolved'
   ov.appendChild(head)
   for (const FW of FWS) for (const t of FW.trades) {
     let x0 = xOf(t.t); if (x0 == null) continue
@@ -410,9 +410,9 @@ function fwDraw() {
     d.textContent = `TP ${fmt(t.target)}`; ov.appendChild(d)
     const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : fr ? '#3ff0ff' : '#ffd23f'
     tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (fr ? 30 : 15)) + 'px'
-    tag.textContent = `${fr ? 'FWD1 1/DAY (swing)' : 'FWD 92% (swing)'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)} · ${fr ? 'bt 90.4%' : 'bt 92.0%'} · ${live} · paper`
+    tag.textContent = `${fr ? 'SWING TRADE · 1/day' : 'SWING TRADE · 92%'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)} · ${fr ? 'bt 90.4%' : 'bt 92.0%'} · ${live} · paper`
     ov.appendChild(tag)
-    const ys = y(t.stop); if (ys != null && ys > 0 && ys < H) { const l = document.createElement('div'); l.className = 'fwstop'; l.style.left = x0 + 'px'; l.style.width = (x1 - x0) + 'px'; l.style.top = ys + 'px'; l.textContent = 'FWD SL ' + fmt(t.stop); ov.appendChild(l) }
+    const ys = y(t.stop); if (ys != null && ys > 0 && ys < H) { const l = document.createElement('div'); l.className = 'fwstop'; l.style.left = x0 + 'px'; l.style.width = (x1 - x0) + 'px'; l.style.top = ys + 'px'; l.textContent = 'SWING SL ' + fmt(t.stop); ov.appendChild(l) }
   }
 }
 setInterval(pollFw, 60000); pollFw(); setInterval(fwDraw, 1000)
@@ -468,10 +468,10 @@ function mxDraw() {
   const box = (cls, a, b, label) => { const ya = y(a), yb = y(b); if (ya == null || yb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls
     d.style.left = x0 + 'px'; d.style.width = Math.max(0, x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(2, Math.abs(ya - yb)) + 'px'; d.textContent = label; ov.appendChild(d) }
   const pips = (v) => Math.round(Math.abs(v) * 10)
-  box('tgt', s.entry, s.tp2, `SNIPER TARGET ZONE (MIN 100 PIPS) · TP1 ${fmt(s.tp1)} (+${pips(s.reward)}p) · TP2 ${fmt(s.tp2)} (+${pips(1.5 * s.reward)}p)`)
-  box('risk', s.entry, s.sl, `RISK PROTECTION ZONE (SL) ${fmt(s.sl)} (−${pips(s.risk)}p)`)
+  box('tgt', s.entry, s.tp2, `SCALP TARGET ZONE · TP1 ${fmt(s.tp1)} (+${pips(s.reward)}p) · TP2 ${fmt(s.tp2)} (+${pips(1.5 * s.reward)}p)`)
+  box('risk', s.entry, s.sl, `SCALP SL ZONE ${fmt(s.sl)} (−${pips(s.risk)}p)`)
   const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
-    t.textContent = `MATRIX SCALP ${s.side} ${fmt(s.entry)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
+    t.textContent = `SCALP ${s.side} ENTRY ${fmt(s.entry)} · SL ${fmt(s.sl)} · TP1 ${fmt(s.tp1)} · TP2 ${fmt(s.tp2)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
 }
 async function pollMatrix() {
   const m = await fetch('/api/matrix').then((x) => x.json()).catch(() => null); if (!m) return
