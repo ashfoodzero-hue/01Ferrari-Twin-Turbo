@@ -182,7 +182,7 @@ function setLines(p, g) {
   p.lines.forEach((l) => p.c.removePriceLine(l)); p.lines = []
   if (!g) return
   const add = (price, color, t, style) => p.lines.push(p.c.createPriceLine({ price, color, lineWidth: 1, lineStyle: style, axisLabelVisible: p.k === 0, title: p.k === 0 ? t : '' }))
-  add(g.rangeHigh, '#8b949e', 'range high', 2); add(g.rangeLow, '#8b949e', 'range low', 2); add(g.sellTrigger, '#ef5350', 'bearish confirm', 1); add(g.buyTrigger, '#26a69a', 'bullish confirm', 1)
+  add(g.rangeHigh, '#8b949e', 'range high', 2); add(g.rangeLow, '#8b949e', 'range low', 2); add(g.sellTrigger, '#ef5350', 'SELL TRIGGER · 15m close below · vol ≥ ' + (g.needVolume || '?'), 1); add(g.buyTrigger, '#26a69a', 'BUY TRIGGER · 15m close above · vol ≥ ' + (g.needVolume || '?'), 1)
 }
 let busy = false
 async function poll() {
