@@ -23,3 +23,21 @@ Written **before any result was seen**.
 - **Split:** TRAIN 60 % / OOS 40 % by time.
 - **PASS ⇔** OOS ≥ 100 trades AND OOS mean $/trade bootstrap LB (α/K) > 0 AND TRAIN mean > 0.
 - **Reported:** WR, $/trade, trades/day, by side (SELL vs BUY).
+
+---
+## Confirmation of the post-hoc lead: pre-registered 2026-10-15 BEFORE its run
+**Lead** (seen only in the OOS side split): 15m, D+S filter, 2 R, **SELL side only** → +$0.47/t.
+**CONFIRMED ⇔ all four checks pass:**
+- **T1 TRAIN 60 %** (the side split was never looked at there): mean $/t > 0 AND bootstrap 2.5 % bound > 0.
+- **T2 per year:** mean > 0 in ≥ 70 % of years with ≥ 15 trades (full window).
+- **T3 spread × 1.5** (full window): mean > 0.
+- **T4 neighbours** (full window): 1.5 R AND 2.5 R both mean > 0.
+
+The same rules otherwise (`study_failed_breakout_sell15.mjs` → `failed_breakout_sell15_confirm.json`).
+
+**RESULT: NOT CONFIRMED (0 / 4).**
+- T1 TRAIN: 31.2 % WR, **−$0.43/t** (n 561).
+- T2: positive years 5/14.
+- T3 spread × 1.5: −$0.19.
+- T4 neighbours: 1.5 R −$0.17, 2.5 R −$0.08.
+- Full window −$0.01/t. The OOS profit came almost entirely from 2026 (76 trades, +$4.31/t); 2025 was −$1.83/t. It is a recent-regime artefact, not an edge.
