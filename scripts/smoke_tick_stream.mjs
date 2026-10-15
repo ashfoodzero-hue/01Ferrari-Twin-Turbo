@@ -134,6 +134,29 @@ await ok('STREAMER, every branch on fixtures (fake socket + fake REST + controll
   const c = s.state.get('XAUUSD').n; assert.deepEqual([c.tick_ca, c.arbiter, c.mismatch, c.unverified, c.refill], [1, 2, 1, 1, 11])
   s.stop()
 })
+await ok('RACE (2026-10-16 23:45 UTC): the socket drops DURING a refill fetch → the cursor is NOT moved to null (no 1969 settled_through, no re-fetch from 1970); after the reconnect the gap refills and the store stays ascending', async () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'race-')), file = path.join(dir, '1m.jsonl'), qfile = path.join(dir, 'q.jsonl'), evFile = path.join(dir, 'ev.jsonl')
+  const T = (k) => M0 + k * MINUTE
+  fs.writeFileSync(file, JSON.stringify({ t: T(-10), o: 1, h: 1, l: 1, c: 1, v: 1 }) + '\n')
+  let now = T(0) - 30000, sock = null, dropNext = true; const rest = new Map(), calls = []
+  for (let k = -9; k <= 3; k++) rest.set(T(k), { t: T(k), o: 100 + k, h: 101 + k, l: 99 + k, c: 100 + k, v: 1 })
+  class FakeWS { constructor() { sock = this; setTimeout(() => this.emit([{ ev: 'status', status: 'connected' }]), 0) }
+    emit(a) { this.onmessage?.({ data: JSON.stringify(a) }) }
+    send(x) { const m = JSON.parse(x); if (m.action === 'auth') this.emit([{ ev: 'status', status: 'auth_success' }]); else if (m.action === 'subscribe') this.emit(m.params.split(',').map((p) => ({ ev: 'status', status: 'success', message: 'subscribed to: ' + p }))) }
+    close() { setTimeout(() => this.onclose?.({ code: 1005 }), 0) } }
+  const s = startTickStream({ log: () => {}, symbols: [{ sym: 'XAUUSD', poly: 'C:XAUUSD', ws: 'C:XAU-USD', pair: 'XAU/USD' }], fileOf: () => file, qfileOf: () => qfile, WS: FakeWS, clock: () => now, key: 'k',
+    fetchRange: async (poly, from, to) => { calls.push([from, to]); if (dropNext) { dropNext = false; sock.close(); await new Promise((r) => setTimeout(r, 50)) } return [...rest.values()].filter((b) => b.t >= from && b.t <= to) },
+    hbFile: path.join(dir, 'hb.json'), evFile, loopMs: 1e9, beatMs: 1e9 })
+  await new Promise((r) => setTimeout(r, 20))
+  now = T(0) + 6000; await s.tick()                                         // refill starts, the socket drops mid-fetch
+  const st = s.state.get('XAUUSD'); assert(Number.isFinite(st.cursor) && st.cursor === T(-9), `cursor moved to ${st.cursor}`)
+  assert(!fs.existsSync(evFile) || !fs.readFileSync(evFile, 'utf8').includes('1969-'), 'an event shows a 1969 bound')
+  await new Promise((r) => setTimeout(r, 1300)); now = T(1) + 6000; await s.tick()   // reconnected (coverage from T(1)) → refill again
+  assert(calls.every(([f, t]) => f >= T(-9) && t >= f), 'a fetch with an inverted / epoch range: ' + JSON.stringify(calls))
+  const L = fs.readFileSync(file, 'utf8').trim().split('\n').map((l) => JSON.parse(l)); for (let i = 1; i < L.length; i++) assert(L[i].t > L[i - 1].t)
+  assert(L.filter((l) => l.ver === 'refill').length >= 10, 'the gap was not refilled after the reconnect'); assert(Number.isFinite(st.cursor) && st.cursor >= T(1))
+  s.stop()
+})
 await ok('LATE TICKS → REST re-check → CORRECTION: a late quote never rewrites the store; ~1 min later the minute is re-fetched, Polygon\'s re-issued bar is appended as ONE correction (provenance + was), the 2nd check adds nothing, and the reader applies it', async () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'late-')), file = path.join(dir, '1m.jsonl'), qfile = path.join(dir, 'q.jsonl'), cfile = path.join(dir, 'c.jsonl')
   const T = (k) => M0 + k * MINUTE

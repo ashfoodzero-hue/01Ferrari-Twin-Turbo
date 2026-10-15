@@ -137,11 +137,16 @@ export function startTickStream({ log = console.log, symbols = SYMBOLS, fileOf =
       if (coverageFrom == null) return                                      // disconnected — wait, refill after reconnect
       if (m < coverageFrom) {
         if (now < coverageFrom + 5000) return                               // the last uncovered minute is not served yet
-        const bars = (await fetchRange(st.poly, m, coverageFrom - 1)).filter((b) => b.t >= m && b.t < coverageFrom).sort((a, b) => a.t - b.t)
+        // 🚨 RACE FIX (2026-10-16 23:45 UTC, measured): the socket can drop DURING this await and set coverageFrom = null. The old code then ran
+        // st.cursor = coverageFrom (null → 0): settled_through became 1969, the next settle re-fetched history from 1970 (283,713
+        // skip-not-after-last events, 33 MB) and nothing settled. Snapshot the bound; if it moved while fetching, keep the cursor and retry.
+        const cov = coverageFrom
+        const bars = (await fetchRange(st.poly, m, cov - 1)).filter((b) => b.t >= m && b.t < cov).sort((a, b) => a.t - b.t)
+        if (coverageFrom !== cov) return                                    // disconnected / reconnected meanwhile — refill again on the next settle
         let k = 0; for (const b of bars) if (append(st, b, 'rest', 'refill')) k++
-        st.n.refill += k; st.builder.dropBefore(coverageFrom); for (const t of [...st.ca.keys()]) if (t < coverageFrom) st.ca.delete(t)
-        event({ sym: st.sym, kind: 'refill', from: new Date(m).toISOString(), to: new Date(coverageFrom - MINUTE).toISOString(), bars: k })
-        st.cursor = coverageFrom; continue
+        st.n.refill += k; st.builder.dropBefore(cov); for (const t of [...st.ca.keys()]) if (t < cov) st.ca.delete(t)
+        event({ sym: st.sym, kind: 'refill', from: new Date(m).toISOString(), to: new Date(cov - MINUTE).toISOString(), bars: k })
+        st.cursor = cov; continue
       }
       const built = st.builder.buckets.get(m) ?? null, ca = st.ca.get(m) ?? null
       const d = settleDecision({ m, built, ca, now, covered: true })

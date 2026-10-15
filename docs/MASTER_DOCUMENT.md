@@ -577,3 +577,13 @@ without duplications … only use the real Win results, and ignore the rest."
     - `.git/hooks/post-commit` runs `build_package.mjs --code` (< 1 s) after every commit.
     - The `--code` mode keeps `built_at`, the data-snapshot date the installer tops up from.
     - Smoke `smoke_package_sync.mjs` checks every committed code / settings / doc file byte for byte, finds no stale files, and confirms no keys and the hook present.
+
+- **(at) 2026-10-16 — Polygon outage 23:38-23:50 UTC + a stream RACE BUG found and fixed.**
+  - **Outage:** Polygon published no forex minutes for 23:35-23:36 and 23:39-23:49 (gold and EURUSD alike; checked on its REST). The socket stayed open but silent, so the streamer reconnected every ~30 s.
+  - **Our bug** (`src/data/tickStream.js` `settle()`):
+    - the socket dropped DURING the awaited REST refill;
+    - `coverageFrom` became null, and the code then set `st.cursor = coverageFrom` (null);
+    - the result: settled_through showed 1969, every later settle re-fetched history from 1970 (283,713 skip events, 33 MB in `stream_events.jsonl`), and nothing settled.
+  - **Fix:** snapshot the bound before the await; if it moved during the fetch, keep the cursor and refill after the reconnect.
+  - Smoke: new RACE test in `smoke_tick_stream.mjs` — it FAILED (and hung) on the old code and PASSES with the fix (12/12).
+  - The live streamer was restarted at 23:56. The 23:39-23:56 refill wrote all 7 bars Polygon has, and the store equals Polygon minute for minute. The daily reconcile picks up any minutes Polygon re-issues later.
