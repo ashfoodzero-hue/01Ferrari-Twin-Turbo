@@ -76,7 +76,24 @@ export function confirmedPivots(B, P = MATRIX.pivot) {
  */
 // maxMiss (default 0 = the script exactly): a TEST-ONLY variant (validate_ferrari_matrix.mjs MATRIX_VARIANT=onemiss) — the wall is always
 // required; of the other three conditions (WTI, DXY, candle colour / CHoCH) up to `maxMiss` may fail. The live tick never passes it.
-export function matrixSignals(B, dxy3m, wti1m, { from = 0, useWti = true, maxMiss = 0 } = {}) {   // useWti=false: the REPORT-only variant without the whale filter
+/**
+ * WATCH ("almost ready") at closed bar i — ONE place for the live chart label (matrix_tick) and study_matrix_prep_alert.mjs (2026-10-16).
+ * Context per side (WTI as delivered + DXY vs EMA10, the signal's own formulas) and the distance of the bar's extreme to the wall in ATR
+ * (BUY: (low − buyLine)/ATR, SELL: (sellLine − high)/ATR; ≤ 0 = wall touched). WATCH = context aligned AND dist ≤ MATRIX.watchK, no signal.
+ * MEASURED (docs §3 (ar), post-hoc, NOT a pass): at −0.25 ATR, BUY watches became a BUY signal within 20 bars (60 min) 82.3 % of the time
+ * (OOS n 1815, median lead 6 min); SELL watches 0/41 (the SELL trigger almost never fires) → the live label is BUY-only. Chart only (Ashraf).
+ */
+export function matrixArmedAt(B, A, i, dByT, dEma, wti1m) {
+  const b = B[i], a = A[i], L = a ? matrixLevelsAt(B, a, i) : null, d = dByT.get(b.t), de = dEma.get(b.t)
+  if (!L || !d || de == null) return null
+  const w = wtiHourAt(wti1m, b.t + MATRIX.tfMs); if (!w) return null
+  return { buyCtx: !w.bullish && d.c < de, sellCtx: w.bullish && d.c > de, buyDist: (b.l - L.buyLine) / a, sellDist: (L.sellLine - b.h) / a, buyLine: L.buyLine, sellLine: L.sellLine }
+}
+export const WATCH = Object.freeze({ side: 'BUY', k: -0.25, bars: 20, conversion: 0.8226, oos_n: 1815, lead_min: 6, source: 'data/master/matrix_prep_alert_posthoc.json (post-hoc, not a pass)' })
+
+// sellRule (2026-10-16, SELL study docs/MATRIX_SELL_SPEC.md): the SELL trigger condition. 'choch' = close below the last confirmed swing low
+// (Ashraf's Pine rule — THE LIVE DEFAULT); 'red' = red candle (the mirror of the BUY's green candle); 'prevlow' = close below the previous bar's low.
+export function matrixSignals(B, dxy3m, wti1m, { from = 0, useWti = true, maxMiss = 0, sellRule = 'choch' } = {}) {   // useWti=false: the REPORT-only variant without the whale filter
   const M = MATRIX, A = atrArr(B, 14), dEma = emaSeries(dxy3m, M.dxyEma), dByT = new Map(dxy3m.map((b) => [b.t, b]))
   const out = []
   const lastPivotLowAt = confirmedPivots(B).lastLowAt
@@ -93,7 +110,8 @@ export function matrixSignals(B, dxy3m, wti1m, { from = 0, useWti = true, maxMis
     const chochShort = Number.isFinite(lastPivotLowAt[i]) && b.c < lastPivotLowAt[i]
     const fails = (xs) => xs.filter((x) => !x).length
     const buy = buyWall && fails([whaleBull, !dxyBull, b.c > b.o]) <= maxMiss
-    const sell = !buy && sellWall && fails([whaleBear, dxyBull, chochShort]) <= maxMiss
+    const sellTrig = sellRule === 'red' ? b.c < b.o : sellRule === 'prevlow' ? b.c < B[i - 1].l : chochShort
+    const sell = !buy && sellWall && fails([whaleBear, dxyBull, sellTrig]) <= maxMiss
     if (!buy && !sell) continue
     let lo5 = Infinity, hi5 = -Infinity; for (let k = i - 4; k <= i; k++) { if (B[k].l < lo5) lo5 = B[k].l; if (B[k].h > hi5) hi5 = B[k].h }
     const side = buy ? 'BUY' : 'SELL', entry = b.c, sl = buy ? lo5 - M.slPad : hi5 + M.slPad, risk = Math.abs(entry - sl), reward = Math.max(M.minReward, M.rr * risk)

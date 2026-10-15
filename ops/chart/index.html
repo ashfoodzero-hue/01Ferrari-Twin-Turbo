@@ -480,7 +480,11 @@ async function pollMon() {
 setInterval(pollMon, 5000)
 
 // ── FERRARI MATRIX paper trade: neon boxes on the main pane while a trade is open (data/master/matrix_state.json via /api/matrix) ──
-let MX = null, mxLines = [], mxKey = null
+let MX = null, mxLines = [], mxKey = null, wLine = null, wKey = null
+// 👁 WATCH (chart only, 2026-10-16): BUY wall touched + context aligned, no trade — measured 82 % become a BUY signal within 60 min (post-hoc)
+function watchDraw() { const p = panes[0], w = !MX?.open && p.sym === 'XAUUSD' ? MX?.watch : null, key = w ? w.barT + '|' + w.line : null
+  if (key === wKey) return; wKey = key; if (wLine) { try { p.c.removePriceLine(wLine) } catch {} wLine = null }
+  if (w) wLine = p.c.createPriceLine({ price: w.line, color: '#ffd166', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `👁 WATCH BUY ${Math.round(100 * w.measured.conversion)}% — waiting for trigger` }) }
 function mxDraw() {
   const ov = $('mxOverlay'), p = panes[0]; ov.innerHTML = ''
   const o = MX?.open, key = o && p.sym === 'XAUUSD' ? `${o.id}|${!!o.progress?.tp1Hit}|${p.sym}` : null
@@ -506,8 +510,9 @@ async function pollMatrix() {
   const vt = g ? '<span class="pill ok">VALIDATED</span>' : `<span class="pill mid">${esc(m.verdict)}</span> backtest ${m.backtest?.oos_net != null ? (m.backtest.oos_net >= 0 ? '+' : '') + m.backtest.oos_net + ' $/oz per trade, WR ' + (100 * m.backtest.oos_wr).toFixed(1) + '%' : ''} — paper only`
   const lc = m.last_closed ? `<div class="dim" style="margin-top:4px">last: ${m.last_closed.side} ${m.last_closed.outcome} ${m.last_closed.pnl >= 0 ? '+' : ''}${m.last_closed.pnl}/oz · ${m.last_closed.closedAt.slice(11, 16)} UTC</div>` : ''
   $('mxMsg').innerHTML = (o ? `<b class="${o.sig.side === 'BUY' ? 'green' : 'red'}">${o.sig.side} open</b> @ ${fmt(o.sig.entry)} · SL ${fmt(o.sig.sl)} · TP1 ${fmt(o.sig.tp1)} · TP2 ${fmt(o.sig.tp2)}${o.progress?.tp1Hit ? ' · <span class="warn">TP1 hit, stop at entry</span>' : ''}<br>`
+    : m.watch ? `<b class="warn">👁 WATCH BUY</b> — wall touched, waiting for the green trigger candle · measured ${(100 * m.watch.measured.conversion).toFixed(1)}% become a BUY signal within 60 min (post-hoc, chart only — not a trade)<br>`
     : (m.data_live === false ? `<span class="red">no new setups — data not live (${esc(m.data_why)})</span><br>` : 'waiting for a setup<br>')) + vt + lc + checklist(m.structure)
-  mxDraw(); strDraw(); pollMon()
+  watchDraw(); mxDraw(); strDraw(); pollMon()
 }
 panes[0].ch.timeScale().subscribeVisibleLogicalRangeChange(() => mxDraw())
 new ResizeObserver(() => mxDraw()).observe($('c0'))

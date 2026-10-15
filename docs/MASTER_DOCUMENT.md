@@ -558,3 +558,22 @@ without duplications … only use the real Win results, and ignore the rest."
   - Cause: the last condition (the trigger candle) is a per-bar event that nothing before it predicts at 98 %. Conversion is measured to raw signals, so a live trade (one at a time) would convert lower still.
   - **Side finding:** 9,929 raw signals in 2 y, of which **4 are SELLs**. The Pine SELL (ceiling wall + WTI bullish + DXY bullish + close below the last swing low) almost never happens, which is why the SCALP is BUY-only in practice.
   - Nothing was wired. No prepare alert is sent.
+
+- **(as) 2026-10-16 — Matrix SELL study: NO PASS (0/6). Chart WATCH label added. Live app ⇄ install package auto-sync.**
+  - **SELL** (spec `docs/MATRIX_SELL_SPEC.md`, `study_matrix_sell.mjs` → `matrix_sell_study.json`; red line WR ≥ 85 % + money).
+    - choch (live): 4 signals in 2 y, underpowered.
+    - **red candle + highwr exit: OOS WR 88.1 %** (n 109), but $/t +0.25 with LB −0.67, TRAIN −1.25, and on 13 y no-WTI 87.9 % WR at −$0.34/t → FAIL.
+    - prevlow + highwr: 90.9 % (n 33, underpowered), but 13 y −$0.38.
+    - Native exits: WR 9-36 %.
+    - Same as the BUY's 85 % exit: a high WR is bought with a 3R stop / 0.25R target and loses money over 13 y.
+    - `matrixSignals` gained a `sellRule` option; the default `choch` is unchanged.
+  - **👁 WATCH BUY (chart only, Ashraf's option 2):**
+    - Shown when the BUY context is aligned and the low is ≥ 0.25 ATR through the buy wall, with no trade open.
+    - The one rule is `matrixArmedAt` / `WATCH` in `ferrariMatrix.js`, shared by `matrix_tick` (writes `matrix_state.watch`) and the study.
+    - Measured, post-hoc: 82.3 % become a BUY signal within 60 min (OOS n 1,815, lead 6 min). SELL watches: 0/41, so the label is BUY-only.
+    - Shown as a dashed gold line and a panel line. Never sent to Telegram.
+    - Smoke `smoke_matrix_watch.mjs` (provenance + mechanism): 3/3.
+  - **Sync (Ashraf: "the attached stream + the independent app must always meet the same settings and improvements"):**
+    - `.git/hooks/post-commit` runs `build_package.mjs --code` (< 1 s) after every commit.
+    - The `--code` mode keeps `built_at`, the data-snapshot date the installer tops up from.
+    - Smoke `smoke_package_sync.mjs` checks every committed code / settings / doc file byte for byte, finds no stale files, and confirms no keys and the hook present.

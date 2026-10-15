@@ -14,7 +14,8 @@ import { loadDxyBars, DXY_WEIGHTS } from '../src/data/dxy.js'
 import { wtiBars } from '../src/data/wti.js'
 import { waitStreamSettled, streamStatus } from '../src/data/tickStream.js'
 import { pidAlive } from '../src/core/pidAlive.js'
-import { matrixSignals, resolveMatrixTrade, matrixStructure, MATRIX } from '../src/master/ferrariMatrix.js'
+import { matrixSignals, resolveMatrixTrade, matrixStructure, matrixArmedAt, emaSeries, WATCH, MATRIX } from '../src/master/ferrariMatrix.js'
+import { atr as atrArr } from '../src/core/indicators.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
 import { alertSetup, scalpSetup } from '../src/master/tradeAlert.js'
 
@@ -61,6 +62,13 @@ if (!out.open && st.live && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) 
   }
 }
 if (!out.open && !st.live) console.log(`  ⛔ matrix: no new trade — data not live (${st.why})`)
+// 👁 WATCH (2026-10-16, Ashraf "option 2 — chart only"): BUY context aligned + the low ≥ 0.25 ATR through the buy wall, no trade, on live data.
+// ONE rule: matrixArmedAt (the study's own function). Measured 82.3 % → a BUY signal within 60 min (post-hoc). NEVER sent to Telegram.
+out.watch = null
+if (!out.open && st.live && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
+  const dEma = emaSeries(D, MATRIX.dxyEma), arm = matrixArmedAt(B, atrArr(B, 14), B.length - 1, new Map(D.map((b) => [b.t, b])), dEma, W)
+  if (arm?.buyCtx && arm.buyDist <= WATCH.k) { out.watch = { side: 'BUY', barT: B.at(-1).t, line: +arm.buyLine.toFixed(2), dist_atr: +arm.buyDist.toFixed(2), measured: WATCH }; console.log(`  👁 matrix WATCH BUY: wall touched (${arm.buyDist.toFixed(2)} ATR), waiting for the green trigger candle`) }
+}
 if (STATIC) { console.log(JSON.stringify({ ...out, open: out.open && { ...out.open, ctx: undefined } }, null, 1)); process.exit(0) }
 fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
