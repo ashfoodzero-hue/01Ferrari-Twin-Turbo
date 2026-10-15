@@ -544,3 +544,5 @@ without duplications … only use the real Win results, and ignore the rest."
     - registration under a test name worked, then the test task was deleted;
     - the shortcut command works;
     - the gold top-up rebuilt 4,906,090 bars, identical to the live store.
+
+  - **2026-10-16 (Ashraf: "use the Turbo 2 Telegram channel for alerts"):** TWIN_TELEGRAM_BOT_TOKEN / TWIN_TELEGRAM_CHAT_ID = Turbo 2's bot (@ferrari_turbo2_bot) and its group "Ferrari Trading Signals" (verified by getMe + getChat; no test message posted). SCALP + SWING TRADE alerts are live from the next tick.
