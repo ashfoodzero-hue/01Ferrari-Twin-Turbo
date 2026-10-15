@@ -491,3 +491,56 @@ without duplications … only use the real Win results, and ignore the rest."
     - SWING TRADE forward arms 1 + 2, every 15 min;
     - reconcile at start, the watchdog, the chart cache at 2 min.
   - To restore: `git checkout checkpoint-2026-10-16-full-app-settings-2`, or copy the folder back and re-add `.env`.
+
+- **(aq) 2026-10-16 — TELEGRAM "TRADE SETUP READY" + ⚙ API KEYS PAGE + INSTALL PACKAGE.** Ashraf asked for:
+  - a folder to install the app on any PC with the full settings, asking for the API keys;
+  - Telegram messages with Entry, SL, TP1, TP2, TP3;
+  - a tab to save all the keys;
+  - the copy to read ticks the same way as this one.
+
+  **Telegram alerts** (`src/master/tradeAlert.js`):
+  - Hooks:
+    - `matrix_tick.mjs` sends SCALP after the state write;
+    - `forward_buyd1.mjs` sends SWING TRADE for each new signal.
+  - Each setup id is sent once (`data/telegram/alerted.json`).
+  - A setup recorded more than 30 min after its bar is never sent (`TWIN_ALERT_MAX_LATE_MIN`).
+  - Switches: `TWIN_ALERT_SCALP`, `TWIN_ALERT_SWING`.
+  - **TP3 is labelled, not faked:**
+    - SCALP TP3 = TP2 + (TP2 − TP1);
+    - SWING TP2 / TP3 = equal steps beyond the single measured target;
+    - every one of these is marked "reference — not in the measured exit".
+  - Found: the code reads `TWIN_TELEGRAM_*`, but `.env` held only `TURBO_TELEGRAM_*` (Turbo 2's channel), so **every alert until now was a dry run**. Credentials go in through the ⚙ page.
+  - Smoke `smoke_trade_alert.mjs`: 7/7.
+
+  **⚙ API keys page** (`scripts/run_settings.mjs`, http://127.0.0.1:7445):
+  - Supervised by run_twin (`ensureSettings`); the ⚙ API keys button is on the chart.
+  - The chart server stays read-only.
+  - Security:
+    - localhost only; the Host header is checked;
+    - every POST needs a per-start page token and the same Origin;
+    - keys are never returned (only ••••last-4);
+    - blank = keep; every other `.env` line is kept; `.env.previous` is kept.
+  - Live tests: Polygon (history + tick socket), Telegram (getMe + a test message), Databento, FRED.
+  - Verified with the real keys: Polygon history ✓ (5,518 bars), Databento ✓, FRED ✓.
+  - Smoke `smoke_settings.mjs`: 5/5.
+
+  **MEASURED 2026-10-15 21:22 UTC:** Polygon allows ONE tick connection per key, and a new socket knocks the running one off.
+  - The live stream got `max_connections`, reconnected 1 s later, and REST refilled the gap. The market was in its daily break.
+  - So the page never opens a second socket while this PC's stream is live.
+  - The installer warns that the same key cannot stream on two PCs.
+
+  **Install package** (`INSTALL_PACKAGE/`):
+  - `build_package.mjs` → `INSTALL_PACKAGE/FerrariTwinTurbo/` (gitignored):
+    - full = code + settings + data, ~16 GB; `--lite` = no history;
+    - never copies `.env`, locks, heartbeats or the halt marker; self-checks.
+  - `INSTALL.cmd` → `ops/setup.mjs`:
+    - checks Node ≥ 22; clears leftovers; writes launchers for that folder and that node.exe;
+    - opens the ⚙ keys page;
+    - history top-up: removes the build-month and later `_parts` first, because the import rebuilds `1m.jsonl` from the parts and a partial part would drop the streamed minutes;
+    - registers the watchdog task (every 5 min + at logon, local-time boundary) and a Desktop shortcut; starts the app.
+  - **Guard:** a watchdog task for another folder means the copy is not registered and not started (default no), so two copies never fight for the tick connection.
+  - Tested in the package on this PC:
+    - the guard kept the live task;
+    - registration under a test name worked, then the test task was deleted;
+    - the shortcut command works;
+    - the gold top-up rebuilt 4,906,090 bars, identical to the live store.

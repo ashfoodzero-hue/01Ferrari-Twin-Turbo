@@ -51,7 +51,19 @@ async function ensureChart() {
   fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'run_chart.mjs', event: 'spawn', pid: chartChild.pid }) + '\n')
   chartChild.on('exit', (code) => { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'run_chart.mjs', event: 'exit', exit: code }) + '\n'); chartChild = null })
 }
-const shutdown = () => { try { streamChild?.kill() } catch { /* */ } try { chartChild?.kill() } catch { /* */ } try { fs.unlinkSync(LOCK) } catch { /* */ } process.exit(0) }
+// ── 1c. the ⚙ API keys page (http://127.0.0.1:7445 — scripts/run_settings.mjs, 2026-10-16), supervised the same way ─────────────
+let setChild = null, setNextCheck = 0
+async function ensureSettings() {
+  if (setChild && setChild.exitCode === null) return
+  if (Date.now() < setNextCheck) return
+  setNextCheck = Date.now() + 60000
+  try { const r = await fetch('http://127.0.0.1:7445/api/state', { signal: AbortSignal.timeout(2000) }); if (r.ok) return } catch { /* not answering → start it */ }
+  const out = fs.openSync(path.join(TURBO.master, 'settings.log'), 'a')
+  setChild = spawn(process.execPath, [path.join(here, 'run_settings.mjs')], { stdio: ['ignore', out, out], windowsHide: true })
+  fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'run_settings.mjs', event: 'spawn', pid: setChild.pid }) + '\n')
+  setChild.on('exit', (code) => { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'run_settings.mjs', event: 'exit', exit: code }) + '\n'); setChild = null })
+}
+const shutdown = () => { try { streamChild?.kill() } catch { /* */ } try { chartChild?.kill() } catch { /* */ } try { setChild?.kill() } catch { /* */ } try { fs.unlinkSync(LOCK) } catch { /* */ } process.exit(0) }
 process.on('SIGINT', shutdown); process.on('SIGTERM', shutdown)
 
 // ── 2. the bar-aligned paper tick ───────────────────────────────────────────────────────────────────────────────
@@ -87,7 +99,7 @@ for (;;) {
   cycle++
   const now = Date.now()
   const lastClose = Math.floor(now / 900000) * 900000, last3m = Math.floor(now / 180000) * 180000
-  ensureStream(); await ensureChart()
+  ensureStream(); await ensureChart(); await ensureSettings()
   if (marketOpen(last3m - 1) && now - last3m >= 4000 && !matrixTicking && (lastMatrixBar == null || lastMatrixBar < last3m)) matrixTick(last3m)
   if (marketOpen(lastClose - 1) && now - lastClose >= TICK_OFFSET_MS && !ticking && (lastTickBar == null || Date.parse(lastTickBar) < lastClose)) await tick(lastClose)
   // reconciliation of the 1m store vs Polygon's current bars (corrections.js) — WHEN and HOW FAR BACK: src/core/reconcilePlan.js (every app

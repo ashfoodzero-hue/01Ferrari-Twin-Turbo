@@ -1,6 +1,7 @@
 // ════════════════════════════════════════════════════════════════════════════════
 // inv90/forward_buyd1.mjs — FORWARD TEST (paper, record-only) of the investigation's closest candidate BUY_D1-x (2026-10-11; Ashraf: "continue").
-// docs/INVESTIGATION_90WR_2026-10-11.md → "Forward test". NEVER trades, never alerts; nothing live reads it.
+// docs/INVESTIGATION_90WR_2026-10-11.md → "Forward test". NEVER trades. Since 2026-10-16 a NEW, fresh signal sends one Telegram
+// "TRADE SETUP READY — SWING TRADE" notice (src/master/tradeAlert.js; stale/backfilled signals are never sent).
 // ────────────────────────────────────────────────────────────────────────────────
 // FROZEN once (first run): the GBDT trained on ALL research rows with a known BUY_D1 outcome (features = dataset features − A + the 10
 // cross-market features), and the threshold = the pooled rule over every OOS year 2016-2026 (WR ≥ 92 %, mean > 0, n ≥ 30, D1 policy).
@@ -12,6 +13,7 @@
 // PRE-REGISTERED forward verdict: none before 100 resolved trades; then the same G2/G3 as Part 4 (WR ≥ 90 % with Wilson LB ≥ 88 %, mean $ > 0
 // with bootstrap LB > 0). At 0.33/day expect ~ 10 months to 100 trades.
 // ════════════════════════════════════════════════════════════════════════════════
+import '../../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
@@ -22,6 +24,7 @@ import { atr } from '../../src/core/indicators.js'
 import { makeSpreadAt, loadLiveSpreads } from '../../src/master/spreadModel.js'
 import { fitBins, binAll, train, predict } from './gbdt.mjs'
 import { wilsonLB } from './gate.mjs'
+import { alertSetup, swingSetup } from '../../src/master/tradeAlert.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url)), DIR = path.join(TURBO.root, 'data', 'inv90'), FD = path.join(DIR, 'forward'); fs.mkdirSync(FD, { recursive: true })
 // ARM (2026-10-15, Ashraf: "add it"): default = the 92 % arm (unchanged). --arm=freq = the ≈ 1 trade/day arm of Part 7b: the STRONG GBDT
@@ -113,3 +116,5 @@ const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, c
   verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 0.9 && wilsonLB(w, rs.length, 1.96) >= 0.88 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS (check bootstrap LB)' : 'FORWARD FAIL') }
 fs.writeFileSync(path.join(AD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
 console.log(`forward ${ARMC.name}: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)
+// 📨 Telegram (2026-10-16): each NEW signal, once; tradeAlert skips anything recorded > TWIN_ALERT_MAX_LATE_MIN after its bar (backfill / catch-up)
+for (const s of add) { const r = await alertSetup(swingSetup(s, { arm: ARM, summary: sum })); console.log(`  📨 telegram SWING ${s.id}: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }

@@ -16,6 +16,7 @@ import { waitStreamSettled, streamStatus } from '../src/data/tickStream.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { matrixSignals, resolveMatrixTrade, matrixStructure, MATRIX } from '../src/master/ferrariMatrix.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
+import { alertSetup, scalpSetup } from '../src/master/tradeAlert.js'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -35,7 +36,7 @@ const [B, D, W, M1] = await Promise.all([
   loadBars('XAUUSD', '1m', { from: (state.open?.sig?.decisionT ?? lastClose) - 60000 }).then((r) => r.bars.filter((b) => b.t + 60000 <= lastClose)),
 ])
 const spreadAt = makeSpreadAt({ live: loadLiveSpreads(quotesFile('XAUUSD'), { from: lastClose - 2 * 86400000 }) })
-let structure = null; try { structure = B.length && B.at(-1).t === lastClose - MATRIX.tfMs ? matrixStructure(B, D, W) : null } catch (e) { console.error('  ⚠ matrix structure: ' + e.message) }
+let opened = null, structure = null; try { structure = B.length && B.at(-1).t === lastClose - MATRIX.tfMs ? matrixStructure(B, D, W) : null } catch (e) { console.error('  ⚠ matrix structure: ' + e.message) }
 const out = { structure, at: new Date(now).toISOString(), bar: new Date(lastClose - MATRIX.tfMs).toISOString(), data_live: st.live, data_why: st.why, verdict, open: state.open, last_closed: state.last_closed ?? null }
 
 // 2) manage the open trade
@@ -55,6 +56,7 @@ if (!out.open && st.live && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) 
   if (s && (!state.last_closed || Date.parse(state.last_closed.closedAt) < s.decisionT)) {
     out.open = { id: `MATRIX@${s.decisionT}`, sig: { ...s, ctx: undefined }, ctx: s.ctx, opened: new Date(now).toISOString(), status: 'OPEN', verdict: verdict.verdict }
     if (!STATIC) fs.appendFileSync(JOURNAL, JSON.stringify({ ...out.open, status: 'OPENED' }) + '\n')
+    opened = s
     console.log(`  🟩 matrix ${s.side} @ ${s.entry.toFixed(2)} · SL ${s.sl.toFixed(2)} · TP1 ${s.tp1.toFixed(2)} · TP2 ${s.tp2.toFixed(2)} (${verdict.verdict})`)
   }
 }
@@ -62,3 +64,5 @@ if (!out.open && !st.live) console.log(`  ⛔ matrix: no new trade — data not 
 if (STATIC) { console.log(JSON.stringify({ ...out, open: out.open && { ...out.open, ctx: undefined } }, null, 1)); process.exit(0) }
 fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
+// 📨 Telegram "TRADE SETUP READY" (2026-10-16) — after the box is written, once per trade; never blocks or breaks the tick
+if (opened) { const r = await alertSetup(scalpSetup(opened, { verdict: verdict.verdict })); console.log(`  📨 telegram SCALP: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }
