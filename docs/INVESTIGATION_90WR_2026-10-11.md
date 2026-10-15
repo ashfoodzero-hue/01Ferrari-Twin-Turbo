@@ -221,3 +221,7 @@ In 2026: model 92.9 % / +$7.62 vs always-buy 81.5 % / −$12.71. A real lift, no
 - Target ≈ $15, stop ≈ $148 per oz at the current ATR. One stop wipes out about 10 targets.
 
 > **Restored 2026-10-14.** This section, `forward_buyd1.mjs`, the `--forward` modes of `build_dataset` / `build_features2` and the hourly hook in `run_twin.mjs` were accidentally reverted by commit 58676fd (a `git add -A` over a stale working copy). Because of that, the hook never ran: the ledger stayed at its 2026-10-11 manual run until this restore.
+
+**Part 8 (2026-10-15, Ashraf: "confirm our 92 % and try to make it 95 %"):** the same pooled rule asking **WR ≥ 95 %** from earlier years (`part4_select --pooled --sfx=_x|_xs --wr=0.95`) → **no year ever has a qualifying threshold** (≥ 30 trades at ≥ 95 % and mean > 0 in the pooled history) → 0 trades.
+- With this model, 95 % does not exist as a repeatable level. 92 % at about 0.3/day remains the frontier.
+- Confirmation of the 92 % comes only from the live forward ledger (3/3 wins so far; verdict at 100 resolved). K = 69.
