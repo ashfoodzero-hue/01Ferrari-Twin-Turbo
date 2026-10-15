@@ -546,3 +546,15 @@ without duplications … only use the real Win results, and ignore the rest."
     - the gold top-up rebuilt 4,906,090 bars, identical to the live store.
 
   - **2026-10-16 (Ashraf: "use the Turbo 2 Telegram channel for alerts"):** TWIN_TELEGRAM_BOT_TOKEN / TWIN_TELEGRAM_CHAT_ID = Turbo 2's bot (@ferrari_turbo2_bot) and its group "Ferrari Trading Signals" (verified by getMe + getChat; no test message posted). SCALP + SWING TRADE alerts are live from the next tick.
+
+- **(ar) 2026-10-16 — Matrix "prepare" alert at 98 %: NO PASS (0/9).** Ashraf asked for a preparation alert before the trigger, at 98 %.
+  - Spec `docs/MATRIX_PREP_ALERT_SPEC.md` (pre-registered); study `study_matrix_prep_alert.mjs` → `matrix_prep_alert_study.json`.
+  - Window: WTI 2 y (the live rule).
+  - Definition: armed = context aligned (WTI as delivered + DXY vs EMA10) and price within k·ATR of the wall, with no signal yet.
+  - Pre-registered grid, OOS:
+    - best conversion 66.2 % (k 0.25, N 20 bars, 12.5 alerts/day, median lead 6 min);
+    - recall ≤ 49 %: most trades have no armed bar before them.
+  - Post-hoc (`matrix_prep_alert_posthoc.json`, not a pass): with the wall already touched and only the trigger candle missing, the best is 80.4 % (−0.25 ATR, N 20, 8.9 alerts/day, lead 6 min).
+  - Cause: the last condition (the trigger candle) is a per-bar event that nothing before it predicts at 98 %. Conversion is measured to raw signals, so a live trade (one at a time) would convert lower still.
+  - **Side finding:** 9,929 raw signals in 2 y, of which **4 are SELLs**. The Pine SELL (ceiling wall + WTI bullish + DXY bullish + close below the last swing low) almost never happens, which is why the SCALP is BUY-only in practice.
+  - Nothing was wired. No prepare alert is sent.
