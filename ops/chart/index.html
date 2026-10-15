@@ -51,6 +51,7 @@
   .nbox.cyan { border-color:#3ff0ff; background:#3ff0ff1c; color:#3ff0ff; box-shadow:0 0 10px #3ff0ff88, inset 0 0 8px #3ff0ff44; }
   .nbox.violet { border-color:#c77dff; background:#c77dff1a; color:#c77dff; box-shadow:0 0 10px #c77dff88, inset 0 0 8px #c77dff44; border-style:dashed; }
   .nbox.done { opacity:.45; box-shadow:none; }
+  .mxbox.fwdone { opacity:.35; box-shadow:none; }
   .ntag { position:absolute; font:800 10px system-ui; color:#0d1117; padding:1px 6px; border-radius:3px; white-space:nowrap; box-shadow:0 0 8px #0008; }
   .fwbox { position:absolute; border:1.5px solid #e3b341; background:#e3b3411a; border-radius:3px; font:600 10px/1.2 system-ui; color:#e3b341; padding:1px 4px; white-space:nowrap; overflow:visible; }
   .fwbox.win { border-color:#3fb950; background:#3fb9501f; color:#56d364; } .fwbox.loss { border-color:#f85149; background:#f851491f; color:#ff7b72; }
@@ -405,9 +406,12 @@ function fwDraw() {
     // NEON box (2026-10-15, Ashraf: "build the neon boxes … name the box type"): gold = FWD 92 % (swing), cyan = FWD1 1/day (swing);
     // each label carries its type, its backtest record and the live tally; a finished trade stays faintly with its result
     const fr = FW.k === 'freq', S = FW.summary, live = S?.resolved ? `live ${Math.round(S.wr * S.resolved)}/${S.resolved}` : 'live 0/0'
-    const d = document.createElement('div'); d.className = 'nbox ' + (fr ? 'cyan' : 'gold') + (t.status !== 'OPEN' ? ' done' : '')
-    d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(3, Math.abs(ya - yb)) + 'px'
-    d.textContent = `TP ${fmt(t.target)}`; ov.appendChild(d)
+    // the SAME two-zone neon style as the scalp box (Ashraf 2026-10-15, his Pine look): green SNIPER TARGET ZONE entry → TP, pink RISK
+    // PROTECTION ZONE entry → SL (clipped by the pane when the wide swing stop is off-screen); a finished trade stays faint with its result
+    const zone = (cls, a, b, label) => { const za = y(a), zb = y(b); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (t.status !== 'OPEN' ? ' fwdone' : '')
+      d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(za, zb) + 'px'; d.style.height = Math.max(2, Math.abs(za - zb)) + 'px'; d.textContent = label; ov.appendChild(d) }
+    zone('tgt', t.entry, t.target, `SNIPER TARGET ZONE · TP ${fmt(t.target)} (+${(t.target - t.entry).toFixed(2)})`)
+    zone('risk', t.entry, t.stop, `RISK PROTECTION ZONE (SL) ${fmt(t.stop)} (−${(t.entry - t.stop).toFixed(2)})`)
     const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : fr ? '#3ff0ff' : '#ffd23f'
     tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (fr ? 30 : 15)) + 'px'
     tag.textContent = `${fr ? 'SWING TRADE · 1/day' : 'SWING TRADE · 92%'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)} · ${fr ? 'bt 90.4%' : 'bt 92.0%'} · ${live} · paper`
@@ -432,7 +436,8 @@ function rtDraw() {
     tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - 15) + 'px'
     tag.textContent = `RETEST ${b.side} ${fmt(b.entry)} · SL ${fmt(b.sl)} · TP1 ${fmt(b.tp1)} · TP2 ${fmt(b.tp2)} · ${b.status} · UNVALIDATED (${rec})`; ov.appendChild(tag) }
 }
-setInterval(pollRt, 30000); pollRt(); setInterval(rtDraw, 1000)
+// RETEST boxes removed from the chart 2026-10-15 (Ashraf: clutter; 37 % WR is far below his 85-92 % bar) — /api/retest stays for research
+// setInterval(pollRt, 30000); pollRt(); setInterval(rtDraw, 1000)
 
 // ── IN-TRADE MONITOR: live chance of TP1 / TP2 for the open trade (/api/monitor; what may be shown is decided by study_trade_monitor.mjs) ──
 let MON = null
@@ -468,8 +473,8 @@ function mxDraw() {
   const box = (cls, a, b, label) => { const ya = y(a), yb = y(b); if (ya == null || yb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls
     d.style.left = x0 + 'px'; d.style.width = Math.max(0, x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(2, Math.abs(ya - yb)) + 'px'; d.textContent = label; ov.appendChild(d) }
   const pips = (v) => Math.round(Math.abs(v) * 10)
-  box('tgt', s.entry, s.tp2, `SCALP TARGET ZONE · TP1 ${fmt(s.tp1)} (+${pips(s.reward)}p) · TP2 ${fmt(s.tp2)} (+${pips(1.5 * s.reward)}p)`)
-  box('risk', s.entry, s.sl, `SCALP SL ZONE ${fmt(s.sl)} (−${pips(s.risk)}p)`)
+  box('tgt', s.entry, s.tp2, `SNIPER TARGET ZONE (MIN 100 PIPS) · TP1 ${fmt(s.tp1)} (+${pips(s.reward)}p) · TP2 ${fmt(s.tp2)} (+${pips(1.5 * s.reward)}p)`)
+  box('risk', s.entry, s.sl, `RISK PROTECTION ZONE (SL) ${fmt(s.sl)} (−${pips(s.risk)}p)`)
   const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
     t.textContent = `SCALP ${s.side} ENTRY ${fmt(s.entry)} · SL ${fmt(s.sl)} · TP1 ${fmt(s.tp1)} · TP2 ${fmt(s.tp2)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
 }
