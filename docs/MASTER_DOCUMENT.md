@@ -481,3 +481,13 @@ without duplications … only use the real Win results, and ignore the rest."
 
   - Post-hoc only (not a pass, side not pre-registered): the 15m D+S 2 R SELL side shows +$0.47.
   - The app's sell stays as it is: no rule earned a place.
+
+- **(ap) 2026-10-16 — SECOND FULL-APP CHECKPOINT (Ashraf: "save this as a second check point for the full app settings").**
+  - Full copy (no `.env`): `C:\01Ferrari Twin Turbo CHECKPOINTS\2026-10-16_full-app-settings-2`. File counts match the live app: docs 12, ops 4, scripts 132, src 83, data 4,407 (15.5 GB).
+  - Git tag `checkpoint-2026-10-16-full-app-settings-2` → commit 4bebdfd.
+  - State saved:
+    - Matrix SCALP box in the SNIPER TARGET / RISK PROTECTION style;
+    - SCALP 85 % paper replay (stop 3r / tp 0.25r; it loses money);
+    - SWING TRADE forward arms 1 + 2, every 15 min;
+    - reconcile at start, the watchdog, the chart cache at 2 min.
+  - To restore: `git checkout checkpoint-2026-10-16-full-app-settings-2`, or copy the folder back and re-add `.env`.
