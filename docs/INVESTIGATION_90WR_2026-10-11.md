@@ -225,3 +225,11 @@ In 2026: model 92.9 % / +$7.62 vs always-buy 81.5 % / −$12.71. A real lift, no
 **Part 8 (2026-10-15, Ashraf: "confirm our 92 % and try to make it 95 %"):** the same pooled rule asking **WR ≥ 95 %** from earlier years (`part4_select --pooled --sfx=_x|_xs --wr=0.95`) → **no year ever has a qualifying threshold** (≥ 30 trades at ≥ 95 % and mean > 0 in the pooled history) → 0 trades.
 - With this model, 95 % does not exist as a repeatable level. 92 % at about 0.3/day remains the frontier.
 - Confirmation of the 92 % comes only from the live forward ledger (3/3 wins so far; verdict at 100 resolved). K = 69.
+
+**Forward test ARM 2 (2026-10-15, Ashraf: "add it"):** `forward_buyd1.mjs --arm=freq --no-build`, in its own dir `data/inv90/forward_freq/`, run hourly in `run_twin` right after arm 1.
+- **Model:** the Part 7a strong GBDT (400 trees, depth 5), trained once on all research rows.
+- **Threshold:** frequency-anchored on the pooled 2016-2026 walk-forward scores (`scores_BUY_D1_xs.bin`): the highest score giving ≥ 1.0 trade / trading day → **0.9486** (pooled 3,552 t, 90.43 % WR, +$0.42/t).
+- **Catch-up since the cutoff:** 5 signals / 5 wins, recorded late.
+- **Verdict rule:** the same as arm 1 (100 resolved; WR ≥ 90 % with LB ≥ 88 %, mean > 0).
+- **Checks:** arm 1 re-verified unchanged (+0 signals); both arms verified running on schedule at 11:23 UTC; chart shows FWD (yellow) and FWD1 (cyan).
+- Checkpoint before the change: `checkpoint-2026-10-15-before-forward-arm2`.

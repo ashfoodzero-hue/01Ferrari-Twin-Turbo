@@ -116,8 +116,12 @@ for (;;) {
   // Catch-up by design (scores every closed bar since its last scan), so a missed hour loses nothing.
   const hourKey = now - (now % 3600000)
   if (new Date(now).getUTCMinutes() >= 20 && lastFwd !== hourKey && !fwdRunning) { fwdRunning = true; lastFwd = hourKey
-    execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs')], { timeout: 20 * 60000, windowsHide: true }, (err, stdout, stderr) => { fwdRunning = false
-      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+    execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs')], { timeout: 20 * 60000, windowsHide: true }, (err, stdout, stderr) => {
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
+      // arm 2 (2026-10-15): the ≈ 1 trade/day arm, right after arm 1 on the features arm 1 just rebuilt (--no-build); only if arm 1 succeeded
+      if (err) { fwdRunning = false; return }
+      execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs'), '--arm=freq', '--no-build'], { timeout: 20 * 60000, windowsHide: true }, (e2, so2, se2) => { fwdRunning = false
+        fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs --arm=freq', exit: e2 ? (e2.code ?? 'killed') : 0, out: String(so2 || '').slice(-300), tail: String(se2 || '').slice(-300) }) + '\n') }) }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }

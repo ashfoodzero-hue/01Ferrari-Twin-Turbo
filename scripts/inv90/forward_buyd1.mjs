@@ -24,7 +24,13 @@ import { fitBins, binAll, train, predict } from './gbdt.mjs'
 import { wilsonLB } from './gate.mjs'
 
 const here = path.dirname(fileURLToPath(import.meta.url)), DIR = path.join(TURBO.root, 'data', 'inv90'), FD = path.join(DIR, 'forward'); fs.mkdirSync(FD, { recursive: true })
-const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.join(FD, 'model_BUY_D1_x.json'), LEDGER = path.join(FD, 'ledger.jsonl'), TM = 0.2, SM = 2
+// ARM (2026-10-15, Ashraf: "add it"): default = the 92 % arm (unchanged). --arm=freq = the ≈ 1 trade/day arm of Part 7b: the STRONG GBDT
+// (400 trees, depth 5) and the FREQUENCY-ANCHORED threshold (highest score whose pooled 2016-2026 policy gives ≥ 1.0 trade/trading day).
+// It has its own model / ledger / summary in data/inv90/forward_freq/ and reuses the forward features of data/inv90/forward/ (--no-build).
+const ARM = process.argv.includes('--arm=freq') ? 'freq' : 'p92', AD = ARM === 'freq' ? path.join(DIR, 'forward_freq') : FD; fs.mkdirSync(AD, { recursive: true })
+const ARMC = ARM === 'freq' ? { name: 'BUY_D1-xs (≈1/day)', idp: 'BUY_D1xs_', model: 'model_BUY_D1_xs.json', scores: 'scores_BUY_D1_xs.bin', train: { seed: 2027, trees: 400, depth: 5, lr: 0.03, minLeaf: 200, sub: 0.5 } }
+  : { name: 'BUY_D1-x', idp: 'BUY_D1x_', model: 'model_BUY_D1_x.json', scores: 'scores_BUY_D1_x.bin', train: { seed: 2027 } }
+const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.join(AD, ARMC.model), LEDGER = path.join(AD, 'ledger.jsonl'), TM = 0.2, SM = 2
 const readMeta = (d) => JSON.parse(fs.readFileSync(path.join(d, 'dataset_meta.json'), 'utf8'))
 const f32 = (f) => { const b = fs.readFileSync(f); return new Float32Array(b.buffer, b.byteOffset, b.length / 4) }
 
@@ -35,28 +41,33 @@ if (!fs.existsSync(MODEL)) {
   const FEATS = [...meta.features.filter((f) => f !== 'A'), ...X2m.names], F = FEATS.length, X = new Float32Array(n * F), y = new Uint8Array(n), rows = []
   for (let r = 0; r < n; r++) { let k = 0; for (const [i, f] of meta.features.entries()) if (f !== 'A') X[r * F + k++] = D[r * W + i]; for (let j = 0; j < X2m.width; j++) X[r * F + k++] = X2[r * X2m.width + j]
     const v = OD[r * O.width + oc]; if (Number.isFinite(v)) { rows.push(r); y[r] = v > 0 ? 1 : 0 } }
-  const edges = fitBins(X, n, F, rows), Xb = binAll(X, n, F, edges), model = train(Xb, n, F, y, rows, { seed: 2027 })
+  const edges = fitBins(X, n, F, rows), Xb = binAll(X, n, F, edges), model = train(Xb, n, F, y, rows, ARMC.train)
   const P4 = JSON.parse(fs.readFileSync(path.join(DIR, 'part4_pooled_x_results.json'), 'utf8')).candidates.BUY_D1.picks
   // threshold for the forward period = the pooled rule over ALL OOS years 2016-2026 (exactly what part4_select would pick for 2027)
-  const S = f32(path.join(DIR, 'scores_BUY_D1_x.bin')), T = new Float64Array(fs.readFileSync(path.join(DIR, 'dataset_times.bin')).buffer.slice(0))
+  const S = f32(path.join(DIR, ARMC.scores)), T = new Float64Array(fs.readFileSync(path.join(DIR, 'dataset_times.bin')).buffer.slice(0))
   const prev = []; for (let r = 0; r < n; r++) if (Number.isFinite(S[r]) && new Date(T[r]).getUTCFullYear() >= 2016) prev.push(r)
   const sc = prev.map((r) => S[r]).sort((a, b) => b - a); let thr = null, pick = null
   const pol = (th) => { const out = [], open = []; let day = -1, nd = 0, last = -Infinity
     for (const r of prev) { const t = T[r], d = Math.floor(t / DAY); if (d !== day) { day = d; nd = 0 } const net = OD[r * O.width + oc]; if (!Number.isFinite(net) || S[r] < th) continue
       while (open.length && open[0] <= t) open.shift(); if (nd >= 5 || open.length >= 5 || t - last < 3600000) continue
       open.push(t + OD[r * O.width + O.cols.indexOf('BUY_D1_dur')] * 60000); open.sort((a, b) => a - b); nd++; last = t; out.push(net) } return out }
-  for (const q of [0.5, 0.3, 0.2, 0.15, 0.1, 0.075, 0.05, 0.03, 0.02, 0.015, 0.01, 0.0075, 0.005, 0.003, 0.002, 0.001, 0.0005]) { const th = sc[Math.max(0, Math.floor(q * sc.length) - 1)], tr = pol(th)
+  if (ARM === 'freq') {   // Part 7b anchor: the HIGHEST threshold whose pooled policy averages ≥ 1.0 trade per trading day (part7_freq.mjs grid)
+    const tdays = new Set(prev.map((r) => Math.floor(T[r] / DAY))).size
+    for (const q of Array.from({ length: 80 }, (_, i) => 0.0005 * Math.pow(1.11, i)).filter((x) => x <= 0.9)) { const th = sc[Math.max(0, Math.floor(q * sc.length) - 1)], tr = pol(th)
+      if (tr.length / tdays >= 1.0) { const w = tr.filter((x) => x > 0).length; thr = th; pick = { q: +q.toFixed(5), n: tr.length, per_day: +(tr.length / tdays).toFixed(3), wr: +(w / tr.length).toFixed(4), net: +(tr.reduce((a, b) => a + b, 0) / tr.length).toFixed(3) }; break } } }
+  else for (const q of [0.5, 0.3, 0.2, 0.15, 0.1, 0.075, 0.05, 0.03, 0.02, 0.015, 0.01, 0.0075, 0.005, 0.003, 0.002, 0.001, 0.0005]) { const th = sc[Math.max(0, Math.floor(q * sc.length) - 1)], tr = pol(th)
     const w = tr.filter((x) => x > 0).length, m = tr.reduce((a, b) => a + b, 0) / Math.max(1, tr.length); if (tr.length >= 30 && w / tr.length >= 0.92 && m > 0) { thr = th; pick = { q, n: tr.length, wr: +(w / tr.length).toFixed(4), net: +m.toFixed(3) }; break } }
   if (thr == null) throw new Error('no threshold qualifies — forward test cannot start')
-  fs.writeFileSync(MODEL, JSON.stringify({ at: new Date().toISOString(), candidate: 'BUY_D1-x', cutoff: new Date(CUT).toISOString(), features: FEATS, edges: edges.map((e) => Array.from(e)), model, thr, pick, part4_2026_pick: P4['2026'] }))
+  fs.writeFileSync(MODEL, JSON.stringify({ at: new Date().toISOString(), candidate: ARMC.name, arm: ARM, cutoff: new Date(CUT).toISOString(), features: FEATS, edges: edges.map((e) => Array.from(e)), model, thr, pick, part4_2026_pick: P4['2026'] }))
   console.log(`frozen model saved · threshold ${thr.toFixed(4)} (pooled 2016-2026: top ${pick.q * 100}% → ${pick.n} t, ${pick.wr * 100}% WR, $${pick.net})`)
 }
 const FM = JSON.parse(fs.readFileSync(MODEL, 'utf8')); FM.edges = FM.edges.map((e) => Float64Array.from(e))
 
 // ── 2. features for every closed bar from (cutoff − 30 d) to now — the SAME builders ───────────────────────────────────
 const from = new Date(CUT - 30 * DAY).toISOString()
-execFileSync(process.execPath, ['--max-old-space-size=8000', path.join(here, 'build_dataset.mjs'), `--forward-from=${from}`], { stdio: 'ignore', windowsHide: true, timeout: 20 * 60000 })
-execFileSync(process.execPath, ['--max-old-space-size=8000', path.join(here, 'build_features2.mjs'), '--forward'], { stdio: 'ignore', windowsHide: true, timeout: 20 * 60000 })
+if (!process.argv.includes('--no-build')) {   // --no-build: reuse the forward features just rebuilt by the 92 % arm (run right after it)
+  execFileSync(process.execPath, ['--max-old-space-size=8000', path.join(here, 'build_dataset.mjs'), `--forward-from=${from}`], { stdio: 'ignore', windowsHide: true, timeout: 20 * 60000 })
+  execFileSync(process.execPath, ['--max-old-space-size=8000', path.join(here, 'build_features2.mjs'), '--forward'], { stdio: 'ignore', windowsHide: true, timeout: 20 * 60000 }) }
 const meta = readMeta(FD), W = meta.width, n = meta.rows, D = f32(path.join(FD, 'dataset.bin')), X2m = JSON.parse(fs.readFileSync(path.join(FD, 'features2_meta.json'), 'utf8')), X2 = f32(path.join(FD, 'features2.bin'))
 const T = new Float64Array(fs.readFileSync(path.join(FD, 'dataset_times.bin')).buffer.slice(0)), F = FM.features.length
 if (JSON.stringify([...meta.features.filter((f) => f !== 'A'), ...X2m.names]) !== JSON.stringify(FM.features)) throw new Error('feature list differs from the frozen model')
@@ -89,7 +100,7 @@ for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) cont
   if (today >= 5 || open >= 5 || t - lastSig < 3600000) continue
   const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) continue
   const entry = c + spread(t)
-  const sig = { type: 'signal', id: `BUY_D1x_${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3), entry_ask: +entry.toFixed(2),
+  const sig = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3), entry_ask: +entry.toFixed(2),
     atr_1d: +Dv.toFixed(2), target: +(entry + TM * Dv).toFixed(2), stop: +(entry - SM * Dv).toFixed(2), recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000) }
   add.push(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
 }
@@ -97,8 +108,8 @@ const lines = [...add, ...res, { type: 'scan', from: lastDone, to: maxT, at: new
 fs.appendFileSync(LEDGER, lines.map((x) => JSON.stringify(x)).join('\n') + '\n')
 // ── 4. summary ───────────────────────────────────────────────────────────────────────────────────────────────────
 const all = [...signals, ...add], rs = [...resolved.values(), ...res], nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
-const sum = { at: new Date(now).toISOString(), candidate: 'BUY_D1-x', cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, open: all.length - rs.length,
+const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, open: all.length - rs.length,
   wr: rs.length ? +(w / rs.length).toFixed(4) : null, wilson_lb: rs.length ? +wilsonLB(w, rs.length, 1.96).toFixed(4) : null, net_mean: rs.length ? +(nets.reduce((a, b) => a + b, 0) / rs.length).toFixed(3) : null,
   verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 0.9 && wilsonLB(w, rs.length, 1.96) >= 0.88 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS (check bootstrap LB)' : 'FORWARD FAIL') }
-fs.writeFileSync(path.join(FD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
-console.log(`forward BUY_D1-x: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)
+fs.writeFileSync(path.join(AD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
+console.log(`forward ${ARMC.name}: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)

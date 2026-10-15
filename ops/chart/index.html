@@ -91,9 +91,9 @@
     <div class="note" id="calNote" style="margin-top:6px"></div>
     <h2>S/R levels (5m chart) — measured</h2>
     <div class="msg" id="lvMsg">—</div>
-    <h2>Forward test BUY_D1-x — paper</h2>
+    <h2>Forward tests (2 arms) — paper</h2>
     <div class="msg" id="fwMsg">—</div>
-    <div class="note" style="margin-top:6px">The 92 % research model, recording since 10-09 06:00 UTC, the model's frozen cutoff. Target 0.2 × daily ATR, stop 2 × daily ATR, up to 7 days. <b>Not validated</b> (0 of 67 passed the gate) — a verdict needs 100 resolved trades.</div>
+    <div class="note" style="margin-top:6px">Two research arms, recording since 10-09 06:00 UTC (frozen cutoff): FWD = the 92 % model (≈ 1 trade / 3 days, backtest 92.0 %); FWD1 = the ≈ 1 trade/day arm (backtest 90.4 %, +$0.42/t). Target 0.2 × daily ATR, stop 2 × daily ATR, up to 7 days. <b>Not validated</b> (0 of 67 passed the gate) — a verdict needs 100 resolved trades.</div>
     <h2>Ferrari Matrix scalp (3m) — paper</h2>
     <div class="msg" id="mxMsg">—</div>
     <div class="msg" id="monMsg" style="display:none;margin-top:6px"></div>
@@ -375,32 +375,33 @@ setInterval(pollLv, 30000); pollLv(); setInterval(lvDraw, 1000)
 
 // ── PAPER FORWARD TEST of BUY_D1-x (/api/forward — the forward hook's ledger; nothing recomputed in the page) ──
 // box = entry → target from the signal bar to the exit (or now); the far stop (2×ATR1d) is a dashed line + its price in the label
-let FW = null
-async function pollFw() { FW = await fetch('/api/forward').then((x) => x.json()).catch(() => null); fwDraw(); fwList() }
+// two arms (2026-10-15): '92' = the 92 % arm (yellow tags "FWD"), 'freq' = the ≈ 1 trade/day arm (cyan tags "FWD1")
+let FWS = []
+async function pollFw() { FWS = (await Promise.all([['92', ''], ['freq', '?arm=freq']].map(async ([k, q]) => { const r = await fetch('/api/forward' + q).then((x) => x.json()).catch(() => null); return r ? { k, ...r } : null }))).filter(Boolean); fwDraw(); fwList() }
 function fwList() {
-  if (!FW) { $('fwMsg').textContent = 'forward test unavailable'; return }
-  const S = FW.summary, rows = FW.trades.slice().reverse().map((t) => `<tr><td>${new Date(t.t).toISOString().slice(5, 16).replace('T', ' ')}</td><td>${fmt(t.entry)}</td><td>${fmt(t.target)}</td><td>${fmt(t.stop)}</td><td class="${t.status === 'WIN' ? 'green' : t.status === 'LOSS' ? 'red' : 'warn'}">${t.status}${t.net != null ? ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2) : ''}</td></tr>`).join('')
-  $('fwMsg').innerHTML = `<b>${esc(S?.verdict ?? '—')}</b> · signals ${FW.trades.length} · resolved ${S?.resolved ?? 0}${S?.resolved ? ` · WR ${Math.round(100 * S.wr)}% · avg ${S.net_mean >= 0 ? '+' : ''}${S.net_mean} $/oz` : ''}<br><span class="dim">scanned to ${S?.scanned_to ? S.scanned_to.slice(5, 16).replace('T', ' ') + ' UTC' : '—'}${FW.trades.some((t) => t.late_min > 30) ? ' · the first signals were recorded late (catch-up scan of bars since the cutoff)' : ''}</span>`
-    + (rows ? `<table style="margin-top:6px"><tr><th>UTC</th><th>entry</th><th>TP</th><th>SL</th><th>result $/oz</th></tr>${rows}</table>` : '<div class="dim">no signals yet</div>')
+  if (!FWS.length) { $('fwMsg').textContent = 'forward test unavailable'; return }
+  $('fwMsg').innerHTML = FWS.map((FW) => { const S = FW.summary, rows = FW.trades.slice().reverse().map((t) => `<tr><td>${new Date(t.t).toISOString().slice(5, 16).replace('T', ' ')}</td><td>${fmt(t.entry)}</td><td>${fmt(t.target)}</td><td>${fmt(t.stop)}</td><td class="${t.status === 'WIN' ? 'green' : t.status === 'LOSS' ? 'red' : 'warn'}">${t.status}${t.net != null ? ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2) : ''}</td></tr>`).join('')
+    return `<div style="margin-bottom:8px"><b>${esc(FW.candidate)}</b> — <b>${esc(S?.verdict ?? '—')}</b> · signals ${FW.trades.length} · resolved ${S?.resolved ?? 0}${S?.resolved ? ` · WR ${Math.round(100 * S.wr)}% · avg ${S.net_mean >= 0 ? '+' : ''}${S.net_mean} $/oz` : ''}<br><span class="dim">scanned to ${S?.scanned_to ? S.scanned_to.slice(5, 16).replace('T', ' ') + ' UTC' : '—'}${FW.trades.some((t) => t.late_min > 30) ? ' · the first signals were recorded late (catch-up scan since the cutoff)' : ''}</span>`
+      + (rows ? `<table style="margin-top:4px"><tr><th>UTC</th><th>entry</th><th>TP</th><th>SL</th><th>result $/oz</th></tr>${rows}</table>` : '<div class="dim">no signals yet</div>') + '</div>' }).join('')
 }
 function fwDraw() {
-  const ov = $('fwOverlay'), p = panes[0]; ov.innerHTML = ''; if (!FW || p.sym !== 'XAUUSD') return
+  const ov = $('fwOverlay'), p = panes[0]; ov.innerHTML = ''; if (!FWS.length || p.sym !== 'XAUUSD') return
   const ts = p.ch.timeScale(), W = ts.width(), H = $('c0').clientHeight, ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v)
   const xOf = (t) => { const x = ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000)); return x }
-  const S = FW.summary, done = FW.trades.filter((t) => t.status !== 'OPEN'), w = done.filter((t) => t.status === 'WIN').length
   const head = document.createElement('div'); head.className = 'fwhead'
-  head.textContent = `FORWARD TEST ${FW.candidate} (paper) · signals ${FW.trades.length} · resolved ${done.length}${done.length ? ` · WR ${Math.round(100 * w / done.length)}% · avg ${(done.reduce((s, t) => s + t.net, 0) / done.length).toFixed(2)} $/oz` : ''} · ${S?.verdict ?? 'no summary'}`
+  head.textContent = FWS.map((FW) => { const done = FW.trades.filter((t) => t.status !== 'OPEN'), w = done.filter((t) => t.status === 'WIN').length
+    return `${FW.k === 'freq' ? 'FWD1' : 'FWD'} ${FW.candidate}: ${FW.trades.length} sig · ${done.length} res${done.length ? ` · WR ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · paper, no verdict before 100 resolved'
   ov.appendChild(head)
-  for (const t of FW.trades) {
+  for (const FW of FWS) for (const t of FW.trades) {
     let x0 = xOf(t.t); if (x0 == null) continue
     let x1 = t.exit_t ? xOf(t.exit_t) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 60)
     const ya = y(t.entry), yb = y(t.target); if (ya == null || yb == null) continue
     const d = document.createElement('div'); d.className = 'fwbox' + (t.status === 'WIN' ? ' win' : t.status === 'LOSS' ? ' loss' : '')
     d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(ya, yb) + 'px'; d.style.height = Math.max(3, Math.abs(ya - yb)) + 'px'
     ov.appendChild(d)
-    const tag = document.createElement('div'); tag.className = 'mxtag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : '#e3b341'
-    tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - 15) + 'px'
-    tag.textContent = `FWD BUY ${fmt(t.entry)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)}`
+    const tag = document.createElement('div'); tag.className = 'mxtag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : FW.k === 'freq' ? '#39c5cf' : '#e3b341'
+    tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (FW.k === 'freq' ? 30 : 15)) + 'px'
+    tag.textContent = `${FW.k === 'freq' ? 'FWD1' : 'FWD'} BUY ${fmt(t.entry)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)}`
     ov.appendChild(tag)
     const ys = y(t.stop); if (ys != null && ys > 0 && ys < H) { const l = document.createElement('div'); l.className = 'fwstop'; l.style.left = x0 + 'px'; l.style.width = (x1 - x0) + 'px'; l.style.top = ys + 'px'; l.textContent = 'FWD SL ' + fmt(t.stop); ov.appendChild(l) }
   }

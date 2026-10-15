@@ -1,0 +1,15 @@
+{
+ "at": "2026-10-15T11:23:50.164Z",
+ "candidate": "BUY_D1-xs (≈1/day)",
+ "arm": "freq",
+ "cutoff": "2026-10-09T06:00:00.000Z",
+ "threshold": 0.9486222267150879,
+ "scanned_to": "2026-10-15T11:15:00.000Z",
+ "signals": 5,
+ "resolved": 5,
+ "open": 0,
+ "wr": 1,
+ "wilson_lb": 0.5655,
+ "net_mean": 14.792,
+ "verdict": "NO VERDICT YET (5/100 resolved)"
+}

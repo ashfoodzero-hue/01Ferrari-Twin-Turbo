@@ -256,8 +256,8 @@ async function levelMarks() {
 }
 
 // ── PAPER FORWARD TEST (BUY_D1-x, docs/INVESTIGATION_90WR_2026-10-11.md) — the ledger is the only source; nothing is recomputed here ──
-function forward() {
-  const dir = path.join(TURBO.root, 'data', 'inv90', 'forward'); let lines = [], summary = null
+function forward(arm) {   // arm 'freq' (2026-10-15) = the ≈ 1 trade/day arm in data/inv90/forward_freq/; default = the 92 % arm
+  const dir = path.join(TURBO.root, 'data', 'inv90', arm === 'freq' ? 'forward_freq' : 'forward'); let lines = [], summary = null
   try { lines = fs.readFileSync(path.join(dir, 'ledger.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
   try { summary = JSON.parse(fs.readFileSync(path.join(dir, 'forward_summary.json'), 'utf8')) } catch {}
   const res = new Map(lines.filter((e) => e.type === 'resolve').map((e) => [e.id, e]))
@@ -280,7 +280,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/calendar') return send(res, 200, calendar())
     if (u.pathname === '/api/fvg') { if (!FVG_TF[tf]) return send(res, 200, { tf, marks: [], note: 'strong FVGs are marked on 3m, 15m and 1h only' }); return send(res, 200, await fvgMarks(tf)) }
     if (u.pathname === '/api/gamma') return send(res, 200, gamma())
-    if (u.pathname === '/api/forward') return send(res, 200, forward())
+    if (u.pathname === '/api/forward') return send(res, 200, forward(u.searchParams.get('arm')))
     if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }

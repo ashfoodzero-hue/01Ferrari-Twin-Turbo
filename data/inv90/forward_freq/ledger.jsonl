@@ -1,0 +1,12 @@
+{"type":"signal","id":"BUY_D1xs_2026-10-09T10:00:00.000Z","t":1791540000000,"bar":"2026-10-09T10:00:00.000Z","score":0.9499,"thr":0.9486,"close_bid":4185.7699999999995,"spread":0.487,"entry_ask":4186.26,"atr_1d":73.97,"target":4201.05,"stop":4038.31,"recorded_at":"2026-10-15T11:13:00.033Z","late_min":8713}
+{"type":"signal","id":"BUY_D1xs_2026-10-09T11:15:00.000Z","t":1791544500000,"bar":"2026-10-09T11:15:00.000Z","score":0.949,"thr":0.9486,"close_bid":4178.85,"spread":0.611,"entry_ask":4179.46,"atr_1d":73.97,"target":4194.26,"stop":4031.51,"recorded_at":"2026-10-15T11:13:00.033Z","late_min":8638}
+{"type":"signal","id":"BUY_D1xs_2026-10-09T12:15:00.000Z","t":1791548100000,"bar":"2026-10-09T12:15:00.000Z","score":0.9543,"thr":0.9486,"close_bid":4182.85,"spread":0.589,"entry_ask":4183.44,"atr_1d":73.97,"target":4198.23,"stop":4035.49,"recorded_at":"2026-10-15T11:13:00.033Z","late_min":8578}
+{"type":"signal","id":"BUY_D1xs_2026-10-09T13:15:00.000Z","t":1791551700000,"bar":"2026-10-09T13:15:00.000Z","score":0.9573,"thr":0.9486,"close_bid":4180.92,"spread":0.565,"entry_ask":4181.49,"atr_1d":73.97,"target":4196.28,"stop":4033.54,"recorded_at":"2026-10-15T11:13:00.033Z","late_min":8518}
+{"type":"signal","id":"BUY_D1xs_2026-10-09T14:45:00.000Z","t":1791557100000,"bar":"2026-10-09T14:45:00.000Z","score":0.949,"thr":0.9486,"close_bid":4184.31,"spread":0.629,"entry_ask":4184.94,"atr_1d":73.97,"target":4199.73,"stop":4036.99,"recorded_at":"2026-10-15T11:13:00.033Z","late_min":8428}
+{"type":"resolve","id":"BUY_D1xs_2026-10-09T10:00:00.000Z","exit_t":1791571860000,"exit":4201.05,"why":"TARGET","net":14.79,"resolved_at":"2026-10-15T11:13:00.033Z"}
+{"type":"resolve","id":"BUY_D1xs_2026-10-09T11:15:00.000Z","exit_t":1791553920000,"exit":4194.26,"why":"TARGET","net":14.8,"resolved_at":"2026-10-15T11:13:00.033Z"}
+{"type":"resolve","id":"BUY_D1xs_2026-10-09T12:15:00.000Z","exit_t":1791569400000,"exit":4198.23,"why":"TARGET","net":14.79,"resolved_at":"2026-10-15T11:13:00.033Z"}
+{"type":"resolve","id":"BUY_D1xs_2026-10-09T13:15:00.000Z","exit_t":1791554280000,"exit":4196.28,"why":"TARGET","net":14.79,"resolved_at":"2026-10-15T11:13:00.033Z"}
+{"type":"resolve","id":"BUY_D1xs_2026-10-09T14:45:00.000Z","exit_t":1791569460000,"exit":4199.73,"why":"TARGET","net":14.79,"resolved_at":"2026-10-15T11:13:00.033Z"}
+{"type":"scan","from":1791525600000,"to":1792062000000,"at":"2026-10-15T11:13:00.033Z","rows_scored":393}
+{"type":"scan","from":1792062000000,"to":1792062900000,"at":"2026-10-15T11:23:50.164Z","rows_scored":1}
