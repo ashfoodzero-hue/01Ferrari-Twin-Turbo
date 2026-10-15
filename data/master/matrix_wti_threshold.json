@@ -1,0 +1,92 @@
+{
+ "at": "2026-10-15T16:42:48.793Z",
+ "spec": "docs/MATRIX_WTI_THRESHOLD_SPEC.md",
+ "current_rule_x0": {
+  "train": {
+   "n": 1976,
+   "tp1_rate": 0.2409,
+   "win_rate": 0.2434,
+   "net": -0.193,
+   "net_lb": -0.584
+  },
+  "oos": {
+   "n": 1422,
+   "tp1_rate": 0.2785,
+   "win_rate": 0.2792,
+   "net": -0.972,
+   "net_lb": -1.887,
+   "per_day": 6.82
+  }
+ },
+ "x0_10": {
+  "train": {
+   "n": 2248,
+   "tp1_rate": 0.2424,
+   "win_rate": 0.2447,
+   "net": -0.234,
+   "net_lb": -0.577
+  },
+  "oos": {
+   "n": 1652,
+   "tp1_rate": 0.2748,
+   "win_rate": 0.2766,
+   "net": -0.998,
+   "net_lb": -1.866,
+   "per_day": 7.93
+  },
+  "verdict": "NOT_BETTER"
+ },
+ "x0_25": {
+  "train": {
+   "n": 2430,
+   "tp1_rate": 0.2449,
+   "win_rate": 0.2473,
+   "net": -0.246,
+   "net_lb": -0.586
+  },
+  "oos": {
+   "n": 1845,
+   "tp1_rate": 0.2694,
+   "win_rate": 0.271,
+   "net": -1.131,
+   "net_lb": -1.903,
+   "per_day": 8.85
+  },
+  "verdict": "NOT_BETTER"
+ },
+ "x0_50": {
+  "train": {
+   "n": 2512,
+   "tp1_rate": 0.248,
+   "win_rate": 0.2504,
+   "net": -0.23,
+   "net_lb": -0.562
+  },
+  "oos": {
+   "n": 1994,
+   "tp1_rate": 0.2668,
+   "win_rate": 0.2683,
+   "net": -1.374,
+   "net_lb": -2.125,
+   "per_day": 9.57
+  },
+  "verdict": "NOT_BETTER"
+ },
+ "no_wti": {
+  "train": {
+   "n": 2569,
+   "tp1_rate": 0.2499,
+   "win_rate": 0.2526,
+   "net": -0.168,
+   "net_lb": -0.508
+  },
+  "oos": {
+   "n": 2059,
+   "tp1_rate": 0.2661,
+   "win_rate": 0.2681,
+   "net": -1.496,
+   "net_lb": -2.295,
+   "per_day": 9.88
+  }
+ }
+}
