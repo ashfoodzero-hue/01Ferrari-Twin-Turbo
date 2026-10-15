@@ -439,6 +439,27 @@ function rtDraw() {
 // RETEST boxes removed from the chart 2026-10-15 (Ashraf: clutter; 37 % WR is far below his 85-92 % bar) — /api/retest stays for research
 // setInterval(pollRt, 30000); pollRt(); setInterval(rtDraw, 1000)
 
+// ── SCALP 85 % (paper): the live Matrix signals with the 3r stop / 0.25r target exit (/api/scalp85) — the same two-zone neon box; the label
+// carries BOTH measured records (13 y without WTI, 2 y with WTI = the live config) and the live tally, so a high WR is never shown alone ──
+let S85 = null
+async function pollS85() { S85 = await fetch('/api/scalp85').then((x) => x.json()).catch(() => null); s85Draw() }
+function s85Draw() {
+  const ov = $('rtOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!S85?.boxes?.length || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
+  const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
+  const a = S85.measured?.no_wti_13y, b2 = S85.measured?.wti_2y, L = S85.live
+  const rec = `bt ${a ? Math.round(1000 * a.wr) / 10 + '% ' + a.net + '$/t (13y)' : '?'} · ${b2 ? Math.round(1000 * b2.wr) / 10 + '% ' + b2.net + '$/t (2y WTI)' : '?'} · live ${L.w}/${L.n} ${L.net >= 0 ? '+' : ''}${L.net}$/oz`
+  for (const b of S85.boxes) { const x0 = xOf(b.t); if (x0 == null) continue; let x1 = b.exitT ? xOf(b.exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 40)
+    const zone = (cls, p1, p2, label) => { const za = y(p1), zb = y(p2); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (b.status !== 'OPEN' ? ' fwdone' : '')
+      d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(za, zb) + 'px'; d.style.height = Math.max(2, Math.abs(za - zb)) + 'px'; d.textContent = label; ov.appendChild(d) }
+    zone('tgt', b.entry, b.tp, `TP ${fmt(b.tp)}`); zone('risk', b.entry, b.sl, `SL ${fmt(b.sl)}`)
+    const ya = y(b.entry); if (ya == null) continue; const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = b.status === 'WIN' ? '#3fb950' : b.status === 'LOSS' ? '#f85149' : '#00ff9c'
+    tag.style.left = x0 + 'px'; tag.style.top = (ya - 26) + 'px'
+    const full = b.status === 'OPEN' || b === S85.boxes[S85.boxes.length - 1]   // only the open / latest trade carries the full label (no clutter)
+    tag.textContent = full ? `SCALP 85% (paper) ${b.side} ENTRY ${fmt(b.entry)} · SL ${fmt(b.sl)} · TP ${fmt(b.tp)} · ${b.status}${b.net != null ? ' ' + (b.net >= 0 ? '+' : '') + b.net : ''} · ${rec}`
+      : `S85 ${b.status === 'WIN' ? 'W' : b.status === 'LOSS' ? 'L' : b.status} ${b.net != null ? (b.net >= 0 ? '+' : '') + b.net : ''}`; ov.appendChild(tag) }
+}
+setInterval(pollS85, 30000); pollS85(); setInterval(s85Draw, 1000)
+
 // ── IN-TRADE MONITOR: live chance of TP1 / TP2 for the open trade (/api/monitor; what may be shown is decided by study_trade_monitor.mjs) ──
 let MON = null
 async function pollMon() {

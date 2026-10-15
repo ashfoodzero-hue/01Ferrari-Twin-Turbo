@@ -273,6 +273,30 @@ async function retestBoxes() {
   })
 }
 
+// ── SCALP 85 % (paper, 2026-10-15, Ashraf: "run the Matrix with the 3× stop / small-target exit as a paper SCALP box"): the SAME live
+// Matrix signals (data/paper/matrix_trades.jsonl, written by matrix_tick) with the docs/MATRIX_85WR_SPEC.md exit stop 3r / target 0.25r
+// (r = the Matrix risk), 24 h; BUY pays the ask and exits at the bid, SELL mirrored; stop first inside a minute. Signals come from the
+// live Matrix (one position at a time on ITS exits), so the live set is the Matrix's, not an independent book. DISPLAY / RECORD ONLY.
+async function scalp85() {
+  return cached('scalp85', 20000, async () => {
+    const now = Date.now(); let L = []
+    try { L = fs.readFileSync(path.join(TURBO.root, 'data', 'paper', 'matrix_trades.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
+    const seen = new Map(); for (const x of L) if (x.sig && !seen.has(x.id)) seen.set(x.id, x.sig)
+    const sigs = [...seen.values()].sort((a, b) => a.decisionT - b.decisionT); if (!sigs.length) return { boxes: [], live: { n: 0, w: 0, net: 0 } }
+    const M = (await loadBars('XAUUSD', '1m', { from: sigs[0].decisionT - 60000 })).bars.filter((b) => b.t + 60000 <= now), sp = makeSpreadAt()
+    const all = sigs.map((s) => { const up = s.side === 'BUY', fill = up ? s.entry + sp(s.decisionT) : s.entry, r = s.risk, sl = up ? fill - 3 * r : fill + 3 * r, tp = up ? fill + 0.25 * r : fill - 0.25 * r
+      let status = 'OPEN', exitT = null, net = null
+      for (const b of M) { if (b.t < s.decisionT) continue; const spr = sp(b.t)
+        if (up ? b.l <= sl : b.h + spr >= sl) { status = 'LOSS'; exitT = b.t; net = -(3 * r + Math.min(0.3, 0.05 * (s.atr || r))); break }
+        if (up ? b.h >= tp : b.l + spr <= tp) { status = 'WIN'; exitT = b.t; net = 0.25 * r; break }
+        if (b.t >= s.decisionT + 86400000) { status = 'TIME'; exitT = b.t; net = up ? b.c - fill : fill - (b.c + spr); break } }
+      return { side: s.side, t: s.decisionT, entry: +fill.toFixed(2), sl: +sl.toFixed(2), tp: +tp.toFixed(2), risk: +(3 * r).toFixed(2), status, exitT, net: net == null ? null : +net.toFixed(2) } })
+    const done = all.filter((x) => x.net != null), study = J('matrix_85wr_study.json')
+    return { boxes: all.filter((x) => x.t >= now - 3 * 86400000), live: { n: done.length, w: done.filter((x) => x.net > 0).length, net: +done.reduce((a, x) => a + x.net, 0).toFixed(2), since: new Date(sigs[0].decisionT).toISOString() },
+      measured: { no_wti_13y: study?.primary_noWTI_13y?.['stop3r|tp0.25r']?.oos ?? null, wti_2y: study?.report_WTI_2y?.['stop3r|tp0.25r']?.oos ?? null } }
+  })
+}
+
 // ── PAPER FORWARD TEST (BUY_D1-x, docs/INVESTIGATION_90WR_2026-10-11.md) — the ledger is the only source; nothing is recomputed here ──
 function forward(arm) {   // arm 'freq' (2026-10-15) = the ≈ 1 trade/day arm in data/inv90/forward_freq/; default = the 92 % arm
   const dir = path.join(TURBO.root, 'data', 'inv90', arm === 'freq' ? 'forward_freq' : 'forward'); let lines = [], summary = null
@@ -300,6 +324,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/gamma') return send(res, 200, gamma())
     if (u.pathname === '/api/forward') return send(res, 200, forward(u.searchParams.get('arm')))
     if (u.pathname === '/api/retest') return send(res, 200, await retestBoxes())
+    if (u.pathname === '/api/scalp85') return send(res, 200, await scalp85())
     if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
