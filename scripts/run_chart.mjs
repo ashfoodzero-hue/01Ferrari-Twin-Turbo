@@ -278,7 +278,7 @@ async function retestBoxes() {
 // (r = the Matrix risk), 24 h; BUY pays the ask and exits at the bid, SELL mirrored; stop first inside a minute. Signals come from the
 // live Matrix (one position at a time on ITS exits), so the live set is the Matrix's, not an independent book. DISPLAY / RECORD ONLY.
 async function scalp85() {
-  return cached('scalp85', 20000, async () => {
+  return cached('scalp85', 120000, async () => {   // 2 min: it re-reads days of 1m bars; 20 s blocked the single-threaded server (measured 2026-10-15)
     const now = Date.now(); let L = []
     try { L = fs.readFileSync(path.join(TURBO.root, 'data', 'paper', 'matrix_trades.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
     const seen = new Map(); for (const x of L) if (x.sig && !seen.has(x.id)) seen.set(x.id, x.sig)
