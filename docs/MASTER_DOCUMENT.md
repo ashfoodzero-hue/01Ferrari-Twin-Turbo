@@ -467,3 +467,17 @@ without duplications … only use the real Win results, and ignore the rest."
 
   - DEFENSE ≈ ATTACK in money → the close-based hold label does not monetize: intrabar wick stops, a 3-bar decision lag, the spread.
   - The hold rate stays CONTEXT only (as in Turbo 2).
+
+- **(ao) 2026-10-15 — FAILED BREAKOUT / BREAKDOWN** (sweep of the 45-bar range edge, close back inside; Ashraf's "fix the sell" after the 13:18 UTC 4168 rejection) → **0/8 PASS**.
+  - Spec `docs/FAILED_BREAKOUT_SPEC.md` (pre-registered); study `study_failed_breakout.mjs` → `failed_breakout_study.json`. 3m: 34,953 setups; 15m: 6,871.
+
+| Cell (OOS) | WR | $ / trade |
+|---|---|---|
+| 3m base 1 R | 39.0 % | −$0.54 (11/day) |
+| 3m D+S 1 R | 40.5 % | −$0.43 |
+| 15m base 1 R | 43.3 % | −$0.56 |
+| 15m D+S 1 R | 46.0 % | −$0.41 |
+| 15m D+S 2 R | 33.3 % | −$0.21 |
+
+  - Post-hoc only (not a pass, side not pre-registered): the 15m D+S 2 R SELL side shows +$0.47.
+  - The app's sell stays as it is: no rule earned a place.
