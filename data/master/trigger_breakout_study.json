@@ -1,0 +1,307 @@
+{
+ "at": "2026-10-15T13:52:34.744Z",
+ "spec": "docs/TRIGGER_BREAKOUT_SPEC.md",
+ "events": 5021,
+ "k": 8,
+ "cells": {
+  "S1|1R|base": {
+   "train": {
+    "n": 4365,
+    "per_day": 2.11,
+    "wr": 0.3592,
+    "net": -0.473,
+    "net_lb": -0.554,
+    "avg_R": 1.81
+   },
+   "oos": {
+    "n": 454,
+    "per_day": 0.33,
+    "wr": 0.4009,
+    "net": -1.784,
+    "net_lb": -3.018,
+    "avg_R": 9.75
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 249,
+     "per_day": null,
+     "wr": 0.3855,
+     "net": -2.198,
+     "net_lb": -3.645,
+     "avg_R": 8.46
+    },
+    "SELL": {
+     "n": 205,
+     "per_day": null,
+     "wr": 0.4195,
+     "net": -1.281,
+     "net_lb": -3.391,
+     "avg_R": 11.31
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S1|1R|D+S": {
+   "train": {
+    "n": 3300,
+    "per_day": 1.6,
+    "wr": 0.3612,
+    "net": -0.459,
+    "net_lb": -0.548,
+    "avg_R": 1.79
+   },
+   "oos": {
+    "n": 343,
+    "per_day": 0.25,
+    "wr": 0.3732,
+    "net": -2.529,
+    "net_lb": -3.98,
+    "avg_R": 9.75
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 194,
+     "per_day": null,
+     "wr": 0.3711,
+     "net": -2.615,
+     "net_lb": -4.189,
+     "avg_R": 8.49
+    },
+    "SELL": {
+     "n": 149,
+     "per_day": null,
+     "wr": 0.3758,
+     "net": -2.417,
+     "net_lb": -4.952,
+     "avg_R": 11.38
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S1|2R|base": {
+   "train": {
+    "n": 3934,
+    "per_day": 1.9,
+    "wr": 0.2461,
+    "net": -0.452,
+    "net_lb": -0.564,
+    "avg_R": 1.8
+   },
+   "oos": {
+    "n": 409,
+    "per_day": 0.3,
+    "wr": 0.2763,
+    "net": -1.582,
+    "net_lb": -3.346,
+    "avg_R": 9.69
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 221,
+     "per_day": null,
+     "wr": 0.2489,
+     "net": -2.728,
+     "net_lb": -4.619,
+     "avg_R": 8.5
+    },
+    "SELL": {
+     "n": 188,
+     "per_day": null,
+     "wr": 0.3085,
+     "net": -0.235,
+     "net_lb": -3.21,
+     "avg_R": 11.1
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S1|2R|D+S": {
+   "train": {
+    "n": 3030,
+    "per_day": 1.46,
+    "wr": 0.2479,
+    "net": -0.445,
+    "net_lb": -0.567,
+    "avg_R": 1.78
+   },
+   "oos": {
+    "n": 316,
+    "per_day": 0.23,
+    "wr": 0.2373,
+    "net": -3.058,
+    "net_lb": -4.922,
+    "avg_R": 9.76
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 177,
+     "per_day": null,
+     "wr": 0.2316,
+     "net": -3.384,
+     "net_lb": -5.457,
+     "avg_R": 8.61
+    },
+    "SELL": {
+     "n": 139,
+     "per_day": null,
+     "wr": 0.2446,
+     "net": -2.643,
+     "net_lb": -5.946,
+     "avg_R": 11.21
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S2|1R|base": {
+   "train": {
+    "n": 3985,
+    "per_day": 1.93,
+    "wr": 0.3917,
+    "net": -0.373,
+    "net_lb": -0.509,
+    "avg_R": 2.64
+   },
+   "oos": {
+    "n": 433,
+    "per_day": 0.31,
+    "wr": 0.4665,
+    "net": -1.077,
+    "net_lb": -3.095,
+    "avg_R": 13.58
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 234,
+     "per_day": null,
+     "wr": 0.4615,
+     "net": -0.546,
+     "net_lb": -2.967,
+     "avg_R": 12.16
+    },
+    "SELL": {
+     "n": 199,
+     "per_day": null,
+     "wr": 0.4724,
+     "net": -1.703,
+     "net_lb": -4.953,
+     "avg_R": 15.25
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S2|1R|D+S": {
+   "train": {
+    "n": 3063,
+    "per_day": 1.48,
+    "wr": 0.4019,
+    "net": -0.333,
+    "net_lb": -0.481,
+    "avg_R": 2.64
+   },
+   "oos": {
+    "n": 324,
+    "per_day": 0.23,
+    "wr": 0.4414,
+    "net": -2.095,
+    "net_lb": -4.503,
+    "avg_R": 14.17
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 183,
+     "per_day": null,
+     "wr": 0.4645,
+     "net": -1.07,
+     "net_lb": -4.074,
+     "avg_R": 12.63
+    },
+    "SELL": {
+     "n": 141,
+     "per_day": null,
+     "wr": 0.4113,
+     "net": -3.424,
+     "net_lb": -7.621,
+     "avg_R": 16.16
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S2|2R|base": {
+   "train": {
+    "n": 3388,
+    "per_day": 1.64,
+    "wr": 0.2748,
+    "net": -0.364,
+    "net_lb": -0.554,
+    "avg_R": 2.66
+   },
+   "oos": {
+    "n": 364,
+    "per_day": 0.26,
+    "wr": 0.3104,
+    "net": -1.424,
+    "net_lb": -4.312,
+    "avg_R": 13.72
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 190,
+     "per_day": null,
+     "wr": 0.3,
+     "net": -1.637,
+     "net_lb": -5.033,
+     "avg_R": 12.23
+    },
+    "SELL": {
+     "n": 174,
+     "per_day": null,
+     "wr": 0.3218,
+     "net": -1.191,
+     "net_lb": -5.839,
+     "avg_R": 15.35
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "S2|2R|D+S": {
+   "train": {
+    "n": 2683,
+    "per_day": 1.3,
+    "wr": 0.2836,
+    "net": -0.31,
+    "net_lb": -0.508,
+    "avg_R": 2.65
+   },
+   "oos": {
+    "n": 288,
+    "per_day": 0.21,
+    "wr": 0.2743,
+    "net": -2.692,
+    "net_lb": -6.073,
+    "avg_R": 14.28
+   },
+   "oos_by_side": {
+    "BUY": {
+     "n": 156,
+     "per_day": null,
+     "wr": 0.2949,
+     "net": -1.747,
+     "net_lb": -5.67,
+     "avg_R": 12.63
+    },
+    "SELL": {
+     "n": 132,
+     "per_day": null,
+     "wr": 0.25,
+     "net": -3.809,
+     "net_lb": -9.111,
+     "avg_R": 16.24
+    }
+   },
+   "verdict": "FAIL"
+  }
+ },
+ "passing": [],
+ "best_oos": "S2|1R|base",
+ "verdict": "NO_PASS"
+}
