@@ -444,3 +444,11 @@ without duplications … only use the real Win results, and ignore the rest."
     - bars advancing each minute;
     - the gamma step (the crashing path) ran: 10-14 NEGATIVE, flip 4162.8.
   - **Lesson:** `node --check` cannot catch a missing variable. After editing `run_twin.mjs`, every time-gated branch (gamma 14:30 UTC, calendar, forward :20, reconcile) must be exercised.
+
+- **(am) 2026-10-15 — Break → retest → rejection 3m scalp (Ashraf's live idea), with DXY / Silver / News / WTI awareness: 0/16 PASS.**
+  - Spec `docs/RETEST_SCALP_SPEC.md` (pre-registered); study `study_retest_scalp.mjs` → `retest_scalp_study.json`. 39,822 setups in 13 y.
+  - OOS at 1 R: base 37.1 % WR −$0.59/t (10.3/day). The filters move WR by < 1 pt: +DXY 37.5 % · +Silver 36.9 % · +News 37.2 % · D+S+N 37.3 % −$0.60.
+  - WTI (2 y): 38.1 % −$0.98. At 2 R: about 25 % WR.
+  - Cause: the average stop is about $2.40, so the spread is a large share, and retests break more than they hold.
+  - Whales: 2 y only and no standalone edge. Gamma: no historical OI, so it cannot be backtested.
+  - Checkpoint tag `checkpoint-2026-10-15-app-settings`. No live app change.
