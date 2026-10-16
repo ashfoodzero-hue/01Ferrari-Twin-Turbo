@@ -843,3 +843,10 @@ without duplications … only use the real Win results, and ignore the rest."
     - 52-week sweep: n 9, 44 %, −0.70R.
   - **Bear:** all three are no better than the base (11-19 %), −0.65 to −1.88R → NOT USEFUL.
   - **Answer:** a level cannot be classified as continuation vs swing start; the best clue (a sweep + reclaim in a discount) is too rare on 13 y to separate from the 2020-26 bull trend.
+
+- **(bm) 2026-10-16 — 🌱 SWING START WATCH live as UNCONFIRMED + live record (Ashraf: "Watch + live record").**
+  - `scripts/swing_start_tick.mjs` checks the completed NY day for the study rule (A-SWEEP+DISC bull, 10-day dedupe). It is chained from `macro_tick` after every NY 4H close (including the 17:00-NY daily close); catch-up + dedupe.
+  - **Telegram:** "🌱 SWING START WATCH — UNCONFIRMED (bull)" with the measured numbers (35.3 % n 34 vs 26.9 % base, +10 % 23.5 %, avg +1.19R), the explicit UNPROVEN / post-2020 warning, the +5 % target and the invalidation level.
+  - **Ledger** `data/paper/swing_start_ledger.jsonl`: alert + resolve rows (+5 % before a daily close below the alert low, 60 d).
+  - **Parity:** the live rule reproduces the study's dates (2026-06-08 / 06-30 / 10-07).
+  - Smoke `smoke_swing_start.mjs` 3/3.

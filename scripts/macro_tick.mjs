@@ -61,4 +61,8 @@ const slim = (xs) => xs.map((b) => ({ t: b.t, o: b.o, h: b.h, l: b.l, c: b.c }))
 fs.writeFileSync(path.join(TURBO.master, 'macro_magnet_bars.json.tmp'), JSON.stringify({ at: new Date(now).toISOString(), gold: slim(G), dxy: slim(D) })); fs.renameSync(path.join(TURBO.master, 'macro_magnet_bars.json.tmp'), path.join(TURBO.master, 'macro_magnet_bars.json'))
 if (add.length) { fs.mkdirSync(TURBO.paper, { recursive: true }); fs.appendFileSync(LEDGER, add.map((x) => JSON.stringify(x)).join('\n') + '\n') }
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(state, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
+// 🌱 SWING START WATCH (2026-10-16): checked after every NY 4H close (which includes the 17:00-NY daily close) — catch-up + dedupe inside, so a new
+// completed day is evaluated once. Separate process, its own ledger; never affects this tick.
+try { const { execFileSync } = await import('node:child_process'), { fileURLToPath } = await import('node:url')
+  process.stdout.write(execFileSync(process.execPath, ['--max-old-space-size=4096', path.join(path.dirname(fileURLToPath(import.meta.url)), 'swing_start_tick.mjs')], { encoding: 'utf8', timeout: 120000, windowsHide: true })) } catch (e) { console.error('  ⚠ swing_start_tick: ' + e.message.slice(0, 200)) }
 console.log(`  🧲 macro magnet ${state.bar?.slice(5, 16)}: gold ${cur?.side} ${cur?.side === 'LONG' ? cur?.long : cur?.short} · DXY ${dx?.side ?? '—'} (${rel}) · ledger +${add.length} · live ${live.hits}/${live.n}`)
