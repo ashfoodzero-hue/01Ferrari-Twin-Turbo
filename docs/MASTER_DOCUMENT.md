@@ -648,3 +648,18 @@ without duplications … only use the real Win results, and ignore the rest."
   - H 120: the same picture.
   - **Final:** gold shows a small (~2-3 pp) lean toward real pools, not separable from chance, era-dependent, absent on DXY. **No magnet / liquidity-target signal is shown anywhere.**
   - What stays measured: distance-only first-touch odds (the placebo calibration, path geometry).
+
+- **(ay) 2026-10-16 — 4H BIAS MODEL (all Pine inputs + continuous versions + daily trend, gold + DXY, 24 features, L2 logistic fit on TRAIN only): NO EDGE.**
+  - Spec `docs/BIAS_MODEL_SPEC.md`; `study_bias_model.mjs` → `bias_model_study.json`.
+  - **TEST (last 40 %, n 8,347):**
+
+| | Next 4H | Next 24 h |
+|---|---|---|
+| AUC | 0.517 (LB 0.505) | 0.506 (LB 0.487) |
+| Brier skill vs base | −0.08 % | −0.43 % |
+| Top-20 % up-rate | 54.7 % vs base 51.8 % (+2.9 pp, LB 52.3) | 53.6 % vs 53.4 % |
+| Bottom-20 % down-rate | 49.3 % vs 48.2 % | — |
+
+  - Largest weights: DXY / gold close vs EMA21 and the EMA gaps — trend, the same as vector A.
+  - **Conclusion across (au)-(ay):** gold's next-4H / 24 h direction is NOT forecastable from these inputs beyond a faint long-side lean.
+  - Dashboard rule (spec): no bias % — "no measured edge, base X %" + Ashraf's score labelled as a score.

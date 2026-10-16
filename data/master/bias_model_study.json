@@ -1,0 +1,303 @@
+{
+ "at": "2026-10-16T08:02:00.768Z",
+ "spec": "docs/BIAS_MODEL_SPEC.md",
+ "rows": 19845,
+ "features": [
+  "gold_A_ema",
+  "gold_B_magnet",
+  "gold_C_rsi",
+  "gold_D_candle",
+  "gold_ema_gap",
+  "gold_close_vs_ema21",
+  "gold_rsi",
+  "gold_dist_bsl",
+  "gold_dist_ssl",
+  "gold_ret_1",
+  "gold_ret_6",
+  "gold_daily_trend",
+  "dxy_A_ema",
+  "dxy_B_magnet",
+  "dxy_C_rsi",
+  "dxy_D_candle",
+  "dxy_ema_gap",
+  "dxy_close_vs_ema21",
+  "dxy_rsi",
+  "dxy_dist_bsl",
+  "dxy_dist_ssl",
+  "dxy_ret_1",
+  "dxy_ret_6",
+  "dxy_daily_trend"
+ ],
+ "outcomes": {
+  "up4": {
+   "lambda": 0.01,
+   "val_auc": 0.5133,
+   "fit_base": 0.5071,
+   "test": {
+    "n": 8347,
+    "auc": 0.517,
+    "auc_lb": 0.5049,
+    "brier_skill": -0.0008,
+    "tails": {
+     "top20": {
+      "n": 1669,
+      "up_rate": 0.547,
+      "lb": 0.5231,
+      "base_up": 0.5177
+     },
+     "bottom20": {
+      "n": 1669,
+      "down_rate": 0.4925,
+      "lb": 0.4686,
+      "base_down": 0.4823
+     }
+    },
+    "calibration": [
+     {
+      "decile": 1,
+      "p_lo": 0.3095,
+      "p_hi": 0.4598,
+      "predicted": 0.4389,
+      "realised": 0.5,
+      "n": 834
+     },
+     {
+      "decile": 2,
+      "p_lo": 0.4599,
+      "p_hi": 0.4763,
+      "predicted": 0.4685,
+      "realised": 0.515,
+      "n": 835
+     },
+     {
+      "decile": 3,
+      "p_lo": 0.4763,
+      "p_hi": 0.4879,
+      "predicted": 0.4821,
+      "realised": 0.4754,
+      "n": 835
+     },
+     {
+      "decile": 4,
+      "p_lo": 0.4879,
+      "p_hi": 0.4979,
+      "predicted": 0.493,
+      "realised": 0.5336,
+      "n": 834
+     },
+     {
+      "decile": 5,
+      "p_lo": 0.4979,
+      "p_hi": 0.5076,
+      "predicted": 0.5029,
+      "realised": 0.5018,
+      "n": 835
+     },
+     {
+      "decile": 6,
+      "p_lo": 0.5076,
+      "p_hi": 0.5176,
+      "predicted": 0.5126,
+      "realised": 0.5317,
+      "n": 835
+     },
+     {
+      "decile": 7,
+      "p_lo": 0.5176,
+      "p_hi": 0.5282,
+      "predicted": 0.5227,
+      "realised": 0.5144,
+      "n": 834
+     },
+     {
+      "decile": 8,
+      "p_lo": 0.5282,
+      "p_hi": 0.5413,
+      "predicted": 0.5346,
+      "realised": 0.5114,
+      "n": 835
+     },
+     {
+      "decile": 9,
+      "p_lo": 0.5413,
+      "p_hi": 0.5583,
+      "predicted": 0.549,
+      "realised": 0.5461,
+      "n": 835
+     },
+     {
+      "decile": 10,
+      "p_lo": 0.5583,
+      "p_hi": 0.7057,
+      "predicted": 0.5784,
+      "realised": 0.5473,
+      "n": 835
+     }
+    ]
+   },
+   "verdict": "NO_EDGE",
+   "intercept": 0.0287,
+   "coef": {
+    "gold_A_ema": -0.028,
+    "gold_B_magnet": 0.0376,
+    "gold_C_rsi": -0.0101,
+    "gold_D_candle": -0.0596,
+    "gold_ema_gap": 0.3476,
+    "gold_close_vs_ema21": -0.4112,
+    "gold_rsi": -0.0122,
+    "gold_dist_bsl": 0.0456,
+    "gold_dist_ssl": -0.0292,
+    "gold_ret_1": 0.0912,
+    "gold_ret_6": 0.0573,
+    "gold_daily_trend": 0.0195,
+    "dxy_A_ema": -0.0785,
+    "dxy_B_magnet": -0.0117,
+    "dxy_C_rsi": 0.0239,
+    "dxy_D_candle": -0.027,
+    "dxy_ema_gap": 0.3747,
+    "dxy_close_vs_ema21": -0.6848,
+    "dxy_rsi": 0.1836,
+    "dxy_dist_bsl": 0.0122,
+    "dxy_dist_ssl": -0.0317,
+    "dxy_ret_1": 0.0905,
+    "dxy_ret_6": 0.1681,
+    "dxy_daily_trend": -0.0051
+   }
+  },
+  "up24": {
+   "lambda": 0.01,
+   "val_auc": 0.5039,
+   "fit_base": 0.5048,
+   "test": {
+    "n": 8347,
+    "auc": 0.5064,
+    "auc_lb": 0.4872,
+    "brier_skill": -0.00426,
+    "tails": {
+     "top20": {
+      "n": 1669,
+      "up_rate": 0.5362,
+      "lb": 0.5123,
+      "base_up": 0.5338
+     },
+     "bottom20": {
+      "n": 1669,
+      "down_rate": 0.4757,
+      "lb": 0.4519,
+      "base_down": 0.4662
+     }
+    },
+    "calibration": [
+     {
+      "decile": 1,
+      "p_lo": 0.3512,
+      "p_hi": 0.4545,
+      "predicted": 0.4337,
+      "realised": 0.506,
+      "n": 834
+     },
+     {
+      "decile": 2,
+      "p_lo": 0.4545,
+      "p_hi": 0.4737,
+      "predicted": 0.4648,
+      "realised": 0.5425,
+      "n": 835
+     },
+     {
+      "decile": 3,
+      "p_lo": 0.4737,
+      "p_hi": 0.487,
+      "predicted": 0.4805,
+      "realised": 0.5246,
+      "n": 835
+     },
+     {
+      "decile": 4,
+      "p_lo": 0.487,
+      "p_hi": 0.4976,
+      "predicted": 0.4925,
+      "realised": 0.5576,
+      "n": 834
+     },
+     {
+      "decile": 5,
+      "p_lo": 0.4977,
+      "p_hi": 0.5082,
+      "predicted": 0.5029,
+      "realised": 0.5054,
+      "n": 835
+     },
+     {
+      "decile": 6,
+      "p_lo": 0.5082,
+      "p_hi": 0.5179,
+      "predicted": 0.513,
+      "realised": 0.5485,
+      "n": 835
+     },
+     {
+      "decile": 7,
+      "p_lo": 0.5179,
+      "p_hi": 0.5295,
+      "predicted": 0.5236,
+      "realised": 0.5528,
+      "n": 834
+     },
+     {
+      "decile": 8,
+      "p_lo": 0.5295,
+      "p_hi": 0.5428,
+      "predicted": 0.5355,
+      "realised": 0.5293,
+      "n": 835
+     },
+     {
+      "decile": 9,
+      "p_lo": 0.5428,
+      "p_hi": 0.5599,
+      "predicted": 0.5509,
+      "realised": 0.5102,
+      "n": 835
+     },
+     {
+      "decile": 10,
+      "p_lo": 0.5599,
+      "p_hi": 0.6757,
+      "predicted": 0.5792,
+      "realised": 0.5617,
+      "n": 835
+     }
+    ]
+   },
+   "verdict": "NO_EDGE",
+   "intercept": 0.0192,
+   "coef": {
+    "gold_A_ema": 0.0121,
+    "gold_B_magnet": -0.0009,
+    "gold_C_rsi": -0.0591,
+    "gold_D_candle": -0.0033,
+    "gold_ema_gap": 0.4291,
+    "gold_close_vs_ema21": -0.032,
+    "gold_rsi": -0.3846,
+    "gold_dist_bsl": -0.0035,
+    "gold_dist_ssl": -0.0079,
+    "gold_ret_1": 0.0516,
+    "gold_ret_6": 0.0886,
+    "gold_daily_trend": -0.0146,
+    "dxy_A_ema": -0.0254,
+    "dxy_B_magnet": 0.0028,
+    "dxy_C_rsi": -0.0471,
+    "dxy_D_candle": -0.0658,
+    "dxy_ema_gap": 0.0533,
+    "dxy_close_vs_ema21": -0.7267,
+    "dxy_rsi": 0.6972,
+    "dxy_dist_bsl": -0.0058,
+    "dxy_dist_ssl": -0.0438,
+    "dxy_ret_1": 0.0223,
+    "dxy_ret_6": 0.1521,
+    "dxy_daily_trend": -0.0475
+   }
+  }
+ }
+}
