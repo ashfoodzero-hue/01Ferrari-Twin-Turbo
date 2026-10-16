@@ -834,3 +834,12 @@ without duplications … only use the real Win results, and ignore the rest."
     - it states 82.3 % → a BUY signal within 60 min (median 6 min) and that only 40.3 % of trades get a warning;
     - `WATCH.recall` added.
   - Smoke trade_alert 8/8.
+
+- **(bl) 2026-10-16 — SWING START WATCH (`docs/SWING_START_SPEC.md`, `study_swing_start.mjs` → `swing_start_study.json`, NY daily candles 13 y): 0 USEFUL.**
+  - **Base:** +5 % before a close beyond the day's extreme — bull 23.0 % TRAIN / 26.9 % OOS, bear 17.6 / 13.8 %.
+  - **Bull:**
+    - A-SWEEP+DISC (20-day-low sweep & reclaim in the bottom-25 % 60-day range), 2.6/y: all 35.3 % (n 34), OOS 44.4 % (n 18, LB 21 %), TRAIN 25 % vs 23 %, avg +1.19R if traded — but **pre-2020 15 % vs post-2020 48 %** (a bull-market effect), UNDERPOWERED;
+    - +RSI < 35: 29.6 %, +0.47R;
+    - 52-week sweep: n 9, 44 %, −0.70R.
+  - **Bear:** all three are no better than the base (11-19 %), −0.65 to −1.88R → NOT USEFUL.
+  - **Answer:** a level cannot be classified as continuation vs swing start; the best clue (a sweep + reclaim in a discount) is too rare on 13 y to separate from the 2020-26 bull trend.
