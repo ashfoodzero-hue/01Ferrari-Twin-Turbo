@@ -805,3 +805,12 @@ without duplications … only use the real Win results, and ignore the rest."
   - **SWING TRADE arms:** BUY_D1 models by construction. INVESTIGATION_90WR: SELL_D1 never qualified (best 82.7 %, OOS AUC 0.505 vs BUY 0.52) → no sell arm.
   - **Today's level / wall / top-down tests ((be)-(bg)):** the SELL side is negative too.
   - **Root cause:** gold's 13 y up-drift (51.8 % of 4H bars up; strong 2024-26). Buy models carry the drift; sells must beat it, and none has met WR ≥ 85 % + money.
+
+- **(bi) 2026-10-16 — SELL-ONLY in confirmed downtrends (`docs/SELL_DOWNTREND_SPEC.md`, `study_sell_downtrend.mjs` → `sell_downtrend_study.json`): 0/12 PASS.**
+  - **R-4H (EMA9 < EMA21 + lower highs), OOS:**
+    - S-RALLY (a defended 3m swing ceiling): RH 58.3 % / −$0.51, R2 30.6 % / −$0.44;
+    - S-BREAK (a 15m close below the swing low): RH 61.5 % / −$0.39, R2 37.2 % / −$0.02.
+  - R-STATE (BREAKOUT_DOWN / TREND_DOWN) is too rare: 9-14 OOS trades.
+  - **The downtrend filter ≈ no filter** (NONE −$0.43 to −$0.55; R-1H the same).
+  - No sell reaches 85 % WR, and every cell is negative in TRAIN and in both eras.
+  - **Conclusion:** the BUY-only state stands; sells remain reading tools.
