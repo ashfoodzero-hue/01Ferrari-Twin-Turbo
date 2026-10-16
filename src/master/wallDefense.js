@@ -49,6 +49,42 @@ export function wallEvents(M, { from = -Infinity, P = WALL } = {}) {
   }
   return events
 }
+/**
+ * SWING-LEVEL walls (2026-10-16, docs/SWING_WALLS_SPEC.md — Ashraf: "bubbles at the reversal points"): the SAME test mechanics as wallEvents
+ * (band, touch from outside, cooldown, touch + 2 decision, zone / push / flow scale, DEFENSE / DEF>PUSH), but the walls are prior CONFIRMED swing
+ * highs (ceilings) / lows (floors): usable from their known time, removed once a 1m close goes beyond them; the nearest active one is tested.
+ * @param levels { highs:[{knownT, px}], lows:[{knownT, px}] } ascending by knownT
+ */
+export function swingWallEvents(M, levels, { from = -Infinity, P = WALL } = {}) {
+  const events = [], active = { ceiling: [], floor: [] }, feats = [], lastFire = new Map(), defCount = new Map(), dq = []
+  let hi = 0, lo = 0, binW = 0, absSum = 0
+  for (let i = 0; i < M.length; i++) { const b = M[i]
+    if (!binW || Math.abs(b.c * P.binFrac / binW - 1) > 0.5) binW = Math.max(0.1, +(b.c * P.binFrac).toFixed(2))
+    while (hi < levels.highs.length && levels.highs[hi].knownT <= b.t) active.ceiling.push(levels.highs[hi++].px)
+    while (lo < levels.lows.length && levels.lows[lo].knownT <= b.t) active.floor.push(levels.lows[lo++].px)
+    for (const ev of feats) { if (ev.state !== 'feature') continue
+      ev.zone += barDelta(b); ev.fb++
+      if (ev.fb >= P.feat) { ev.state = 'done'; ev.di = i; ev.decisionT = b.t + 60000
+        const beyond = ev.type === 'ceiling' ? b.c >= ev.wall + P.brk * ev.binW : b.c <= ev.wall - P.brk * ev.binW
+        if (!beyond && b.t >= from) { const attack = ev.type === 'ceiling' ? 1 : -1
+          ev.defense = Math.sign(ev.zone) === -attack; ev.mag = ev.flowScale > 0 ? Math.abs(ev.zone) / ev.flowScale : 0; ev.defStronger = ev.defense && Math.abs(ev.zone) > Math.abs(ev.push)
+          const key = ev.type + ':' + ev.wall; if (ev.defense) defCount.set(key, (defCount.get(key) ?? 0) + 1); ev.count = ev.defense ? defCount.get(key) : 0
+          events.push(ev) } } }
+    for (let k = feats.length - 1; k >= 0; k--) if (feats[k].state === 'done') feats.splice(k, 1)
+    if (dq.length >= P.profileMin * 0.8 && i >= P.approach) { const prev = M[i - 1], band = P.band * binW
+      for (const type of ['ceiling', 'floor']) { if (feats.some((e) => e.type === type)) continue
+        let wall = null; for (const px of active[type]) if (type === 'ceiling' ? px - band > prev.c && (wall == null || px < wall) : px + band < prev.c && (wall == null || px > wall)) wall = px
+        if (wall == null) continue
+        const touched = type === 'ceiling' ? b.h >= wall - band : b.l <= wall + band
+        if (touched && b.t - (lastFire.get(type + ':' + wall) ?? -Infinity) > P.coolMs) { lastFire.set(type + ':' + wall, b.t)
+          let push = 0; for (let q = i - P.approach; q < i; q++) push += barDelta(M[q])
+          feats.push({ type, wall, binW, t: b.t, touchI: i, flowScale: 3 * absSum / dq.length, zone: barDelta(b), push, fb: 1, state: 'feature', swing: true }) } } }
+    active.ceiling = active.ceiling.filter((px) => !(b.c > px)); active.floor = active.floor.filter((px) => !(b.c < px))   // broken by a close beyond
+    const d = Math.abs(barDelta(b)); dq.push({ t: b.t, d }); absSum += d; const cut = b.t - P.profileMin * 60000
+    while (dq.length && dq[0].t < cut) absSum -= dq.shift().d
+  }
+  return events
+}
 /** Turbo 2 hold label: close retreating `bounce` bins = HOLD, close beyond wall ± `brk` bins = BREAK, within `horizon` bars; null = timeout. */
 export function holdLabel(M, e, P = WALL) {
   for (let j = e.di + 1; j < M.length && j <= e.di + P.horizon; j++) { const c = M[j].c

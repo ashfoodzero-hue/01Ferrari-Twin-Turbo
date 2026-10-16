@@ -724,3 +724,17 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Chart:** 🔵 resistance / 🟡 support circles at the wall price. Size = class (DEFENDED / DEF>PUSH / STRONG); the number = the measured OOS hold %; a tooltip shows the test count and outcome; resolved bubbles are faded. Panel section "WALL PRESSURE bubbles — measured".
   - **First live day:** 13 wall tests, 4 bubbles (2 held, 2 broke), 9 attacked (no bubble).
   - Smoke `smoke_wall_bubbles.mjs` 4/4 (engine identity, mechanism on real data, API provenance + ATTACK never a bubble, chart read-only).
+
+- **(bc) 2026-10-16 — SWING-LEVEL WALLS (reversal points, `docs/SWING_WALLS_SPEC.md`, `swingWallEvents()` in `wallDefense.js`, `study_swing_walls.mjs` → `swing_walls_study.json`): 6/6 SHOWN.**
+  - **Walls:** prior confirmed 5/5 swing highs / lows (the chart's H/L rule), usable from their known time, removed when a 1m close goes beyond. The mechanics are identical to the volume engine.
+  - **OOS holds** (base ≈ 60.2 %):
+
+| Wall type | Tests / day | DEFENSE | DEF>PUSH | STRONG | ATTACK |
+|---|---|---|---|---|---|
+| 3m swings | 38.8 | 70.2 % (LB +9.3) | 73.8 % (+12.4) | 78.3 % (+16.7) | 52.2 % |
+| 15m swings | 8.4 | 69.8 % | 73.2 % | 78.8 % | 52.4 % |
+| Volume walls (reference) | 11.8 | 69.9 % | 73.4 % | 77.1 % | 51.0 % |
+
+  - TRAIN lifts +10.9 to +17.8 pp; both eras; floors hold better than ceilings (e.g. 3m STRONG 80.2 % vs 74.6 %).
+  - A swing level coinciding with a volume wall adds nothing.
+  - **Why no bubble at a new high** (Ashraf 09:18 UTC, gold 4190): the line at the top is the Matrix "SELL wall 3m" (a range-extension level, not a volume / swing wall). The 24 h volume profile has no wall above price (walls 4148.55 / 4154.85), and a swing ceiling exists only while unbroken.
