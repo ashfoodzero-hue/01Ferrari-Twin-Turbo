@@ -855,3 +855,16 @@ without duplications … only use the real Win results, and ignore the rest."
   - `sendText` now makes up to 3 attempts (waits 3 s / 8 s) on a network error / 5xx / 429; a 4xx is final; it never throws.
   - This covers SCALP / SWING / PREPARE / 4H-level / swing-start alerts.
   - Smoke trade_alert 9/9.
+
+- **(bo) 2026-10-16 — SWING TRADE arm 1 with a REASONABLE stop (Ashraf: "the SL must be reasonable" → "Reasonable SL, honest WR"; `docs/SWING_BRACKET_SPEC.md`, `study_swing_bracket.mjs` → `swing_bracket_study.json`).**
+  - Arm 1's own walk-forward signals (scores ≥ 0.9394, D1 policy), 2016 → 2026; E0 reproduces 92.0 % WR.
+  - **OOS (2022+) / TRAIN, with a RANDOM-ENTRY control** (5 draws, same count / policy / bracket):
+    - **E3 0.5 D / 1 D:** WR 73.0 %, +$3.76/t (LB +0.21), TRAIN +$1.02; random −$0.02 → **model − random +$3.78 / +$1.11** → KEEP;
+    - **E4 1 D / 1 D:** WR 58.6 %, +$6.48/t (LB +1.18), TRAIN +$1.21; random +$2.70 (bull drift) → **+$3.78 / +$1.13** → KEEP;
+    - E1 / E2 (0.5 D stop ≈ $37): fail TRAIN → DROP;
+    - E0 today: +$3.30 vs random −$0.16.
+  - **Caveats:**
+    - the 0.9394 threshold was chosen on the pooled 2016-26 OOS (optimistic);
+    - losing years 2016-18 and 2022;
+    - max losing streak 9 (E3) / 14 (E4).
+  - A replacement of arm 1's bracket needs Ashraf's approval.
