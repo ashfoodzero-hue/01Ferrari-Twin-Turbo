@@ -288,7 +288,7 @@ async function pollBias() {
   const w = b.whale, ws = b.whale_study
   const wd = !w || w.error ? '<span class="dim">unavailable</span>' : w.stale ? '<span class="dim">market closed</span>' : w.dir === 'QUIET' ? `<span class="dim">QUIET — no whale-size volume (max ${w.maxMult}× normal)</span>` : w.dir === 'MIXED' ? `<span class="dim">MIXED</span> <small>pressure ${w.pressure}</small>` : `${arrow(w.dir)} <small>pressure ${w.pressure >= 0 ? '+' : ''}${w.pressure} · ${w.big} big bar(s), up to ${w.maxMult}×</small>`
   const wtitle = 'Where heavy CME gold-futures volume (≥ 2× normal) closed inside its 15m bar, last hour, 10 min delayed. NOT true buyer/seller data (Polygon does not give us futures trades).' + (ws ? ` Measured ${ws.window}: heavy-volume direction → gold +$10 first ${(100 * ws.oos_win).toFixed(1)}% vs ${(100 * ws.oos_base).toFixed(1)}% base (n ${ws.oos_n}) — ${ws.verdict.replace(/_/g, ' ').toLowerCase()}.` : '')
-  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + gammaChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
+  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + gammaChip() + magnetChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
   const gb = $('gmBtn'); if (gb) gb.onclick = () => { st.gamma = st.gamma === false; save(); gmKey = '?'; gmDraw(); pollBias() }
   $('fullBtn').onclick = () => { st.full = !st.full; save(); applyLayout(); pollBias() }
 }
@@ -296,6 +296,11 @@ setInterval(pollBias, 15000); pollBias()
 
 // ── GAMMA levels (GLD options → XAU), daily; context only until the forward test measures them ──
 let GM = null, gmLines = [], gmKey = null
+// 4H MACRO MAGNET chip in the top row (2026-10-16, Ashraf: "i do not see it" — the tile lives in the right panel): score + measured truth
+let MG = null
+function magnetChip() { if (!MG || !MG.gold) return ''; const g = MG.gold, pct = g.side === 'LONG' ? g.long : g.short, ts = MG.measured?.this_score
+  const t = 'Your visionHunt 4H Macro Magnet, copied exactly (closed 17:00-NY 4H candles; matches your OANDA chart). The % is a POINTS SCORE, not a probability. Measured 13 y: this reading → up next 4H ' + (ts ? (100 * ts.up4).toFixed(1) + '% (n ' + ts.n + ')' : '—') + ' vs gold base ' + (MG.measured ? (100 * MG.measured.base_up4).toFixed(1) : '—') + '% → no edge. DXY on the other side: measured, adds nothing. Details in the panel.'
+  return `<span class="chip" title="${esc(t)}"><b>4H Magnet</b><span class="${g.side === 'LONG' ? 'up' : 'dn'}">${g.side} ${pct}</span> <small>score · DXY ${MG.dxy_relation === 'confirms' ? 'confirms' : MG.dxy_relation === 'against' ? 'against' : '—'} · measured: no edge${ts ? ' (' + (100 * ts.up4).toFixed(1) + '% up next 4H)' : ''}${MG.stale ? ' · STALE' : ''}</small></span>` }
 async function pollGamma() { GM = await fetch('/api/gamma').then((x) => x.json()).catch(() => null); gmDraw(); pollBias() }
 function gmDraw() {
   const p = panes[0], key = GM?.available && p.sym === 'XAUUSD' && st.gamma !== false ? GM.at + '|' + p.sym : null
@@ -509,6 +514,7 @@ function mxDraw() {
 }
 async function pollMacroMagnet() {
   const m = await fetch('/api/magnet').then((x) => x.json()).catch(() => null); if (!m) return
+  MG = m
   if (m.available === false || !m.gold) { $('mgMsg').innerHTML = `<span class="dim">${esc(m.why || 'no 4H score yet')}</span>`; return }
   const g = m.gold, d = m.dxy, side = g.side, pct = side === 'LONG' ? g.long : g.short, col = side === 'LONG' ? 'green' : 'red', M = m.measured, ts = M?.this_score
   const pc = (x) => x == null ? '—' : (100 * x).toFixed(1) + '%', live = m.live
