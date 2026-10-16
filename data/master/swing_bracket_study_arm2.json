@@ -1,0 +1,239 @@
+{
+ "at": "2026-10-16T11:55:22.173Z",
+ "spec": "docs/SWING_BRACKET_SPEC.md",
+ "threshold": 0.9486222267150879,
+ "cells": {
+  "E0": {
+   "target_D": 0.2,
+   "stop_D": 2,
+   "random_control": {
+    "oos_wr": 0.892,
+    "oos_net": -0.318,
+    "train_wr": 0.885,
+    "train_net": -0.2,
+    "draws": 5
+   },
+   "model_minus_random_oos": 0.96,
+   "model_minus_random_train": 0.41,
+   "train": {
+    "n": 1962,
+    "wr": 0.9016,
+    "net": 0.21,
+    "net_lb": -0.33,
+    "avg_R": 0.014,
+    "avg_risk": 32.8,
+    "max_losses_in_row": 10
+   },
+   "oos": {
+    "n": 1587,
+    "wr": 0.9074,
+    "net": 0.64,
+    "net_lb": -1.55,
+    "avg_R": 0.019,
+    "avg_risk": 88.7,
+    "max_losses_in_row": 5
+   },
+   "per_day": 1.26,
+   "year_net": {
+    "2016": 117.5,
+    "2017": 137.8,
+    "2018": -209.9,
+    "2019": 637.2,
+    "2020": -528.9,
+    "2021": 266.1,
+    "2022": -373.9,
+    "2023": 526.5,
+    "2024": 784,
+    "2025": 1262.3,
+    "2026": -1184.3
+   },
+   "verdict": "REFERENCE"
+  },
+  "E1": {
+   "target_D": 0.5,
+   "stop_D": 0.5,
+   "random_control": {
+    "oos_wr": 0.509,
+    "oos_net": -0.34,
+    "train_wr": 0.478,
+    "train_net": -0.49,
+    "draws": 5
+   },
+   "model_minus_random_oos": 1.18,
+   "model_minus_random_train": 0.4,
+   "train": {
+    "n": 2172,
+    "wr": 0.5009,
+    "net": -0.09,
+    "net_lb": -0.54,
+    "avg_R": -0.02,
+    "avg_risk": 8.3,
+    "max_losses_in_row": 18
+   },
+   "oos": {
+    "n": 1716,
+    "wr": 0.5367,
+    "net": 0.84,
+    "net_lb": -0.73,
+    "avg_R": 0.063,
+    "avg_risk": 22.3,
+    "max_losses_in_row": 22
+   },
+   "per_day": 1.39,
+   "year_net": {
+    "2016": -179.1,
+    "2017": -79.1,
+    "2018": -321.9,
+    "2019": 310.6,
+    "2020": 157.3,
+    "2021": -91.9,
+    "2022": -754.4,
+    "2023": 455.2,
+    "2024": 1673,
+    "2025": 1477.7,
+    "2026": -1414.3
+   },
+   "verdict": "DROP"
+  },
+  "E2": {
+   "target_D": 1,
+   "stop_D": 0.5,
+   "random_control": {
+    "oos_wr": 0.374,
+    "oos_net": 0.95,
+    "train_wr": 0.331,
+    "train_net": -0.438,
+    "draws": 5
+   },
+   "model_minus_random_oos": 1.83,
+   "model_minus_random_train": 0.21,
+   "train": {
+    "n": 1875,
+    "wr": 0.3355,
+    "net": -0.23,
+    "net_lb": -0.88,
+    "avg_R": -0.033,
+    "avg_risk": 8.3,
+    "max_losses_in_row": 49
+   },
+   "oos": {
+    "n": 1470,
+    "wr": 0.3986,
+    "net": 2.78,
+    "net_lb": 0.39,
+    "avg_R": 0.167,
+    "avg_risk": 22.4,
+    "max_losses_in_row": 31
+   },
+   "per_day": 1.19,
+   "year_net": {
+    "2016": -474.9,
+    "2017": -297.8,
+    "2018": -374.8,
+    "2019": 684.7,
+    "2020": 335.5,
+    "2021": -312.6,
+    "2022": -969.5,
+    "2023": 971.8,
+    "2024": 2066.6,
+    "2025": 2228.4,
+    "2026": -203.6
+   },
+   "verdict": "DROP"
+  },
+  "E3": {
+   "target_D": 0.5,
+   "stop_D": 1,
+   "random_control": {
+    "oos_wr": 0.684,
+    "oos_net": -0.022,
+    "train_wr": 0.66,
+    "train_net": -0.17,
+    "draws": 5
+   },
+   "model_minus_random_oos": -0.71,
+   "model_minus_random_train": 0.64,
+   "train": {
+    "n": 1847,
+    "wr": 0.6838,
+    "net": 0.47,
+    "net_lb": -0.23,
+    "avg_R": 0.025,
+    "avg_risk": 16.8,
+    "max_losses_in_row": 15
+   },
+   "oos": {
+    "n": 1446,
+    "wr": 0.6805,
+    "net": -0.73,
+    "net_lb": -3.18,
+    "avg_R": 0.025,
+    "avg_risk": 44.9,
+    "max_losses_in_row": 11
+   },
+   "per_day": 1.17,
+   "year_net": {
+    "2016": -130.6,
+    "2017": 53.9,
+    "2018": -239.3,
+    "2019": 644.5,
+    "2020": 712.2,
+    "2021": -179,
+    "2022": -555.5,
+    "2023": 486.3,
+    "2024": 1486.5,
+    "2025": 725.5,
+    "2026": -3195.1
+   },
+   "verdict": "DROP"
+  },
+  "E4": {
+   "target_D": 1,
+   "stop_D": 1,
+   "random_control": {
+    "oos_wr": 0.555,
+    "oos_net": 2.566,
+    "train_wr": 0.514,
+    "train_net": 0.106,
+    "draws": 5
+   },
+   "model_minus_random_oos": -2.06,
+   "model_minus_random_train": 0.66,
+   "train": {
+    "n": 1480,
+    "wr": 0.5277,
+    "net": 0.77,
+    "net_lb": -0.28,
+    "avg_R": 0.052,
+    "avg_risk": 16.7,
+    "max_losses_in_row": 34
+   },
+   "oos": {
+    "n": 1176,
+    "wr": 0.5451,
+    "net": 0.51,
+    "net_lb": -3.2,
+    "avg_R": 0.085,
+    "avg_risk": 45.1,
+    "max_losses_in_row": 18
+   },
+   "per_day": 0.95,
+   "year_net": {
+    "2016": 112.8,
+    "2017": -59.9,
+    "2018": -293.3,
+    "2019": 922.5,
+    "2020": 640.9,
+    "2021": -190.9,
+    "2022": -657.4,
+    "2023": 702.3,
+    "2024": 1974.7,
+    "2025": 1946.1,
+    "2026": -3366.8
+   },
+   "verdict": "DROP"
+  }
+ },
+ "keep": [],
+ "arm": "freq"
+}

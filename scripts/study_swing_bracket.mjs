@@ -9,8 +9,10 @@ import { loadBars } from '../src/data/backfillReader.js'
 import { atr } from '../src/core/indicators.js'
 import { makeSpreadAt } from '../src/master/spreadModel.js'
 
-const DIR = path.join(TURBO.root, 'data', 'inv90'), THR = 0.9394, DAY = 86400000, SPLIT = Date.UTC(2022, 0, 1), TO = Date.parse('2026-10-09T06:00:00Z'), K = 4, ALPHA = 0.05 / K, spreadAt = makeSpreadAt()
-const T = new Float64Array(fs.readFileSync(path.join(DIR, 'dataset_times.bin')).buffer.slice(0)), S = new Float32Array(fs.readFileSync(path.join(DIR, 'scores_BUY_D1_x.bin')).buffer.slice(0))
+// SWING_ARM=freq (2026-10-16): the same test on forward arm 2 (BUY_D1-xs, the strong GBDT, frozen threshold 0.9486) before it switches to E3
+const ARM = process.env.SWING_ARM === 'freq' ? 'freq' : 'p92'
+const DIR = path.join(TURBO.root, 'data', 'inv90'), THR = ARM === 'freq' ? 0.9486222267150879 : 0.9394, DAY = 86400000, SPLIT = Date.UTC(2022, 0, 1), TO = Date.parse('2026-10-09T06:00:00Z'), K = 4, ALPHA = 0.05 / K, spreadAt = makeSpreadAt()
+const T = new Float64Array(fs.readFileSync(path.join(DIR, 'dataset_times.bin')).buffer.slice(0)), S = new Float32Array(fs.readFileSync(path.join(DIR, ARM === 'freq' ? 'scores_BUY_D1_xs.bin' : 'scores_BUY_D1_x.bin')).buffer.slice(0))
 if (T.length !== S.length) throw new Error(`scores ${S.length} vs times ${T.length}`)
 const idx = [...T.keys()].filter((i) => S[i] >= THR && T[i] <= TO - 8 * DAY && Number.isFinite(S[i]) && S[i] > 0).sort((a, b) => T[a] - T[b])
 const from = T[idx[0]] - 60 * DAY
@@ -62,5 +64,5 @@ for (const [name, [tm, sm]] of Object.entries(BR)) {
   console.log(`   per year $: ${JSON.stringify(years)}`)
   console.log(`   RANDOM BUY same bracket/policy: OOS WR ${C.oos_wr} $/t ${C.oos_net} · TRAIN WR ${C.train_wr} $/t ${C.train_net} → model − random: OOS ${(O.net - C.oos_net).toFixed(2)} · TRAIN ${(TR.net - C.train_net).toFixed(2)}`) }
 res.keep = Object.entries(res.cells).filter(([, c]) => c.verdict === 'KEEP').map(([k]) => k)
-fs.writeFileSync(path.join(TURBO.master, 'swing_bracket_study.json'), JSON.stringify(res, null, 1))
+res.arm = ARM; fs.writeFileSync(path.join(TURBO.master, ARM === 'freq' ? 'swing_bracket_study_arm2.json' : 'swing_bracket_study.json'), JSON.stringify(res, null, 1))
 console.log(`\n=> reasonable-stop brackets KEPT: ${res.keep.join(', ') || 'none'}`)

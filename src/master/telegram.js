@@ -93,7 +93,7 @@ function logSend(kind, text, result) {
     }) + String.fromCharCode(10))
   } catch { /* a log must never break an alert */ }
 }
-export async function sendText(text, { token = TELEGRAM_CONFIG.token, chatId = TELEGRAM_CONFIG.chatId, dryRun = false } = {}) {
+export async function sendText(text, { token = TELEGRAM_CONFIG.token, chatId = TELEGRAM_CONFIG.chatId, dryRun = false, log = true } = {}) {   // log:false = tests (never write the real send log)
   if (!text) return { sent: false, reason: 'empty' }
   if (dryRun || !token || !chatId) { const r = { sent: false, dryRun: true, text }; logSend('group', text, r); return r }
   // 15s bound (2026-09-07): Node's fetch has no default timeout — a stalled socket here would hold the paper tick
@@ -112,6 +112,6 @@ export async function sendText(text, { token = TELEGRAM_CONFIG.token, chatId = T
     } catch (e) { last = { sent: false, error: e.cause?.code || e.message, attempts: attempt + 1 } }
     if (attempt < waits.length) await new Promise((r) => setTimeout(r, waits[attempt]))
   }
-  logSend('group', text, last)
+  if (log) logSend('group', text, last)
   return last
 }

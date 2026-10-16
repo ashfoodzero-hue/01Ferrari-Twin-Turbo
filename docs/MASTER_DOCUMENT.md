@@ -868,3 +868,12 @@ without duplications … only use the real Win results, and ignore the rest."
     - losing years 2016-18 and 2022;
     - max losing streak 9 (E3) / 14 (E4).
   - A replacement of arm 1's bracket needs Ashraf's approval.
+
+- **(bp) 2026-10-16 — SWING arm 1 switched to E3 (Ashraf's choice); arm 2 silenced.**
+  - **Arm 2 measured first** (`swing_bracket_study_arm2.json`): E3 −$0.73/t OOS vs random −$0.02 (model − random −$0.71); E4 −$2.06 vs random. **No reasonable-stop version passes** → arm 2 keeps E0 and records SILENTLY (no Telegram).
+  - **`forward_buyd1.mjs`:**
+    - arm 1 bracket E3 (target 0.5·ATR1d / stop 1·ATR1d);
+    - every signal stores `bracket`; old E0 signals resolve on their own levels;
+    - the summary / verdict counts the current bracket only.
+  - **Display:** the SWING TRADE alert says "forward arm 1 · E3 (stop 1× daily ATR)" with the measured 73.0 % / +$3.76 / beats-random line; the chart labels and the forward note were updated.
+  - **Fix:** the sendText retry smoke had written fake sends into the real `sent.jsonl` (seen by the monitor; never delivered). `sendText({log:false})` is for tests; the 9 fake lines were removed.

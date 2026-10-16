@@ -26,8 +26,8 @@ export function scalpSetup(sig, { verdict } = {}) {
 /** SWING TRADE (forward arm) signal → alert fields. s = ledger signal (entry_ask, stop, target, t, atr_1d); BUY only by construction. */
 export function swingSetup(s, { arm, summary } = {}) {
   const step = s.target - s.entry_ask
-  return { id: s.id, kind: 'SWING TRADE', name: arm === 'freq' ? 'forward arm 2 (≈1/day)' : 'forward arm 1 (92 %)', side: 'BUY', t: s.t, entry: s.entry_ask, sl: s.stop, tp1: s.target, tp2: s.target + step, tp3: s.target + 2 * step,
-    measured: 'TP1 (one target, 7-day limit)', reference: ['tp2', 'tp3'], up: true, verdict: summary?.verdict, lateMin: s.late_min }
+  return { id: s.id, kind: 'SWING TRADE', name: arm === 'freq' ? 'forward arm 2 (≈1/day)' : s.bracket === 'E3' ? 'forward arm 1 · E3 (stop 1× daily ATR)' : 'forward arm 1 (92 %)', side: 'BUY', t: s.t, entry: s.entry_ask, sl: s.stop, tp1: s.target, tp2: s.target + step, tp3: s.target + 2 * step,
+    measured: s.bracket === 'E3' ? 'TP1 = 0.5× daily ATR (one target, 7-day limit) · measured 13 y: 73.0% WR, +$3.76/t (2022-26), beats random buys by +$3.78/t' : 'TP1 (one target, 7-day limit)', reference: ['tp2', 'tp3'], up: true, verdict: summary?.verdict, lateMin: s.late_min }
 }
 export function formatSetupAlert(a) {
   const dir = a.side === 'BUY' ? '🟢 <b>BUY</b>' : '🔴 <b>SELL</b>'

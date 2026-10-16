@@ -33,7 +33,11 @@ const here = path.dirname(fileURLToPath(import.meta.url)), DIR = path.join(TURBO
 const ARM = process.argv.includes('--arm=freq') ? 'freq' : 'p92', AD = ARM === 'freq' ? path.join(DIR, 'forward_freq') : FD; fs.mkdirSync(AD, { recursive: true })
 const ARMC = ARM === 'freq' ? { name: 'BUY_D1-xs (≈1/day)', idp: 'BUY_D1xs_', model: 'model_BUY_D1_xs.json', scores: 'scores_BUY_D1_xs.bin', train: { seed: 2027, trees: 400, depth: 5, lr: 0.03, minLeaf: 200, sub: 0.5 } }
   : { name: 'BUY_D1-x', idp: 'BUY_D1x_', model: 'model_BUY_D1_x.json', scores: 'scores_BUY_D1_x.bin', train: { seed: 2027 } }
-const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.join(AD, ARMC.model), LEDGER = path.join(AD, 'ledger.jsonl'), TM = 0.2, SM = 2
+const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.join(AD, ARMC.model), LEDGER = path.join(AD, 'ledger.jsonl')
+// BRACKET (2026-10-16, Ashraf: "the SL must be reasonable" → chose E3; study (bo) swing_bracket_study*.json): arm 1 → E3 = target 0.5·ATR1d /
+// stop 1·ATR1d (73.0 % WR, +$3.76/t 2022-26, beats random buys by +$3.78/t); arm 2 FAILED every reasonable bracket (E3 −$0.73/t, worse than
+// random) → keeps E0 0.2/2 and records SILENTLY (no Telegram). Each signal stores its own bracket; old E0 signals resolve on their own levels.
+const BR = ARM === 'freq' ? { name: 'E0', tm: 0.2, sm: 2 } : { name: 'E3', tm: 0.5, sm: 1 }, TM = BR.tm, SM = BR.sm
 const readMeta = (d) => JSON.parse(fs.readFileSync(path.join(d, 'dataset_meta.json'), 'utf8'))
 const f32 = (f) => { const b = fs.readFileSync(f); return new Float32Array(b.buffer, b.byteOffset, b.length / 4) }
 
@@ -104,17 +108,19 @@ for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) cont
   const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) continue
   const entry = c + spread(t)
   const sig = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3), entry_ask: +entry.toFixed(2),
-    atr_1d: +Dv.toFixed(2), target: +(entry + TM * Dv).toFixed(2), stop: +(entry - SM * Dv).toFixed(2), recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000) }
+    atr_1d: +Dv.toFixed(2), target: +(entry + TM * Dv).toFixed(2), stop: +(entry - SM * Dv).toFixed(2), recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
   add.push(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
 }
 const lines = [...add, ...res, { type: 'scan', from: lastDone, to: maxT, at: new Date(now).toISOString(), rows_scored: T.filter((t) => t > lastDone && t >= CUT).length }]
 fs.appendFileSync(LEDGER, lines.map((x) => JSON.stringify(x)).join('\n') + '\n')
 // ── 4. summary ───────────────────────────────────────────────────────────────────────────────────────────────────
-const all = [...signals, ...add], rs = [...resolved.values(), ...res], nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
-const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, open: all.length - rs.length,
+// the summary / verdict count ONLY the arm's current bracket (arm 1: E3 from 2026-10-16; the earlier E0 signals stay in the ledger, not in this verdict)
+const inBr = (s) => (s.bracket ?? 'E0') === BR.name, all = [...signals, ...add].filter(inBr), ids = new Set(all.map((s) => s.id))
+const rs = [...resolved.values(), ...res].filter((x) => ids.has(x.id)), nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
+const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, bracket: BR, telegram: ARM !== 'freq', cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, open: all.length - rs.length,
   wr: rs.length ? +(w / rs.length).toFixed(4) : null, wilson_lb: rs.length ? +wilsonLB(w, rs.length, 1.96).toFixed(4) : null, net_mean: rs.length ? +(nets.reduce((a, b) => a + b, 0) / rs.length).toFixed(3) : null,
   verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 0.9 && wilsonLB(w, rs.length, 1.96) >= 0.88 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS (check bootstrap LB)' : 'FORWARD FAIL') }
 fs.writeFileSync(path.join(AD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
 console.log(`forward ${ARMC.name}: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)
 // 📨 Telegram (2026-10-16): each NEW signal, once; tradeAlert skips anything recorded > TWIN_ALERT_MAX_LATE_MIN after its bar (backfill / catch-up)
-for (const s of add) { const r = await alertSetup(swingSetup(s, { arm: ARM, summary: sum })); console.log(`  📨 telegram SWING ${s.id}: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }
+for (const s of ARM === 'freq' ? [] : add) { const r = await alertSetup(swingSetup(s, { arm: ARM, summary: sum })); console.log(`  📨 telegram SWING ${s.id}: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }

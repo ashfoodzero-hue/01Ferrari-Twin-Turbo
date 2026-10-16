@@ -348,9 +348,9 @@ function forward(arm) {   // arm 'freq' (2026-10-15) = the ≈ 1 trade/day arm i
   try { summary = JSON.parse(fs.readFileSync(path.join(dir, 'forward_summary.json'), 'utf8')) } catch {}
   const res = new Map(lines.filter((e) => e.type === 'resolve').map((e) => [e.id, e]))
   const trades = lines.filter((e) => e.type === 'signal').map((s) => { const r = res.get(s.id)
-    return { id: s.id, t: s.t, side: 'BUY', entry: s.entry_ask, target: s.target, stop: s.stop, score: s.score, thr: s.thr, late_min: s.late_min ?? 0,
+    return { id: s.id, t: s.t, side: 'BUY', entry: s.entry_ask, target: s.target, stop: s.stop, score: s.score, thr: s.thr, late_min: s.late_min ?? 0, bracket: s.bracket ?? 'E0',
       status: r ? (r.net > 0 ? 'WIN' : 'LOSS') : 'OPEN', why: r?.why ?? null, exit_t: r?.exit_t ?? null, exit: r?.exit ?? null, net: r?.net ?? null } })
-  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: 'paper forward test — 0.2×ATR1d target / 2×ATR1d stop, 7-day horizon; research candidate, NOT validated (0/67 passed the gate)' }
+  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: arm === 'freq' ? 'paper forward test, RECORD ONLY (no Telegram) — 0.2×ATR1d target / 2×ATR1d stop; no reasonable-stop version passed (study bo)' : 'paper forward test — from 2026-10-16 bracket E3: target 0.5×ATR1d / stop 1×ATR1d, 7-day horizon (measured 73 % WR, +$3.76/t 2022-26); earlier signals used 0.2/2' }
 }
 
 const server = http.createServer(async (req, res) => {
