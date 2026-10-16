@@ -814,3 +814,13 @@ without duplications … only use the real Win results, and ignore the rest."
   - **The downtrend filter ≈ no filter** (NONE −$0.43 to −$0.55; R-1H the same).
   - No sell reaches 85 % WR, and every cell is negative in TRAIN and in both eras.
   - **Conclusion:** the BUY-only state stands; sells remain reading tools.
+
+- **(bj) 2026-10-16 — 4H S/R LEVEL TELEGRAM NOTICES (Ashraf: "send this msg about 5 m before it reaches the defended level … so I watch it · for S/R · also show the Macro bias strength on what favour"). INFORMATION ONLY.**
+  - **Numbers:** `study_c4h_levels.mjs` → `c4h_level_study.json` (OOS). Levels = closed NY 4H candle highs / lows kept until a 1m close beyond.
+    - **APPROACH** (the first minute within one 5m-ATR14, ≈ one 5-minute candle): touches within 15 min **52.2 %** (median 4 min); when it touches, holds only **35.2 %** (TRAIN 53.2 / 37.1 %).
+    - **TOUCH**, i.e. not already through at touch + 2: all 60.9 % · defended 70.7 % · **strong 74.7 %** (TRAIN p66 1.070) · attacked 52.7 %; after a hold ≥ $10 within 4 h 31.0 %.
+  - **`scripts/level_tick.mjs`** (run_twin every minute, +20 s, market open):
+    - ⏳ APPROACHING once per level per 2 h; 🧱 DEFENDED (strong defence at a 4H level) once per test;
+    - each message carries the measured numbers + a 4H Macro bias line (score, which side it favours, "measured: no edge") + "information only";
+    - a stale-data guard; dedupe ledger `data/telegram/level_alerts.json`; `--dry` preview.
+  - Smoke `smoke_level_tick.mjs` 2/2.

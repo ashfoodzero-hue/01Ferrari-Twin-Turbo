@@ -86,7 +86,7 @@ const tick = (barT) => new Promise((resolve) => {
   })
 })
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
-let lastMacro = null, macroRunning = false
+let lastMacro = null, macroRunning = false, lastLevel = null, levelRunning = false
 let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
@@ -143,6 +143,13 @@ for (;;) {
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'macro_tick.mjs')], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { macroRunning = false
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'macro_tick.mjs', bar: new Date(mKey).toISOString(), exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
       process.stdout.write(String(stdout || '')) }) }
+  // 4H S/R LEVEL notices (level_tick.mjs, 2026-10-16, Ashraf: "send this msg about 5 m before it reaches the level … so I watch it"): every minute,
+  // 20 s after the minute closes, while the market is open. Information only (APPROACHING / DEFENDED), deduplicated by its own ledger.
+  const lKey = now - (now % 60000)
+  if (marketOpen(lKey - 1) && now - lKey >= 20000 && lastLevel !== lKey && !levelRunning) { levelRunning = true; lastLevel = lKey
+    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'level_tick.mjs')], { timeout: 50000, windowsHide: true }, (err, stdout, stderr) => { levelRunning = false
+      if (err || /📨/.test(String(stdout))) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'level_tick.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n')
+      if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }
