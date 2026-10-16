@@ -789,3 +789,10 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Average risk ≈ $6:** the reversal extreme sits far from the CHoCH entry once the 15m/30m candle has confirmed.
   - 10-18 % of confirmations never give a CHoCH.
   - **1R WR ≈ 47 %** = a coin flip; the spread makes it a loss. Once a turn is confirmed on three timeframes, the measurable edge is gone.
+
+- **(bg) 2026-10-16 — PULLBACK LIMIT after a defended 4H/1H candle level, $4 then BE (Ashraf: "confirm the $4 first, then BE SL"; `docs/WALL_PULLBACK_SPEC.md`, `study_wall_pullback.mjs` → `wall_pullback_study.json`): 0/2 PASS.**
+  - **OOS:**
+    - L4H SPLIT4: 57 % filled, reached +$4 only 28.5 %, WR 33.8 %, −$0.38/t (risk $2.42);
+    - L1H: 33.4 %, −$0.45.
+  - **Adverse selection:** price that comes BACK to a defended wall is mostly breaking it; the clean bounces never fill.
+  - Across (be) / (bf) / (bg), confirming the $4 has failed with a market entry, a top-down CHoCH entry and a pullback limit.
