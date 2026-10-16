@@ -58,6 +58,8 @@
   .fwstop { position:absolute; border-top:1px dashed #f85149; height:0; font:600 9px system-ui; color:#ff7b72; white-space:nowrap; }
   .fwhead { position:absolute; left:8px; bottom:26px; font:600 11px system-ui; color:#e3b341; background:#0d1117cc; border:1px solid #e3b34166; border-radius:4px; padding:3px 7px; }
   .wbub { position:absolute; border-radius:50%; transform:translate(-50%,-50%); display:flex; align-items:center; justify-content:center; font:700 9px system-ui; color:#0d1117; box-shadow:0 0 8px currentColor; pointer-events:auto; cursor:default; }
+  .wbline { position:absolute; height:0; border-top:2px dashed; } .wbline.res { border-color:#2f81f7; } .wbline.sup { border-color:#ffd400; }
+  .wblab { position:absolute; font:700 9px system-ui; padding:0 4px; border-radius:2px; white-space:nowrap; transform:translateY(-100%); } .wblab.res { background:#2f81f7; color:#fff; } .wblab.sup { background:#ffd400; color:#0d1117; }
   .wbub.res { background:#2f81f7; color:#fff; } .wbub.sup { background:#ffd400; color:#0d1117; } .wbub.done { opacity:.55; }
   .mxtag { position:absolute; font:700 10px system-ui; color:#0d1117; padding:1px 5px; border-radius:3px; white-space:nowrap; }
   aside { background:var(--panel); border-left:1px solid var(--line); padding:14px; overflow:auto; }
@@ -526,6 +528,10 @@ function wbDraw() { const ov = $('wbOverlay'), p = panes[0]; if (!ov) return; ov
   if (!WB?.available || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m', '1h'].includes(st.tf)) return
   const ms = TFMS[st.tf], ts = p.ch.timeScale(), size = { STRONG: 24, 'DEF>PUSH': 19, DEFENSE: 15 }, name = { STRONG: 'STRONG defence', 'DEF>PUSH': 'defence > push', DEFENSE: 'defended' }
   for (const b of WB.bubbles) { const x = ts.timeToCoordinate(Math.floor(Math.floor(b.touchT / ms) * ms / 1000)), y = p.c.priceToCoordinate(b.wall); if (x == null || y == null) continue
+    // the WALL itself (2026-10-16, Ashraf: "bubbles should be at the walls location"): a dashed line at the volume wall from the touch to its outcome (or 60 min), labelled with its price
+    const ce = b.type === 'ceiling' ? 'res' : 'sup', x2 = ts.timeToCoordinate(Math.floor(Math.floor((b.touchT + 60 * 60000) / ms) * ms / 1000)), W = ts.width(), xe = Math.min(W, x2 == null ? x + 140 : Math.max(x + 60, x2))
+    const ln = document.createElement('div'); ln.className = 'wbline ' + ce; ln.style.left = x + 'px'; ln.style.top = y + 'px'; ln.style.width = Math.max(0, xe - x) + 'px'; if (b.outcome === 'HELD' || b.outcome === 'BROKE') ln.style.opacity = '.5'; ov.appendChild(ln)
+    const lb = document.createElement('div'); lb.className = 'wblab ' + ce; lb.style.left = (x + 14) + 'px'; lb.style.top = (y - 2) + 'px'; lb.textContent = `VOL WALL ${fmt(b.wall)}${b.outcome === 'HELD' || b.outcome === 'BROKE' ? ' · ' + b.outcome : ''}`; if (b.outcome === 'HELD' || b.outcome === 'BROKE') lb.style.opacity = '.6'; ov.appendChild(lb)
     const d = document.createElement('div'), z = size[b.cls]; d.className = 'wbub ' + (b.type === 'ceiling' ? 'res' : 'sup') + (b.outcome === 'HELD' || b.outcome === 'BROKE' ? ' done' : '')
     d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.width = d.style.height = z + 'px'; d.textContent = b.measured_hold != null ? Math.round(100 * b.measured_hold) : ''
     d.title = `${b.side} wall ${fmt(b.wall)} · ${name[b.cls]} (test #${b.count} of this wall) · measured hold ${b.measured_hold != null ? (100 * b.measured_hold).toFixed(1) + '%' : '—'} · ${new Date(b.touchT).toISOString().slice(11, 16)} UTC · outcome: ${b.outcome}`
