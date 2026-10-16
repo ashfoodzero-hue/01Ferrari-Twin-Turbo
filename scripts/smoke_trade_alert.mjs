@@ -55,6 +55,17 @@ await ok('👁 SCALP PREPARE: header + the WATCH study numbers (82.3 % / 6 min /
   const e = await alertPrepare(w, 1, { now: T + 200 * 60000, send: async () => { throw new Error('down') }, ledger: pl }); assert(e.error === 'down')
   assert(fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8').includes('if (out.watch && !out.open) { const r = await alertPrepare('))
 })
+await ok('sendText RETRY: a network failure twice then OK → sent on attempt 3; a 4xx is final (1 attempt); all failing → never throws', async () => {
+  const { sendText } = await import('../src/master/telegram.js'), real = globalThis.fetch; let calls = 0
+  try {
+    globalThis.fetch = async () => { calls++; if (calls < 3) throw Object.assign(new Error('fetch failed'), { cause: { code: 'ETIMEDOUT' } }); return { ok: true, status: 200, json: async () => ({ ok: true }) } }
+    const a = await sendText('retry test', { token: 't', chatId: '1' }); assert(a.sent && a.attempts === 3, JSON.stringify(a))
+    calls = 0; globalThis.fetch = async () => { calls++; return { ok: false, status: 400, json: async () => ({ ok: false, description: 'chat not found' }) } }
+    const b = await sendText('4xx test', { token: 't', chatId: '1' }); assert(!b.sent && calls === 1)
+    calls = 0; globalThis.fetch = async () => { calls++; throw new Error('down') }
+    const c = await sendText('down test', { token: 't', chatId: '1' }); assert(!c.sent && c.error && calls === 3)
+  } finally { globalThis.fetch = real }
+})
 await ok('STATIC: both live hooks are wired (matrix_tick SCALP after the state write; forward arms SWING per new signal)', async () => {
   const m = fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8'), f = fs.readFileSync(path.join(here, 'inv90', 'forward_buyd1.mjs'), 'utf8')
   assert(m.indexOf('alertSetup(scalpSetup(') > m.indexOf('fs.renameSync(STATE + \'.tmp\', STATE)')); assert(/for \(const s of add\) \{ const r = await alertSetup\(swingSetup\(/.test(f))

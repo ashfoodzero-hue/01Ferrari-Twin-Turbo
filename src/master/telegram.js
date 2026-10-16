@@ -98,10 +98,20 @@ export async function sendText(text, { token = TELEGRAM_CONFIG.token, chatId = T
   if (dryRun || !token || !chatId) { const r = { sent: false, dryRun: true, text }; logSend('group', text, r); return r }
   // 15s bound (2026-09-07): Node's fetch has no default timeout — a stalled socket here would hold the paper tick
   // (and the fire it is announcing) until the child budget kills it. A late alert beats a hung recorder.
-  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true }), signal: AbortSignal.timeout(15_000) })
-  const j = await res.json().catch(() => ({}))
-  const out = { sent: !!(res.ok && j.ok), status: res.status, response: j }
-  logSend('group', text, out)
-  return out
+  // RETRY (2026-10-16, measured: a 10:5x UTC network blip timed out a send — ETIMEDOUT to api.telegram.org — while the next try 1 min later worked).
+  // A trade alert is sent ONCE when the trade opens, so a single failed attempt lost it. Up to 3 attempts (waits 3 s, 8 s) on a network error /
+  // timeout / HTTP 5xx / 429; a 4xx (bad token, chat) is final. Never throws: the caller gets { sent:false, error } and the tick carries on.
+  const waits = [3000, 8000]; let last = null
+  for (let attempt = 0; attempt <= waits.length; attempt++) {
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true }), signal: AbortSignal.timeout(15_000) })
+      const j = await res.json().catch(() => ({}))
+      last = { sent: !!(res.ok && j.ok), status: res.status, response: j, attempts: attempt + 1 }
+      if (last.sent || (res.status >= 400 && res.status < 500 && res.status !== 429)) break
+    } catch (e) { last = { sent: false, error: e.cause?.code || e.message, attempts: attempt + 1 } }
+    if (attempt < waits.length) await new Promise((r) => setTimeout(r, waits[attempt]))
+  }
+  logSend('group', text, last)
+  return last
 }

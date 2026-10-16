@@ -850,3 +850,8 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Ledger** `data/paper/swing_start_ledger.jsonl`: alert + resolve rows (+5 % before a daily close below the alert low, 60 d).
   - **Parity:** the live rule reproduces the study's dates (2026-06-08 / 06-30 / 10-07).
   - Smoke `smoke_swing_start.mjs` 3/3.
+
+- **(bn) 2026-10-16 — Telegram send RETRY.** A network blip (ETIMEDOUT to api.telegram.org) lost a test send; a trade alert is sent once, so it would have been lost too.
+  - `sendText` now makes up to 3 attempts (waits 3 s / 8 s) on a network error / 5xx / 429; a 4xx is final; it never throws.
+  - This covers SCALP / SWING / PREPARE / 4H-level / swing-start alerts.
+  - Smoke trade_alert 9/9.
