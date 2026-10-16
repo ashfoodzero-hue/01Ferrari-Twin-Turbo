@@ -51,6 +51,7 @@ import { bucket15, whaleAt, WHALE } from '../src/master/goldWhale.js'
 import { streamBars } from '../src/data/backfillReader.js'
 import { streamDxy1m } from '../src/data/dxy.js'
 import { formingScore } from '../src/master/macroMagnet.js'
+import { wallEvents, holdLabel } from '../src/master/wallDefense.js'
 
 export const CHART_PORT = +(process.env.TWIN_CHART_PORT || 7444)
 const PAGE = path.join(TURBO.root, 'ops', 'chart', 'index.html')
@@ -60,6 +61,23 @@ const isSeries = (s) => !!BY_SYM[s] || !!DERIVED[s]
 const cache = new Map()
 const cached = async (key, ttl, fn) => { const c = cache.get(key); if (c && Date.now() - c.at < ttl) return c.v; const v = await fn(); cache.set(key, { at: Date.now(), v }); return v }
 const J = (f) => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, f), 'utf8')) } catch { return null } }
+// WALL-PRESSURE BUBBLES (2026-10-16, docs/WALL_BUBBLES_SPEC.md): the shared engine on the last 36 h of gold 1m (24 h profile + a day of tests),
+// classes from the study (STRONG threshold = its TRAIN p66), measured OOS holds from wall_bubbles_study.json, and each bubble's own outcome once its
+// 60 min have passed (live record, the same hold rule). Background-refreshed at most once a minute — never blocks a request. Read-only.
+const WBF = { at: 0, val: null, busy: false }
+async function refreshWalls() {
+  if (WBF.busy || Date.now() - WBF.at < 60000) return; WBF.busy = true
+  try { const st = J('wall_bubbles_study.json'); if (!st) { WBF.val = { available: false, why: 'wall_bubbles_study.json missing' }; return }
+    const now = Date.now(), M = (await loadBars('XAUUSD', '1m', { from: now - 36 * 3600000 })).bars.filter((b) => b.t + 60000 <= now)
+    const ev = wallEvents(M, { from: now - 24 * 3600000 }), m66 = st.strong_threshold_train_p66, C = st.classes
+    const cls = (e) => !e.defense ? null : e.mag > m66 ? 'STRONG' : e.defStronger ? 'DEF>PUSH' : 'DEFENSE'
+    const bubbles = ev.map((e) => ({ e, c: cls(e) })).filter((x) => x.c).map(({ e, c }) => { const h = M.length - 1 - e.di >= 60 ? holdLabel(M, e) : undefined
+      return { side: e.type === 'ceiling' ? 'RESISTANCE' : 'SUPPORT', type: e.type, wall: +e.wall.toFixed(2), touchT: e.t, decisionT: e.decisionT, cls: c, count: e.count, measured_hold: C[c]?.oos_hold ?? null, outcome: h === undefined ? 'pending' : h === null ? 'timeout' : h ? 'HELD' : 'BROKE' } })
+    const done = bubbles.filter((b) => b.outcome === 'HELD' || b.outcome === 'BROKE')
+    WBF.val = { available: true, computed_at: new Date(now).toISOString(), bubbles, attacked_last24h: ev.filter((e) => !e.defense).length,
+      measured: { base: st.base.oos, attack: C.ATTACK.oos_hold, defense: C.DEFENSE.oos_hold, def_push: C['DEF>PUSH'].oos_hold, strong: C.STRONG.oos_hold, stacking: st.stacking, rsi_confirms: st.rsi_confirms, source: 'data/master/wall_bubbles_study.json' },
+      live24h: { resolved: done.length, held: done.filter((b) => b.outcome === 'HELD').length } }
+  } catch (e) { WBF.val = { available: false, why: e.message } } finally { WBF.at = Date.now(); WBF.busy = false } }
 // FORMING 4H magnet preview: the closed bars macro_tick saved + the minutes since (≤ a few hours) through the SAME engine. PROVISIONAL.
 const MGF = { at: 0, val: null, busy: false }
 async function refreshForming() {
@@ -343,6 +361,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     // 4H MACRO MAGNET tile (2026-10-16): the state macro_tick.mjs writes — Ashraf's Pine score + its MEASURED 13 y result + the live record — plus
     // the FORMING preview of the open 4H candle (provisional; refreshed in the background at most once a minute, never blocks a request). Read-only.
+    if (u.pathname === '/api/walls') { refreshWalls(); return send(res, 200, WBF.val ?? { available: false, why: 'computing — first refresh in progress' }) }
     if (u.pathname === '/api/magnet') { const m = J('macro_magnet_state.json'); refreshForming(); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 5 * 3600000, forming: MGF.val } : { available: false, why: 'macro_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, watch: m?.watch && Date.now() - m.watch.barT < 6 * 60000 ? m.watch : null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
     if (!isSeries(sym)) return send(res, 400, { error: 'unknown symbol', symbols: [...SYMBOLS.map((s) => s.sym), ...Object.keys(DERIVED)] })

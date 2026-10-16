@@ -715,3 +715,12 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Stacking REFUTED:** repeated defended tests of the same wall hold LESS (72.4 → 69.1 → 67.7 %); the count is shown with that fact.
   - **RSI adds nothing:** 0/6 (4H RSI, 1H RSI, recent 4H RSI bubble, each on DEFENSE and DEF>PUSH; diffs −1.1 to +3.5 pp, all LB < 0).
   - **Hold** = close retreats ~$4 (4 bins) before closing ~$2 beyond within 60 min — a short reaction, not a trade (study (an): no money edge after costs).
+  - **Engine identity:** the same 40,693 wall tests as study (an)'s own engine copy.
+  - **STRONG cut-off:** the TRAIN p66 over LABELLED defended tests = 0.775 (study (an) used all defended tests = 0.731). Both are TRAIN-only; the new one is stricter.
+  - **LIVE (2026-10-16):** `/api/walls` on the chart server (read-only):
+    - the shared engine on the last 36 h of 1m, refreshed in the background ≤ 1/min;
+    - classes and measured holds from `wall_bubbles_study.json`;
+    - each bubble's own HELD / BROKE once its 60 min pass (live record).
+  - **Chart:** 🔵 resistance / 🟡 support circles at the wall price. Size = class (DEFENDED / DEF>PUSH / STRONG); the number = the measured OOS hold %; a tooltip shows the test count and outcome; resolved bubbles are faded. Panel section "WALL PRESSURE bubbles — measured".
+  - **First live day:** 13 wall tests, 4 bubbles (2 held, 2 broke), 9 attacked (no bubble).
+  - Smoke `smoke_wall_bubbles.mjs` 4/4 (engine identity, mechanism on real data, API provenance + ATTACK never a bubble, chart read-only).

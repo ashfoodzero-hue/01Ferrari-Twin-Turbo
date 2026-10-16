@@ -57,6 +57,8 @@
   .fwbox.win { border-color:#3fb950; background:#3fb9501f; color:#56d364; } .fwbox.loss { border-color:#f85149; background:#f851491f; color:#ff7b72; }
   .fwstop { position:absolute; border-top:1px dashed #f85149; height:0; font:600 9px system-ui; color:#ff7b72; white-space:nowrap; }
   .fwhead { position:absolute; left:8px; bottom:26px; font:600 11px system-ui; color:#e3b341; background:#0d1117cc; border:1px solid #e3b34166; border-radius:4px; padding:3px 7px; }
+  .wbub { position:absolute; border-radius:50%; transform:translate(-50%,-50%); display:flex; align-items:center; justify-content:center; font:700 9px system-ui; color:#0d1117; box-shadow:0 0 8px currentColor; pointer-events:auto; cursor:default; }
+  .wbub.res { background:#2f81f7; color:#fff; } .wbub.sup { background:#ffd400; color:#0d1117; } .wbub.done { opacity:.55; }
   .mxtag { position:absolute; font:700 10px system-ui; color:#0d1117; padding:1px 5px; border-radius:3px; white-space:nowrap; }
   aside { background:var(--panel); border-left:1px solid var(--line); padding:14px; overflow:auto; }
   aside h2 { font-size:12px; text-transform:uppercase; letter-spacing:.6px; color:var(--muted); margin:16px 0 6px; font-weight:600; }
@@ -88,7 +90,7 @@
 <main>
   <div id="charts">
     <div id="bias"><span class="dim">loading drivers…</span></div>
-    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div><div id="fwOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="rtOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div></div>
+    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div><div id="fwOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="rtOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="wbOverlay" style="position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden"></div></div>
     <div class="pane sub"><div class="ptitle" id="t1"></div><div class="cbox" id="c1"></div></div>
     <div class="pane sub"><div class="ptitle" id="t2"></div><div class="cbox" id="c2"></div></div>
     <div class="pane sub"><div class="ptitle" id="t3"></div><div class="cbox" id="c3"></div></div>
@@ -99,6 +101,9 @@
     <div class="note" id="calNote" style="margin-top:6px"></div>
     <h2>S/R levels (5m chart) — measured</h2>
     <div class="msg" id="lvMsg">—</div>
+    <h2>WALL PRESSURE bubbles — measured</h2>
+    <div class="msg" id="wbMsg">—</div>
+    <div class="note" style="margin-top:6px">🔵 resistance / 🟡 support, drawn at the wall each time the volume flow DEFENDS it (≈ 3 min after the touch — defence can only be seen once price is at the wall). Size = class: small DEFENDED · medium DEFENCE &gt; PUSH (your rule) · large STRONG. The number = its measured hold %. No bubble when the flow ATTACKS (51 % = coin flip). Held = price backs off ~$4 before closing ~$2 through the wall within 60 min — a short reaction, not a trade signal by itself. Repeated defences of the same wall hold LESS, not more (measured). RSI adds nothing (measured).</div>
     <h2>4H MACRO MAGNET (your Pine) — score, not probability</h2>
     <div class="msg" id="mgMsg">—</div>
     <div class="note" style="margin-top:6px">Your visionHunt indicator copied exactly (closed 17:00-New-York 4H candles; matches your OANDA chart on 98.7 % of bars, same side 100 %). The % is a <b>points score</b> (EMA 35 · liquidity 35 · RSI 20 · candle 10). Measured on 13 y it does <b>not</b> forecast the next 4H — your chart's history looks stronger only because the Pine uses <code>lookahead_on</code>. Every 4H close is recorded live as a forward test.</div>
@@ -515,6 +520,24 @@ function mxDraw() {
   const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
     t.textContent = `SCALP ${s.side} ENTRY ${fmt(s.entry)} · SL ${fmt(s.sl)} · TP1 ${fmt(s.tp1)} · TP2 ${fmt(s.tp2)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
 }
+// ── WALL-PRESSURE BUBBLES (/api/walls): 🔵 resistance / 🟡 support at the wall price; size = class; number = measured OOS hold % ──
+let WB = null
+function wbDraw() { const ov = $('wbOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''
+  if (!WB?.available || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m', '1h'].includes(st.tf)) return
+  const ms = TFMS[st.tf], ts = p.ch.timeScale(), size = { STRONG: 24, 'DEF>PUSH': 19, DEFENSE: 15 }, name = { STRONG: 'STRONG defence', 'DEF>PUSH': 'defence > push', DEFENSE: 'defended' }
+  for (const b of WB.bubbles) { const x = ts.timeToCoordinate(Math.floor(Math.floor(b.touchT / ms) * ms / 1000)), y = p.c.priceToCoordinate(b.wall); if (x == null || y == null) continue
+    const d = document.createElement('div'), z = size[b.cls]; d.className = 'wbub ' + (b.type === 'ceiling' ? 'res' : 'sup') + (b.outcome === 'HELD' || b.outcome === 'BROKE' ? ' done' : '')
+    d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.width = d.style.height = z + 'px'; d.textContent = b.measured_hold != null ? Math.round(100 * b.measured_hold) : ''
+    d.title = `${b.side} wall ${fmt(b.wall)} · ${name[b.cls]} (test #${b.count} of this wall) · measured hold ${b.measured_hold != null ? (100 * b.measured_hold).toFixed(1) + '%' : '—'} · ${new Date(b.touchT).toISOString().slice(11, 16)} UTC · outcome: ${b.outcome}`
+    ov.appendChild(d) } }
+async function pollWalls() { const w = await fetch('/api/walls').then((x) => x.json()).catch(() => null); if (!w) return; WB = w
+  if (!w.available) { $('wbMsg').innerHTML = `<span class="dim">${esc(w.why || 'not available')}</span>`; return }
+  const M = w.measured, pc = (x) => x == null ? '—' : (100 * x).toFixed(1) + '%', last = w.bubbles.at(-1)
+  $('wbMsg').innerHTML = `measured 13 y (unseen data): <b>STRONG ${pc(M.strong)}</b> · <b>defence &gt; push ${pc(M.def_push)}</b> · <b>defended ${pc(M.defense)}</b> vs all tests ${pc(M.base)} · attacked ${pc(M.attack)} (no bubble)<br>`
+    + `<span class="dim">last 24 h: ${w.bubbles.length} bubbles (${w.attacked_last24h} attacked tests, no bubble) · live record ${w.live24h.held}/${w.live24h.resolved} held</span>`
+    + (last ? `<br>latest: <b class="${last.type === 'ceiling' ? 'red' : 'green'}">${last.side} ${fmt(last.wall)}</b> ${esc(last.cls)} · ${new Date(last.touchT).toISOString().slice(11, 16)} UTC · ${esc(last.outcome)}` : '')
+  wbDraw() }
+setInterval(pollWalls, 30000); setTimeout(pollWalls, 1500); setInterval(wbDraw, 1000)
 async function pollMacroMagnet() {
   const m = await fetch('/api/magnet').then((x) => x.json()).catch(() => null); if (!m) return
   MG = m
