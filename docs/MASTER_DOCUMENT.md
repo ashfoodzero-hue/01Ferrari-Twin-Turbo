@@ -905,3 +905,18 @@ without duplications … only use the real Win results, and ignore the rest."
   - Most facts reverse sign between TRAIN and OOS: DXY 15m (TRAIN favours DXY up, OOS DXY down), session, ATR percentile, market state.
   - **Conclusion:** the SCALP has no edge, so no pre-trigger filter recovers one. Avoiding "similar trades" = not treating SCALP (SHADOW) alerts as trades.
 - **(bt) 2026-10-16 — SCALP Telegram alerts: "Keep, with a loud warning" (Ashraf).** Every SCALP card's line 2 now prints the measured gate result from `ferrari_matrix_gate.json` (today: SHADOW, −$0.91/trade on unseen data, 20 % full wins, NOT a trade recommendation). A last line says whether silver 3m (close vs EMA10) confirms; it is info only, being the one same-sign fact in (bs), and it is not significant. **Nothing is filtered or blocked:** every Matrix signal still alerts, so no opportunity is lost. This is on purpose, because (bs)/(br) showed every filter also removed winners. Code: `tradeAlert.js` scalpSetup/formatSetupAlert, `matrix_tick.mjs`. Smoke: smoke_trade_alert 10/10.
+- **(bu) 2026-10-16 — FAST MOVE → BOUNCE AT THE 4H LEVEL (Ashraf, after 4176 → 4154.60 → 4188: "limit at the strong level, small SL, BE after +$6"; "a second entry that supports my losing entry"; "DXY 1H RSI bearish sign at the bounce"; "add the DXY bias"). Pre-registered `docs/FAST_MOVE_BOUNCE_SPEC.md` (+ addendum A). `study_fast_move_bounce.mjs` → `fast_move_bounce.json`; `study_fast_move_bounce_dxy.mjs` → `fast_move_bounce_dxy.json`. 0/8 + 0/24 PASS.**
+  - **Event:** a 60-min move ≥ max($15, 3× 5m-ATR); the nearest active NY-4H level within $15; 13 y of data.
+  - **L (limit at the level, stop $4 / $8, BE at +$6, TP +$15, 4 h), OOS:**
+    - long: L4 WR 14.8 %, −$0.95/t; L8 26.1 %, −$0.58;
+    - short: L4 −$1.19; L8 −$1.51.
+  - **Fast-move limits do WORSE than ordinary level touches** (touch control −$0.29/−$0.21; the difference LB is negative).
+  - **D (wait for DXY 3m back across EMA10 + gold back across the level):**
+    - long D4 +$0.37 OOS (WR 32.5 %), but LB −0.68 and TRAIN −$0.11 → not proven;
+    - shorts negative.
+  - **Addendum A** (DXY 1H RSI divergence, DXY 4H magnet bias, both): 0/24 pass.
+    - DIV on the D cells: long +$1.66 / +$2.24 on n 43, LB about −2. TRAIN n 2-3, too few to judge.
+    - BIAS ≈ no lift.
+  - **"Second entry rescues the first":** the added entry is the L trade above (negative). After an L fill, price got back $20 above the level within 4 h only **27.8 %** (OOS) of the time.
+  - **Today:** the active 4H floors were 4162.97 (broken 13:18) and 4146.98. The low of 4154.60 never reached the 4146.98 floor, so a limit there would not have filled.
+  - **Conclusion:** no tradeable bounce rule. Every L/D cell's WR is far below the 85 % line.

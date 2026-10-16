@@ -1,0 +1,435 @@
+{
+ "at": "2026-10-16T14:29:15.210Z",
+ "spec": "docs/FAST_MOVE_BOUNCE_SPEC.md",
+ "window": [
+  "2013-07-21T22:00:00.000Z",
+  "2026-10-09T06:00:00.000Z"
+ ],
+ "oos_from": "2021-06-26T07:36:00.000Z",
+ "dxy_from": "2013-07-17T22:00:00.000Z",
+ "events": {
+  "drop": 2275,
+  "rally": 2323,
+  "with_level": {
+   "drop": 1218,
+   "rally": 1103
+  }
+ },
+ "cells": {
+  "LONG after FAST DROP": {
+   "L4": {
+    "oos": {
+     "n": 495,
+     "wr": 0.1475,
+     "net": -0.951,
+     "out": {
+      "TP": 48,
+      "BE": 79,
+      "SL": 342,
+      "TIME": 26
+     }
+    },
+    "train": {
+     "n": 103,
+     "wr": 0.1748,
+     "net": -1.124,
+     "out": {
+      "TP": 6,
+      "BE": 16,
+      "SL": 68,
+      "TIME": 13
+     }
+    },
+    "oos_lb": -1.555,
+    "control_touch_oos": {
+     "n": 4089,
+     "wr": 0.3118,
+     "net": -0.286,
+     "out": {
+      "TP": 216,
+      "BE": 332,
+      "SL": 2161,
+      "TIME": 1380
+     }
+    },
+    "vs_touch_lb": -1.35,
+    "random_oos": {
+     "n": 994,
+     "wr": 0.2616,
+     "net": -0.575,
+     "out": {
+      "TP": 64,
+      "BE": 83,
+      "SL": 559,
+      "TIME": 288
+     }
+    },
+    "vs_random_lb": -1.052,
+    "verdict": "FAIL"
+   },
+   "L8": {
+    "oos": {
+     "n": 495,
+     "wr": 0.2606,
+     "net": -0.575,
+     "out": {
+      "TP": 87,
+      "BE": 128,
+      "SL": 227,
+      "TIME": 53
+     }
+    },
+    "train": {
+     "n": 103,
+     "wr": 0.3204,
+     "net": -0.702,
+     "out": {
+      "TP": 11,
+      "BE": 20,
+      "SL": 42,
+      "TIME": 30
+     }
+    },
+    "oos_lb": -1.462,
+    "control_touch_oos": {
+     "n": 4089,
+     "wr": 0.4074,
+     "net": -0.206,
+     "out": {
+      "TP": 291,
+      "BE": 430,
+      "SL": 1141,
+      "TIME": 2227
+     }
+    },
+    "vs_touch_lb": -1.311,
+    "random_oos": {
+     "n": 994,
+     "wr": 0.341,
+     "net": -0.682,
+     "out": {
+      "TP": 76,
+      "BE": 126,
+      "SL": 294,
+      "TIME": 498
+     }
+    },
+    "vs_random_lb": -0.862,
+    "verdict": "FAIL"
+   },
+   "D4": {
+    "oos": {
+     "n": 406,
+     "wr": 0.3251,
+     "net": 0.367,
+     "out": {
+      "TP": 86,
+      "BE": 96,
+      "SL": 169,
+      "TIME": 55
+     }
+    },
+    "train": {
+     "n": 86,
+     "wr": 0.2674,
+     "net": -0.113,
+     "out": {
+      "TP": 9,
+      "BE": 24,
+      "SL": 28,
+      "TIME": 25
+     }
+    },
+    "oos_lb": -0.682,
+    "control_touch_oos": {
+     "n": 4089,
+     "wr": 0.3118,
+     "net": -0.286,
+     "out": {
+      "TP": 216,
+      "BE": 332,
+      "SL": 2161,
+      "TIME": 1380
+     }
+    },
+    "vs_touch_lb": -0.447,
+    "random_oos": {
+     "n": 994,
+     "wr": 0.2616,
+     "net": -0.575,
+     "out": {
+      "TP": 64,
+      "BE": 83,
+      "SL": 559,
+      "TIME": 288
+     }
+    },
+    "vs_random_lb": -0.207,
+    "verdict": "FAIL"
+   },
+   "D8": {
+    "oos": {
+     "n": 406,
+     "wr": 0.3596,
+     "net": -0.13,
+     "out": {
+      "TP": 93,
+      "BE": 108,
+      "SL": 133,
+      "TIME": 72
+     }
+    },
+    "train": {
+     "n": 86,
+     "wr": 0.3256,
+     "net": 0.374,
+     "out": {
+      "TP": 11,
+      "BE": 25,
+      "SL": 16,
+      "TIME": 34
+     }
+    },
+    "oos_lb": -1.305,
+    "control_touch_oos": {
+     "n": 4089,
+     "wr": 0.4074,
+     "net": -0.206,
+     "out": {
+      "TP": 291,
+      "BE": 430,
+      "SL": 1141,
+      "TIME": 2227
+     }
+    },
+    "vs_touch_lb": -1.158,
+    "random_oos": {
+     "n": 994,
+     "wr": 0.341,
+     "net": -0.682,
+     "out": {
+      "TP": 76,
+      "BE": 126,
+      "SL": 294,
+      "TIME": 498
+     }
+    },
+    "vs_random_lb": -0.728,
+    "verdict": "FAIL"
+   }
+  },
+  "SHORT after FAST RALLY": {
+   "L4": {
+    "oos": {
+     "n": 458,
+     "wr": 0.1332,
+     "net": -1.194,
+     "out": {
+      "TP": 47,
+      "BE": 67,
+      "SL": 327,
+      "TIME": 17
+     }
+    },
+    "train": {
+     "n": 95,
+     "wr": 0.2632,
+     "net": -0.083,
+     "out": {
+      "TP": 10,
+      "BE": 12,
+      "SL": 57,
+      "TIME": 16
+     }
+    },
+    "oos_lb": -1.761,
+    "control_touch_oos": {
+     "n": 6644,
+     "wr": 0.3018,
+     "net": -0.55,
+     "out": {
+      "TP": 312,
+      "BE": 483,
+      "SL": 3541,
+      "TIME": 2308
+     }
+    },
+    "vs_touch_lb": -1.276,
+    "random_oos": {
+     "n": 918,
+     "wr": 0.2832,
+     "net": -0.23,
+     "out": {
+      "TP": 72,
+      "BE": 93,
+      "SL": 463,
+      "TIME": 290
+     }
+    },
+    "vs_random_lb": -1.71,
+    "verdict": "FAIL"
+   },
+   "L8": {
+    "oos": {
+     "n": 458,
+     "wr": 0.2118,
+     "net": -1.514,
+     "out": {
+      "TP": 74,
+      "BE": 112,
+      "SL": 233,
+      "TIME": 39
+     }
+    },
+    "train": {
+     "n": 95,
+     "wr": 0.3263,
+     "net": -0.428,
+     "out": {
+      "TP": 13,
+      "BE": 18,
+      "SL": 37,
+      "TIME": 27
+     }
+    },
+    "oos_lb": -2.38,
+    "control_touch_oos": {
+     "n": 6644,
+     "wr": 0.3781,
+     "net": -0.694,
+     "out": {
+      "TP": 432,
+      "BE": 620,
+      "SL": 1862,
+      "TIME": 3730
+     }
+    },
+    "vs_touch_lb": -1.723,
+    "random_oos": {
+     "n": 918,
+     "wr": 0.3529,
+     "net": -0.287,
+     "out": {
+      "TP": 97,
+      "BE": 133,
+      "SL": 255,
+      "TIME": 433
+     }
+    },
+    "vs_random_lb": -2.219,
+    "verdict": "FAIL"
+   },
+   "D4": {
+    "oos": {
+     "n": 381,
+     "wr": 0.2546,
+     "net": -0.899,
+     "out": {
+      "TP": 70,
+      "BE": 66,
+      "SL": 202,
+      "TIME": 43
+     }
+    },
+    "train": {
+     "n": 89,
+     "wr": 0.3933,
+     "net": 0.114,
+     "out": {
+      "TP": 12,
+      "BE": 13,
+      "SL": 28,
+      "TIME": 36
+     }
+    },
+    "oos_lb": -1.821,
+    "control_touch_oos": {
+     "n": 6644,
+     "wr": 0.3018,
+     "net": -0.55,
+     "out": {
+      "TP": 312,
+      "BE": 483,
+      "SL": 3541,
+      "TIME": 2308
+     }
+    },
+    "vs_touch_lb": -1.29,
+    "random_oos": {
+     "n": 918,
+     "wr": 0.2832,
+     "net": -0.23,
+     "out": {
+      "TP": 72,
+      "BE": 93,
+      "SL": 463,
+      "TIME": 290
+     }
+    },
+    "vs_random_lb": -1.727,
+    "verdict": "FAIL"
+   },
+   "D8": {
+    "oos": {
+     "n": 381,
+     "wr": 0.2992,
+     "net": -1.199,
+     "out": {
+      "TP": 81,
+      "BE": 81,
+      "SL": 148,
+      "TIME": 71
+     }
+    },
+    "train": {
+     "n": 89,
+     "wr": 0.4157,
+     "net": -0.139,
+     "out": {
+      "TP": 14,
+      "BE": 14,
+      "SL": 19,
+      "TIME": 42
+     }
+    },
+    "oos_lb": -2.377,
+    "control_touch_oos": {
+     "n": 6644,
+     "wr": 0.3781,
+     "net": -0.694,
+     "out": {
+      "TP": 432,
+      "BE": 620,
+      "SL": 1862,
+      "TIME": 3730
+     }
+    },
+    "vs_touch_lb": -1.706,
+    "random_oos": {
+     "n": 918,
+     "wr": 0.3529,
+     "net": -0.287,
+     "out": {
+      "TP": 97,
+      "BE": 133,
+      "SL": 255,
+      "TIME": 433
+     }
+    },
+    "vs_random_lb": -2.222,
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "rescue": {
+  "definition": "after an L fill, price returns $20 beyond the level (a first entry placed $20 earlier) within 4 h",
+  "oos": {
+   "n": 953,
+   "back_20": 0.2781
+  },
+  "train": {
+   "n": 198,
+   "back_20": 0.1162
+  }
+ }
+}
