@@ -824,3 +824,13 @@ without duplications … only use the real Win results, and ignore the rest."
     - each message carries the measured numbers + a 4H Macro bias line (score, which side it favours, "measured: no edge") + "information only";
     - a stale-data guard; dedupe ledger `data/telegram/level_alerts.json`; `--dry` preview.
   - Smoke `smoke_level_tick.mjs` 2/2.
+
+- **(bk) 2026-10-16 — 👁 SCALP PREPARE to Telegram (Ashraf: "an alert prior the trade setup … today I received a trade already triggered but no alert before").**
+  - **Audit of this morning:**
+    - the 00:39 SCALP BUY HAD a chart WATCH at 00:33 / 00:36 (chart-only then → no Telegram);
+    - the 06:03 SCALP BUY had NO watch (the wall touch and the green trigger in the same 3m bar) — measured: only 40.3 % of SCALP signals get a prior watch (`matrix_prep_alert_posthoc.json` recall).
+  - **Now:**
+    - `matrix_tick` sends "👁 SCALP PREPARE — WATCH BUY" (FERRARI TWIN TURBO header) when the WATCH state appears — once per episode (45 min), never with a trade open (`alertPrepare` in `tradeAlert.js`);
+    - it states 82.3 % → a BUY signal within 60 min (median 6 min) and that only 40.3 % of trades get a warning;
+    - `WATCH.recall` added.
+  - Smoke trade_alert 8/8.

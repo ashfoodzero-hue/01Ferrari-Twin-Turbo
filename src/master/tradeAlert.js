@@ -44,6 +44,19 @@ export function formatSetupAlert(a) {
     `<code>${new Date(a.t).toISOString().replace('.000Z', 'Z')}</code>`,
   ].join('\n')
 }
+/** 👁 SCALP PREPARE (2026-10-16, Ashraf: "an alert prior the trade setup … to prepare waiting the trigger msg"): the chart's WATCH BUY state sent to
+ *  Telegram ONCE per watch episode (≥ 45 min since the last prepare notice) and never while a trade is open. Numbers = the WATCH study (post-hoc). */
+export function formatPrepareAlert(w, close) { const m = w.measured, pc = (x) => (100 * x).toFixed(1) + '%'
+  return ['🏎🏎 <b>FERRARI TWIN TURBO</b> 🏎🏎', '👁 <b>SCALP PREPARE — WATCH BUY</b> · XAUUSD', `gold ${close != null ? Number(close).toFixed(2) + ' ' : ''}pushed through the Matrix BUY wall (~${w.line}) · waiting for the green trigger candle`,
+    `measured: ${pc(m.conversion)} of these became a BUY signal within 60 min (median ${m.lead_min} min) · ⚠ only ${pc(m.recall)} of SCALP trades get this warning — many trigger with none`,
+    '<i>Matrix SCALP = SHADOW (paper) · get ready — the TRADE SETUP READY message follows if it triggers</i>'].join('\n') }
+export async function alertPrepare(w, close, { now = Date.now(), send = sendText, ledger = LEDGER } = {}) {
+  try { const led = readLedger(ledger), last = led['PREPARE:last'] ? Date.parse(led['PREPARE:last'].at) : -Infinity
+    if (now - last < 45 * 60000) return { skipped: 'same watch episode' }
+    const r = await send(formatPrepareAlert(w, close))
+    if (r?.sent || r?.dryRun) { led['PREPARE:last'] = { at: new Date(now).toISOString(), sent: !!r.sent }; fs.mkdirSync(path.dirname(ledger), { recursive: true }); fs.writeFileSync(ledger + '.tmp', JSON.stringify(led, null, 1)); fs.renameSync(ledger + '.tmp', ledger) }
+    return { sent: !!r?.sent, dryRun: !!r?.dryRun }
+  } catch (e) { return { sent: false, error: e.message } } }
 const readLedger = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return {} } }
 /** Send once per setup id. Never throws (an alert must never break the tick that found the trade). Returns { sent, dryRun, skipped }. */
 export async function alertSetup(a, { now = Date.now(), dryRun = false, send = sendText, ledger = LEDGER } = {}) {

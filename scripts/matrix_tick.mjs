@@ -17,7 +17,7 @@ import { pidAlive } from '../src/core/pidAlive.js'
 import { matrixSignals, resolveMatrixTrade, matrixStructure, matrixArmedAt, emaSeries, WATCH, MATRIX } from '../src/master/ferrariMatrix.js'
 import { atr as atrArr } from '../src/core/indicators.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
-import { alertSetup, scalpSetup } from '../src/master/tradeAlert.js'
+import { alertSetup, scalpSetup, alertPrepare } from '../src/master/tradeAlert.js'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -73,4 +73,5 @@ if (STATIC) { console.log(JSON.stringify({ ...out, open: out.open && { ...out.op
 fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
 // 📨 Telegram "TRADE SETUP READY" (2026-10-16) — after the box is written, once per trade; never blocks or breaks the tick
+if (out.watch && !out.open) { const r = await alertPrepare(out.watch, B.at(-1)?.c); console.log(`  📨 telegram PREPARE: ${r.sent ? 'sent' : r.dryRun ? 'dry run' : r.skipped || r.error}`) }   // 👁 → Telegram (2026-10-16)
 if (opened) { const r = await alertSetup(scalpSetup(opened, { verdict: verdict.verdict })); console.log(`  📨 telegram SCALP: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }

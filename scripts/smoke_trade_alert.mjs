@@ -45,6 +45,16 @@ await ok('a failing sender never throws out of alertSetup and is not marked aler
   const a = scalpSetup({ ...buy, decisionT: T + 2 }); const r = await alertSetup(a, { now: T + 60000, send: async () => { throw new Error('network down') }, ledger })
   assert(r.error === 'network down'); assert(!JSON.parse(fs.readFileSync(ledger, 'utf8'))[a.id])
 })
+await ok('👁 SCALP PREPARE: header + the WATCH study numbers (82.3 % / 6 min / 40.3 % recall); once per watch episode (45 min); a failing sender never throws; never while a trade is open', async () => {
+  const { formatPrepareAlert, alertPrepare } = await import('../src/master/tradeAlert.js'), { WATCH } = await import('../src/master/ferrariMatrix.js')
+  const w = { side: 'BUY', line: 4150.5, measured: WATCH }, txt = formatPrepareAlert(w, 4149.2)
+  assert(txt.startsWith('🏎🏎 <b>FERRARI TWIN TURBO</b>') && txt.includes('SCALP PREPARE — WATCH BUY') && txt.includes('82.3%') && txt.includes('median 6 min') && txt.includes('40.3%') && txt.includes('SHADOW'))
+  const pl = path.join(tmp, 'prep.json'), seen = []; const fk = async (t) => { seen.push(t); return { sent: true } }
+  const a = await alertPrepare(w, 4149.2, { now: T, send: fk, ledger: pl }), b = await alertPrepare(w, 4149.2, { now: T + 20 * 60000, send: fk, ledger: pl }), c = await alertPrepare(w, 4149.2, { now: T + 50 * 60000, send: fk, ledger: pl })
+  assert(a.sent && b.skipped && c.sent && seen.length === 2)
+  const e = await alertPrepare(w, 1, { now: T + 200 * 60000, send: async () => { throw new Error('down') }, ledger: pl }); assert(e.error === 'down')
+  assert(fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8').includes('if (out.watch && !out.open) { const r = await alertPrepare('))
+})
 await ok('STATIC: both live hooks are wired (matrix_tick SCALP after the state write; forward arms SWING per new signal)', async () => {
   const m = fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8'), f = fs.readFileSync(path.join(here, 'inv90', 'forward_buyd1.mjs'), 'utf8')
   assert(m.indexOf('alertSetup(scalpSetup(') > m.indexOf('fs.renameSync(STATE + \'.tmp\', STATE)')); assert(/for \(const s of add\) \{ const r = await alertSetup\(swingSetup\(/.test(f))

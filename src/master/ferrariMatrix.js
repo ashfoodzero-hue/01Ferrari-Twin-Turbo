@@ -89,7 +89,8 @@ export function matrixArmedAt(B, A, i, dByT, dEma, wti1m) {
   const w = wtiHourAt(wti1m, b.t + MATRIX.tfMs); if (!w) return null
   return { buyCtx: !w.bullish && d.c < de, sellCtx: w.bullish && d.c > de, buyDist: (b.l - L.buyLine) / a, sellDist: (L.sellLine - b.h) / a, buyLine: L.buyLine, sellLine: L.sellLine }
 }
-export const WATCH = Object.freeze({ side: 'BUY', k: -0.25, bars: 20, conversion: 0.8226, oos_n: 1815, lead_min: 6, source: 'data/master/matrix_prep_alert_posthoc.json (post-hoc, not a pass)' })
+export const WATCH = Object.freeze({ side: 'BUY', k: -0.25, bars: 20, conversion: 0.8226, oos_n: 1815, lead_min: 6, recall: 0.4033,   // recall = share of signals that had a watch before them (2026-10-16)
+  source: 'data/master/matrix_prep_alert_posthoc.json (post-hoc, not a pass)' })
 
 // sellRule (2026-10-16, SELL study docs/MATRIX_SELL_SPEC.md): the SELL trigger condition. 'choch' = close below the last confirmed swing low
 // (Ashraf's Pine rule — THE LIVE DEFAULT); 'red' = red candle (the mirror of the BUY's green candle); 'prevlow' = close below the previous bar's low.
