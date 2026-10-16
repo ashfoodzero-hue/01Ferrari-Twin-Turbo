@@ -1,0 +1,181 @@
+{
+ "at": "2026-10-16T07:48:25.064Z",
+ "spec": "docs/MAGNET_CONFIRMATION_SPEC.md",
+ "family_cells": 18,
+ "H30": {
+  "C2_gold_regime": {
+   "oos": {
+    "n": 1392,
+    "real": 0.755,
+    "placebo": 0.7261,
+    "lift": 0.0289,
+    "lb_0.025": 0.0057,
+    "lb_0.002777777777777778": -0.0037
+   },
+   "train": {
+    "n": 1994,
+    "lift": 0.0096
+   },
+   "era": {
+    "pre2020": 0.0126,
+    "post2020": 0.0221
+   }
+  },
+  "C1_gold_timing": {
+   "oos": {
+    "n": 1392,
+    "real": 0.755,
+    "placebo": 0.7305,
+    "lift": 0.0246,
+    "lb_0.025": 0.0015,
+    "lb_0.002777777777777778": -0.0069
+   },
+   "train": {
+    "n": 1994,
+    "lift": 0.0043
+   },
+   "era": {
+    "pre2020": 0.0072,
+    "post2020": 0.0178
+   }
+  },
+  "C3_dxy_regime": {
+   "oos": {
+    "n": 1330,
+    "real": 0.7316,
+    "placebo": 0.7308,
+    "lift": 0.0008,
+    "lb_0.025": -0.0228,
+    "lb_0.002777777777777778": -0.0334
+   },
+   "train": {
+    "n": 1898,
+    "lift": 0.027
+   },
+   "era": {
+    "pre2020": 0.0226,
+    "post2020": 0.0099
+   }
+  },
+  "C4_dxy_confirm": {
+   "groups": {
+    "agree": {
+     "oos_n": 472,
+     "oos_real": 0.7415,
+     "oos_placebo": 0.7309,
+     "oos_lift": 0.0106,
+     "train_lift": -0.005
+    },
+    "disagree": {
+     "oos_n": 327,
+     "oos_real": 0.7554,
+     "oos_placebo": 0.7011,
+     "oos_lift": 0.0543,
+     "train_lift": 0.0281
+    },
+    "none": {
+     "oos_n": 593,
+     "oos_real": 0.7656,
+     "oos_placebo": 0.7358,
+     "oos_lift": 0.0298,
+     "train_lift": 0.0113
+    }
+   },
+   "oos_diff": -0.0437,
+   "lb_0.025": -0.1102,
+   "train_diff": -0.0332
+  }
+ },
+ "H120": {
+  "C2_gold_regime": {
+   "oos": {
+    "n": 1648,
+    "real": 0.7239,
+    "placebo": 0.7001,
+    "lift": 0.0238,
+    "lb_0.025": 0.0029,
+    "lb_0.002777777777777778": -0.0047
+   },
+   "train": {
+    "n": 2432,
+    "lift": -0.0001
+   },
+   "era": {
+    "pre2020": 0.0023,
+    "post2020": 0.0165
+   }
+  },
+  "C1_gold_timing": {
+   "oos": {
+    "n": 1648,
+    "real": 0.7239,
+    "placebo": 0.7033,
+    "lift": 0.0206,
+    "lb_0.025": -0.001,
+    "lb_0.002777777777777778": -0.0085
+   },
+   "train": {
+    "n": 2432,
+    "lift": 0.0013
+   },
+   "era": {
+    "pre2020": 0.0046,
+    "post2020": 0.0134
+   }
+  },
+  "C3_dxy_regime": {
+   "oos": {
+    "n": 1611,
+    "real": 0.6996,
+    "placebo": 0.7008,
+    "lift": -0.0013,
+    "lb_0.025": -0.0232,
+    "lb_0.002777777777777778": -0.0327
+   },
+   "train": {
+    "n": 2286,
+    "lift": 0.0262
+   },
+   "era": {
+    "pre2020": 0.0247,
+    "post2020": 0.0051
+   }
+  },
+  "C4_dxy_confirm": {
+   "groups": {
+    "agree": {
+     "oos_n": 567,
+     "oos_real": 0.7108,
+     "oos_placebo": 0.7019,
+     "oos_lift": 0.0089,
+     "train_lift": -0.0201
+    },
+    "disagree": {
+     "oos_n": 372,
+     "oos_real": 0.7231,
+     "oos_placebo": 0.6858,
+     "oos_lift": 0.0374,
+     "train_lift": 0.0343
+    },
+    "none": {
+     "oos_n": 709,
+     "oos_real": 0.7348,
+     "oos_placebo": 0.7063,
+     "oos_lift": 0.0286,
+     "train_lift": -0.0023
+    }
+   },
+   "oos_diff": -0.0285,
+   "lb_0.025": -0.0928,
+   "train_diff": -0.0543
+  }
+ },
+ "verdicts": {
+  "C1_timing_matched": "FAIL",
+  "C2_family_wise_gold": "FAIL",
+  "C2_family_wise_timing": "FAIL",
+  "C3_dxy_replicates": "NO",
+  "C4_dxy_adds_strength": "NO"
+ },
+ "magnet_confirmed": false
+}

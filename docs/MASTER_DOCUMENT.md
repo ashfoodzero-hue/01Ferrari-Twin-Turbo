@@ -633,3 +633,18 @@ without duplications … only use the real Win results, and ignore the rest."
     - by distance share: the lift sits in 0.2-0.5 (+4-5 pp); none at the extremes.
   - **No-drift:** the 4H strict run reproduced exactly (424 / 347 / 75.5 % / +2.6 pp).
   - **Reading:** a small, genuine liquidity pull within ~30 h of a new 1H pool pair, mostly since 2020. The dashboard may show the measured nearer-first % per distance bucket (1H, 30 h), labelled with its size and limits; nothing else.
+
+- **(ax) 2026-10-16 — Liquidity MAGNET confirmation (`docs/MAGNET_CONFIRMATION_SPEC.md`, `study_magnet_confirm.mjs` → `magnet_confirm.json`): NOT CONFIRMED. (aw)'s pass was marginal.**
+  - **H 30, OOS:**
+
+| Check | Result |
+|---|---|
+| Gold, regime placebo, fresh seed | +2.9 pp (was +3.5 — the placebo draw alone moves it 0.6 pp), LB(α/2) +0.6, **LB(α/18) −0.4** |
+| **C1** timing-matched placebo (other new-pair moments) | +2.5 pp, LB +0.1, TRAIN +0.4 → **FAIL** |
+| **C2** family-wise (18 cells) | **FAIL** |
+| **C3** DXY 1H pools | +0.1 pp (73.2 % vs 73.1 %) → **does not replicate** |
+| **C4** DXY agreeing | gold's lift +1.1 pp vs DXY disagreeing +5.4 (TRAIN the same sign) → **DXY adds no strength**, if anything the reverse |
+
+  - H 120: the same picture.
+  - **Final:** gold shows a small (~2-3 pp) lean toward real pools, not separable from chance, era-dependent, absent on DXY. **No magnet / liquidity-target signal is shown anywhere.**
+  - What stays measured: distance-only first-touch odds (the placebo calibration, path geometry).
