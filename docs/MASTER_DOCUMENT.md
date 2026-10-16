@@ -884,3 +884,12 @@ without duplications … only use the real Win results, and ignore the rest."
     - It missed its ≤ 15/day bar → chart only.
   - **Wiring:** `WALL_TOUCH` constant; `matrix_tick` sets `wallTouch` when the full WATCH does not fire; `/api/matrix` passes it while fresh; the chart shows a grey dashed "🫴 wall touched 64% — waiting for WTI/DXY" line + a panel line. No Telegram path.
   - **Live 12:53:** the first real ⏳ 4H SUPPORT AHEAD 4168.72 notice. The 12:24 SCALP BUY hit SL −$5.84.
+
+- **(br) 2026-10-16 — 12:24 SCALP post-mortem: DXY 15m trend + "fresh flip" filters (`docs/MATRIX_DXY_CONTEXT_SPEC.md`, `study_matrix_dxy_context.mjs` → `matrix_dxy_context_study.json`): NO HELP (0/2).**
+  - **Facts:** WTI turned OK at 12:18; DXY 3m dropped below its EMA only on the 12:21 signal bar; DXY 15m was BULLISH.
+  - **OOS BUYs** (all −$0.87/t, WR 27.7 %):
+    - skip-when-DXY-15m-up: kept −$0.57 vs skipped −$1.06 (+$0.30, LB −0.83), TRAIN −$0.13 (reverses);
+    - skip-fresh-flip: kept −$0.63 vs skipped −$0.99 (+$0.24, LB −0.94), TRAIN −$0.04;
+    - both: +$0.03.
+  - Ashraf's DXY intuition points the right way recently but is not significant and reverses in TRAIN. The 12:24 stop-out = the normal SHADOW scalp result.
+  - Ashraf's own live trade (entry ~4176, SL 4143) was closed at breakeven after the 4154.6 un-defended bounce.

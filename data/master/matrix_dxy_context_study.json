@@ -1,0 +1,130 @@
+{
+ "at": "2026-10-16T13:42:30.060Z",
+ "spec": "docs/MATRIX_DXY_CONTEXT_SPEC.md",
+ "buys": 3395,
+ "cells": {
+  "F-DXY15": {
+   "removes_share": 0.57,
+   "oos": {
+    "all": {
+     "n": 1324,
+     "wr": 0.2772,
+     "net": -0.87
+    },
+    "kept": {
+     "n": 508,
+     "wr": 0.2913,
+     "net": -0.568
+    },
+    "skipped": {
+     "n": 816,
+     "wr": 0.2684,
+     "net": -1.057
+    }
+   },
+   "train": {
+    "all": {
+     "n": 2071,
+     "wr": 0.2467,
+     "net": -0.27
+    },
+    "kept": {
+     "n": 952,
+     "wr": 0.2437,
+     "net": -0.404
+    },
+    "skipped": {
+     "n": 1119,
+     "wr": 0.2493,
+     "net": -0.156
+    }
+   },
+   "oos_gain": 0.302,
+   "train_gain": -0.134,
+   "gain_lb": -0.828,
+   "verdict": "NO_HELP"
+  },
+  "F-FRESH": {
+   "removes_share": 0.62,
+   "oos": {
+    "all": {
+     "n": 1324,
+     "wr": 0.2772,
+     "net": -0.87
+    },
+    "kept": {
+     "n": 455,
+     "wr": 0.2747,
+     "net": -0.632
+    },
+    "skipped": {
+     "n": 869,
+     "wr": 0.2785,
+     "net": -0.994
+    }
+   },
+   "train": {
+    "all": {
+     "n": 2071,
+     "wr": 0.2467,
+     "net": -0.27
+    },
+    "kept": {
+     "n": 835,
+     "wr": 0.2287,
+     "net": -0.31
+    },
+    "skipped": {
+     "n": 1236,
+     "wr": 0.2589,
+     "net": -0.243
+    }
+   },
+   "oos_gain": 0.238,
+   "train_gain": -0.04,
+   "gain_lb": -0.942,
+   "verdict": "NO_HELP"
+  },
+  "BOTH (reported)": {
+   "removes_share": 0.77,
+   "oos": {
+    "all": {
+     "n": 1324,
+     "wr": 0.2772,
+     "net": -0.87
+    },
+    "kept": {
+     "n": 267,
+     "wr": 0.2772,
+     "net": -0.841
+    },
+    "skipped": {
+     "n": 1057,
+     "wr": 0.2772,
+     "net": -0.877
+    }
+   },
+   "train": {
+    "all": {
+     "n": 2071,
+     "wr": 0.2467,
+     "net": -0.27
+    },
+    "kept": {
+     "n": 513,
+     "wr": 0.2339,
+     "net": -0.337
+    },
+    "skipped": {
+     "n": 1558,
+     "wr": 0.251,
+     "net": -0.248
+    }
+   },
+   "oos_gain": 0.029,
+   "train_gain": -0.067,
+   "gain_lb": -1.522,
+   "verdict": "REPORTED"
+  }
+ }
+}
