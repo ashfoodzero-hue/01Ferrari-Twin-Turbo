@@ -893,3 +893,14 @@ without duplications … only use the real Win results, and ignore the rest."
     - both: +$0.03.
   - Ashraf's DXY intuition points the right way recently but is not significant and reverses in TRAIN. The 12:24 stop-out = the normal SHADOW scalp result.
   - Ashraf's own live trade (entry ~4176, SL 4143) was closed at breakeven after the 4154.6 un-defended bounce.
+
+- **(bs) 2026-10-16 — Matrix SCALP BUY LOSS AUTOPSY (15 pre-trigger facts, TRAIN-only selection, one OOS test; `docs/MATRIX_LOSS_AUTOPSY_SPEC.md`, `study_matrix_loss_autopsy.mjs` → `matrix_loss_autopsy.json`): NOTHING avoids losers.**
+  - **BUYs:** TRAIN 2,071 (−$0.27, WR 24.7 %), OOS 1,324 (−$0.87, WR 27.7 %).
+  - **TRAIN top 3:** candle body mid (+0.31), 4H Macro ≥ 65 (+0.30), silver 3m up (+0.29).
+  - **OOS:**
+    - body mid **−$1.46** (reverses);
+    - Macro ≥ 65 −$1.01 (reverses);
+    - silver 3m up −$0.14 (gain +0.73, LB −0.42 — the only same-sign fact, not significant);
+    - top1 AND top2 −$0.24.
+  - Most facts reverse sign between TRAIN and OOS: DXY 15m (TRAIN favours DXY up, OOS DXY down), session, ATR percentile, market state.
+  - **Conclusion:** the SCALP has no edge, so no pre-trigger filter recovers one. Avoiding "similar trades" = not treating SCALP (SHADOW) alerts as trades.
