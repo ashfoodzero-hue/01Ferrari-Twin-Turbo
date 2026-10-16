@@ -93,7 +93,8 @@ export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult =
 
   // ── THE MIDDLE: do not guess ──
   return { state: 'EQUILIBRIUM', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: null, canTrade: false,
-    message: `🚫 EQUILIBRIUM $${f(mid)} (${Math.round(pos * 100)}% of range) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.`,
+    // wording (2026-10-16): the old "EQUILIBRIUM $<mid> (72% of range)" read as if the price were the mid. EQUILIBRIUM = 25-75 % of the range.
+    message: `🚫 EQUILIBRIUM — price $${f(px)} at ${Math.round(pos * 100)}% of the range (middle zone 25-75 %, mid $${f(mid)}) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.`,
     waitFor: { sell: dnTrigger, buy: upTrigger, needVolume: `${volMult}× average`, plain: `Wait for a close below $${dnTrigger} (then SELL) or above $${upTrigger} (then BUY) — with volume.` } }
 }
 
