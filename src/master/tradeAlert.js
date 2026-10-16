@@ -18,10 +18,14 @@ const on = (v) => !/^(0|off|false|no)$/i.test(String(v ?? '1').trim())
 export const alertSettings = () => ({ scalp: on(process.env.TWIN_ALERT_SCALP), swing: on(process.env.TWIN_ALERT_SWING), maxLateMin: +(process.env.TWIN_ALERT_MAX_LATE_MIN || 30) })
 
 /** SCALP (Ferrari Matrix) setup → alert fields. sig = matrix signal (side, entry, sl, tp1, tp2, decisionT). */
-export function scalpSetup(sig, { verdict } = {}) {
+// WARNING (2026-10-16, Ashraf "keep, with a loud warning" — study (bs): no pre-trigger filter fixes the SCALP): every SCALP alert opens with the
+// measured gate result (ferrari_matrix_gate.json via `gate`) and says whether silver 3m confirms (the only same-sign fact in both periods, unproven).
+export function scalpSetup(sig, { verdict, gate, silverUp } = {}) {
   const up = sig.side === 'BUY', tp3 = sig.tp2 + (sig.tp2 - sig.tp1)
+  const warning = gate?.oos_net != null ? `⚠️ <b>SHADOW system</b> — measured ${gate.oos_net >= 0 ? '+' : '−'}$${Math.abs(Number(gate.oos_net)).toFixed(2)}/trade on unseen data${gate.oos_wr != null ? `, ${(100 * gate.oos_wr).toFixed(0)}% full wins` : ''} · NOT a trade recommendation` : null
+  const info = silverUp == null ? null : `silver 3m ${silverUp === up ? 'CONFIRMS ✅' : 'does NOT confirm ❌'} (info only — the one fact that pointed the same way in both test periods, not proven)`
   return { id: `MATRIX@${sig.decisionT}`, kind: 'SCALP', name: 'Ferrari Matrix 3m', side: sig.side, t: sig.decisionT, entry: sig.entry, sl: sig.sl, tp1: sig.tp1, tp2: sig.tp2, tp3,
-    measured: 'TP1 + TP2 (half each, stop to entry after TP1)', reference: ['tp3'], up, verdict }
+    measured: 'TP1 + TP2 (half each, stop to entry after TP1)', reference: ['tp3'], up, verdict, warning, info }
 }
 /** SWING TRADE (forward arm) signal → alert fields. s = ledger signal (entry_ask, stop, target, t, atr_1d); BUY only by construction. */
 export function swingSetup(s, { arm, summary } = {}) {
@@ -34,12 +38,14 @@ export function formatSetupAlert(a) {
   const tp = (k, label) => `${label} <b>${f2(a[k])}</b>${a.reference.includes(k) ? ' <i>(reference — not in the measured exit)</i>' : ''}`
   return [
     `🏎🏎 <b>FERRARI TWIN TURBO</b> 🏎🏎`,   // Ashraf 2026-10-16: the Twin shares Turbo 2's group — the first line names the app
+    ...(a.warning ? [a.warning] : []),
     `🚨 <b>TRADE SETUP READY — ${a.kind}</b> · XAUUSD`,
     `${dir} · ${a.name}`,
     `ENTRY <b>${f2(a.entry)}</b>`,
     `SL <b>${f2(a.sl)}</b>  (risk $${f2(Math.abs(a.entry - a.sl))}/oz)`,
     tp('tp1', 'TP1'), tp('tp2', 'TP2'), tp('tp3', 'TP3'),
     `<i>measured exit: ${a.measured}${a.verdict ? ' · ' + a.verdict : ''}</i>`,
+    ...(a.info ? [`<i>${a.info}</i>`] : []),
     `<i>Ferrari Twin Turbo · PAPER — a notice, not an order</i>`,
     `<code>${new Date(a.t).toISOString().replace('.000Z', 'Z')}</code>`,
   ].join('\n')

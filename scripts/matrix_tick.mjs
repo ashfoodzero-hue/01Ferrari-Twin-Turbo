@@ -76,4 +76,5 @@ fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
 // 📨 Telegram "TRADE SETUP READY" (2026-10-16) — after the box is written, once per trade; never blocks or breaks the tick
 if (out.watch && !out.open) { const r = await alertPrepare(out.watch, B.at(-1)?.c); console.log(`  📨 telegram PREPARE: ${r.sent ? 'sent' : r.dryRun ? 'dry run' : r.skipped || r.error}`) }   // 👁 → Telegram (2026-10-16)
-if (opened) { const r = await alertSetup(scalpSetup(opened, { verdict: verdict.verdict })); console.log(`  📨 telegram SCALP: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }
+if (opened) { let silverUp = null; try { const S3 = (await loadBars('XAGUSD', '3m', { from: lastClose - 2 * 86400000 })).bars.filter((b) => b.t + MATRIX.tfMs <= lastClose); if (S3.length > 20) { const e = emaSeries(S3, 10); silverUp = S3.at(-1).c > e.get(S3.at(-1).t) } } catch { /* info only */ }
+  const r = await alertSetup(scalpSetup(opened, { verdict: verdict.verdict, gate: verdict, silverUp })); console.log(`  📨 telegram SCALP: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }
