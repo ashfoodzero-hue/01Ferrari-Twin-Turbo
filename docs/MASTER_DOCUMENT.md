@@ -762,3 +762,19 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Swing follow-through within 4 h after a HELD wall:** ≥ $10 ≈ 30 %, ≥ $20 ≈ 12 %. A DEF>PUSH / STRONG bubble does not raise it (−2.1 / 0.0 pp).
     - → A held wall = usually a PULLBACK, not a swing. No "swing expected" alert and no pre-touch hold alert.
     - The panel shows the measured follow-through.
+
+- **(be) 2026-10-16 — WALL SCALP at defended levels (`docs/WALL_SCALP_SPEC.md`, `study_wall_scalp.mjs` → `wall_scalp_study.json`): 0/15 PASS.**
+  - **Levels:** 4H candle highs/lows (C4H) · 4H / 1H / 15m / 3m swings.
+  - **Trade:** only DEF>PUSH-or-STRONG bubbles; market entry at the decision (measured spread); stop wall ± 3 bins; exits T4 ($4) / T10 ($10) / SPLIT. Red line WR ≥ 85 % + money.
+  - **OOS:**
+    - C4H T4: 43.5 % WR, −$0.50/t (1.46/d);
+    - C4H T10: 34.2 %, −$0.40;
+    - S3 T4: 42.6 %, −$0.65;
+    - every cell is negative on both sides and in TRAIN.
+    - Average risk ≈ $4.7 (> the $4 target).
+    - Reached +$10 within 4 h: 12-18 %.
+  - **Why** a 74-78 % hold does not become a scalp:
+    - the hold is measured from the WALL, while the trade enters 3 min later, after much of the bounce;
+    - the stop beyond the wall plus the spread sits further away than the target;
+    - wicks hit the stop more often than closes break the wall.
+  - The wall bubbles stay as reading tools; no wall scalp is built.
