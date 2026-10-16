@@ -40,4 +40,16 @@ await ok('STATIC: run_twin runs macro_tick 2 min after every NY 4H close; the ch
   assert(ch.includes("u.pathname === '/api/magnet'") && ch.includes("u.pathname === '/api/macro') return send(res, 200, await macro())"))
   assert(pg.includes("fetch('/api/magnet')") && pg.includes('score, not probability'))
 })
+await ok('FORMING preview: no minutes → null; with minutes = the engine on closed bars + the open candle; the saved closed bars reproduce the official score; the API + page label it provisional', async () => {
+  const { formingScore } = await import('../src/master/macroMagnet.js')
+  const b = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'macro_magnet_bars.json'), 'utf8'))
+  assert.equal(await formingScore(b.gold, []), null)
+  const off = magnetScores(b.gold).filter(Boolean).at(-1), st2 = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'macro_magnet_state.json'), 'utf8'))
+  if (off.t === st2.bar_t) { assert.equal(off.long, st2.gold.long, 'saved closed bars drift from the official score'); assert.equal(off.bsl, st2.gold.bsl); assert.equal(off.ssl, st2.gold.ssl) }
+  const last = b.gold.at(-1), H4 = 4 * 3600000, mins = []; for (let i = 0; i < 90; i++) { const t = last.t + H4 + i * 60000, p = last.c + i * 0.1; mins.push({ t, o: p, h: p + 0.2, l: p - 0.2, c: p + 0.05 }) }
+  const f = await formingScore(b.gold, mins), manual = magnetScores([...b.gold, { t: last.t + H4, o: mins[0].o, h: Math.max(...mins.map((m) => m.h)), l: Math.min(...mins.map((m) => m.l)), c: mins.at(-1).c }]).at(-1)
+  assert(f && f.forming && f.partial.minutes === 90 && f.partial.closes_at === last.t + 2 * H4); assert.equal(f.long, manual.long); for (const k of 'ABCD') assert.equal(f[k], manual[k])
+  const ch = fs.readFileSync(path.join(here, 'run_chart.mjs'), 'utf8'), pg = fs.readFileSync(path.join(root, 'ops', 'chart', 'index.html'), 'utf8')
+  assert(ch.includes('forming: MGF.val') && ch.includes("provisional: true") && ch.includes('Date.now() - MGF.at < 60000')); assert(pg.includes('PROVISIONAL, can change until the close') && pg.includes('function fChip()'))
+})
 console.log(process.exitCode ? '✗ MACRO MAGNET LIVE TICK SMOKE FAILED' : `✅ MACRO MAGNET LIVE TICK SMOKE: ${n} passed, 0 failed`)

@@ -55,6 +55,10 @@ const state = { at: new Date(now).toISOString(), bar: cur ? new Date(G[k].t).toI
   measured: ny ? { verdict: study.informative?.length ? 'INFORMATIVE' : 'NO_EDGE', base_up4: ny.base.oos.up4, base_dn4: ny.base.oos.dn4, this_score: lk, pine_history_view: ny.methodE.pine_view_bar_itself_up, live_view: ny.methodE.live_view_next_bar_up, window: study.window, source: 'data/master/macro_magnet_study.json' } : null,
   live, ledger_rows_added: add.length }
 if (STATIC) { console.log(JSON.stringify(state, null, 1)); process.exit(0) }
+// ALL closed NY 4H bars of the 200-day window for the chart's FORMING preview — the FULL series, because a BSL/SSL register can come from an old
+// unbroken pivot (a 400-bar slice would lose it and the preview would disagree with the official score). run_chart adds only the open candle.
+const slim = (xs) => xs.map((b) => ({ t: b.t, o: b.o, h: b.h, l: b.l, c: b.c }))
+fs.writeFileSync(path.join(TURBO.master, 'macro_magnet_bars.json.tmp'), JSON.stringify({ at: new Date(now).toISOString(), gold: slim(G), dxy: slim(D) })); fs.renameSync(path.join(TURBO.master, 'macro_magnet_bars.json.tmp'), path.join(TURBO.master, 'macro_magnet_bars.json'))
 if (add.length) { fs.mkdirSync(TURBO.paper, { recursive: true }); fs.appendFileSync(LEDGER, add.map((x) => JSON.stringify(x)).join('\n') + '\n') }
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(state, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
 console.log(`  🧲 macro magnet ${state.bar?.slice(5, 16)}: gold ${cur?.side} ${cur?.side === 'LONG' ? cur?.long : cur?.short} · DXY ${dx?.side ?? '—'} (${rel}) · ledger +${add.length} · live ${live.hits}/${live.n}`)

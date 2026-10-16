@@ -674,3 +674,11 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Live at start:** 01:00 UTC bar — gold LONG 100, DXY SHORT 100 (confirms). This is the same as his OANDA chart.
   - **run_twin restarted 08:06 UTC.** The old stream / chart / settings children closed with it; the new run_twin started fresh ones. One streamer only, no missing minutes.
   - Smokes `smoke_macro_tick.mjs` (5/5: parity, provenance, ledger integrity, hook, endpoint) + `smoke_macro_magnet.mjs` added to smoke_all.
+
+  - **Forming preview (Ashraf: "yes add the forming preview"):**
+    - `formingScore()` in `macroMagnet.js` = the closed bars (`data/master/macro_magnet_bars.json`, the FULL 200-day series, so an old unbroken pool is kept) + the open candle built from the minutes since;
+    - run_chart computes it in the background at most once a minute (`/api/magnet` → `forming`, `provisional: true`), so a request is never blocked;
+    - the chip shows "│ forming HH:MM: LONG 100 provisional" and the tile has a "PROVISIONAL, can change until the close" line;
+    - the official score stays the closed bar.
+    - Smoke: forming test 6/6.
+    - Noted, NOT changed: `/api/bias` recomputes every 15 s and takes 5-9 s — pre-existing, unrelated.

@@ -300,7 +300,10 @@ let GM = null, gmLines = [], gmKey = null
 let MG = null
 function magnetChip() { if (!MG || !MG.gold) return ''; const g = MG.gold, pct = g.side === 'LONG' ? g.long : g.short, ts = MG.measured?.this_score
   const t = 'Your visionHunt 4H Macro Magnet, copied exactly (closed 17:00-NY 4H candles; matches your OANDA chart). The % is a POINTS SCORE, not a probability. Measured 13 y: this reading → up next 4H ' + (ts ? (100 * ts.up4).toFixed(1) + '% (n ' + ts.n + ')' : '—') + ' vs gold base ' + (MG.measured ? (100 * MG.measured.base_up4).toFixed(1) : '—') + '% → no edge. DXY on the other side: measured, adds nothing. Details in the panel.'
-  return `<span class="chip" title="${esc(t)}"><b>4H Magnet</b><span class="${g.side === 'LONG' ? 'up' : 'dn'}">${g.side} ${pct}</span> <small>score · DXY ${MG.dxy_relation === 'confirms' ? 'confirms' : MG.dxy_relation === 'against' ? 'against' : '—'} · measured: no edge${ts ? ' (' + (100 * ts.up4).toFixed(1) + '% up next 4H)' : ''}${MG.stale ? ' · STALE' : ''}</small></span>` }
+  return `<span class="chip" title="${esc(t)}"><b>4H Magnet</b><span class="${g.side === 'LONG' ? 'up' : 'dn'}">${g.side} ${pct}</span> <small>score · DXY ${MG.dxy_relation === 'confirms' ? 'confirms' : MG.dxy_relation === 'against' ? 'against' : '—'} · measured: no edge${ts ? ' (' + (100 * ts.up4).toFixed(1) + '% up next 4H)' : ''}${MG.stale ? ' · STALE' : ''}</small>${fChip()}</span>` }
+// FORMING preview of the open 4H candle (provisional — can change until the close; the official score is the closed bar above)
+function fChip() { const f = MG?.forming?.gold; if (!f) return ''; const p = f.side === 'LONG' ? f.long : f.short
+  return ` <small>│ forming ${esc(f.closes_at.slice(11, 16))}:</small> <span class="${f.side === 'LONG' ? 'up' : 'dn'}" style="opacity:.75">${f.side} ${p}</span> <small>provisional</small>` }
 async function pollGamma() { GM = await fetch('/api/gamma').then((x) => x.json()).catch(() => null); gmDraw(); pollBias() }
 function gmDraw() {
   const p = panes[0], key = GM?.available && p.sym === 'XAUUSD' && st.gamma !== false ? GM.at + '|' + p.sym : null
@@ -522,6 +525,7 @@ async function pollMacroMagnet() {
     + `<span class="dim">EMA ${g.A ? '▲' : '▼'} · liquidity ${g.B ? '▲ BSL ' + (g.bsl ?? '—') : '▼ SSL ' + (g.ssl ?? '—')} · RSI ${g.rsi} · candle ${g.D ? '▲' : '▼'}</span><br>`
     + (d ? `DXY ${d.side} ${d.side === 'LONG' ? d.long : d.short}% → <b>${m.dxy_relation === 'confirms' ? 'confirms' : m.dxy_relation === 'against' ? 'against' : '—'}</b> <span class="dim">(measured: adds nothing)</span><br>` : '')
     + (M ? `<span class="pill mid">${esc(M.verdict.replace('_', ' '))}</span> measured 13 y: this reading → up next 4H <b>${pc(ts?.up4)}</b> (n ${ts?.n ?? '—'}) vs gold's base ${pc(M.base_up4)} · up next 24 h ${pc(ts?.up24)}<br>` : '')
+    + (m.forming?.gold ? (() => { const f = m.forming.gold, fp = f.side === 'LONG' ? f.long : f.short; return `<span class="dim">forming 4H (closes ${esc(f.closes_at.slice(11, 16))} UTC, ${f.minutes} min so far): </span><b class="${f.side === 'LONG' ? 'green' : 'red'}" style="opacity:.75">${f.side} ${fp}%</b> <span class="dim">— PROVISIONAL, can change until the close · EMA ${f.A ? '▲' : '▼'} liq ${f.B ? '▲' : '▼'} RSI ${f.rsi} candle ${f.D ? '▲' : '▼'}${m.forming.dxy ? ' · DXY ' + m.forming.dxy.side + ' (' + m.forming.dxy_relation + ')' : ''}</span><br>` })() : '')
     + `<span class="dim">live record: ${live.n ? live.hits + '/' + live.n + ' right (' + pc(live.rate) + ')' : 'starts with the next 4H close'}</span>`
 }
 async function pollMatrix() {

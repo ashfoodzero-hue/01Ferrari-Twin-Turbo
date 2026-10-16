@@ -48,6 +48,9 @@ import { liveMonitor } from '../src/master/tradeMonitor.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
 import { quotesFile } from '../src/core/paths.js'
 import { bucket15, whaleAt, WHALE } from '../src/master/goldWhale.js'
+import { streamBars } from '../src/data/backfillReader.js'
+import { streamDxy1m } from '../src/data/dxy.js'
+import { formingScore } from '../src/master/macroMagnet.js'
 
 export const CHART_PORT = +(process.env.TWIN_CHART_PORT || 7444)
 const PAGE = path.join(TURBO.root, 'ops', 'chart', 'index.html')
@@ -57,6 +60,17 @@ const isSeries = (s) => !!BY_SYM[s] || !!DERIVED[s]
 const cache = new Map()
 const cached = async (key, ttl, fn) => { const c = cache.get(key); if (c && Date.now() - c.at < ttl) return c.v; const v = await fn(); cache.set(key, { at: Date.now(), v }); return v }
 const J = (f) => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, f), 'utf8')) } catch { return null } }
+// FORMING 4H magnet preview: the closed bars macro_tick saved + the minutes since (≤ a few hours) through the SAME engine. PROVISIONAL.
+const MGF = { at: 0, val: null, busy: false }
+async function refreshForming() {
+  if (MGF.busy || Date.now() - MGF.at < 60000) return; MGF.busy = true
+  try { const b = J('macro_magnet_bars.json'); if (!b?.gold?.length || !b?.dxy?.length) { MGF.val = null; return }
+    const H4 = 4 * 3600000, mins = async (src) => { const out = []; for await (const x of src) out.push(x); return out }
+    const gm = await mins(streamBars('XAUUSD', '1m', { from: b.gold.at(-1).t + H4 })), dm = await mins(streamDxy1m({ from: b.dxy.at(-1).t + H4 }))
+    const fg = await formingScore(b.gold, gm), fd = await formingScore(b.dxy, dm)
+    const pick = (r) => r && { long: r.long, short: r.short, side: r.side, A: r.A, B: r.B, C: r.C, D: r.D, bsl: r.bsl, ssl: r.ssl, rsi: +r.rsi.toFixed(2), bar: new Date(r.partial.t).toISOString(), closes_at: new Date(r.partial.closes_at).toISOString(), minutes: r.partial.minutes, last_minute: new Date(r.partial.last_minute).toISOString() }
+    MGF.val = fg ? { provisional: true, gold: pick(fg), dxy: pick(fd), dxy_relation: !fd ? 'none' : fd.side !== fg.side ? 'confirms' : 'against', computed_at: new Date().toISOString() } : null
+  } catch (e) { MGF.val = { provisional: true, error: e.message } } finally { MGF.at = Date.now(); MGF.busy = false } }
 const send = (res, code, body, type = 'application/json') => { res.writeHead(code, { 'content-type': type, 'cache-control': 'no-store' }); res.end(type === 'application/json' ? JSON.stringify(body) : body) }
 const readHb = () => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, 'stream_heartbeat.json'), 'utf8')) } catch { return null } }
 
@@ -327,8 +341,9 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/scalp85') return send(res, 200, await scalp85())
     if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
-    // 4H MACRO MAGNET tile (2026-10-16): the state macro_tick.mjs writes — Ashraf's Pine score + its MEASURED 13 y result + the live record. Read-only.
-    if (u.pathname === '/api/magnet') { const m = J('macro_magnet_state.json'); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 5 * 3600000 } : { available: false, why: 'macro_tick.mjs has not run yet' }) }
+    // 4H MACRO MAGNET tile (2026-10-16): the state macro_tick.mjs writes — Ashraf's Pine score + its MEASURED 13 y result + the live record — plus
+    // the FORMING preview of the open 4H candle (provisional; refreshed in the background at most once a minute, never blocks a request). Read-only.
+    if (u.pathname === '/api/magnet') { const m = J('macro_magnet_state.json'); refreshForming(); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 5 * 3600000, forming: MGF.val } : { available: false, why: 'macro_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, watch: m?.watch && Date.now() - m.watch.barT < 6 * 60000 ? m.watch : null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
     if (!isSeries(sym)) return send(res, 400, { error: 'unknown symbol', symbols: [...SYMBOLS.map((s) => s.sym), ...Object.keys(DERIVED)] })
     if (u.pathname === '/api/bars') { if (!TF[tf]) return send(res, 400, { error: 'unknown tf', tfs: Object.keys(TF) }); return send(res, 200, await bars(sym, tf)) }

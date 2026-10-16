@@ -46,6 +46,23 @@ export async function resample4h(stream1m, anchors = ['ny'], { closedBy = -Infin
   for (const a of anchors) if (cur[a] && cur[a].t + H4 <= closedBy) out[a].push(cur[a])
   return out
 }
+/**
+ * FORMING preview (2026-10-16, Ashraf: "yes add the forming preview"): the score of the CURRENT, still-open NY 4H candle = the closed bars
+ * + the candle built from the minutes so far (and any whole bucket the closed list lacks). PROVISIONAL by definition — it can change until
+ * the close (this is what the Pine shows live with lookahead_on). The official score stays the closed-bar one.
+ * @param closed ascending closed NY 4H bars · @param minutes ascending 1m bars after the last closed bar · @returns row + { partial, forming:true } | null
+ */
+export async function formingScore(closed, minutes, P = MAGNET) {
+  if (!closed.length) return null
+  const lastEnd = closed.at(-1).t + H4, after = minutes.filter((m) => m.t >= lastEnd)
+  if (!after.length) return null
+  async function* it() { for (const m of after) yield m }
+  const extra = (await resample4h(it(), ['ny'], { closedBy: Infinity })).ny   // closedBy ∞ → the open bucket is included
+  const bars = [...closed, ...extra], rows = magnetScores(bars, P), r = rows.at(-1)
+  if (!r) return null
+  const p = bars.at(-1)
+  return { ...r, forming: true, partial: { t: p.t, o: p.o, h: p.h, l: p.l, c: p.c, minutes: p.n, closes_at: p.t + H4, last_minute: after.at(-1).t } }
+}
 /** The score on every closed 4H bar (causal). Returns rows aligned to bars (null until EMA21 + RSI exist). */
 export function magnetScores(bars, P = MAGNET) {
   const L = P.swing, eF = ema(bars, P.emaFast), eS = ema(bars, P.emaSlow), R = rsi(bars, P.rsiLen), rows = new Array(bars.length).fill(null)
