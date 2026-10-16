@@ -796,3 +796,12 @@ without duplications … only use the real Win results, and ignore the rest."
     - L1H: 33.4 %, −$0.45.
   - **Adverse selection:** price that comes BACK to a defended wall is mostly breaking it; the clean bounces never fill.
   - Across (be) / (bf) / (bg), confirming the $4 has failed with a market entry, a top-down CHoCH entry and a pullback limit.
+
+- **(bh) 2026-10-16 — WHY ONLY BUY TRADES FIRE (Ashraf's question) — measured, not a bug.**
+  - **SCALP (Matrix):**
+    - the live journal has 58 BUY rows / 0 SELL;
+    - the SELL rule (ceiling wall + WTI bullish + DXY bullish + close below the last swing low) fired 4× in 2 y;
+    - the SELL-trigger study (as): red-candle SELL 88 % WR but −$0.34/t on 13 y.
+  - **SWING TRADE arms:** BUY_D1 models by construction. INVESTIGATION_90WR: SELL_D1 never qualified (best 82.7 %, OOS AUC 0.505 vs BUY 0.52) → no sell arm.
+  - **Today's level / wall / top-down tests ((be)-(bg)):** the SELL side is negative too.
+  - **Root cause:** gold's 13 y up-drift (51.8 % of 4H bars up; strong 2024-26). Buy models carry the drift; sells must beat it, and none has met WR ≥ 85 % + money.
