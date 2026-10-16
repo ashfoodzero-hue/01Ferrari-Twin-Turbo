@@ -663,3 +663,14 @@ without duplications … only use the real Win results, and ignore the rest."
   - Largest weights: DXY / gold close vs EMA21 and the EMA gaps — trend, the same as vector A.
   - **Conclusion across (au)-(ay):** gold's next-4H / 24 h direction is NOT forecastable from these inputs beyond a faint long-side lean.
   - Dashboard rule (spec): no bias % — "no measured edge, base X %" + Ashraf's score labelled as a score.
+
+- **(az) 2026-10-16 — 4H MACRO MAGNET live tile + forward record (Ashraf: "honest tile + live record").**
+  - **`scripts/macro_tick.mjs`:**
+    - run by run_twin 2 min after every NY 4H close and once at start (catch-up);
+    - scores only bars whose last minute is SETTLED for gold and all six DXY pairs;
+    - writes an append-only ledger `data/paper/macro_magnet_ledger.jsonl` (a 'score' row per bar, a 'resolve' row after the next bar) and `data/master/macro_magnet_state.json`.
+  - **Tile** "4H MACRO MAGNET (your Pine) — score, not probability" on the chart, via `/api/magnet`. The first try used `/api/macro`, which clashed with the existing economic-data endpoint; renamed, and both work.
+    - It shows: the score exactly as his indicator shows it; the vectors; DXY's side and relation, labelled "measured: adds nothing"; the measured 13 y result for this exact reading (e.g. LONG 100 + DXY confirms → 50.5 % up next 4H, n 549, vs base 51.8 %) with the NO EDGE label; and the live record.
+  - **Live at start:** 01:00 UTC bar — gold LONG 100, DXY SHORT 100 (confirms). This is the same as his OANDA chart.
+  - **run_twin restarted 08:06 UTC.** The old stream / chart / settings children closed with it; the new run_twin started fresh ones. One streamer only, no missing minutes.
+  - Smokes `smoke_macro_tick.mjs` (5/5: parity, provenance, ledger integrity, hook, endpoint) + `smoke_macro_magnet.mjs` added to smoke_all.

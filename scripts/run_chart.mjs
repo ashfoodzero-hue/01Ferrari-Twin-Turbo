@@ -327,6 +327,8 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/scalp85') return send(res, 200, await scalp85())
     if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
+    // 4H MACRO MAGNET tile (2026-10-16): the state macro_tick.mjs writes — Ashraf's Pine score + its MEASURED 13 y result + the live record. Read-only.
+    if (u.pathname === '/api/magnet') { const m = J('macro_magnet_state.json'); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 5 * 3600000 } : { available: false, why: 'macro_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, watch: m?.watch && Date.now() - m.watch.barT < 6 * 60000 ? m.watch : null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
     if (!isSeries(sym)) return send(res, 400, { error: 'unknown symbol', symbols: [...SYMBOLS.map((s) => s.sym), ...Object.keys(DERIVED)] })
     if (u.pathname === '/api/bars') { if (!TF[tf]) return send(res, 400, { error: 'unknown tf', tfs: Object.keys(TF) }); return send(res, 200, await bars(sym, tf)) }

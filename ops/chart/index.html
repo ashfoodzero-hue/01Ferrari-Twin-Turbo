@@ -99,6 +99,9 @@
     <div class="note" id="calNote" style="margin-top:6px"></div>
     <h2>S/R levels (5m chart) — measured</h2>
     <div class="msg" id="lvMsg">—</div>
+    <h2>4H MACRO MAGNET (your Pine) — score, not probability</h2>
+    <div class="msg" id="mgMsg">—</div>
+    <div class="note" style="margin-top:6px">Your visionHunt indicator copied exactly (closed 17:00-New-York 4H candles; matches your OANDA chart on 98.7 % of bars, same side 100 %). The % is a <b>points score</b> (EMA 35 · liquidity 35 · RSI 20 · candle 10). Measured on 13 y it does <b>not</b> forecast the next 4H — your chart's history looks stronger only because the Pine uses <code>lookahead_on</code>. Every 4H close is recorded live as a forward test.</div>
     <h2>SWING TRADES (forward test, 2 arms) — paper</h2>
     <div class="msg" id="fwMsg">—</div>
     <div class="note" style="margin-top:6px">Two research arms, recording since 10-09 06:00 UTC (frozen cutoff): FWD = the 92 % model (≈ 1 trade / 3 days, backtest 92.0 %); FWD1 = the ≈ 1 trade/day arm (backtest 90.4 %, +$0.42/t). Target 0.2 × daily ATR, stop 2 × daily ATR, up to 7 days. <b>Not validated</b> (0 of 67 passed the gate) — a verdict needs 100 resolved trades.</div>
@@ -504,6 +507,17 @@ function mxDraw() {
   const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
     t.textContent = `SCALP ${s.side} ENTRY ${fmt(s.entry)} · SL ${fmt(s.sl)} · TP1 ${fmt(s.tp1)} · TP2 ${fmt(s.tp2)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
 }
+async function pollMacroMagnet() {
+  const m = await fetch('/api/magnet').then((x) => x.json()).catch(() => null); if (!m) return
+  if (m.available === false || !m.gold) { $('mgMsg').innerHTML = `<span class="dim">${esc(m.why || 'no 4H score yet')}</span>`; return }
+  const g = m.gold, d = m.dxy, side = g.side, pct = side === 'LONG' ? g.long : g.short, col = side === 'LONG' ? 'green' : 'red', M = m.measured, ts = M?.this_score
+  const pc = (x) => x == null ? '—' : (100 * x).toFixed(1) + '%', live = m.live
+  $('mgMsg').innerHTML = `<b class="${col}">${side} ${pct}%</b> <span class="dim">(score) · opposing ${side === 'LONG' ? 'SHORT' : 'LONG'} ${100 - pct}% · 4H bar ${esc((m.bar || '').slice(5, 16))} UTC${m.stale ? ' · <span class="red">STALE</span>' : ''}</span><br>`
+    + `<span class="dim">EMA ${g.A ? '▲' : '▼'} · liquidity ${g.B ? '▲ BSL ' + (g.bsl ?? '—') : '▼ SSL ' + (g.ssl ?? '—')} · RSI ${g.rsi} · candle ${g.D ? '▲' : '▼'}</span><br>`
+    + (d ? `DXY ${d.side} ${d.side === 'LONG' ? d.long : d.short}% → <b>${m.dxy_relation === 'confirms' ? 'confirms' : m.dxy_relation === 'against' ? 'against' : '—'}</b> <span class="dim">(measured: adds nothing)</span><br>` : '')
+    + (M ? `<span class="pill mid">${esc(M.verdict.replace('_', ' '))}</span> measured 13 y: this reading → up next 4H <b>${pc(ts?.up4)}</b> (n ${ts?.n ?? '—'}) vs gold's base ${pc(M.base_up4)} · up next 24 h ${pc(ts?.up24)}<br>` : '')
+    + `<span class="dim">live record: ${live.n ? live.hits + '/' + live.n + ' right (' + pc(live.rate) + ')' : 'starts with the next 4H close'}</span>`
+}
 async function pollMatrix() {
   const m = await fetch('/api/matrix').then((x) => x.json()).catch(() => null); if (!m) return
   MX = m; const g = m.verdict === 'SHIP', o = m.open
@@ -517,6 +531,7 @@ async function pollMatrix() {
 panes[0].ch.timeScale().subscribeVisibleLogicalRangeChange(() => mxDraw())
 new ResizeObserver(() => mxDraw()).observe($('c0'))
 setInterval(pollMatrix, 5000); pollMatrix(); setInterval(mxDraw, 1000)
+setInterval(pollMacroMagnet, 30000); pollMacroMagnet()
 pollMacro(); pollNews(); setInterval(pollMacro, 10 * 60000); setInterval(pollNews, 2 * 60000)
 controls(); panes.forEach((p) => loadPane(p, true)); setInterval(poll, 1000); poll(); setInterval(pollDrivers, 15000); pollDrivers()
 </script>

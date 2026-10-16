@@ -15,6 +15,7 @@ import { marketOpen } from '../src/core/freshness.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { streamStatus } from '../src/data/tickStream.js'
 import { reconcilePlan } from '../src/core/reconcilePlan.js'
+import { bucket4h } from '../src/master/macroMagnet.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const HB = path.join(TURBO.master, 'live_heartbeat.json')
@@ -85,6 +86,7 @@ const tick = (barT) => new Promise((resolve) => {
   })
 })
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
+let lastMacro = null, macroRunning = false
 let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
@@ -134,6 +136,13 @@ for (;;) {
       if (err) { fwdRunning = false; return }
       execFile(process.execPath, ['--max-old-space-size=10000', path.join(here, 'inv90', 'forward_buyd1.mjs'), '--arm=freq', '--no-build'], { timeout: 20 * 60000, windowsHide: true }, (e2, so2, se2) => { fwdRunning = false
         fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'inv90/forward_buyd1.mjs --arm=freq', exit: e2 ? (e2.code ?? 'killed') : 0, out: String(so2 || '').slice(-300), tail: String(se2 || '').slice(-300) }) + '\n') }) }) }
+  // 4H MACRO MAGNET (macro_tick.mjs, 2026-10-16, Ashraf "honest tile + live record"): 2 min after every NY 4H close + once at start
+  // (catch-up by design: it scores every closed, settled 4H bar not yet in its append-only ledger)
+  const mKey = bucket4h(now)
+  if (now - mKey >= 120000 && lastMacro !== mKey && !macroRunning) { macroRunning = true; lastMacro = mKey
+    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'macro_tick.mjs')], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { macroRunning = false
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'macro_tick.mjs', bar: new Date(mKey).toISOString(), exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
+      process.stdout.write(String(stdout || '')) }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }
