@@ -27,6 +27,12 @@ await ok('mechanism: on real BUY signal bars matrixArmedAt shows the BUY context
   const A = atrArr(B, 14), dEma = emaSeries(D, MATRIX.dxyEma), dByT = new Map(D.map((b) => [b.t, b]))
   for (const s of sigs) { const a = matrixArmedAt(B, A, s.i, dByT, dEma, W); assert(a && a.buyCtx && a.buyDist <= 1e-9, 'disagrees at ' + new Date(s.t).toISOString()) }
 })
+await ok('🫴 WALL_TOUCH: numbers = the saved price-only BUY cell; chart only (no Telegram in its block); only when the full WATCH did not fire', async () => {
+  const { WALL_TOUCH } = await import('../src/master/ferrariMatrix.js'), c = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'matrix_prep_alert_priceonly.json'), 'utf8')).cells[`k${WALL_TOUCH.k}|N${WALL_TOUCH.bars}`]
+  assert.equal(c.oos.by_side.BUY.conversion, WALL_TOUCH.conversion); assert.equal(c.oos.recall, WALL_TOUCH.recall)
+  const tick = fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8'), blk = tick.slice(tick.indexOf('// 🫴 WALL TOUCH'), tick.indexOf('if (STATIC)'))
+  assert(blk.includes('else if (arm && arm.buyDist <= WALL_TOUCH.k)') && !/alertSetup|alertPrepare|sendText/.test(blk))
+})
 await ok('STATIC: WATCH is chart-only (no Telegram path) and drawn only with no open trade; the API passes it only while fresh', async () => {
   const tick = fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8'), page = fs.readFileSync(path.join(here, '..', 'ops', 'chart', 'index.html'), 'utf8'), chart = fs.readFileSync(path.join(here, 'run_chart.mjs'), 'utf8')
   const block = tick.slice(tick.indexOf('out.watch = null'), tick.indexOf('if (STATIC)')); assert(block.includes('matrixArmedAt(') && !/alertSetup|sendText/.test(block))

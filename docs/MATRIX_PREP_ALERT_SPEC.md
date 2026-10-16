@@ -42,3 +42,12 @@ A cell passes only if all of these hold:
 If no cell passes, the frontier is reported (best conversion, and its alerts per day) and nothing is called "98 %".
 
 Output: `data/master/matrix_prep_alert_study.json`. Script: `scripts/study_matrix_prep_alert.mjs`.
+
+## Addendum (pre-registered 2026-10-16, before the run) — PRICE-ONLY "wall touched" warning
+
+**Request (Ashraf):** "yes measure the price at the wall warning" (the 12:24 SCALP had gold under the BUY wall for 30 min while WTI / DXY were not yet aligned, so no warning was possible).
+
+- **Rule:** ARMED BUY = the bar's low ≤ buyLine + k·ATR — the context condition (WTI / DXY) is DROPPED. Same episodes, the same N windows, the same 2 y WTI window and 60/40 split. BUY side only.
+- **Grid:** k ∈ {0, −0.25} × N ∈ {10, 20}.
+- **Reported:** BUY conversion to a BUY signal within N bars, recall (the share of BUY signals preceded by a warning), alerts / day, median lead.
+- **ADD as a second warning level** ⇔ OOS recall ≥ 0.60 (vs 0.40 for the context watch), conversion ≥ 0.50, ≤ 15 alerts / day, and TRAIN within 5 pp of OOS. It is shown with its own measured numbers.

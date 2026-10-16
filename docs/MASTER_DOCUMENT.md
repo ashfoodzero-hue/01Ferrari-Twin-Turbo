@@ -877,3 +877,10 @@ without duplications … only use the real Win results, and ignore the rest."
     - the summary / verdict counts the current bracket only.
   - **Display:** the SWING TRADE alert says "forward arm 1 · E3 (stop 1× daily ATR)" with the measured 73.0 % / +$3.76 / beats-random line; the chart labels and the forward note were updated.
   - **Fix:** the sendText retry smoke had written fake sends into the real `sent.jsonl` (seen by the monitor; never delivered). `sendText({log:false})` is for tests; the 9 fake lines were removed.
+
+- **(bq) 2026-10-16 — 🫴 WALL TOUCH early level, CHART ONLY (Ashraf's choice).**
+  - Price-only addendum (`matrix_prep_alert_priceonly.json`, pre-registered in `MATRIX_PREP_ALERT_SPEC.md`): gold ≥ 0.25 ATR through the BUY wall, WTI / DXY ignored.
+    - BUY: 63.7 % → a BUY signal within 60 min; catches 61 % of signals early (vs 40 % for WATCH); lead 9 min; ~17/day.
+    - It missed its ≤ 15/day bar → chart only.
+  - **Wiring:** `WALL_TOUCH` constant; `matrix_tick` sets `wallTouch` when the full WATCH does not fire; `/api/matrix` passes it while fresh; the chart shows a grey dashed "🫴 wall touched 64% — waiting for WTI/DXY" line + a panel line. No Telegram path.
+  - **Live 12:53:** the first real ⏳ 4H SUPPORT AHEAD 4168.72 notice. The 12:24 SCALP BUY hit SL −$5.84.

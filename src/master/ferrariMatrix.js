@@ -89,6 +89,10 @@ export function matrixArmedAt(B, A, i, dByT, dEma, wti1m) {
   const w = wtiHourAt(wti1m, b.t + MATRIX.tfMs); if (!w) return null
   return { buyCtx: !w.bullish && d.c < de, sellCtx: w.bullish && d.c > de, buyDist: (b.l - L.buyLine) / a, sellDist: (L.sellLine - b.h) / a, buyLine: L.buyLine, sellLine: L.sellLine }
 }
+// WALL_TOUCH (2026-10-16, Ashraf "Chart only"): the PRICE-ONLY early level — gold ≥ 0.25 ATR through the BUY wall, WTI / DXY ignored. Measured
+// (matrix_prep_alert_priceonly.json k-0.25|N20, BUY): 63.7 % → a BUY signal within 60 min, catches 61 % of signals early (vs 40 % for WATCH), median
+// lead 9 min, ~17 per day. It missed its pre-registered ≤ 15/day bar → CHART ONLY, never Telegram.
+export const WALL_TOUCH = Object.freeze({ side: 'BUY', k: -0.25, bars: 20, conversion: 0.6373, oos_n: 3546, recall: 0.6105, lead_min: 9, per_day: 17.02, source: 'data/master/matrix_prep_alert_priceonly.json' })
 export const WATCH = Object.freeze({ side: 'BUY', k: -0.25, bars: 20, conversion: 0.8226, oos_n: 1815, lead_min: 6, recall: 0.4033,   // recall = share of signals that had a watch before them (2026-10-16)
   source: 'data/master/matrix_prep_alert_posthoc.json (post-hoc, not a pass)' })
 

@@ -13,6 +13,7 @@ import { wti1m } from './lib/matrix_trades.mjs'
 import { wilsonLB, zOf } from './inv90/gate.mjs'
 
 const FROM = Date.parse('2024-10-10T00:00:00Z'), TO = Date.parse(process.env.TURBO_VAL_TO || '2026-10-09T06:00:00Z'), SPLIT = FROM + 0.6 * (TO - FROM)
+const NOCTX = process.env.PREP_NOCTX === '1'
 const KS = process.env.PREP_KS ? process.env.PREP_KS.split(',').map(Number) : [0.25, 0.5, 1.0], NS = [5, 10, 20], K = KS.length * NS.length, Z = zOf(K)
 const B = (await loadBars('XAUUSD', '3m', { from: FROM - 3 * 86400000, to: TO })).bars, D = (await loadDxyBars('3m', { from: FROM - 3 * 86400000, to: TO })).bars, W = wti1m(TO)
 const startI = B.findIndex((b) => b.t >= FROM), sigs = matrixSignals(B, D, W, { from: startI })
@@ -28,7 +29,7 @@ for (const k of KS) for (const N of NS) { const ep = []
   for (const side of ['BUY', 'SELL']) { let open = null, prevArmed = false
     for (let i = startI; i < B.length; i++) { const c = ctx[i], isSig = sigAt[side].has(i)
       if (open && (isSig || i > open.i + N)) { if (isSig && i <= open.i + N) open.conv = i; ep.push(open); open = null }
-      const armed = !!c && !isSig && (side === 'BUY' ? c.buyCtx && c.buyDist <= k : c.sellCtx && c.sellDist <= k)
+      const armed = !!c && !isSig && (side === 'BUY' ? (NOCTX || c.buyCtx) && c.buyDist <= k : (NOCTX || c.sellCtx) && c.sellDist <= k)   // PREP_NOCTX=1: the price-only addendum
       if (armed && !prevArmed && !open && B[i].t + (N + 1) * MATRIX.tfMs <= TO) open = { side, i, t: B[i].t, conv: null }
       prevArmed = armed }
     if (open) ep.push(open) }
@@ -43,5 +44,5 @@ for (const k of KS) for (const N of NS) { const ep = []
 const pass = Object.entries(res).filter(([, c]) => c.verdict === 'PASS').map(([x]) => x)
 const best = Object.entries(res).sort((a, b) => b[1].oos.conversion - a[1].oos.conversion)[0]
 const out = { at: new Date().toISOString(), spec: 'docs/MATRIX_PREP_ALERT_SPEC.md', window: [new Date(FROM).toISOString(), new Date(TO).toISOString()], signals: sigs.length, cells: res, passing: pass, verdict: pass.length ? 'SOME_PASS' : 'NO_PASS', best: { cell: best[0], ...best[1] } }
-fs.writeFileSync(path.join(TURBO.master, process.env.PREP_KS ? 'matrix_prep_alert_posthoc.json' : 'matrix_prep_alert_study.json'), JSON.stringify(out, null, 1))
+fs.writeFileSync(path.join(TURBO.master, NOCTX ? 'matrix_prep_alert_priceonly.json' : process.env.PREP_KS ? 'matrix_prep_alert_posthoc.json' : 'matrix_prep_alert_study.json'), JSON.stringify(out, null, 1))
 console.log(`\n=> PREP ALERT ≥ 98 %: ${out.verdict}${pass.length ? ' ' + pass.join(', ') : ''} · best OOS conversion ${best[1].oos.conversion} (${best[0]})`)

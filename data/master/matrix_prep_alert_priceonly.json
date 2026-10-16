@@ -1,0 +1,252 @@
+{
+ "at": "2026-10-16T12:51:03.896Z",
+ "spec": "docs/MATRIX_PREP_ALERT_SPEC.md",
+ "window": [
+  "2024-10-10T00:00:00.000Z",
+  "2026-10-09T06:00:00.000Z"
+ ],
+ "signals": 9929,
+ "cells": {
+  "k0|N5": {
+   "train": {
+    "episodes": 8191,
+    "per_day": 26.21,
+    "conversion": 0.3362,
+    "conversion_lb": 0.3238,
+    "median_lead_min": 6
+   },
+   "oos": {
+    "episodes": 5278,
+    "per_day": 25.33,
+    "conversion": 0.3147,
+    "conversion_lb": 0.2996,
+    "median_lead_min": 6,
+    "recall": 0.4487,
+    "by_side": {
+     "BUY": {
+      "episodes": 4571,
+      "per_day": 21.94,
+      "conversion": 0.3634,
+      "conversion_lb": 0.3465,
+      "median_lead_min": 6
+     },
+     "SELL": {
+      "episodes": 707,
+      "per_day": 3.39,
+      "conversion": 0,
+      "conversion_lb": 0,
+      "median_lead_min": null
+     }
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "k0|N10": {
+   "train": {
+    "episodes": 7450,
+    "per_day": 23.84,
+    "conversion": 0.458,
+    "conversion_lb": 0.4442,
+    "median_lead_min": 9
+   },
+   "oos": {
+    "episodes": 4789,
+    "per_day": 22.98,
+    "conversion": 0.4183,
+    "conversion_lb": 0.4013,
+    "median_lead_min": 6,
+    "recall": 0.5411,
+    "by_side": {
+     "BUY": {
+      "episodes": 4160,
+      "per_day": 19.97,
+      "conversion": 0.4815,
+      "conversion_lb": 0.463,
+      "median_lead_min": 6
+     },
+     "SELL": {
+      "episodes": 629,
+      "per_day": 3.02,
+      "conversion": 0,
+      "conversion_lb": 0,
+      "median_lead_min": null
+     }
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "k0|N20": {
+   "train": {
+    "episodes": 6706,
+    "per_day": 21.46,
+    "conversion": 0.5746,
+    "conversion_lb": 0.56,
+    "median_lead_min": 9
+   },
+   "oos": {
+    "episodes": 4279,
+    "per_day": 20.54,
+    "conversion": 0.5455,
+    "conversion_lb": 0.5272,
+    "median_lead_min": 9,
+    "recall": 0.6305,
+    "by_side": {
+     "BUY": {
+      "episodes": 3718,
+      "per_day": 17.84,
+      "conversion": 0.6275,
+      "conversion_lb": 0.6083,
+      "median_lead_min": 9
+     },
+     "SELL": {
+      "episodes": 561,
+      "per_day": 2.69,
+      "conversion": 0.0018,
+      "conversion_lb": 0.0002,
+      "median_lead_min": 33
+     }
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "k-0.25|N5": {
+   "train": {
+    "episodes": 7190,
+    "per_day": 23.01,
+    "conversion": 0.3791,
+    "conversion_lb": 0.3655,
+    "median_lead_min": 6
+   },
+   "oos": {
+    "episodes": 4572,
+    "per_day": 21.94,
+    "conversion": 0.3545,
+    "conversion_lb": 0.3378,
+    "median_lead_min": 6,
+    "recall": 0.4379,
+    "by_side": {
+     "BUY": {
+      "episodes": 4337,
+      "per_day": 20.82,
+      "conversion": 0.3738,
+      "conversion_lb": 0.3564,
+      "median_lead_min": 6
+     },
+     "SELL": {
+      "episodes": 235,
+      "per_day": 1.13,
+      "conversion": 0,
+      "conversion_lb": 0,
+      "median_lead_min": null
+     }
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "k-0.25|N10": {
+   "train": {
+    "episodes": 6533,
+    "per_day": 20.9,
+    "conversion": 0.5129,
+    "conversion_lb": 0.4981,
+    "median_lead_min": 9
+   },
+   "oos": {
+    "episodes": 4200,
+    "per_day": 20.16,
+    "conversion": 0.4683,
+    "conversion_lb": 0.45,
+    "median_lead_min": 6,
+    "recall": 0.5313,
+    "by_side": {
+     "BUY": {
+      "episodes": 3988,
+      "per_day": 19.14,
+      "conversion": 0.4932,
+      "conversion_lb": 0.4743,
+      "median_lead_min": 6
+     },
+     "SELL": {
+      "episodes": 212,
+      "per_day": 1.02,
+      "conversion": 0,
+      "conversion_lb": 0,
+      "median_lead_min": null
+     }
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "k-0.25|N20": {
+   "train": {
+    "episodes": 5896,
+    "per_day": 18.87,
+    "conversion": 0.6365,
+    "conversion_lb": 0.6214,
+    "median_lead_min": 9
+   },
+   "oos": {
+    "episodes": 3744,
+    "per_day": 17.97,
+    "conversion": 0.6036,
+    "conversion_lb": 0.5844,
+    "median_lead_min": 9,
+    "recall": 0.6105,
+    "by_side": {
+     "BUY": {
+      "episodes": 3546,
+      "per_day": 17.02,
+      "conversion": 0.6373,
+      "conversion_lb": 0.6178,
+      "median_lead_min": 9
+     },
+     "SELL": {
+      "episodes": 198,
+      "per_day": 0.95,
+      "conversion": 0,
+      "conversion_lb": 0,
+      "median_lead_min": null
+     }
+    }
+   },
+   "verdict": "FAIL"
+  }
+ },
+ "passing": [],
+ "verdict": "NO_PASS",
+ "best": {
+  "cell": "k-0.25|N20",
+  "train": {
+   "episodes": 5896,
+   "per_day": 18.87,
+   "conversion": 0.6365,
+   "conversion_lb": 0.6214,
+   "median_lead_min": 9
+  },
+  "oos": {
+   "episodes": 3744,
+   "per_day": 17.97,
+   "conversion": 0.6036,
+   "conversion_lb": 0.5844,
+   "median_lead_min": 9,
+   "recall": 0.6105,
+   "by_side": {
+    "BUY": {
+     "episodes": 3546,
+     "per_day": 17.02,
+     "conversion": 0.6373,
+     "conversion_lb": 0.6178,
+     "median_lead_min": 9
+    },
+    "SELL": {
+     "episodes": 198,
+     "per_day": 0.95,
+     "conversion": 0,
+     "conversion_lb": 0,
+     "median_lead_min": null
+    }
+   }
+  },
+  "verdict": "FAIL"
+ }
+}
