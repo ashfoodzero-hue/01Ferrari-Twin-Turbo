@@ -682,3 +682,20 @@ without duplications … only use the real Win results, and ignore the rest."
     - the official score stays the closed bar.
     - Smoke: forming test 6/6.
     - Noted, NOT changed: `/api/bias` recomputes every 15 s and takes 5-9 s — pre-existing, unrelated.
+
+- **(ba) 2026-10-16 — 4H MACRO BUBBLES (Ashraf's "Trend Divergence Engine", bubble method ONLY) copied exactly + 13 y measurement: NO EDGE (0/8).**
+  - Spec `docs/BUBBLE_SPEC.md`; engine `src/master/macroBubbles.js`; study `study_bubbles.mjs` → `bubble_study.json`.
+  - **The real method** (the whole source):
+    - RSI14 of the 4H closes, RSI pivots 3/3;
+    - yellow = RSI pivot low < 35 and above the previous RSI low;
+    - blue = RSI pivot high > 65 and below the previous RSI high.
+    - **No volume, no walls, no trend-vs-defence comparison** (this differs from Ashraf's description). Pivot prices are stored but unused. The plot sits 3 bars before the bubble was knowable. On lower-timeframe charts the Pine computes RSI on the chart-timeframe series of 4H closes (a different series).
+  - **13 y, NY 4H:** 354 bubbles (BULL 12.6/y, BEAR 14.2/y).
+  - **OOS:**
+    - BULL up 24 h 68.5 % vs 53.4 % base (+15 pp, n 54) BUT TRAIN −7 pp, pre-2020 42 % vs post-2020 66 % → era effect;
+    - BULL up 4H 42.6 % (−9 pp);
+    - BEAR down 4H 55.6 % (+7.5 pp, TRAIN −4.2);
+    - BEAR down 24 h / 5 d below base;
+    - level holds vs matched placebo +3.9 / +5.0 pp (TRAIN ≈ 0).
+  - Bubble count ≥ 2 does not help. 1H robustness (1,250 bubbles): everything within ±5 pp.
+  - **Tie audit:** 108 RSI-pivot ties. The leftEq / rightEq conventions change 1 bubble in 13 y; every verdict is unchanged.
