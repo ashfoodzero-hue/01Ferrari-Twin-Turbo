@@ -621,3 +621,15 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Era:** H 30 lift pre-2020 +0.9 pp vs post-2020 +3.0 pp.
   - **Verdict:** a ~2-3 pp liquidity effect is possible but not provable on 13 y of 4H pools; nothing is shown as a "magnet".
   - **What IS measured and usable:** the placebo calibration — which level price reaches first from distances alone (path geometry, not liquidity). OOS, H 30 placebo by nearer-share of the distance: 0-0.1 → 95.6 % · 0.1-0.2 → 88.5 % · 0.2-0.3 → 79.5 % · 0.3-0.4 → 68.4 % · 0.4-0.5 → 55.3 %.
+
+- **(aw) 2026-10-16 — Liquidity MAGNET on 1H pools (strict test pre-registered as PRIMARY, `docs/MAGNET_LIQUIDITY_1H_SPEC.md`): PASS at 30 h, FAIL at 5 days.**
+  - Primary test: one event per distinct pool pair; regime-matched placebo ×20; week-block bootstrap; 1m touch order. → `magnet_liquidity_1h_111_study.json`.
+  - **H 30 (30 h), OOS:** n 1,392 independent; real nearer-first **75.5 %** vs placebo 72.0 % (formula 70.3 %); **lift +3.5 pp, LB +1.2**; TRAIN +1.0 → **MAGNET_REAL**.
+  - **H 120 (5 days):** +2.2 pp, LB +0.1, TRAIN −0.1 → no.
+  - **Limits (measured):**
+    - era: pre-2020 +1.2 pp vs post-2020 +2.8;
+    - nearer = SSL +5.2 pp vs nearer = BSL +2.0;
+    - counting every hour (not independent): only +1.4 pp — the effect sits at the moment a new pool pair forms;
+    - by distance share: the lift sits in 0.2-0.5 (+4-5 pp); none at the extremes.
+  - **No-drift:** the 4H strict run reproduced exactly (424 / 347 / 75.5 % / +2.6 pp).
+  - **Reading:** a small, genuine liquidity pull within ~30 h of a new 1H pool pair, mostly since 2020. The dashboard may show the measured nearer-first % per distance bucket (1H, 30 h), labelled with its size and limits; nothing else.

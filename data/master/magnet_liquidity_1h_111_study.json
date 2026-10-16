@@ -1,0 +1,258 @@
+{
+ "at": "2026-10-16T07:37:17.394Z",
+ "spec": "docs/MAGNET_LIQUIDITY_SPEC.md",
+ "window": [
+  "2013-07-21T22:00:00.000Z",
+  "2026-10-09T06:00:00.000Z"
+ ],
+ "placebos_per_event": 20,
+ "horizons": {
+  "30": {
+   "train": {
+    "events": 2494,
+    "resolved": 1994,
+    "censored": 500,
+    "ambiguous": 0,
+    "real_near_first": 0.7382,
+    "placebo_near_first": 0.7285,
+    "formula": 0.7063,
+    "lift": 0.0097
+   },
+   "oos": {
+    "events": 1690,
+    "resolved": 1392,
+    "censored": 298,
+    "ambiguous": 0,
+    "real_near_first": 0.755,
+    "placebo_near_first": 0.7202,
+    "formula": 0.7028,
+    "lift": 0.0348,
+    "lift_lb": 0.0119
+   },
+   "verdict": "MAGNET_REAL",
+   "by_near_side": {
+    "near_BSL": {
+     "events": 917,
+     "resolved": 774,
+     "censored": 143,
+     "ambiguous": 0,
+     "real_near_first": 0.7636,
+     "placebo_near_first": 0.7432,
+     "formula": 0.7113,
+     "lift": 0.0204
+    },
+    "near_SSL": {
+     "events": 773,
+     "resolved": 618,
+     "censored": 155,
+     "ambiguous": 0,
+     "real_near_first": 0.7443,
+     "placebo_near_first": 0.6927,
+     "formula": 0.6922,
+     "lift": 0.0516
+    }
+   },
+   "era": {
+    "pre2020": {
+     "events": 2049,
+     "resolved": 1638,
+     "censored": 411,
+     "ambiguous": 0,
+     "real_near_first": 0.7418,
+     "placebo_near_first": 0.7299,
+     "formula": 0.7054,
+     "lift": 0.0118
+    },
+    "post2020": {
+     "events": 2135,
+     "resolved": 1748,
+     "censored": 387,
+     "ambiguous": 0,
+     "real_near_first": 0.7483,
+     "placebo_near_first": 0.7206,
+     "formula": 0.7044,
+     "lift": 0.0277
+    }
+   },
+   "calibration_oos": {
+    "0-0.1": {
+     "events": 122,
+     "resolved": 104,
+     "censored": 18,
+     "ambiguous": 0,
+     "real_near_first": 0.9615,
+     "placebo_near_first": 0.963,
+     "formula": 0.9361,
+     "lift": -0.0015
+    },
+    "0.1-0.2": {
+     "events": 290,
+     "resolved": 241,
+     "censored": 49,
+     "ambiguous": 0,
+     "real_near_first": 0.8838,
+     "placebo_near_first": 0.8786,
+     "formula": 0.8497,
+     "lift": 0.0053
+    },
+    "0.2-0.3": {
+     "events": 422,
+     "resolved": 337,
+     "censored": 85,
+     "ambiguous": 0,
+     "real_near_first": 0.8309,
+     "placebo_near_first": 0.7813,
+     "formula": 0.7477,
+     "lift": 0.0495
+    },
+    "0.3-0.4": {
+     "events": 413,
+     "resolved": 337,
+     "censored": 76,
+     "ambiguous": 0,
+     "real_near_first": 0.6914,
+     "placebo_near_first": 0.6515,
+     "formula": 0.6501,
+     "lift": 0.0399
+    },
+    "0.4-0.5": {
+     "events": 443,
+     "resolved": 373,
+     "censored": 70,
+     "ambiguous": 0,
+     "real_near_first": 0.6032,
+     "placebo_near_first": 0.5519,
+     "formula": 0.55,
+     "lift": 0.0514
+    }
+   }
+  },
+  "120": {
+   "train": {
+    "events": 2494,
+    "resolved": 2432,
+    "censored": 62,
+    "ambiguous": 0,
+    "real_near_first": 0.7052,
+    "placebo_near_first": 0.7067,
+    "formula": 0.7048,
+    "lift": -0.0015
+   },
+   "oos": {
+    "events": 1687,
+    "resolved": 1648,
+    "censored": 39,
+    "ambiguous": 0,
+    "real_near_first": 0.7239,
+    "placebo_near_first": 0.7016,
+    "formula": 0.7024,
+    "lift": 0.0223,
+    "lift_lb": 0.0012
+   },
+   "verdict": "NOT_LIQUIDITY",
+   "by_near_side": {
+    "near_BSL": {
+     "events": 915,
+     "resolved": 895,
+     "censored": 20,
+     "ambiguous": 0,
+     "real_near_first": 0.7397,
+     "placebo_near_first": 0.722,
+     "formula": 0.7116,
+     "lift": 0.0177
+    },
+    "near_SSL": {
+     "events": 772,
+     "resolved": 753,
+     "censored": 19,
+     "ambiguous": 0,
+     "real_near_first": 0.7052,
+     "placebo_near_first": 0.6774,
+     "formula": 0.6916,
+     "lift": 0.0277
+    }
+   },
+   "era": {
+    "pre2020": {
+     "events": 2049,
+     "resolved": 1995,
+     "censored": 54,
+     "ambiguous": 0,
+     "real_near_first": 0.7088,
+     "placebo_near_first": 0.7065,
+     "formula": 0.7043,
+     "lift": 0.0022
+    },
+    "post2020": {
+     "events": 2132,
+     "resolved": 2085,
+     "censored": 47,
+     "ambiguous": 0,
+     "real_near_first": 0.7165,
+     "placebo_near_first": 0.7029,
+     "formula": 0.7034,
+     "lift": 0.0137
+    }
+   },
+   "calibration_oos": {
+    "0-0.1": {
+     "events": 122,
+     "resolved": 120,
+     "censored": 2,
+     "ambiguous": 0,
+     "real_near_first": 0.9333,
+     "placebo_near_first": 0.9383,
+     "formula": 0.935,
+     "lift": -0.005
+    },
+    "0.1-0.2": {
+     "events": 289,
+     "resolved": 282,
+     "censored": 7,
+     "ambiguous": 0,
+     "real_near_first": 0.8191,
+     "placebo_near_first": 0.8602,
+     "formula": 0.8488,
+     "lift": -0.041
+    },
+    "0.2-0.3": {
+     "events": 422,
+     "resolved": 410,
+     "censored": 12,
+     "ambiguous": 0,
+     "real_near_first": 0.7951,
+     "placebo_near_first": 0.7371,
+     "formula": 0.7472,
+     "lift": 0.058
+    },
+    "0.3-0.4": {
+     "events": 411,
+     "resolved": 403,
+     "censored": 8,
+     "ambiguous": 0,
+     "real_near_first": 0.665,
+     "placebo_near_first": 0.6544,
+     "formula": 0.6495,
+     "lift": 0.0106
+    },
+    "0.4-0.5": {
+     "events": 443,
+     "resolved": 433,
+     "censored": 10,
+     "ambiguous": 0,
+     "real_near_first": 0.5912,
+     "placebo_near_first": 0.5447,
+     "formula": 0.5496,
+     "lift": 0.0465
+    }
+   }
+  }
+ },
+ "verdict": "MAGNET_REAL",
+ "robustness": {
+  "dedup": true,
+  "regime_matched_placebo": true,
+  "week_block_bootstrap": true
+ },
+ "tf": "1h"
+}

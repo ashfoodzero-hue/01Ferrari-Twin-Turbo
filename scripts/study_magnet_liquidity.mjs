@@ -16,16 +16,21 @@ const FROM = HISTORY_CONTINUOUS_FROM + 7 * 86400000, TO = Date.parse(process.env
 //   MAG_REGIME=1 placebo times drawn ONLY from bars that also have both pools set (same range regime, other levels)
 //   MAG_WEEKBLOCK=1 bootstrap resamples whole calendar weeks of events (overlapping paths stay together)
 const DEDUP = process.env.MAG_DEDUP === '1', REGIME = process.env.MAG_REGIME === '1', WEEKBLOCK = process.env.MAG_WEEKBLOCK === '1', ROBUST = DEDUP || REGIME || WEEKBLOCK
-const H4 = 4 * 3600000, M = 20, HS = [30, 6], K = HS.length, ALPHA = 0.05 / K, Y2020 = Date.UTC(2020, 0, 1)
+// MAG_TF=1h (2026-10-16, docs/MAGNET_LIQUIDITY_1H_SPEC.md): the same test on 1H pools (UTC hours), horizons 30 and 120 bars. Default = 4H (unchanged).
+const TF = process.env.MAG_TF === '1h' ? '1h' : '4h', BAR = TF === '1h' ? 3600000 : 4 * 3600000
+const H4 = BAR, M = 20, HS = TF === '1h' ? [30, 120] : [30, 6], K = HS.length, ALPHA = 0.05 / K, Y2020 = Date.UTC(2020, 0, 1)
 // one pass over the 1m store: keep t/h/l for the 1m resolution AND build the NY 4H candles from the same minutes
 const T = [], Hh = [], Ll = []
 async function* tee(src) { for await (const b of src) { T.push(b.t); Hh.push(b.h); Ll.push(b.l); yield b } }
-console.log('loading 13 y of gold 1m + building NY 4H …')
-const g = (await resample4h(tee(streamBars('XAUUSD', '1m', { from: FROM - 120 * 86400000, to: TO + 70 * 86400000 })), ['ny'])).ny
+console.log(`loading 13 y of gold 1m + building ${TF === '1h' ? '1H (UTC hours)' : 'NY 4H'} …`)
+async function resample1h(src) { const out = []; let c = null; for await (const b of src) { const t = Math.floor(b.t / 3600000) * 3600000
+    if (!c || c.t !== t) { if (c) out.push(c); c = { t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v || 0 } } else { if (b.h > c.h) c.h = b.h; if (b.l < c.l) c.l = b.l; c.c = b.c; c.v += b.v || 0 } } return out }
+const src1m = tee(streamBars('XAUUSD', '1m', { from: FROM - 120 * 86400000, to: TO + 70 * 86400000 }))
+const g = TF === '1h' ? await resample1h(src1m) : (await resample4h(src1m, ['ny'])).ny
 const Tm = Float64Array.from(T), Hm = Float64Array.from(Hh), Lm = Float64Array.from(Ll)
 const lb = (t) => { let lo = 0, hi = Tm.length; while (lo < hi) { const m = (lo + hi) >> 1; if (Tm[m] < t) lo = m + 1; else hi = m } return lo }
 const S = magnetScores(g), A = atrArr(g, 14)
-console.log(`${g.length} 4H candles, ${Tm.length} minutes`)
+console.log(`${g.length} ${TF} candles, ${Tm.length} minutes`)
 /** first touch after bar k's close within H bars: 'U' (up level) | 'D' | 'AMB' (same minute) | 'CENS' */
 function firstTouch(k, up, dn, H) {
   for (let j = k + 1; j <= k + H && j < g.length; j++) { const b = g[j], hu = b.h >= up, hd = b.l <= dn
@@ -66,5 +71,6 @@ for (const H of HS) {
   for (const [k, b] of Object.entries(buckets)) console.log(`   ratio ${k.padEnd(9)} n ${String(b.resolved).padStart(4)}  real ${b.real_near_first}  placebo ${b.placebo_near_first}  formula ${b.formula}`) }
 res.verdict = Object.values(res.horizons).some((h) => h.verdict === 'MAGNET_REAL') ? 'MAGNET_REAL' : 'NOT_LIQUIDITY'
 res.robustness = ROBUST ? { dedup: DEDUP, regime_matched_placebo: REGIME, week_block_bootstrap: WEEKBLOCK } : null
-fs.writeFileSync(path.join(TURBO.master, ROBUST ? `magnet_liquidity_robustness_${+DEDUP}${+REGIME}${+WEEKBLOCK}.json` : 'magnet_liquidity_study.json'), JSON.stringify(res, null, 1))
+res.tf = TF
+fs.writeFileSync(path.join(TURBO.master, TF === '1h' ? `magnet_liquidity_1h${ROBUST ? '_' + (+DEDUP) + (+REGIME) + (+WEEKBLOCK) : ''}_study.json` : ROBUST ? `magnet_liquidity_robustness_${+DEDUP}${+REGIME}${+WEEKBLOCK}.json` : 'magnet_liquidity_study.json'), JSON.stringify(res, null, 1))
 console.log(`\n=> LIQUIDITY MAGNET: ${res.verdict}`)
