@@ -87,7 +87,7 @@ async function refreshWalls() {
     bubbles.sort((a, b) => a.touchT - b.touchT)
     const done = bubbles.filter((b) => b.outcome === 'HELD' || b.outcome === 'BROKE')
     WBF.val = { available: true, computed_at: new Date(now).toISOString(), bubbles, swing, last_close: M.at(-1)?.c ?? null, attacked_last24h: ev.filter((e) => !e.defense).length,
-      measured: { base: st.base.oos, attack: C.ATTACK.oos_hold, defense: C.DEFENSE.oos_hold, def_push: C['DEF>PUSH'].oos_hold, strong: C.STRONG.oos_hold, stacking: st.stacking, rsi_confirms: st.rsi_confirms, source: 'data/master/wall_bubbles_study.json' },
+      measured: { follow_through: (() => { const wc = J('wall_context_study.json'); return wc ? { ft10: wc.swing.ft10.held_defended.rate, ft20: wc.swing.ft20.held_defended.rate, source: 'data/master/wall_context_study.json' } : null })(), base: st.base.oos, attack: C.ATTACK.oos_hold, defense: C.DEFENSE.oos_hold, def_push: C['DEF>PUSH'].oos_hold, strong: C.STRONG.oos_hold, stacking: st.stacking, rsi_confirms: st.rsi_confirms, source: 'data/master/wall_bubbles_study.json' },
       live24h: { resolved: done.length, held: done.filter((b) => b.outcome === 'HELD').length } }
   } catch (e) { WBF.val = { available: false, why: e.message } } finally { WBF.at = Date.now(); WBF.busy = false } }
 // FORMING 4H magnet preview: the closed bars macro_tick saved + the minutes since (≤ a few hours) through the SAME engine. PROVISIONAL.

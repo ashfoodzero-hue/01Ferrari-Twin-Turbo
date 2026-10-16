@@ -750,3 +750,15 @@ without duplications … only use the real Win results, and ignore the rest."
     - the top at 4189.5-4190.6 was defended 4× (all HELD); new DEF>PUSH bubbles at 4189.50 (15m) and 4193.53 (3m);
     - last 24 h: 18/23 resolved bubbles held.
   - Smoke 5/5: swing provenance per kind and swing engine rules (known-time, break removal, nearest level).
+
+- **(bd) 2026-10-16 — WALL CONTEXT + SWING FOLLOW-THROUGH (`docs/WALL_CONTEXT_SPEC.md`, `study_wall_context.mjs` → `wall_context_study.json`): NOTHING informative.**
+  - 133,896 3m swing-wall tests; OOS base hold 60.2 %.
+  - **Pre-touch context (known before the touch):**
+    - AGAINST-MACRO (e.g. resistance while the 4H Macro is LONG ≥ 65) 59.3 % (−0.9 pp);
+    - WITH-MACRO 61.5 % (+1.3);
+    - weak approach 60.2 % (−0.1);
+    - 15m RSI exhaustion 57.7 % (−2.5, TRAIN −0.3).
+    - **The trend score does not decide whether a wall holds.** On top of a bubble the same: e.g. DEFENSE + against-macro 69.4 % vs 70.2 %.
+  - **Swing follow-through within 4 h after a HELD wall:** ≥ $10 ≈ 30 %, ≥ $20 ≈ 12 %. A DEF>PUSH / STRONG bubble does not raise it (−2.1 / 0.0 pp).
+    - → A held wall = usually a PULLBACK, not a swing. No "swing expected" alert and no pre-touch hold alert.
+    - The panel shows the measured follow-through.

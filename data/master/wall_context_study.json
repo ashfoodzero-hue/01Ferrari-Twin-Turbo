@@ -1,0 +1,220 @@
+{
+ "at": "2026-10-16T09:36:56.658Z",
+ "spec": "docs/WALL_CONTEXT_SPEC.md",
+ "tests": 133896,
+ "labelled": 114751,
+ "base_hold": {
+  "oos": 0.6022,
+  "train": 0.6162
+ },
+ "pre_touch": {
+  "AGAINST-MACRO": {
+   "oos_n": 18776,
+   "oos_hold": 0.5928,
+   "oos_diff": -0.0094,
+   "ci": [
+    -0.018,
+    -0.0011
+   ],
+   "train_diff": -0.0022,
+   "era": {
+    "pre2020": -0.0031,
+    "post2020": -0.0071
+   },
+   "by_side": {
+    "ceiling": 0.5597,
+    "floor": 0.6315
+   },
+   "verdict": "NO_EFFECT"
+  },
+  "WEAK-APPROACH": {
+   "oos_n": 31207,
+   "oos_hold": 0.6015,
+   "oos_diff": -0.0006,
+   "ci": [
+    -0.0046,
+    0.0031
+   ],
+   "train_diff": -0.0153,
+   "era": {
+    "pre2020": -0.0164,
+    "post2020": -0.0029
+   },
+   "by_side": {
+    "ceiling": 0.57,
+    "floor": 0.6329
+   },
+   "verdict": "NO_EFFECT"
+  },
+  "RSI-EXHAUST": {
+   "oos_n": 2484,
+   "oos_hold": 0.5773,
+   "oos_diff": -0.0249,
+   "ci": [
+    -0.0482,
+    -0.0013
+   ],
+   "train_diff": -0.0031,
+   "era": {
+    "pre2020": 0.0035,
+    "post2020": -0.0268
+   },
+   "by_side": {
+    "ceiling": 0.5496,
+    "floor": 0.6138
+   },
+   "verdict": "NO_EFFECT"
+  },
+  "WITH-MACRO": {
+   "oos_n": 17700,
+   "oos_hold": 0.6153,
+   "oos_diff": 0.0131,
+   "ci": [
+    0.0043,
+    0.022
+   ],
+   "train_diff": 0.0073,
+   "era": {
+    "pre2020": 0.0073,
+    "post2020": 0.0117
+   },
+   "by_side": {
+    "ceiling": 0.5897,
+    "floor": 0.6364
+   }
+  },
+  "STRONG-APPROACH": {
+   "oos_n": 2695,
+   "oos_hold": 0.6078,
+   "oos_diff": 0.0056,
+   "ci": [
+    -0.0164,
+    0.0276
+   ],
+   "train_diff": 0.0573,
+   "era": {
+    "pre2020": 0.065,
+    "post2020": 0.0067
+   },
+   "by_side": {
+    "ceiling": 0.5743,
+    "floor": 0.6362
+   }
+  }
+ },
+ "on_bubble": {
+  "DEFENSE+AGAINST-MACRO": {
+   "oos_n": 8185,
+   "oos_hold": 0.6938,
+   "bubble_alone": 0.7024,
+   "diff": -0.0085,
+   "train_diff": -0.0029
+  },
+  "DEF>PUSH+AGAINST-MACRO": {
+   "oos_n": 3099,
+   "oos_hold": 0.7364,
+   "bubble_alone": 0.738,
+   "diff": -0.0017,
+   "train_diff": -0.0015
+  },
+  "DEFENSE+WEAK-APPROACH": {
+   "oos_n": 13688,
+   "oos_hold": 0.705,
+   "bubble_alone": 0.7024,
+   "diff": 0.0026,
+   "train_diff": -0.0148
+  },
+  "DEF>PUSH+WEAK-APPROACH": {
+   "oos_n": 5281,
+   "oos_hold": 0.7432,
+   "bubble_alone": 0.738,
+   "diff": 0.0052,
+   "train_diff": -0.0133
+  },
+  "DEFENSE+RSI-EXHAUST": {
+   "oos_n": 1105,
+   "oos_hold": 0.6932,
+   "bubble_alone": 0.7024,
+   "diff": -0.0092,
+   "train_diff": 0.0026
+  },
+  "DEF>PUSH+RSI-EXHAUST": {
+   "oos_n": 409,
+   "oos_hold": 0.7457,
+   "bubble_alone": 0.738,
+   "diff": 0.0077,
+   "train_diff": 0.0043
+  },
+  "DEFENSE+WITH-MACRO": {
+   "oos_n": 8020,
+   "oos_hold": 0.7152,
+   "bubble_alone": 0.7024,
+   "diff": 0.0128,
+   "train_diff": 0.0052
+  },
+  "DEF>PUSH+WITH-MACRO": {
+   "oos_n": 3004,
+   "oos_hold": 0.7457,
+   "bubble_alone": 0.738,
+   "diff": 0.0077,
+   "train_diff": 0.0071
+  },
+  "DEFENSE+STRONG-APPROACH": {
+   "oos_n": 1321,
+   "oos_hold": 0.6927,
+   "bubble_alone": 0.7024,
+   "diff": -0.0097,
+   "train_diff": 0.052
+  },
+  "DEF>PUSH+STRONG-APPROACH": {
+   "oos_n": 460,
+   "oos_hold": 0.7435,
+   "bubble_alone": 0.738,
+   "diff": 0.0055,
+   "train_diff": 0.0681
+  }
+ },
+ "swing": {
+  "ft10": {
+   "held_all": {
+    "n": 28640,
+    "rate": 0.2994
+   },
+   "held_defended": {
+    "n": 14837,
+    "rate": 0.2943
+   },
+   "held_strong_or_defpush": {
+    "n": 7305,
+    "rate": 0.2782
+   },
+   "all_tests": 0.2582,
+   "diff": -0.0212,
+   "lb": -0.03,
+   "train_diff": 0.0006,
+   "against_macro_held_defended": 0.2912,
+   "verdict": "REPORTED"
+  },
+  "ft20": {
+   "held_all": {
+    "n": 28640,
+    "rate": 0.1226
+   },
+   "held_defended": {
+    "n": 14837,
+    "rate": 0.1239
+   },
+   "held_strong_or_defpush": {
+    "n": 7305,
+    "rate": 0.1227
+   },
+   "all_tests": 0.1051,
+   "diff": 0.0001,
+   "lb": -0.0057,
+   "train_diff": 0.0001,
+   "against_macro_held_defended": 0.1266,
+   "verdict": "NO_EFFECT"
+  }
+ },
+ "informative": []
+}
