@@ -1,0 +1,584 @@
+{
+ "at": "2026-10-16T09:57:58.132Z",
+ "spec": "docs/MTF_REVERSAL_SPEC.md",
+ "red_line": "WR >= 85 % + money",
+ "cells": {
+  "L4H|15m|1R": {
+   "setups": 39313,
+   "no_choch": 6840,
+   "bad_risk": 943,
+   "train": {
+    "n": 5860,
+    "per_day": 2.83,
+    "wr": 0.4249,
+    "wr_lb": 0.408,
+    "net": -0.496,
+    "net_lb": -0.626,
+    "avg_risk": 3.78
+   },
+   "oos": {
+    "n": 3709,
+    "per_day": 2.69,
+    "wr": 0.4659,
+    "wr_lb": 0.4444,
+    "net": -0.37,
+    "net_lb": -0.638,
+    "avg_risk": 5.86
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 1791,
+     "per_day": null,
+     "wr": 0.4701,
+     "wr_lb": 0.4392,
+     "net": -0.372,
+     "net_lb": -0.764,
+     "avg_risk": 5.82
+    },
+    "BUY": {
+     "n": 1918,
+     "per_day": null,
+     "wr": 0.4619,
+     "wr_lb": 0.4321,
+     "net": -0.369,
+     "net_lb": -0.744,
+     "avg_risk": 5.9
+    }
+   },
+   "era": {
+    "pre2020": -0.444,
+    "post2020": -0.451
+   },
+   "verdict": "FAIL"
+  },
+  "L4H|15m|2R": {
+   "setups": 39313,
+   "no_choch": 6138,
+   "bad_risk": 901,
+   "train": {
+    "n": 5260,
+    "per_day": 2.54,
+    "wr": 0.35,
+    "wr_lb": 0.3329,
+    "net": -0.53,
+    "net_lb": -0.69,
+    "avg_risk": 3.78
+   },
+   "oos": {
+    "n": 3297,
+    "per_day": 2.39,
+    "wr": 0.36,
+    "wr_lb": 0.3383,
+    "net": -0.406,
+    "net_lb": -0.778,
+    "avg_risk": 5.89
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 1581,
+     "per_day": null,
+     "wr": 0.351,
+     "wr_lb": 0.3201,
+     "net": -0.456,
+     "net_lb": -0.97,
+     "avg_risk": 5.9
+    },
+    "BUY": {
+     "n": 1716,
+     "per_day": null,
+     "wr": 0.3683,
+     "wr_lb": 0.3382,
+     "net": -0.361,
+     "net_lb": -0.848,
+     "avg_risk": 5.89
+    }
+   },
+   "era": {
+    "pre2020": -0.44,
+    "post2020": -0.526
+   },
+   "verdict": "FAIL"
+  },
+  "L4H|15m|SPLIT": {
+   "setups": 39313,
+   "no_choch": 6310,
+   "bad_risk": 924,
+   "train": {
+    "n": 5410,
+    "per_day": 2.61,
+    "wr": 0.4266,
+    "wr_lb": 0.409,
+    "net": -0.498,
+    "net_lb": -0.634,
+    "avg_risk": 3.79
+   },
+   "oos": {
+    "n": 3417,
+    "per_day": 2.48,
+    "wr": 0.4601,
+    "wr_lb": 0.4377,
+    "net": -0.434,
+    "net_lb": -0.732,
+    "avg_risk": 5.88
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 1635,
+     "per_day": null,
+     "wr": 0.4661,
+     "wr_lb": 0.4337,
+     "net": -0.463,
+     "net_lb": -0.899,
+     "avg_risk": 5.88
+    },
+    "BUY": {
+     "n": 1782,
+     "per_day": null,
+     "wr": 0.4545,
+     "wr_lb": 0.4237,
+     "net": -0.407,
+     "net_lb": -0.787,
+     "avg_risk": 5.88
+    }
+   },
+   "era": {
+    "pre2020": -0.451,
+    "post2020": -0.497
+   },
+   "verdict": "FAIL"
+  },
+  "L4H|30m|1R": {
+   "setups": 27995,
+   "no_choch": 3984,
+   "bad_risk": 867,
+   "train": {
+    "n": 5754,
+    "per_day": 2.78,
+    "wr": 0.4275,
+    "wr_lb": 0.4104,
+    "net": -0.479,
+    "net_lb": -0.609,
+    "avg_risk": 3.89
+   },
+   "oos": {
+    "n": 3562,
+    "per_day": 2.58,
+    "wr": 0.4554,
+    "wr_lb": 0.4335,
+    "net": -0.558,
+    "net_lb": -0.824,
+    "avg_risk": 5.95
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 1744,
+     "per_day": null,
+     "wr": 0.4501,
+     "wr_lb": 0.4189,
+     "net": -0.637,
+     "net_lb": -1.017,
+     "avg_risk": 5.85
+    },
+    "BUY": {
+     "n": 1818,
+     "per_day": null,
+     "wr": 0.4604,
+     "wr_lb": 0.4298,
+     "net": -0.482,
+     "net_lb": -0.884,
+     "avg_risk": 6.04
+    }
+   },
+   "era": {
+    "pre2020": -0.466,
+    "post2020": -0.554
+   },
+   "verdict": "FAIL"
+  },
+  "L4H|30m|2R": {
+   "setups": 27995,
+   "no_choch": 3642,
+   "bad_risk": 832,
+   "train": {
+    "n": 5210,
+    "per_day": 2.52,
+    "wr": 0.3514,
+    "wr_lb": 0.3342,
+    "net": -0.488,
+    "net_lb": -0.665,
+    "avg_risk": 3.87
+   },
+   "oos": {
+    "n": 3197,
+    "per_day": 2.32,
+    "wr": 0.3672,
+    "wr_lb": 0.345,
+    "net": -0.423,
+    "net_lb": -0.8,
+    "avg_risk": 5.99
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 1542,
+     "per_day": null,
+     "wr": 0.3541,
+     "wr_lb": 0.3227,
+     "net": -0.596,
+     "net_lb": -1.122,
+     "avg_risk": 5.91
+    },
+    "BUY": {
+     "n": 1655,
+     "per_day": null,
+     "wr": 0.3795,
+     "wr_lb": 0.3486,
+     "net": -0.262,
+     "net_lb": -0.79,
+     "avg_risk": 6.07
+    }
+   },
+   "era": {
+    "pre2020": -0.476,
+    "post2020": -0.45
+   },
+   "verdict": "FAIL"
+  },
+  "L4H|30m|SPLIT": {
+   "setups": 27995,
+   "no_choch": 3711,
+   "bad_risk": 848,
+   "train": {
+    "n": 5363,
+    "per_day": 2.59,
+    "wr": 0.4261,
+    "wr_lb": 0.4084,
+    "net": -0.502,
+    "net_lb": -0.651,
+    "avg_risk": 3.88
+   },
+   "oos": {
+    "n": 3330,
+    "per_day": 2.41,
+    "wr": 0.4538,
+    "wr_lb": 0.4311,
+    "net": -0.515,
+    "net_lb": -0.821,
+    "avg_risk": 5.99
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 1599,
+     "per_day": null,
+     "wr": 0.4478,
+     "wr_lb": 0.4153,
+     "net": -0.643,
+     "net_lb": -1.076,
+     "avg_risk": 5.93
+    },
+    "BUY": {
+     "n": 1731,
+     "per_day": null,
+     "wr": 0.4593,
+     "wr_lb": 0.4279,
+     "net": -0.396,
+     "net_lb": -0.812,
+     "avg_risk": 6.04
+    }
+   },
+   "era": {
+    "pre2020": -0.493,
+    "post2020": -0.521
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|15m|1R": {
+   "setups": 121844,
+   "no_choch": 10325,
+   "bad_risk": 2113,
+   "train": {
+    "n": 9219,
+    "per_day": 4.46,
+    "wr": 0.4372,
+    "wr_lb": 0.4237,
+    "net": -0.418,
+    "net_lb": -0.522,
+    "avg_risk": 3.73
+   },
+   "oos": {
+    "n": 6499,
+    "per_day": 4.71,
+    "wr": 0.4801,
+    "wr_lb": 0.4638,
+    "net": -0.281,
+    "net_lb": -0.51,
+    "avg_risk": 6.14
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 2985,
+     "per_day": null,
+     "wr": 0.4777,
+     "wr_lb": 0.4537,
+     "net": -0.335,
+     "net_lb": -0.702,
+     "avg_risk": 6.14
+    },
+    "BUY": {
+     "n": 3514,
+     "per_day": null,
+     "wr": 0.4821,
+     "wr_lb": 0.4599,
+     "net": -0.235,
+     "net_lb": -0.534,
+     "avg_risk": 6.14
+    }
+   },
+   "era": {
+    "pre2020": -0.386,
+    "post2020": -0.339
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|15m|2R": {
+   "setups": 121844,
+   "no_choch": 8436,
+   "bad_risk": 1907,
+   "train": {
+    "n": 7819,
+    "per_day": 3.78,
+    "wr": 0.3554,
+    "wr_lb": 0.3413,
+    "net": -0.416,
+    "net_lb": -0.55,
+    "avg_risk": 3.7
+   },
+   "oos": {
+    "n": 5404,
+    "per_day": 3.92,
+    "wr": 0.3699,
+    "wr_lb": 0.3528,
+    "net": -0.182,
+    "net_lb": -0.503,
+    "avg_risk": 6.14
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 2480,
+     "per_day": null,
+     "wr": 0.356,
+     "wr_lb": 0.3311,
+     "net": -0.379,
+     "net_lb": -0.893,
+     "avg_risk": 6.13
+    },
+    "BUY": {
+     "n": 2924,
+     "per_day": null,
+     "wr": 0.3817,
+     "wr_lb": 0.3583,
+     "net": -0.015,
+     "net_lb": -0.424,
+     "avg_risk": 6.15
+    }
+   },
+   "era": {
+    "pre2020": -0.366,
+    "post2020": -0.278
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|15m|SPLIT": {
+   "setups": 121844,
+   "no_choch": 8935,
+   "bad_risk": 2015,
+   "train": {
+    "n": 8197,
+    "per_day": 3.96,
+    "wr": 0.4421,
+    "wr_lb": 0.4277,
+    "net": -0.416,
+    "net_lb": -0.533,
+    "avg_risk": 3.73
+   },
+   "oos": {
+    "n": 5799,
+    "per_day": 4.2,
+    "wr": 0.4804,
+    "wr_lb": 0.4632,
+    "net": -0.233,
+    "net_lb": -0.491,
+    "avg_risk": 6.14
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 2634,
+     "per_day": null,
+     "wr": 0.4822,
+     "wr_lb": 0.4566,
+     "net": -0.33,
+     "net_lb": -0.734,
+     "avg_risk": 6.12
+    },
+    "BUY": {
+     "n": 3165,
+     "per_day": null,
+     "wr": 0.479,
+     "wr_lb": 0.4556,
+     "net": -0.152,
+     "net_lb": -0.478,
+     "avg_risk": 6.15
+    }
+   },
+   "era": {
+    "pre2020": -0.351,
+    "post2020": -0.33
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|30m|1R": {
+   "setups": 79725,
+   "no_choch": 5841,
+   "bad_risk": 1980,
+   "train": {
+    "n": 9052,
+    "per_day": 4.38,
+    "wr": 0.4358,
+    "wr_lb": 0.4221,
+    "net": -0.449,
+    "net_lb": -0.559,
+    "avg_risk": 3.91
+   },
+   "oos": {
+    "n": 6280,
+    "per_day": 4.55,
+    "wr": 0.4704,
+    "wr_lb": 0.4538,
+    "net": -0.441,
+    "net_lb": -0.683,
+    "avg_risk": 6.34
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 2955,
+     "per_day": null,
+     "wr": 0.4663,
+     "wr_lb": 0.4422,
+     "net": -0.485,
+     "net_lb": -0.87,
+     "avg_risk": 6.35
+    },
+    "BUY": {
+     "n": 3325,
+     "per_day": null,
+     "wr": 0.474,
+     "wr_lb": 0.4512,
+     "net": -0.402,
+     "net_lb": -0.701,
+     "avg_risk": 6.33
+    }
+   },
+   "era": {
+    "pre2020": -0.407,
+    "post2020": -0.481
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|30m|2R": {
+   "setups": 79725,
+   "no_choch": 4966,
+   "bad_risk": 1833,
+   "train": {
+    "n": 7706,
+    "per_day": 3.72,
+    "wr": 0.3562,
+    "wr_lb": 0.342,
+    "net": -0.439,
+    "net_lb": -0.579,
+    "avg_risk": 3.85
+   },
+   "oos": {
+    "n": 5257,
+    "per_day": 3.81,
+    "wr": 0.3685,
+    "wr_lb": 0.3511,
+    "net": -0.277,
+    "net_lb": -0.608,
+    "avg_risk": 6.33
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 2441,
+     "per_day": null,
+     "wr": 0.3601,
+     "wr_lb": 0.3349,
+     "net": -0.372,
+     "net_lb": -0.891,
+     "avg_risk": 6.38
+    },
+    "BUY": {
+     "n": 2816,
+     "per_day": null,
+     "wr": 0.3757,
+     "wr_lb": 0.352,
+     "net": -0.196,
+     "net_lb": -0.607,
+     "avg_risk": 6.28
+    }
+   },
+   "era": {
+    "pre2020": -0.377,
+    "post2020": -0.37
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|30m|SPLIT": {
+   "setups": 79725,
+   "no_choch": 5204,
+   "bad_risk": 1913,
+   "train": {
+    "n": 8081,
+    "per_day": 3.91,
+    "wr": 0.4353,
+    "wr_lb": 0.4209,
+    "net": -0.449,
+    "net_lb": -0.566,
+    "avg_risk": 3.9
+   },
+   "oos": {
+    "n": 5602,
+    "per_day": 4.06,
+    "wr": 0.4689,
+    "wr_lb": 0.4514,
+    "net": -0.358,
+    "net_lb": -0.611,
+    "avg_risk": 6.34
+   },
+   "oos_by_side": {
+    "SELL": {
+     "n": 2590,
+     "per_day": null,
+     "wr": 0.4703,
+     "wr_lb": 0.4445,
+     "net": -0.403,
+     "net_lb": -0.804,
+     "avg_risk": 6.38
+    },
+    "BUY": {
+     "n": 3012,
+     "per_day": null,
+     "wr": 0.4678,
+     "wr_lb": 0.4439,
+     "net": -0.318,
+     "net_lb": -0.646,
+     "avg_risk": 6.31
+    }
+   },
+   "era": {
+    "pre2020": -0.389,
+    "post2020": -0.433
+   },
+   "verdict": "FAIL"
+  }
+ },
+ "passing": []
+}

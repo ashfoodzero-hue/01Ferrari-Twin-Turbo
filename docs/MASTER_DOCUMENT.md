@@ -778,3 +778,14 @@ without duplications … only use the real Win results, and ignore the rest."
     - the stop beyond the wall plus the spread sits further away than the target;
     - wicks hit the stop more often than closes break the wall.
   - The wall bubbles stay as reading tools; no wall scalp is built.
+
+- **(bf) 2026-10-16 — TOP-DOWN REVERSAL (Ashraf's design: 4H/1H candle level → 15m/30m reversal candle → 3m CHoCH entry; `docs/MTF_REVERSAL_SPEC.md`, `study_mtf_reversal.mjs` → `mtf_reversal_study.json`): 0/12 PASS.**
+  - **OOS:**
+    - L4H→15m 1R: 46.6 % WR, −$0.37/t (2.7/d);
+    - L4H→30m 1R: 45.5 %, −$0.56;
+    - L1H→15m 2R: 37.0 %, −$0.18 (the least bad);
+    - L1H→30m 2R: 36.9 %, −$0.28.
+    - Every cell is negative on both sides, in TRAIN, and pre/post 2020.
+  - **Average risk ≈ $6:** the reversal extreme sits far from the CHoCH entry once the 15m/30m candle has confirmed.
+  - 10-18 % of confirmations never give a CHoCH.
+  - **1R WR ≈ 47 %** = a coin flip; the spread makes it a loss. Once a turn is confirmed on three timeframes, the measurable edge is gone.
