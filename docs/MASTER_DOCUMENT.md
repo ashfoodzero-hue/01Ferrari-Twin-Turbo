@@ -587,3 +587,20 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Fix:** snapshot the bound before the await; if it moved during the fetch, keep the cursor and refill after the reconnect.
   - Smoke: new RACE test in `smoke_tick_stream.mjs` — it FAILED (and hung) on the old code and PASSES with the fix (12/12).
   - The live streamer was restarted at 23:56. The 23:39-23:56 refill wrote all 7 bars Polygon has, and the store equals Polygon minute for minute. The daily reconcile picks up any minutes Polygon re-issues later.
+
+- **(au) 2026-10-16 — 4H MACRO MAGNET (Ashraf's visionHunt Pine) copied exactly + DXY cross-check: NO EDGE (0/8 cells, all 3 4H cuts).**
+  - Spec `docs/MACRO_MAGNET_SPEC.md` (pre-registered); engine `src/master/macroMagnet.js`; study `study_macro_magnet.mjs` → `macro_magnet_study.json`.
+  - **4H cut MEASURED from Ashraf's TradingView over CDP:** OANDA 4H start at 01/05/09/13/17/21 UTC = 17:00 New York (434 bars). The app's 00/04/08 UTC cut differs.
+  - **Parity with his chart:** 433/434 candles align (NY cut); the score is identical on 98.7 % of 300 bars, with the same side 100 %. The only differences are in vector D (candle colour) on tiny bodies — OANDA vs Polygon cents. Smoke `smoke_macro_magnet.mjs` 5/5.
+  - **13 y, OOS** (base up-next-4H 51.8 %):
+
+| Reading | Up next 4H | Up next 24 h |
+|---|---|---|
+| LONG ≥ 65 | 52.3 % (+0.6 pp; TRAIN −0.9) | — |
+| LONG 100 | 51.7 % | 58.1 % (TRAIN 4H 48.3 %) |
+| SHORT ≥ 65 (down next 4H) | 48.8 % vs base 48.1 % | — |
+
+  - **DXY on the other side adds nothing:** +0.1 to +1.7 pp, TRAIN negative in every cell. Vector A (EMA) is the only part with a sign: 53.1 % vs 50.2 %.
+  - **Method E:** the Pine's own history (lookahead_on) shows **77.8 %** "up" for LONG ≥ 65 because it scores the bar with its own final close; a live reader gets **52.3 %**.
+  - **Reported finding (not a pre-registered cell):** with both liquidity pools set, the NEARER one is touched first **78.0 %** vs a 71.5 % distance-only expectation (n 3,116 OOS; the same on all 3 cuts). This deserves its own pre-registered test.
+  - Nothing was wired into the live app.
