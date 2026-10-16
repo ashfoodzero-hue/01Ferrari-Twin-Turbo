@@ -73,7 +73,7 @@ async function refreshWalls() {
     const now = Date.now(), M = (await loadBars('XAUUSD', '1m', { from: now - 5 * 86400000 })).bars.filter((b) => b.t + 60000 <= now), sw = J('swing_walls_study.json')
     const ev = wallEvents(M, { from: now - 24 * 3600000 }), m66 = st.strong_threshold_train_p66, C = st.classes
     const clsOf = (thr) => (e) => !e.defense ? null : e.mag > thr ? 'STRONG' : e.defStronger ? 'DEF>PUSH' : 'DEFENSE'
-    const mk = (kind, list, cls, holds) => list.map((e) => ({ e, c: cls(e) })).filter((x) => x.c).map(({ e, c }) => { const h = M.length - 1 - e.di >= 60 ? holdLabel(M, e) : undefined
+    const mk = (kind, list, cls, holds) => list.map((e) => ({ e, c: cls(e) })).filter((x) => x.c).map(({ e, c }) => { const lab = holdLabel(M, e), h = lab !== null ? lab : M.length - 1 - e.di >= 60 ? null : undefined   // decided as soon as the rule decides; pending while undecided < 60 min
       return { kind, side: e.type === 'ceiling' ? 'RESISTANCE' : 'SUPPORT', type: e.type, wall: +e.wall.toFixed(2), touchT: e.t, decisionT: e.decisionT, cls: c, count: e.count, measured_hold: holds[c]?.oos_hold ?? null, outcome: h === undefined ? 'pending' : h === null ? 'timeout' : h ? 'HELD' : 'BROKE' } })
     const levelsOf = (ms) => { const B = []; let c = null; for (const b of M) { const t = Math.floor(b.t / ms) * ms; if (!c || c.t !== t) { if (c) B.push(c); c = { t, o: b.o, h: b.h, l: b.l, c: b.c } } else { if (b.h > c.h) c.h = b.h; if (b.l < c.l) c.l = b.l; c.c = b.c } } if (c && c.t + ms <= now) B.push(c)
       const P = confirmedPivots(B, 5), kk = (x) => ({ knownT: B[x.knownAt].t + ms, px: x.px }); return { highs: P.highs.map(kk), lows: P.lows.map(kk) } }
