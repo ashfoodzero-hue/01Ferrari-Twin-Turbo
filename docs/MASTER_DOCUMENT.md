@@ -604,3 +604,20 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Method E:** the Pine's own history (lookahead_on) shows **77.8 %** "up" for LONG ≥ 65 because it scores the bar with its own final close; a live reader gets **52.3 %**.
   - **Reported finding (not a pre-registered cell):** with both liquidity pools set, the NEARER one is touched first **78.0 %** vs a 71.5 % distance-only expectation (n 3,116 OOS; the same on all 3 cuts). This deserves its own pre-registered test.
   - Nothing was wired into the live app.
+
+- **(av) 2026-10-16 — Liquidity MAGNET, matched-placebo test: NOT CONFIRMED** (it passed the pre-registered rule, then FAILED the independence audit).
+  - Spec `docs/MAGNET_LIQUIDITY_SPEC.md`; `study_magnet_liquidity.mjs`:
+    - the primary run → `magnet_liquidity_study.json`;
+    - the audits (switches MAG_DEDUP / MAG_REGIME / MAG_WEEKBLOCK) → `magnet_liquidity_robustness_*.json`.
+  - Touch order is resolved on 1m bars. The placebo uses 20 random times with the same ATR distances, the same horizon and the same censoring.
+  - **Primary (as pre-registered), H 30, OOS:**
+    - real nearer-first 78.0 % · placebo 74.1 % · formula 71.5 %;
+    - lift +3.9 pp, LB +2.5; TRAIN +0.7 → passed.
+    - Most of the "78 %" is the path itself (the placebo gives 74.1 %).
+  - **Audit:**
+    - the same (BSL, SSL) pair repeats ~10 bars, so the events are not independent;
+    - one event per pair leaves **n = 347 independent** (OOS): lift +2.0 pp, LB −2.5. With every fix together: +2.6 pp, LB −2.2 → NOT CONFIRMED;
+    - regime-matched placebo alone: +3.7 pp (LB +2.3); week-block alone: LB +1.0. Neither removes the repetition.
+  - **Era:** H 30 lift pre-2020 +0.9 pp vs post-2020 +3.0 pp.
+  - **Verdict:** a ~2-3 pp liquidity effect is possible but not provable on 13 y of 4H pools; nothing is shown as a "magnet".
+  - **What IS measured and usable:** the placebo calibration — which level price reaches first from distances alone (path geometry, not liquidity). OOS, H 30 placebo by nearer-share of the distance: 0-0.1 → 95.6 % · 0.1-0.2 → 88.5 % · 0.2-0.3 → 79.5 % · 0.3-0.4 → 68.4 % · 0.4-0.5 → 55.3 %.
