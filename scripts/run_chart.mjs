@@ -51,7 +51,8 @@ import { bucket15, whaleAt, WHALE } from '../src/master/goldWhale.js'
 import { streamBars } from '../src/data/backfillReader.js'
 import { streamDxy1m } from '../src/data/dxy.js'
 import { formingScore } from '../src/master/macroMagnet.js'
-import { wallEvents, holdLabel } from '../src/master/wallDefense.js'
+import { wallEvents, swingWallEvents, holdLabel } from '../src/master/wallDefense.js'
+import { confirmedPivots } from '../src/master/ferrariMatrix.js'
 
 export const CHART_PORT = +(process.env.TWIN_CHART_PORT || 7444)
 const PAGE = path.join(TURBO.root, 'ops', 'chart', 'index.html')
@@ -68,13 +69,24 @@ const WBF = { at: 0, val: null, busy: false }
 async function refreshWalls() {
   if (WBF.busy || Date.now() - WBF.at < 60000) return; WBF.busy = true
   try { const st = J('wall_bubbles_study.json'); if (!st) { WBF.val = { available: false, why: 'wall_bubbles_study.json missing' }; return }
-    const now = Date.now(), M = (await loadBars('XAUUSD', '1m', { from: now - 36 * 3600000 })).bars.filter((b) => b.t + 60000 <= now)
+    // 5 days of 1m: the volume profile needs 24 h; SWING walls (2026-10-16, study (bc)) need older unbroken pivots too
+    const now = Date.now(), M = (await loadBars('XAUUSD', '1m', { from: now - 5 * 86400000 })).bars.filter((b) => b.t + 60000 <= now), sw = J('swing_walls_study.json')
     const ev = wallEvents(M, { from: now - 24 * 3600000 }), m66 = st.strong_threshold_train_p66, C = st.classes
-    const cls = (e) => !e.defense ? null : e.mag > m66 ? 'STRONG' : e.defStronger ? 'DEF>PUSH' : 'DEFENSE'
-    const bubbles = ev.map((e) => ({ e, c: cls(e) })).filter((x) => x.c).map(({ e, c }) => { const h = M.length - 1 - e.di >= 60 ? holdLabel(M, e) : undefined
-      return { side: e.type === 'ceiling' ? 'RESISTANCE' : 'SUPPORT', type: e.type, wall: +e.wall.toFixed(2), touchT: e.t, decisionT: e.decisionT, cls: c, count: e.count, measured_hold: C[c]?.oos_hold ?? null, outcome: h === undefined ? 'pending' : h === null ? 'timeout' : h ? 'HELD' : 'BROKE' } })
+    const clsOf = (thr) => (e) => !e.defense ? null : e.mag > thr ? 'STRONG' : e.defStronger ? 'DEF>PUSH' : 'DEFENSE'
+    const mk = (kind, list, cls, holds) => list.map((e) => ({ e, c: cls(e) })).filter((x) => x.c).map(({ e, c }) => { const h = M.length - 1 - e.di >= 60 ? holdLabel(M, e) : undefined
+      return { kind, side: e.type === 'ceiling' ? 'RESISTANCE' : 'SUPPORT', type: e.type, wall: +e.wall.toFixed(2), touchT: e.t, decisionT: e.decisionT, cls: c, count: e.count, measured_hold: holds[c]?.oos_hold ?? null, outcome: h === undefined ? 'pending' : h === null ? 'timeout' : h ? 'HELD' : 'BROKE' } })
+    const levelsOf = (ms) => { const B = []; let c = null; for (const b of M) { const t = Math.floor(b.t / ms) * ms; if (!c || c.t !== t) { if (c) B.push(c); c = { t, o: b.o, h: b.h, l: b.l, c: b.c } } else { if (b.h > c.h) c.h = b.h; if (b.l < c.l) c.l = b.l; c.c = b.c } } if (c && c.t + ms <= now) B.push(c)
+      const P = confirmedPivots(B, 5), kk = (x) => ({ knownT: B[x.knownAt].t + ms, px: x.px }); return { highs: P.highs.map(kk), lows: P.lows.map(kk) } }
+    // the nearest UNBROKEN swing ceiling / floor right now (a swing high stays a ceiling until a 1m close goes above it)
+    const nearest = (L) => { const last = M.at(-1), alive = (px, knownT, up) => !M.some((b) => b.t >= knownT && (up ? b.c > px : b.c < px))
+      const ce = L.highs.filter((x) => x.px > last.c && alive(x.px, x.knownT, true)).sort((a, b) => a.px - b.px)[0], fl = L.lows.filter((x) => x.px < last.c && alive(x.px, x.knownT, false)).sort((a, b) => b.px - a.px)[0]
+      return { ceiling: ce ? +ce.px.toFixed(2) : null, floor: fl ? +fl.px.toFixed(2) : null } }
+    let bubbles = mk('VOL', ev, clsOf(m66), C), swing = {}
+    if (sw) for (const [kind, tf, ms] of [['SW3', '3m', 180000], ['SW15', '15m', 900000]]) { const L = levelsOf(ms), V = sw.variants[tf]
+      bubbles = bubbles.concat(mk(kind, swingWallEvents(M, L, { from: now - 24 * 3600000 }), clsOf(V.strong_threshold_train_p66), V.classes)); swing[tf] = { nearest: nearest(L), measured: { base: V.base.oos, defense: V.classes.DEFENSE.oos_hold, def_push: V.classes['DEF>PUSH'].oos_hold, strong: V.classes.STRONG.oos_hold, attack: V.classes.ATTACK.oos_hold } } }
+    bubbles.sort((a, b) => a.touchT - b.touchT)
     const done = bubbles.filter((b) => b.outcome === 'HELD' || b.outcome === 'BROKE')
-    WBF.val = { available: true, computed_at: new Date(now).toISOString(), bubbles, attacked_last24h: ev.filter((e) => !e.defense).length,
+    WBF.val = { available: true, computed_at: new Date(now).toISOString(), bubbles, swing, last_close: M.at(-1)?.c ?? null, attacked_last24h: ev.filter((e) => !e.defense).length,
       measured: { base: st.base.oos, attack: C.ATTACK.oos_hold, defense: C.DEFENSE.oos_hold, def_push: C['DEF>PUSH'].oos_hold, strong: C.STRONG.oos_hold, stacking: st.stacking, rsi_confirms: st.rsi_confirms, source: 'data/master/wall_bubbles_study.json' },
       live24h: { resolved: done.length, held: done.filter((b) => b.outcome === 'HELD').length } }
   } catch (e) { WBF.val = { available: false, why: e.message } } finally { WBF.at = Date.now(); WBF.busy = false } }

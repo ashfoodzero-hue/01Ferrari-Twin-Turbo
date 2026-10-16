@@ -9,7 +9,7 @@ import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { TURBO } from '../src/core/paths.js'
 import { loadBars } from '../src/data/backfillReader.js'
-import { wallEvents, holdLabel } from '../src/master/wallDefense.js'
+import { wallEvents, swingWallEvents, holdLabel } from '../src/master/wallDefense.js'
 
 let n = 0
 const ok = async (name, fn) => { try { await fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
@@ -33,12 +33,21 @@ await ok('/api/walls: ATTACK never makes a bubble; measured holds = the study (p
   try { let w = null; for (let i = 0; i < 60; i++) { await new Promise((r) => setTimeout(r, 1000)); try { w = await (await fetch(`http://127.0.0.1:${PORT}/api/walls`)).json(); if (w.available) break } catch { /* starting */ } }
     assert(w?.available, 'walls never became available: ' + JSON.stringify(w))
     assert.equal(w.measured.defense, S.classes.DEFENSE.oos_hold); assert.equal(w.measured.strong, S.classes.STRONG.oos_hold); assert.equal(w.measured.def_push, S.classes['DEF>PUSH'].oos_hold); assert.equal(w.measured.attack, S.classes.ATTACK.oos_hold)
-    for (const b of w.bubbles) { assert(['STRONG', 'DEF>PUSH', 'DEFENSE'].includes(b.cls)); assert.equal(b.measured_hold, S.classes[b.cls].oos_hold); assert(b.count >= 1); assert(['pending', 'timeout', 'HELD', 'BROKE'].includes(b.outcome)) }
+    const SW = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'swing_walls_study.json'), 'utf8')), holds = { VOL: S.classes, SW3: SW.variants['3m'].classes, SW15: SW.variants['15m'].classes }
+    for (const b of w.bubbles) { assert(['VOL', 'SW3', 'SW15'].includes(b.kind)); assert(['STRONG', 'DEF>PUSH', 'DEFENSE'].includes(b.cls)); assert.equal(b.measured_hold, holds[b.kind][b.cls].oos_hold, 'provenance ' + b.kind + ' ' + b.cls); assert(b.count >= 1); assert(['pending', 'timeout', 'HELD', 'BROKE'].includes(b.outcome)) }
   } finally { child.kill() }
+})
+await ok('SWING engine rules (synthetic): a level is usable only from its known time; a 1m close beyond it removes it; the nearest active level is the one tested', async () => {
+  const t0 = Date.UTC(2026, 0, 5), M = []; for (let i = 0; i < 1700; i++) { const p = 100 + (i < 1500 ? 0 : i - 1500 >= 50 ? 1.5 : (i - 1500) * 0.03); M.push({ t: t0 + i * 60000, o: p, h: p + 0.02, l: p - 0.02, c: p, v: 10 }) }
+  const lv = (px, i) => ({ knownT: t0 + i * 60000, px })
+  const ev1 = swingWallEvents(M, { highs: [lv(101, 1600)], lows: [] })   // known only AFTER price passed it → never tested
+  assert.equal(ev1.length, 0, 'a level was tested before its known time')
+  const ev2 = swingWallEvents(M, { highs: [lv(100.6, 1000), lv(103, 1000)], lows: [] }); assert(ev2.length >= 1 && ev2[0].wall === 100.6, 'the nearest active ceiling must be tested first')
+  assert(!ev2.some((e) => e.wall === 100.6 && e.t > t0 + 1600 * 60000), 'a broken level was tested again')
 })
 await ok('STATIC: the chart server never writes; the page draws .wbub only for bubble classes and says ATTACK = no bubble', async () => {
   const ch = fs.readFileSync(path.join(here, 'run_chart.mjs'), 'utf8'), pg = fs.readFileSync(path.join(here, '..', 'ops', 'chart', 'index.html'), 'utf8')
-  assert(!/writeFileSync|appendFileSync|createWriteStream/.test(ch)); assert(ch.includes("const cls = (e) => !e.defense ? null"))
+  assert(!/writeFileSync|appendFileSync|createWriteStream/.test(ch)); assert(ch.includes("const clsOf = (thr) => (e) => !e.defense ? null"))
   assert(pg.includes("d.className = 'wbub '") && pg.includes('No bubble when the flow ATTACKS'))
 })
 console.log(process.exitCode ? '✗ WALL-PRESSURE BUBBLES SMOKE FAILED' : `✅ WALL-PRESSURE BUBBLES SMOKE: ${n} passed, 0 failed`)

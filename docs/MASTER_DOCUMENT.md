@@ -738,3 +738,15 @@ without duplications … only use the real Win results, and ignore the rest."
   - TRAIN lifts +10.9 to +17.8 pp; both eras; floors hold better than ceilings (e.g. 3m STRONG 80.2 % vs 74.6 %).
   - A swing level coinciding with a volume wall adds nothing.
   - **Why no bubble at a new high** (Ashraf 09:18 UTC, gold 4190): the line at the top is the Matrix "SELL wall 3m" (a range-extension level, not a volume / swing wall). The 24 h volume profile has no wall above price (walls 4148.55 / 4154.85), and a swing ceiling exists only while unbroken.
+
+  - **LIVE (2026-10-16 ~09:30 UTC):**
+    - `/api/walls` now also runs `swingWallEvents` on 3m and 15m confirmed pivots (5 days of 1m, so older unbroken swings count), with the measured holds from `swing_walls_study.json`;
+    - it reports the nearest unbroken swing ceiling / floor.
+  - **Chart:**
+    - swing bubbles have a white ring, on a "SWING 3m / 15m WALL [price]" line;
+    - 3m swings show on 1m/3m/5m charts, 15m swings on 15m/1h, volume walls on all intraday charts;
+    - the panel shows the swing measurements and the nearest ceiling / floor.
+  - **First live read:**
+    - the top at 4189.5-4190.6 was defended 4× (all HELD); new DEF>PUSH bubbles at 4189.50 (15m) and 4193.53 (3m);
+    - last 24 h: 18/23 resolved bubbles held.
+  - Smoke 5/5: swing provenance per kind and swing engine rules (known-time, break removal, nearest level).
