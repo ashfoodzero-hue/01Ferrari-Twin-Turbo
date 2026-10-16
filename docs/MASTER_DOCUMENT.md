@@ -699,3 +699,19 @@ without duplications … only use the real Win results, and ignore the rest."
     - level holds vs matched placebo +3.9 / +5.0 pp (TRAIN ≈ 0).
   - Bubble count ≥ 2 does not help. 1H robustness (1,250 bubbles): everything within ±5 pp.
   - **Tie audit:** 108 RSI-pivot ties. The leftEq / rightEq conventions change 1 bubble in 13 y; every verdict is unchanged.
+
+- **(bb) 2026-10-16 — WALL-PRESSURE BUBBLES, pre-registered re-check + RSI confirmation (`docs/WALL_BUBBLES_SPEC.md`, engine `src/master/wallDefense.js`, `study_wall_bubbles.mjs` → `wall_bubbles_study.json`).**
+  - **No-drift:** the shared engine reproduces study (an) exactly — 60.4 / 71.4 / 51.2 % (n 36,724 labelled tests).
+  - **OOS holds** (base 60.3 %; week-block bootstrap LB at α/3):
+
+| Class | OOS hold | Lift (LB) | TRAIN | Verdict |
+|---|---|---|---|---|
+| DEFENSE | 69.9 % | +9.6 pp (LB +8.7) | 73.1 % | SHOWN |
+| **DEF>PUSH** (Ashraf's rule) | 73.4 % | +13.1 pp (LB +11.6) | 78.9 % | SHOWN |
+| STRONG | 77.1 % | +16.8 pp (LB +15.0) | 81.8 % | SHOWN |
+| ATTACK | 51.0 % | — | — | coin flip, no bubble, no "will break" claim |
+
+  - All classes hold on both sides and both eras.
+  - **Stacking REFUTED:** repeated defended tests of the same wall hold LESS (72.4 → 69.1 → 67.7 %); the count is shown with that fact.
+  - **RSI adds nothing:** 0/6 (4H RSI, 1H RSI, recent 4H RSI bubble, each on DEFENSE and DEF>PUSH; diffs −1.1 to +3.5 pp, all LB < 0).
+  - **Hold** = close retreats ~$4 (4 bins) before closing ~$2 beyond within 60 min — a short reaction, not a trade (study (an): no money edge after costs).
