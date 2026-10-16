@@ -57,4 +57,6 @@ for (const o of out) {
   const r = await sendText(o.text).catch((e) => ({ sent: false, error: e.message }))
   if (r.sent || r.dryRun) { led[o.key] = { at: new Date(now).toISOString(), sent: !!r.sent } }
   console.log(`  📨 ${o.key}: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_*)' : 'not sent ' + (r.error || r.status)}`) }
+// state of every run (proves the every-minute hook runs; the chart may show the nearest 4H levels from it)
+if (!DRY) { const SF = path.join(TURBO.master, 'level_tick_state.json'); fs.writeFileSync(SF + '.tmp', JSON.stringify({ at: new Date(now).toISOString(), price, ceiling: ceil?.px ?? null, floor: floor?.px ?? null, atr5: atr5 == null ? null : +atr5.toFixed(2), notices: out.map((o) => o.key) }, null, 1)); fs.renameSync(SF + '.tmp', SF) }
 if (!DRY && out.length) { fs.mkdirSync(path.dirname(LEDGER), { recursive: true }); fs.writeFileSync(LEDGER + '.tmp', JSON.stringify(led, null, 1)); fs.renameSync(LEDGER + '.tmp', LEDGER) }
