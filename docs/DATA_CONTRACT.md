@@ -1,0 +1,96 @@
+# Data contract: what every dataset is, what it is NOT, and its coverage
+
+Audited 2026-10-17. Ashraf: "we need all data base 100% correct … based on real information".
+
+Every study reads data through the modules named here. A field not listed here must not be used.
+
+## 1. Gold price: spot XAUUSD 1m (Polygon)
+
+- **File:** `data/history/XAUUSD/1m.jsonl`.
+- **Read with:** `loadBars('XAUUSD','1m')`, then `nyCandles.cleanForTv`.
+- **Coverage:** continuous from 2013-07-14 (4.58 M minutes). The 2009-2011 data is patchy and excluded.
+- **Holes (Polygon has NO data, re-queried 2026-10-17; not even daily bars):**
+  - 2019-09-04 → 2019-10-04;
+  - 2020-10-14 → 2020-11-13.
+
+  Use `dataHoles.findHoles` / `markIncomplete`. No candle or swing may span a hole.
+- **Holidays:** single missing weekdays (Christmas, New Year, Good Friday) are holidays, not holes.
+- **`v` is NOT volume.** It is Polygon's quote/tick count, and Polygon's own spot-gold quote feed changed density about 100×. Quotes counted 14:00-15:00 UTC:
+  - 18-35 k/h in 2014-19;
+  - 150-200/h in 2021-25;
+  - 12.7 k/h in 2026.
+
+  `cleanForTv` strips it. **Spot gold has no exchange volume anywhere.**
+- **Candles:** `nyCandles.buildCandles` builds TradingView-exact candles on 16 timeframes (1m → 1M, including 9H/2D/3D).
+  - Anchors are measured from Ashraf's TradingView: `tv_anchor_reference.json`.
+  - Proof: `smoke_ny_candles` 17/17.
+  - Polygon vs OANDA differ by a median of $0.23-0.48 on highs and lows (different feeds).
+- **Spot bid/ask:**
+  - live per minute from 2026-10-08: `data/history/XAUUSD/quotes_1m.jsonl` (ask OHLC, spread);
+  - historical spreads: the measured `spread_table.json` (`spreadModel`).
+
+  Polygon `/v3/quotes` is on the plan back to 2014, but the feed is thin in 2021-25 (see above).
+
+## 2. Real exchange volume: last 2 years only
+
+Ashraf, 2026-10-17: no purchase for older years. 2013-2024 is price-only.
+
+| Dataset | File | Coverage | What is real |
+|---|---|---|---|
+| CME gold futures 1m (Polygon) | `data/history/GOLD_FUT/1m.jsonl` | 2024-10-09 → now | Real exchange volume. No buyer/seller split. The front month is the contract with the most volume in the PREVIOUS session (causal), from G J M Q Z. |
+| CME gold futures footprints (Databento tbbo) | `data/orderflow/gc_1m_footprints.jsonl`, `gc_5m_footprints.jsonl`, raw `gc_tbbo/` | 2024-10-01 → 2026-10-08 | Every trade with the EXCHANGE aggressor side (buyer lifted the ask / seller hit the bid), plus the best bid/ask before it. TEST-ONLY research data (R0 exception). |
+| GLD ETF 1m (Polygon) | `data/history/GLD/1m.jsonl` | 2024-10-01 → now | Real ETF share volume, US hours plus extended. |
+
+**Futures audit 2026-10-17** (Polygon vs Databento, minute by minute):
+- **When both feeds hold the same contract, volume is equal on 100.00 % of minutes.**
+- Closes differ by a median of one tick ($0.10): trade order within the same millisecond.
+- Differences remain only on the 19 roll days, where Databento rolls one day earlier.
+- **Fixed:** the old import put the thin October contract (GCV5/GCV6) in the series for 2 days each July, because December was outside its 4-month window. It also chose the contract from the same session's volume (a small look-ahead).
+
+Futures ≠ spot: match futures to spot by TIME only, never by price (basis and rolls). The `footprintTf.footprintCandles` roll-up marks `roll: true` on candles that span a contract change.
+
+## 3. Calendar, macro and news (as known at the time): `src/master/marketContext.js`
+
+| Dataset | File | Coverage | Becomes known |
+|---|---|---|---|
+| Official release times (Fed, BLS, Census) | `data/calendar/history.json` | 2013 → 2027 (FOMC, CPI, NFP, PPI, JOLTS, Retail Sales, Fed speeches) | At its time (the time authority) |
+| Forex Factory USD events with actual / forecast / previous / impact | `data/calendar/ff_history.jsonl` (backfill `scripts/backfill_ff_history.mjs`), live `upcoming.json` | 2013-07 → now | forecast/previous before the event; actual from its release time |
+| Treasury yields, daily (1m … 30y) | `data/macro/treasury-yields.json` (Polygon /fed/v1) | 1962 → now | 2 sessions after the date (conservative) |
+| CPI / core CPI level, monthly | `data/macro/inflation.json` | 1947 → now | at the first official CPI release after the month |
+| Unemployment, participation, earnings | `data/macro/labor-market.json` | 1948 → now | at the first official NFP release after the month |
+| Inflation expectations (model, 1/5/10/30 y) | `data/macro/inflation-expectations.json` | 1982 → now | from the 1st of the next month |
+| Gold-related news headlines (GLD IAU GDX NEM SLV) | `data/news/polygon_news.jsonl` | **2020-03 → now only** (Polygon's archive has nothing earlier) | at `published_utc` |
+
+**Gaps:**
+- **No news before 2020-03.** The GDELT backfill is blocked on this machine (see memory).
+- Consensus forecasts come only from Forex Factory (Polygon has none).
+- Only USD events are kept (Ashraf's calendar rule).
+
+## 4. Other context
+
+| Data | Coverage |
+|---|---|
+| Silver XAGUSD 1m | 2013-07 → now; holes 2019-09 and 2020-11, like gold |
+| DXY | Rebuilt from 6 Polygon pairs (`dxy.js`), 2009-09 → now; four pairs have holes in 2019-09 and 2020-10/11 |
+| WTI 1m | 2024-10 → now (Ferrari Matrix R0 exception, unchanged) |
+
+## 5. Corrections applied on 2026-10-17
+
+- **GOLD_FUT patched to the CME exchange feed** where it exists (`scripts/fix_gold_fut_with_cme.mjs`; originals in `data/history/GOLD_FUT/cme_corrections.jsonl`).
+  - On same-contract minutes, Polygon had LOWER volume on 30 of 682,457 minutes (missed trades). The close was one tick off on about 38.9 k minutes (trade order inside a millisecond).
+  - After the patch, volume equals CME on 100 % (682,457 / 682,457). **Re-run the patch after every `import_futures_1m.mjs GOLD_FUT`.**
+- **GOLD_FUT roll rule fixed**: no October contract; the front month comes from the previous session's volume. 2024-10-09..16 were restored from the previous import (same contract GCZ4; Polygon's 2-year window rolled forward).
+- **Forex Factory times**: an FF event belonging to an official release takes the official minute (`t_ff` keeps FF's). 898 / 898 official CPI, NFP, PPI, JOLTS, Retail Sales and FOMC releases (2013-07 → now) have their FF event at the exact minute with an actual.
+- **Spot gaps:** Good Friday + Easter Monday 2025 (2025-04-18 → 04-21) are missing in Polygon spot. They are flagged as a hole (conservative).
+
+## 6. ⚠ Existing features that read spot `v` as volume (retrospective audit 2026-10-17, NOT yet fixed)
+
+These take spot XAUUSD bars, so their volume component uses the tick count above. In 2021-2025 that was about 3 per minute, nearly constant, so the volume part carried no information. Their past measured results are suspect wherever the volume part mattered:
+- `src/master/fvg.js` (activity filter);
+- `src/master/marketState.js` (the "volume N×" confirmation in the live state messages);
+- `src/master/orderBlock.js` (volume);
+- `src/master/volumeProfile.js` and `src/core/structure/volumeProfile.js`;
+- `src/master/wallDefense.js` (volume walls / bubbles, `barDelta`);
+- `src/master/levelRadar.js`.
+
+`src/master/goldWhale.js` uses CME futures volume, so it is not affected. Fixing these changes live behaviour: a separate task, with Ashraf's approval.

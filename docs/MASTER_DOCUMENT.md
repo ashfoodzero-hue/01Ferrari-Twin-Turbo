@@ -938,3 +938,16 @@ without duplications … only use the real Win results, and ignore the rest."
     - `src/core/studyStats.js`: Wilson, two-proportion test, Holm, week-block bootstrap.
   - **Smokes** (registered in smoke_all): `smoke_swing_tools` 6/6, `smoke_footprint_tf` 2/2, `smoke_study_stats` 5/5.
   - **Method skill:** `~/.claude/skills/gold-measured-study`.
+- **(bw) 2026-10-17 — DATABASE MADE 100 % CORRECT before the swing-candle study (Ashraf: "fix the fake data base and the gold future ask/bid and volume … news and macros at the same time of the candles"; volume source for 2013-2024: "No purchase"). The full contract is `docs/DATA_CONTRACT.md`, proved by `smoke_data_contract` 3/3 + `smoke_market_context` 4/4.**
+  - **Fake volume removed:** spot `v` = Polygon's quote count. Polygon's own spot quote feed fell from 18-35 k/h (2014-19) to 150-200/h (2021-25), then 12.7 k/h (2026). `cleanForTv` strips it. Real volume runs 2024-10 → now only: CME futures, Databento footprints (buyer/seller), GLD 1m (new, 351,989 bars).
+  - **GOLD_FUT fixed:**
+    - The October contract had leaked in, because a 4-month window excluded December. The front month was also chosen from same-session volume (look-ahead).
+    - New rule: the most volume in the PREVIOUS session, from G J M Q Z.
+    - Then patched to the CME exchange feed: 38,919 minutes (30 volume, the rest one-tick closes); originals in `cme_corrections.jsonl`.
+    - Result: volume = CME on 682,457 / 682,457 same-contract minutes.
+  - **Calendar / macro / news:**
+    - Forex Factory USD history 2013-07 → now: 692 weeks, 17,155 events with actual / forecast / previous. 898 / 898 official releases at the exact minute after the time-authority fix.
+    - Polygon macro: yields 1962+, CPI 1947+, labour 1948+, inflation expectations 1982+.
+    - Polygon gold news: 1,914 items, 2020-03+ only (no earlier archive).
+    - `src/master/marketContext.js` gives every candle its events, news and the macro values KNOWN at its open and close, using conservative known-at rules.
+  - **Retrospective finding (not fixed, task flagged):** fvg, marketState ("volume N×"), orderBlock, volumeProfile, wallDefense and levelRadar read spot `v` as volume. Their volume parts were meaningless in 2021-25.

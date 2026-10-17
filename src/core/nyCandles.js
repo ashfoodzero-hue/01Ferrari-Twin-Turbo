@@ -35,7 +35,10 @@ export function cleanForTv(m1) {
   const nyHour = (t) => { const local = t + nyOffsetMs(t); return Math.floor((local % DAY + DAY) % DAY / H) }
   const kept = m1.filter((b) => nyHour(b.t) !== 17), per = new Map()
   for (const b of kept) { const d = tradingDate(b.t); per.set(d, (per.get(d) || 0) + 1) }
-  const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES)
+  // SPOT `v` IS NOT VOLUME (audit 2026-10-17): it is Polygon's quote/tick count and Polygon's own spot-gold quote feed thinned ~100× in
+  // 2021-2025 (14:00-15:00 UTC: 18-35 k quotes/h in 2014-19, 150-200 in 2021-25, 12.7 k in 2026). It is DROPPED here so no study can read it
+  // as volume. Real volume = GOLD_FUT (Polygon CME) / Databento footprints / GLD — 2024-10 onward only (Ashraf: no purchase for older years).
+  const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES).map((b) => ({ t: b.t, o: b.o, h: b.h, l: b.l, c: b.c }))
   return { bars, dropped: { break_minutes: m1.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
 }
 

@@ -46,8 +46,8 @@ const curlText = (url) => new Promise((resolve) => execFile(CURL, ['-s', '-L', '
   (err, stdout) => { const s = String(stdout || ''), i = s.lastIndexOf('\n'); resolve({ status: err ? 0 : +s.slice(i + 1), text: s.slice(0, i) }) }))
 
 /** Forex Factory week → USD events [{ src:'FF', id, t, name, impact, actual, forecast, previous }] (deduped). */
-export async function fetchForexFactory(week = 'this') {
-  const { status, text } = await curlText('https://www.forexfactory.com/calendar' + (week === 'next' ? '?week=next' : ''))
+export async function fetchForexFactory(week = 'this') {   // week: 'this' | 'next' | an FF week key such as 'mar3.2014' (history backfill, 2026-10-17)
+  const { status, text } = await curlText('https://www.forexfactory.com/calendar' + (week === 'next' ? '?week=next' : week === 'this' ? '' : '?week=' + week))
   if (status !== 200) throw new Error('Forex Factory HTTP ' + status)
   const seen = new Set(), out = []
   for (const m of text.matchAll(/\{"id":\d+,"ebaseId".*?\}(?=,\{"id"|\])/g)) {

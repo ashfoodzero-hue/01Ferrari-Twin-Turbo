@@ -23,7 +23,10 @@ async function get(url) { const w = last + 260 - Date.now(); if (w > 0) await sl
 async function all(url) { const out = []; let u = url; for (let p = 0; p < 40 && u; p++) { const j = await get(u); out.push(...(j.results ?? [])); u = j.next_url ?? null } return out }
 
 const CFG = { WTI: { root: 'CL', maxAhead: 3, note: 'Ashraf exception to R0 (2026-10-09): WTI used as delivered live (≥10 min old) by the Ferrari Matrix signal only' },
-  GOLD_FUT: { root: 'GC', maxAhead: 4, months: 'GJMQVZ', note: 'CME gold futures, 10 min delayed: DISPLAY/CONTEXT only (real exchange volume; no buyer/seller split on our plan)' } }
+  // GOLD_FUT fixed 2026-10-17 (audit vs Databento CME ticks): (1) maxAhead 4 EXCLUDED December in late July, so the thin October contract (GCV5 /
+  // GCV6) won two-day runs — GC's liquid months are G J M Q Z (October is not a most-active month) and the most-active can be 5 months out;
+  // (2) the front month is now chosen from the PREVIOUS session's volumes (prevSession) — the same-session choice was a small look-ahead.
+  GOLD_FUT: { root: 'GC', maxAhead: 6, months: 'GJMQZ', prevSession: true, note: 'CME gold futures, 10 min delayed: real exchange volume; no buyer/seller split on our plan. Front month = most volume in the PREVIOUS session (causal).' } }
 const ASSET = (process.argv[2] || 'WTI').toUpperCase(), C = CFG[ASSET]; if (!C) { console.error('asset must be one of ' + Object.keys(CFG)); process.exit(1) }
 const contracts = []; for (const y of [4, 5, 6, 7]) for (const c of C.months ?? CODES) contracts.push(`${C.root}${c}${y}`)   // GC: CME ACTIVE months only (a thin month won partial sessions: GCK6, GCF7 — measured 2026-10-09)
 // 1) sessions per contract → front month per session (max volume)
@@ -36,7 +39,9 @@ for (const tk of contracts) {
     if (dm - sm < 1 || dm - sm > C.maxAhead) continue
     const cur = sessions.get(ws); if (!cur || (x.volume ?? 0) > cur.vol) sessions.set(ws, { tk, vol: x.volume ?? 0, end: x.session_end_date }) }
 }
-const S = [...sessions.entries()].sort((a, b) => a[0] - b[0])
+let S = [...sessions.entries()].sort((a, b) => a[0] - b[0])
+// prevSession (causal): session k trades the contract that WON session k−1 (the first session keeps its own winner)
+if (C.prevSession) S = S.map(([ws, s], k) => [ws, { ...s, tk: k ? S[k - 1][1].tk : s.tk }])
 console.log(`sessions ${S.length} · ${new Date(S[0][0]).toISOString().slice(0, 10)} → ${new Date(S.at(-1)[0]).toISOString().slice(0, 10)}`)
 // 2) contiguous runs of the same front contract → one 1m fetch per run
 const runs = []; for (let k = 0; k < S.length; k++) { const [ws, s] = S[k]; const until = k + 1 < S.length ? S[k + 1][0] : Date.now(); const r = runs.at(-1); if (r && r.tk === s.tk) r.to = until; else runs.push({ tk: s.tk, from: ws, to: until }) }
