@@ -22,9 +22,9 @@ import { atr as atrArr } from '../core/indicators.js'
 /**
  * The state's GEOMETRY — the one place the range and the confirmation triggers are computed (readMarketState uses it; the live
  * chart draws it, 2026-10-09). Range = the `lookback` bars BEFORE the last one (causal); a confirmed break = a close beyond
- * range ± breakAtr·ATR(14) with volume ≥ volMult × the range's average.
+ * range ± breakAtr·ATR(14) (+ volume ≥ volMult × the range average only when volMult > 0 — default 0 since the 2026-10-17 volume audit).
  */
-export function marketStateGeometry(bars, { lookback = 48, breakAtr = 0.3, volMult = 1.4 } = {}) {
+export function marketStateGeometry(bars, { lookback = 48, breakAtr = 0.3, volMult = 0 } = {}) {   // volMult 0 = no volume condition (2026-10-17 volume audit, DROP)
   if (!Array.isArray(bars) || bars.length < lookback + 20) return null
   const A = atrArr(bars, 14)
   const i = bars.length - 1, a = A[i] || 1, last = bars[i]
@@ -36,7 +36,7 @@ export function marketStateGeometry(bars, { lookback = 48, breakAtr = 0.3, volMu
   return { A, i, last, a, rangeHigh, rangeLow, avgVol, volMult, upTrigger: f(rangeHigh + breakAtr * a), dnTrigger: f(rangeLow - breakAtr * a), sinceT: win[0].t }
 }
 
-export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult = 1.4 } = {}) {
+export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult = 0 } = {}) {   // volMult 0 = no volume condition (DROP)
   const g = marketStateGeometry(bars, { lookback, breakAtr, volMult })
   if (!g) return null
   const { A, i, last, a, rangeHigh, rangeLow, avgVol, upTrigger, dnTrigger } = g
@@ -45,7 +45,7 @@ export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult =
   const mid = (rangeHigh + rangeLow) / 2
   const pos = (px - rangeLow) / span                            // 0 = range low, 1 = range high
 
-  const volSurge = avgVol > 0 && (last.v || 0) >= volMult * avgVol
+  const volSurge = volMult <= 0 || (avgVol > 0 && (last.v || 0) >= volMult * avgVol)   // DROP: spot v is a quote count → no volume condition
   const brokeDown = last.c < rangeLow - breakAtr * a
   const brokeUp = last.c > rangeHigh + breakAtr * a
 
@@ -53,13 +53,13 @@ export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult =
 
   // ── CONFIRMED BREAK (direction known) → fire that side ──
   if (brokeDown && volSurge) return { state: 'BREAKOUT_DOWN', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: 'SELL', canTrade: true,
-    message: `✅ DIRECTION CONFIRMED: DOWN — closed $${f(px)} below $${dnTrigger} with volume ${(last.v / avgVol).toFixed(1)}× · SELL side is live`, waitFor: null }
+    message: `✅ DIRECTION CONFIRMED: DOWN — closed $${f(px)} below $${dnTrigger} · SELL side is live`, waitFor: null }
   if (brokeUp && volSurge) return { state: 'BREAKOUT_UP', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: 'BUY', canTrade: true,
-    message: `✅ DIRECTION CONFIRMED: UP — closed $${f(px)} above $${upTrigger} with volume ${(last.v / avgVol).toFixed(1)}× · BUY side is live`, waitFor: null }
+    message: `✅ DIRECTION CONFIRMED: UP — closed $${f(px)} above $${upTrigger} · BUY side is live`, waitFor: null }
   // broke but WITHOUT volume = unconfirmed → still wait
   if (brokeDown || brokeUp) return { state: 'EQUILIBRIUM', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: null, canTrade: false,
     message: `⏸ BREAK NOT CONFIRMED — price left the range but volume is thin (${avgVol ? (last.v / avgVol).toFixed(1) : '?'}×). WAIT for a volume close.`,
-    waitFor: { sell: dnTrigger, buy: upTrigger, needVolume: `${volMult}× average` } }
+    waitFor: { sell: dnTrigger, buy: upTrigger, needVolume: volMult > 0 ? `${volMult}× average` : 'none (spot v is not volume)' } }
 
   // ── POST-BREAKOUT HYSTERESIS: after a CONFIRMED break, the direction stays locked until price RECLAIMS the
   // broken level. Never buy the falling knife (or short the rip) one bar after a volume break. ──
@@ -67,20 +67,20 @@ export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult =
     const w = bars.slice(k - lookback, k)
     const rl = Math.min(...w.map(b => b.l)), rh = Math.max(...w.map(b => b.h))
     const av = w.reduce((s, b) => s + (b.v || 0), 0) / w.length
-    const surge = av > 0 && (bars[k].v || 0) >= volMult * av
+    const surge = volMult <= 0 || (av > 0 && (bars[k].v || 0) >= volMult * av)
     const ak = A[k] || a
     if (surge && bars[k].c < rl - breakAtr * ak) {                       // confirmed break DOWN at bar k
       const brokeLvl = f(rl - breakAtr * ak)
       const reclaimed = bars.slice(k + 1).some(b => b.c > brokeLvl)
       if (!reclaimed) return { state: 'TREND_DOWN', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: 'SELL', canTrade: true,
-        message: `🔻 DOWNTREND CONFIRMED (broke $${brokeLvl} on volume) — SELL side only. Do NOT buy the falling knife.`,
+        message: `🔻 DOWNTREND CONFIRMED (broke $${brokeLvl} on a close) — SELL side only. Do NOT buy the falling knife.`,
         waitFor: { plain: `Only consider BUY once price closes back above $${brokeLvl} (reclaim).` } }
     }
     if (surge && bars[k].c > rh + breakAtr * ak) {                       // confirmed break UP at bar k
       const brokeLvl = f(rh + breakAtr * ak)
       const reclaimed = bars.slice(k + 1).some(b => b.c < brokeLvl)
       if (!reclaimed) return { state: 'TREND_UP', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: 'BUY', canTrade: true,
-        message: `🔺 UPTREND CONFIRMED (broke $${brokeLvl} on volume) — BUY side only. Do NOT short the rip.`,
+        message: `🔺 UPTREND CONFIRMED (broke $${brokeLvl} on a close) — BUY side only. Do NOT short the rip.`,
         waitFor: { plain: `Only consider SELL once price closes back below $${brokeLvl} (reclaim).` } }
     }
   }
@@ -95,7 +95,7 @@ export function readMarketState(bars, { lookback = 48, breakAtr = 0.3, volMult =
   return { state: 'EQUILIBRIUM', rangeHigh: f(rangeHigh), rangeLow: f(rangeLow), mid: f(mid), pos: +pos.toFixed(2), allowedSide: null, canTrade: false,
     // wording (2026-10-16): the old "EQUILIBRIUM $<mid> (72% of range)" read as if the price were the mid. EQUILIBRIUM = 25-75 % of the range.
     message: `🚫 EQUILIBRIUM — price $${f(px)} at ${Math.round(pos * 100)}% of the range (middle zone 25-75 %, mid $${f(mid)}) — direction is UNDECIDED. Do NOT pick a side here. WAIT FOR CONFIRMATION.`,
-    waitFor: { sell: dnTrigger, buy: upTrigger, needVolume: `${volMult}× average`, plain: `Wait for a close below $${dnTrigger} (then SELL) or above $${upTrigger} (then BUY) — with volume.` } }
+    waitFor: { sell: dnTrigger, buy: upTrigger, needVolume: volMult > 0 ? `${volMult}× average` : 'none (spot v is not volume)', plain: `Wait for a close below $${dnTrigger} (then SELL) or above $${upTrigger} (then BUY).` } }
 }
 
 /** Gate a signal against the market state: only fire when the state allows that side. */

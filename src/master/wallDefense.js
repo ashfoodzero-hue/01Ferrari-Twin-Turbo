@@ -10,7 +10,10 @@
 // count = defended tests of the SAME wall (type + bin) so far — the "bubbles stack" claim (measured, not assumed).
 // ════════════════════════════════════════════════════════════════════════════════
 export const WALL = Object.freeze({ profileMin: 1440, binFrac: 0.00025, wallRatio: 2.5, band: 1.5, brk: 2, bounce: 4, feat: 3, approach: 5, horizon: 60, coolMs: 120 * 60000 })
-export const barDelta = (b) => { const r = b.h - b.l, pos = r > 0 ? (b.c - b.l) / r : 0.5; return (b.v || 0) * (2 * pos - 1) }
+// VOLUME DROPPED 2026-10-17 (Ashraf approved the volume audit, docs/VOLUME_AUDIT_RESULTS.md §5): spot `v` is a quote count, not volume, so every
+// minute weighs 1 — walls = TIME-at-price, delta = close position (2·pos − 1). This is exactly the audit's DROP mode (v := 1), measured on 13 y.
+export const WEIGHT = () => 1
+export const barDelta = (b) => { const r = b.h - b.l, pos = r > 0 ? (b.c - b.l) / r : 0.5; return WEIGHT(b) * (2 * pos - 1) }
 
 /** Wall tests on ascending 1m bars M. Events are kept from `from` on (the profile warms up before). */
 export function wallEvents(M, { from = -Infinity, P = WALL } = {}) {
@@ -43,8 +46,8 @@ export function wallEvents(M, { from = -Infinity, P = WALL } = {}) {
             let absSum = 0; for (const w of win) absSum += Math.abs(w.d)
             let push = 0; for (let q = i - P.approach; q < i; q++) push += barDelta(M[q])
             active.push({ type, wall, wb, binW, t: b.t, touchI: i, flowScale: win.length ? 3 * absSum / win.length : 0, zone: barDelta(b), push, fb: 1, state: 'feature' }) } } } }
-    const k = binOf(b.c), cell = bins.get(k) ?? { v: 0, d: 0 }; cell.v += b.v || 0; cell.d += barDelta(b); bins.set(k, cell)
-    win.push({ t: b.t, k, v: b.v || 0, d: barDelta(b) }); const cut = b.t - P.profileMin * 60000
+    const k = binOf(b.c), cell = bins.get(k) ?? { v: 0, d: 0 }; cell.v += WEIGHT(b); cell.d += barDelta(b); bins.set(k, cell)
+    win.push({ t: b.t, k, v: WEIGHT(b), d: barDelta(b) }); const cut = b.t - P.profileMin * 60000
     while (win.length && win[0].t < cut) { const o = win.shift(), c2 = bins.get(o.k); if (c2) { c2.v -= o.v; c2.d -= o.d; if (c2.v <= 0) bins.delete(o.k) } }
   }
   return events

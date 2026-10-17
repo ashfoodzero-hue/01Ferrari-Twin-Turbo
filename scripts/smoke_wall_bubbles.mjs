@@ -1,5 +1,5 @@
 // smoke_wall_bubbles.mjs — WALL-PRESSURE bubbles (src/master/wallDefense.js + /api/walls + the chart overlay, 2026-10-16).
-// Checks: the study ran on THIS engine (replication 60.4 / 71.4 / 51.2) and every shown class passed its pre-registered rule; on recent real
+// Checks: the study ran on THIS engine (time-at-price since 2026-10-17: = the volume audit DROP run) and every shown class passed its pre-registered rule; on recent real
 // data the engine's DEFENSE / DEF>PUSH flags follow their definitions; ATTACK never makes a bubble; the API's measured holds = the study's
 // (provenance); the chart server stays read-only.
 import assert from 'node:assert'
@@ -15,10 +15,11 @@ let n = 0
 const ok = async (name, fn) => { try { await fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
 const here = path.dirname(fileURLToPath(import.meta.url)), S = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'wall_bubbles_study.json'), 'utf8'))
 console.log('\n██ WALL-PRESSURE BUBBLES SMOKE ██')
-await ok('the study ran on this engine (same 40,693 tests as study (an); holds 60.4 / 71.4 / 51.2) and every SHOWN class passed its rule (n ≥ 300, lift ≥ 5 pp, LB > 0, TRAIN > 0)', async () => {
-  // exact engine identity: the same 40,693 wall tests as study (an)'s own engine copy (wall_defense_money.json); holds round to its 60.4 / 71.4 / 51.2
-  const an = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'wall_defense_money.json'), 'utf8')); assert.equal(S.events, an.events)
-  ;[[S.replication.all, 60.4], [S.replication.defense, 71.4], [S.replication.attack, 51.2]].forEach(([x, ref]) => assert(Math.abs(100 * x - ref) < 0.06, `${100 * x} vs ${ref}`))   // stored to 4 dp, printed to 1 dp
+await ok('the study ran on this engine (VOLUME DROPPED 2026-10-17: 47,928 time-at-price tests = the volume audit DROP run; holds 60.1 / 71.1 / 50.8) and every SHOWN class passed its rule (n ≥ 300, lift ≥ 5 pp, LB > 0, TRAIN > 0)', async () => {
+  // exact engine identity: the same tests + holds as the audit's DROP artifact (v := 1, docs/VOLUME_AUDIT_RESULTS.md). The old volume-weighted engine
+  // (study (an), 40,693 tests, 60.4 / 71.4 / 51.2) read spot v — a quote count — and is retired.
+  const drop = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'vol_audit', 'drop_full', 'wall_bubbles_study.json'), 'utf8')); assert.equal(S.events, drop.events); assert.equal(S.events, 47928)
+  ;[[S.replication.all, 60.06], [S.replication.defense, 71.12], [S.replication.attack, 50.84]].forEach(([x, ref]) => assert(Math.abs(100 * x - ref) < 0.006, `${100 * x} vs ${ref}`))   // stored to 4 dp
   for (const k of S.shown) { const c = S.classes[k]; assert(c.oos_n >= 300 && c.oos_lift >= 0.05 && c.lift_lb > 0 && c.train_lift > 0, k) }
   assert.deepEqual(S.shown.sort(), ['DEF>PUSH', 'DEFENSE', 'STRONG'])
 })

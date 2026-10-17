@@ -24,9 +24,11 @@ await ok('no OB when the candle is the wrong colour, the move is < 1.5 ATR, or t
   B = [...flat(20), dn, { o: 99.2, h: 101, l: 99.1, c: 100.9, v: 10 }, { o: 100.9, h: 101, l: 100, c: 100.1, v: 10 }, { o: 100.1, h: 100.2, l: 99.9, c: 100.1, v: 10 }]
   assert.equal(orderBlockAt(B, A(B), 20), null)   // closes back inside the block
 })
-await ok('bearish OB is the mirror; weak volume → not STRONG', () => {
+await ok('bearish OB is the mirror; weak volume stays STRONG (volume dropped 2026-10-17 — spot v is a quote count); displacement < 2.5 ATR → not STRONG', () => {
   const B = [...flat(20), { o: 100, h: 101, l: 99.8, c: 100.8, v: 10 }, { o: 100.8, h: 100.9, l: 99.5, c: 99.6, v: 10 }, { o: 99.6, h: 99.7, l: 98.6, c: 98.7, v: 10 }, { o: 98.7, h: 98.8, l: 98, c: 98.2, v: 10 }]
-  const ob = orderBlockAt(B, A(B), 20); assert(ob && !ob.up); assert(Math.abs(ob.disp - 3) < 1e-9); assert.equal(ob.strong, false)
+  const ob = orderBlockAt(B, A(B), 20); assert(ob && !ob.up); assert(Math.abs(ob.disp - 3) < 1e-9); assert(Math.abs(ob.relVol - 1) < 1e-9); assert.equal(ob.strong, true)
+  const W = [...B.slice(0, 22), { o: 99.6, h: 99.7, l: 98.9, c: 99.0, v: 10 }, { o: 99.0, h: 99.1, l: 98.8, c: 98.9, v: 10 }]
+  const ow = orderBlockAt(W, A(W), 20); assert(ow && !ow.up); assert(Math.abs(ow.disp - 2.2) < 1e-9); assert.equal(ow.strong, false)
 })
 await ok('order_block_study.json: 16 cells; HOLDS only with OOS ≥ 100, bounce LB > control, TRAIN > control, money bound > 0, TRAIN $ > 0', () => {
   const S = JSON.parse(fs.readFileSync(path.join(root, 'data', 'master', 'order_block_study.json'), 'utf8')); assert.equal(Object.keys(S.cells).length, 16)

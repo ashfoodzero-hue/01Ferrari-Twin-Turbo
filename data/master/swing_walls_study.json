@@ -1,10 +1,10 @@
 {
- "at": "2026-10-16T09:14:52.179Z",
+ "at": "2026-10-17T18:08:42.259Z",
  "spec": "docs/SWING_WALLS_SPEC.md",
  "volume_walls": {
-  "tests_per_day": 11.8,
-  "oos_hold_all": 0.6031,
-  "oos_hold_defense": 0.699
+  "tests_per_day": 13.9,
+  "oos_hold_all": 0.6018,
+  "oos_hold_defense": 0.7007
  },
  "variants": {
   "3m": {
@@ -15,84 +15,84 @@
     "oos": 0.6022,
     "train": 0.6162
    },
-   "strong_threshold_train_p66": 0.7207271640322898,
+   "strong_threshold_train_p66": 0.5818631575021762,
    "classes": {
     "ATTACK": {
-     "oos_n": 26437,
-     "oos_hold": 0.5221,
-     "oos_lift": -0.0801,
-     "train_hold": 0.528,
-     "train_lift": -0.0882,
+     "oos_n": 26589,
+     "oos_hold": 0.5219,
+     "oos_lift": -0.0803,
+     "train_hold": 0.5254,
+     "train_lift": -0.0908,
      "by_side": {
-      "ceiling": 0.5109,
-      "floor": 0.536
+      "ceiling": 0.5106,
+      "floor": 0.5357
      },
      "era": {
-      "pre2020": 0.5181,
-      "post2020": 0.5322
+      "pre2020": 0.5161,
+      "post2020": 0.5308
      },
-     "coincide_with_volume": 0.5211,
-     "swing_only": 0.5221,
-     "n_coincide": 758
+     "coincide_with_volume": 0.5201,
+     "swing_only": 0.522,
+     "n_coincide": 819
     },
     "DEFENSE": {
-     "oos_n": 21124,
-     "oos_hold": 0.7024,
-     "oos_lift": 0.1002,
-     "train_hold": 0.7253,
-     "train_lift": 0.1091,
+     "oos_n": 20972,
+     "oos_hold": 0.7039,
+     "oos_lift": 0.1018,
+     "train_hold": 0.724,
+     "train_lift": 0.1078,
      "by_side": {
-      "ceiling": 0.67,
-      "floor": 0.726
+      "ceiling": 0.6699,
+      "floor": 0.7292
      },
      "era": {
-      "pre2020": 0.7202,
-      "post2020": 0.7119
+      "pre2020": 0.7184,
+      "post2020": 0.7135
      },
-     "coincide_with_volume": 0.6814,
-     "swing_only": 0.703,
-     "n_coincide": 612,
-     "lift_lb": 0.0934,
+     "coincide_with_volume": 0.6868,
+     "swing_only": 0.7045,
+     "n_coincide": 613,
+     "lift_lb": 0.0949,
      "verdict": "SHOWN"
     },
     "DEF>PUSH": {
-     "oos_n": 7970,
-     "oos_hold": 0.738,
-     "oos_lift": 0.1358,
-     "train_hold": 0.7624,
-     "train_lift": 0.1462,
+     "oos_n": 7369,
+     "oos_hold": 0.7386,
+     "oos_lift": 0.1365,
+     "train_hold": 0.7562,
+     "train_lift": 0.14,
      "by_side": {
-      "ceiling": 0.7054,
-      "floor": 0.7579
+      "ceiling": 0.7094,
+      "floor": 0.7587
      },
      "era": {
-      "pre2020": 0.757,
-      "post2020": 0.7487
+      "pre2020": 0.7521,
+      "post2020": 0.7463
      },
-     "coincide_with_volume": 0.7143,
-     "swing_only": 0.7387,
-     "n_coincide": 224,
-     "lift_lb": 0.1241,
+     "coincide_with_volume": 0.75,
+     "swing_only": 0.7383,
+     "n_coincide": 204,
+     "lift_lb": 0.1239,
      "verdict": "SHOWN"
     },
     "STRONG": {
-     "oos_n": 5891,
-     "oos_hold": 0.7829,
-     "oos_lift": 0.1807,
-     "train_hold": 0.7938,
-     "train_lift": 0.1776,
+     "oos_n": 7037,
+     "oos_hold": 0.7716,
+     "oos_lift": 0.1695,
+     "train_hold": 0.789,
+     "train_lift": 0.1728,
      "by_side": {
-      "ceiling": 0.7459,
-      "floor": 0.8022
+      "ceiling": 0.7417,
+      "floor": 0.7898
      },
      "era": {
-      "pre2020": 0.7916,
-      "post2020": 0.7878
+      "pre2020": 0.7857,
+      "post2020": 0.7788
      },
-     "coincide_with_volume": 0.7403,
-     "swing_only": 0.784,
-     "n_coincide": 154,
-     "lift_lb": 0.1665,
+     "coincide_with_volume": 0.7817,
+     "swing_only": 0.7713,
+     "n_coincide": 197,
+     "lift_lb": 0.1559,
      "verdict": "SHOWN"
     }
    }
@@ -105,84 +105,84 @@
     "oos": 0.6017,
     "train": 0.6335
    },
-   "strong_threshold_train_p66": 0.9834604353525653,
+   "strong_threshold_train_p66": 0.5722697582262007,
    "classes": {
     "ATTACK": {
-     "oos_n": 5650,
-     "oos_hold": 0.5235,
-     "oos_lift": -0.0782,
-     "train_hold": 0.5299,
-     "train_lift": -0.1036,
+     "oos_n": 5675,
+     "oos_hold": 0.5211,
+     "oos_lift": -0.0807,
+     "train_hold": 0.522,
+     "train_lift": -0.1115,
      "by_side": {
-      "ceiling": 0.5037,
-      "floor": 0.5508
+      "ceiling": 0.5008,
+      "floor": 0.5483
      },
      "era": {
-      "pre2020": 0.5192,
-      "post2020": 0.5349
+      "pre2020": 0.5109,
+      "post2020": 0.5313
      },
-     "coincide_with_volume": 0.5031,
-     "swing_only": 0.5241,
-     "n_coincide": 161
+     "coincide_with_volume": 0.5029,
+     "swing_only": 0.5216,
+     "n_coincide": 171
     },
     "DEFENSE": {
-     "oos_n": 4599,
-     "oos_hold": 0.6978,
-     "oos_lift": 0.096,
-     "train_hold": 0.7505,
-     "train_lift": 0.1169,
+     "oos_n": 4574,
+     "oos_hold": 0.7018,
+     "oos_lift": 0.1001,
+     "train_hold": 0.7507,
+     "train_lift": 0.1171,
      "by_side": {
-      "ceiling": 0.6604,
-      "floor": 0.7268
+      "ceiling": 0.6639,
+      "floor": 0.7319
      },
      "era": {
-      "pre2020": 0.7411,
-      "post2020": 0.7191
+      "pre2020": 0.7409,
+      "post2020": 0.7233
      },
-     "coincide_with_volume": 0.646,
-     "swing_only": 0.6991,
-     "n_coincide": 113,
-     "lift_lb": 0.0824,
+     "coincide_with_volume": 0.6466,
+     "swing_only": 0.7032,
+     "n_coincide": 116,
+     "lift_lb": 0.0865,
      "verdict": "SHOWN"
     },
     "DEF>PUSH": {
-     "oos_n": 1678,
-     "oos_hold": 0.7318,
-     "oos_lift": 0.1301,
-     "train_hold": 0.7789,
-     "train_lift": 0.1454,
+     "oos_n": 1566,
+     "oos_hold": 0.7337,
+     "oos_lift": 0.132,
+     "train_hold": 0.7848,
+     "train_lift": 0.1512,
      "by_side": {
-      "ceiling": 0.6855,
-      "floor": 0.7615
+      "ceiling": 0.684,
+      "floor": 0.7691
      },
      "era": {
-      "pre2020": 0.7702,
-      "post2020": 0.7521
+      "pre2020": 0.7759,
+      "post2020": 0.7537
      },
-     "coincide_with_volume": 0.6522,
-     "swing_only": 0.7341,
-     "n_coincide": 46,
-     "lift_lb": 0.1031,
+     "coincide_with_volume": 0.6471,
+     "swing_only": 0.7366,
+     "n_coincide": 51,
+     "lift_lb": 0.1054,
      "verdict": "SHOWN"
     },
     "STRONG": {
-     "oos_n": 845,
-     "oos_hold": 0.7882,
-     "oos_lift": 0.1864,
-     "train_hold": 0.8114,
-     "train_lift": 0.1779,
+     "oos_n": 1556,
+     "oos_hold": 0.7648,
+     "oos_lift": 0.1631,
+     "train_hold": 0.816,
+     "train_lift": 0.1825,
      "by_side": {
-      "ceiling": 0.7483,
-      "floor": 0.8099
+      "ceiling": 0.7351,
+      "floor": 0.7836
      },
      "era": {
-      "pre2020": 0.8063,
-      "post2020": 0.8039
+      "pre2020": 0.8138,
+      "post2020": 0.7798
      },
-     "coincide_with_volume": 0.5789,
-     "swing_only": 0.793,
-     "n_coincide": 19,
-     "lift_lb": 0.1481,
+     "coincide_with_volume": 0.6216,
+     "swing_only": 0.7683,
+     "n_coincide": 37,
+     "lift_lb": 0.1357,
      "verdict": "SHOWN"
     }
    }

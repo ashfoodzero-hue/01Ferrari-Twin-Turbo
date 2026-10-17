@@ -83,7 +83,20 @@ Futures ≠ spot: match futures to spot by TIME only, never by price (basis and 
 - **Forex Factory times**: an FF event belonging to an official release takes the official minute (`t_ff` keeps FF's). 898 / 898 official CPI, NFP, PPI, JOLTS, Retail Sales and FOMC releases (2013-07 → now) have their FF event at the exact minute with an actual.
 - **Spot gaps:** Good Friday + Easter Monday 2025 (2025-04-18 → 04-21) are missing in Polygon spot. They are flagged as a hole (conservative).
 
-## 6. ⚠ Existing features that read spot `v` as volume (retrospective audit 2026-10-17, NOT yet fixed)
+## 6. ✅ Features that read spot `v` as volume: FIXED 2026-10-17 (volume DROPPED; Ashraf: "Yes, remove it everywhere")
+
+**FIXED 2026-10-17** (MASTER_DOCUMENT §7 (ci)). Every live module now ignores spot `v`, exactly as the audit's DROP mode (`v := 1`):
+- `wallDefense.js`: every minute weighs 1 (walls = time-at-price, delta = close position); the strong cut-off p66 is re-derived in the re-run.
+- `marketState.js`: `volMult = 0` by default (a close beyond range ± 0.3 ATR confirms); no "volume" words in the live messages; the chart shows "volume needed: none".
+- `fvg.js`: STRONG = big + body + 1h/4h trend (`s2` is kept as a record only).
+- `orderBlock.js`: STRONG = displacement ≥ 2.5 ATR (`relVol` is kept as a record only).
+- `volumeProfile.js` stays out of use; `levelRadar.js` needs no action (the `v` sum is dead code); `src/core/structure/volumeProfile.js` has no consumer.
+
+**Proof:** `scripts/vol_audit/verify_drop_live.mjs` shows 5/5 live-read artifacts = the audit DROP artifacts. fvg_strong skips only its record-only S2 row and random-control values: the study re-run with s2 forced equals the audit file exactly. `order_block_study.json` also equals the audit (0 diffs). Smokes are updated to the new rules.
+
+The text below is the audit record as it was before the fix.
+
+### 6a. The audit record (before the fix)
 
 These take spot XAUUSD bars, so their volume component uses the tick count above. In 2021-2025 that was about 3 per minute, nearly constant, so the volume part carried no information. Their past measured results are suspect wherever the volume part mattered:
 - `src/master/fvg.js` (activity filter);

@@ -123,7 +123,7 @@
     <div class="kv"><span>Range low (12h)</span><span id="rLow">—</span></div>
     <div class="kv"><span class="red">Bearish confirm: 15m close below</span><span class="red" id="sellT">—</span></div>
     <div class="kv"><span class="green">Bullish confirm: 15m close above</span><span class="green" id="buyT">—</span></div>
-    <div class="kv"><span>…with volume</span><span id="needVol">—</span></div>
+    <div class="kv"><span>…volume needed</span><span id="needVol">—</span></div>
     <h2>Drivers vs gold</h2>
     <table><thead><tr><th>Market</th><th>State</th><th>15m</th><th title="Measured, out of sample: share of 15m bars moving in gold's expected direction">Agree</th><th title="Measured, out of sample: after this market confirms a break while gold has not, how often gold follows within 60 min (vs base)">Lead 60m</th></tr></thead><tbody id="drivers"></tbody></table>
     <h2>All markets vs gold — measured (13y, out of sample)</h2>
@@ -201,7 +201,7 @@ function setLines(p, g) {
   p.lines.forEach((l) => p.c.removePriceLine(l)); p.lines = []
   if (!g) return
   const add = (price, color, t, style) => p.lines.push(p.c.createPriceLine({ price, color, lineWidth: 1, lineStyle: style, axisLabelVisible: p.k === 0, title: p.k === 0 ? t : '' }))
-  add(g.rangeHigh, '#8b949e', 'range high', 2); add(g.rangeLow, '#8b949e', 'range low', 2); add(g.sellTrigger, '#ef5350', 'SELL TRIGGER · 15m close below · vol ≥ ' + (g.needVolume || '?'), 1); add(g.buyTrigger, '#26a69a', 'BUY TRIGGER · 15m close above · vol ≥ ' + (g.needVolume || '?'), 1)
+  add(g.rangeHigh, '#8b949e', 'range high', 2); add(g.rangeLow, '#8b949e', 'range low', 2); add(g.sellTrigger, '#ef5350', 'SELL TRIGGER · 15m close below', 1); add(g.buyTrigger, '#26a69a', 'BUY TRIGGER · 15m close above', 1)
 }
 let busy = false
 async function poll() {

@@ -1053,3 +1053,33 @@ without duplications … only use the real Win results, and ignore the rest."
   - **`smoke_ladder_context` 4/4:** window parity with full-history swings; replay = study flips + atlas odds (3 moments 2024-26); no look-ahead; footer present, no trade words.
   - Preview verified on a temporary chart server (port 7446, Friday-close replay); the preview file was removed.
   - **LIVE 2026-10-17 (Ashraf: "Yes, make it live now"):** run_twin hook every 3 min (30 s after each 3m close) while the market is open, + once at start; app restarted.
+- **(ci) 2026-10-17 — FAKE SPOT VOLUME REMOVED EVERYWHERE (Ashraf: "Yes, remove it everywhere"; the audit (bz) / `docs/VOLUME_AUDIT_RESULTS.md` §5 DROP proposal). `docs/DATA_CONTRACT.md` §6 marked FIXED.**
+  - **Code:**
+    - `wallDefense.js`: `WEIGHT = () => 1` (walls = time-at-price), `barDelta` = close position.
+    - `marketState.js`: `volMult = 0` default; the volume words are gone from the messages; the chart shows "volume needed: none" and plain trigger labels.
+    - `fvg.js`: STRONG = big + s1 + s3 (s2 kept as a record).
+    - `orderBlock.js`: STRONG = disp ≥ 2.5 (relVol kept as a record).
+    - `study_fvg_strong.mjs` now uses the shared `F.strong` (ONE RULE; it had recomputed s1 && s2 && s3).
+  - **Re-run (data/master), all = audit DROP:**
+    - `c4h_level_study`, `wall_bubbles_study` (47,928 tests; holds 60.1 / 71.1 / 50.8; SHOWN DEFENSE 70.1 % +9.9 pp, STRONG 76.5 % +16.3 pp, DEF>PUSH 75.0 % +14.8 pp OOS; p66 0.571), `swing_walls_study` (3m + 15m SHOWN DEFENSE / DEF>PUSH / STRONG), `wall_context_study` (nothing informative), `fvg_strong_study` (STRONG_FVG_DOES_NOT_HOLD, 0/12) and `order_block_study` (ORDER_BLOCKS_DO_NOT_HOLD, 0 diffs vs the audit).
+    - `vol_audit/verify_drop_live.mjs`: 5/5 identical.
+    - fvg skips only the record-only S2 row and random-control values (control, net_lb), which shift because the S2 row draws from the shared seeded rng. MEASURED: the live study run with only s2 forced equals the audit file on every value except the rules text.
+  - **Live effect (as §6 of the audit):**
+    - The IMPULSE_CONT paper gate admits far more fires (it is unpowered either way).
+    - Wall/swing bubbles + 🧱 alerts come from time-at-price walls.
+    - Strong FVG boxes are about 10× more frequent, each labelled DOES_NOT_HOLD.
+  - **Smokes updated to the new rules:**
+    - market_state 9/9 (the opt-in volMult still blocks);
+    - wall_bubbles 5/5 (pins the DROP run);
+    - gamma_fvg 7/7 (low v stays strong, a weak body does not);
+    - order_block 4/4 (displacement-only);
+    - twin_parity 3/3. The state MECHANISM = Turbo2 when run at Turbo2's volMult 1.4. Turbo2 itself still uses the tick count and was not touched. The live twin's gate differs from Turbo2 on 20 of 111 shared fires: the approved divergence.
+    - All other smokes are green, except `smoke_macro_tick`: its clock check needs an 8H bar under 14 h old, and it is the weekend.
+  - **Found on the way, a CALENDAR BUG (fixed):** at 17:59 UTC the Fed site failed (fetch failed / HTTP 406), and `fetch_calendar.mjs` rewrote `data/calendar/history.json` without every FOMC decision and Fed speech (2003 → 836 events).
+    - New `mergeHistory` (`src/data/calendar.js`): a failed source keeps its own types from the previous file.
+    - File restored from git and refreshed (2,004 events, all sources ok); the damaged copy is kept in the session scratchpad.
+    - `smoke_calendar` 6/6, incl. a simulated Fed outage.
+    - Exposure in the window (MEASURED):
+      - The inv90 forward test rebuilt its dataset at 18:36 UTC with the shrunken file, but both ledgers got only 4 "scan" rows each, up to the Friday-close bar (market closed). No signal was scored or recorded, and its next run rebuilds the features from the restored file.
+      - None of the re-run volume studies reads the calendar (grep).
+      - The `run_chart` board names re-read the file hourly.

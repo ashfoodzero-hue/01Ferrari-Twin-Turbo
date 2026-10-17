@@ -23,9 +23,11 @@ ok('EQUILIBRIUM (mid-range) blocks BOTH sides and says WAIT FOR CONFIRMATION', (
   assert.equal(stateAllows({ side: 'BUY' }, st).allow, false)
   assert.equal(stateAllows({ side: 'SELL' }, st).allow, false)
 })
-ok('break WITHOUT volume = NOT confirmed → still blocked (no guessing)', () => {
+ok('VOLUME DROPPED 2026-10-17 (spot v is a quote count): by default a close beyond the trigger CONFIRMS with any v; the opt-in volMult > 0 still blocks a low-v break', () => {
   const st = readMarketState(mk({ breakDown: true, vol: 1 }))
-  assert.equal(st.canTrade, false); assert(/NOT CONFIRMED/.test(st.message))
+  assert.equal(st.state, 'BREAKOUT_DOWN'); assert.equal(st.canTrade, true); assert(!/volume/i.test(st.message), 'no volume words in the live message')
+  const old = readMarketState(mk({ breakDown: true, vol: 1 }), { volMult: 1.5 })
+  assert.equal(old.canTrade, false); assert(/NOT CONFIRMED/.test(old.message))
 })
 ok('break WITH volume = DIRECTION CONFIRMED → only that side fires', () => {
   const dn = readMarketState(mk({ breakDown: true, vol: 2 }))

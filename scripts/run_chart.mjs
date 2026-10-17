@@ -149,7 +149,7 @@ async function geometry(sym) {
     const g = marketStateGeometry(b15), s = readMarketState(b15)
     if (!g) return null
     const last = b15.at(-1), prev = b15.at(-2)
-    return { rangeHigh: +g.rangeHigh.toFixed(5), rangeLow: +g.rangeLow.toFixed(5), sellTrigger: g.dnTrigger, buyTrigger: g.upTrigger, needVolume: sym === 'DXY' ? 'n/a (index)' : `${g.volMult}× avg`,
+    return { rangeHigh: +g.rangeHigh.toFixed(5), rangeLow: +g.rangeLow.toFixed(5), sellTrigger: g.dnTrigger, buyTrigger: g.upTrigger, needVolume: sym === 'DXY' ? 'n/a (index)' : g.volMult > 0 ? `${g.volMult}× avg` : 'none (spot v is not volume)',
       sinceT: g.sinceT, state: s?.state, allowedSide: s?.allowedSide, message: s?.message, barT: g.last.t, close: last.c, change15m: prev ? +((last.c - prev.c) / prev.c * 100).toFixed(3) : null }
   })
 }

@@ -4,7 +4,7 @@
 // BULLISH OB at bar j (closed): bar j is a DOWN candle (c < o) and the next K = 3 bars displace UP: their highest high − low[j] ≥ 1.5·ATR14(j)
 // AND bar j+3 closes above high[j] (structure leaves the block). Zone = [low[j], high[j]], known at the close of bar j+3. BEARISH mirrored.
 // STRENGTH (pre-registered): disp = displacement in ATR · relVol = mean volume of bars j+1..j+3 ÷ mean volume of the 20 bars before j.
-//   STRONG ⇔ disp ≥ 2.5 AND relVol ≥ 1.5.
+//   STRONG ⇔ disp ≥ 2.5 (relVol ≥ 1.5 was dropped 2026-10-17: spot v is a quote count — docs/VOLUME_AUDIT_RESULTS.md).
 // ════════════════════════════════════════════════════════════════════════════════
 export const OB_RULE = Object.freeze({ k: 3, disp: 1.5, strongDisp: 2.5, strongVol: 1.5, volBars: 20 })
 
@@ -18,5 +18,7 @@ export function orderBlockAt(B, A, j) {
   const up = b.c < b.o && last.c > b.h, dn = b.c > b.o && last.c < b.l; if (!up && !dn) return null
   const disp = (up ? hh - b.l : b.h - ll) / a; if (disp < OB_RULE.disp) return null
   const relVol = vs > 0 ? (vi / K) / (vs / OB_RULE.volBars) : 0
-  return { j, up, top: b.h, bot: b.l, atr: a, disp, relVol, strong: disp >= OB_RULE.strongDisp && relVol >= OB_RULE.strongVol, knownIdx: j + K }
+  // VOLUME DROPPED 2026-10-17 (Ashraf approved the volume audit, docs/VOLUME_AUDIT_RESULTS.md §5): relVol reads spot `v` (a quote count, not
+  // volume), so STRONG = displacement only. relVol is still returned for the record only.
+  return { j, up, top: b.h, bot: b.l, atr: a, disp, relVol, strong: disp >= OB_RULE.strongDisp, knownIdx: j + K }
 }

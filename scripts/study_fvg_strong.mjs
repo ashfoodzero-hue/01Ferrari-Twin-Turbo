@@ -56,7 +56,8 @@ for (const tf of TFS) {
       return { t: M[kT].t, part, bounce, ctrl, net: limitTrade(M, kT, up, near, stopLine, tgt, spreadAt, Math.min(0.3, 0.05 * a), tEnd), D } }
     const e25 = ev(0.25)
     FAC.BIG.push(e25); if (s1) FAC.S1.push(e25); if (s2) FAC.S2.push(e25); if (s3) FAC.S3.push(e25); FAC.S4.push(e25)
-    if (s1 && s2 && s3) { FAC.STRONG.push(e25); for (const x of XS) EV[x].push(x === 0.25 ? e25 : ev(x)) }
+    // the shared rule (fvg.js) — volume s2 dropped 2026-10-17, the S2 factor row is kept as a descriptive record only
+    if (F.strong) { FAC.STRONG.push(e25); for (const x of XS) EV[x].push(x === 0.25 ? e25 : ev(x)) }
   }
   for (const x of XS) { const TR = stat(EV[x].filter((e) => e.part === 'TRAIN')), OOS = stat(EV[x].filter((e) => e.part === 'OOS')); cells[`${tf}|${x}`] = { tf, x, train: TR, oos: OOS, verdict: levelVerdict(TR, OOS, MIN_N) } }
   factors[tf] = Object.fromEntries(Object.entries(FAC).map(([k, E]) => [k, stat(E.filter((e) => e.part === 'OOS'))]))
@@ -66,7 +67,7 @@ for (const tf of TFS) {
 const holds = Object.values(cells).filter((c) => c.verdict === 'HOLDS').map((c) => `${c.tf} X${c.x}`)
 const best = Object.values(cells).filter((c) => c.oos.resolved >= MIN_N).sort((a, b) => b.oos.bounce - a.oos.bounce)[0]
 const out = { at: new Date().toISOString(), window: new Date(FROM).toISOString().slice(0, 10) + ' → ' + new Date(TO).toISOString().slice(0, 16), split: new Date(SPLIT).toISOString().slice(0, 10),
-  rules: { strong: 'BIG ≥0.5ATR + body ≥1.5ATR + activity ≥1.5×20-bar mean + 1h & 4h EMA stack agree + first retest ≤20 bars', xs: XS, z: Z, min_n: MIN_N }, cells, factors,
+  rules: { strong: 'BIG ≥0.5ATR + body ≥1.5ATR + 1h & 4h EMA stack agree + first retest ≤20 bars (volume activity dropped 2026-10-17: spot v is a quote count)', xs: XS, z: Z, min_n: MIN_N }, cells, factors,
   holding: holds, best_oos_bounce: best ? { cell: `${best.tf} X${best.x}`, bounce: best.oos.bounce, control: best.oos.control, net: best.oos.net } : null,
   reached_95: Object.values(cells).some((c) => c.oos.resolved >= MIN_N && c.oos.bounce_lb >= 0.95), verdict: holds.length ? 'SOME_STRONG_FVG_HOLDS' : 'STRONG_FVG_DOES_NOT_HOLD' }
 fs.writeFileSync(path.join(TURBO.master, 'fvg_strong_study.json'), JSON.stringify(out, null, 1))

@@ -9,6 +9,7 @@ import { pathToFileURL } from 'node:url'
 import { loadBars } from '../src/data/backfillReader.js'
 import { REF } from '../src/core/paths.js'
 import { emitTwinRoster } from '../src/master/twinRoster.js'
+import { readMarketState, stateAllows } from '../src/master/marketState.js'
 
 let pass = 0, fail = 0
 const ok = (n, f) => { try { f(); pass++; console.log('  ✓ ' + n) } catch (e) { fail++; console.log('  ✗ ' + n + ' — ' + e.message) } }
@@ -27,7 +28,7 @@ const cuts = new Set()
 for (const t of fireTs) { const k = idx.get(t); for (const d of [0, 1, 3]) if (k + d < b15.length) cuts.add(k + d) }   // visible for 4 bars
 const quiet = 16; for (let q = 1; q <= quiet; q++) cuts.add(Math.floor(b15.length * q / (quiet + 1)))
 const FIELDS = ['tier', 'side', 'direction', 't', 'i', 'entry', 'stop', 'target', 'riskUsd', 'targetUsd', 'atr', 'setup', 'beTriggerR', 'beLockR']
-let both = 0, neither = 0, mism = [], gateMism = []
+let both = 0, neither = 0, mism = [], gateMism = [], dropDiff = 0
 for (const cut of [...cuts].sort((a, b) => a - b)) {
   const upto = b15.slice(0, cut + 1); if (upto.length < 2000) continue
   const now = upto.at(-1).t + 900000
@@ -37,10 +38,14 @@ for (const cut of [...cuts].sort((a, b) => a - b)) {
   if (!tw || !t2) { mism.push(`cut ${new Date(upto.at(-1).t).toISOString()}: twin=${tw ? 'fire' : 'null'} turbo2=${t2 ? 'fire' : 'null'}`); continue }
   both++
   for (const f of FIELDS) if (JSON.stringify(tw[f]) !== JSON.stringify(t2[f])) mism.push(`${new Date(tw.t).toISOString()} ${f}: twin ${JSON.stringify(tw[f])} vs turbo2 ${JSON.stringify(t2[f])}`)
-  if (tw.stateRead.agrees !== !t2.blocked) gateMism.push(`${new Date(tw.t).toISOString()}: twin agrees=${tw.stateRead.agrees} turbo2 blocked=${t2.blocked} (${t2.blockedWhy})`)
+  // VOLUME DROPPED 2026-10-17 in the twin (volMult 0); Turbo2 still gates on its tick-count volume (volMult 1.4). The MECHANISM parity is checked
+  // with the twin's gate run at Turbo2's volMult; the live (DROP) disagreements are counted as the measured, approved divergence.
+  const agree14 = !!stateAllows(tw, readMarketState(upto, { volMult: 1.4 })).allow
+  if (agree14 !== !t2.blocked) gateMism.push(`${new Date(tw.t).toISOString()}: twin@1.4 agrees=${agree14} turbo2 blocked=${t2.blocked} (${t2.blockedWhy})`)
+  if (tw.stateRead.agrees !== !t2.blocked) dropDiff++
 }
 ok(`POWER: ${both} cut point(s) where BOTH emitters fired (journal fires in window: ${fireTs.length}; quiet points agreeing on null: ${neither})`, () => assert(both >= 3, 'fewer than 3 shared fires — the parity check is unpowered'))
 ok('every shared fire is IDENTICAL on ' + FIELDS.length + ' fields and no cut point fires on one side only', () => assert.equal(mism.length, 0, mism.slice(0, 6).join(' · ')))
-ok('the market-state verdict agrees (twin stateRead.agrees ⇔ Turbo2 not blocked)', () => assert.equal(gateMism.length, 0, gateMism.slice(0, 4).join(' · ')))
+ok(`the market-state MECHANISM agrees (twin gate at Turbo2's volMult 1.4 ⇔ Turbo2 not blocked); live twin (volume dropped) differs on ${dropDiff} shared fire(s) — the approved divergence`, () => assert.equal(gateMism.length, 0, gateMism.slice(0, 4).join(' · ')))
 console.log(`\n${fail ? '✗' : '✅'} TWIN ↔ TURBO2 PARITY: ${pass} passed, ${fail} failed`)
 process.exitCode = fail ? 1 : 0

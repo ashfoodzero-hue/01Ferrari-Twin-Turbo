@@ -40,13 +40,15 @@ await ok('gamma snapshot + forward test: the latest file has ≥ 90 % OI coverag
   const d = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); assert(d.coverage.oi_coverage >= 0.9); assert(Math.abs(d.ratio - d.xau_same_minute / d.gld_price) < 1e-5)
   const s = JSON.parse(fs.readFileSync(path.join(master, 'gamma_levels_study.json'), 'utf8')); if (s.all.resolved < 100) assert.equal(s.verdict, 'INSUFFICIENT')
 })
-await ok('STRONG FVG rule (src/master/fvg.js): big + displacement + activity + 1h/4h trend; any missing piece → not strong; artifact verdicts self-consistent', async () => {
+await ok('STRONG FVG rule (src/master/fvg.js): big + displacement + 1h/4h trend (volume activity dropped 2026-10-17 — low v stays strong); any missing piece → not strong; artifact verdicts self-consistent', async () => {
   const { fvgAt } = await import('../src/master/fvg.js')
   const B = Array.from({ length: 30 }, (_, k) => ({ o: 100, h: 101, l: 99, c: 100, v: 10 })); B[27] = { o: 101, h: 101.5, l: 100.5, c: 101, v: 10 }; B[28] = { o: 101, h: 106, l: 101, c: 105.8, v: 40 }; B[29] = { o: 105.8, h: 107, l: 103, c: 106.5, v: 10 }
   const A = B.map(() => 2), up = () => 'BULL'
   B[29].l = 102; const F = fvgAt(B, A, 29, 0, up); assert(F && F.up && F.top === 102 && F.bot === 101.5 && F.big === false, 'zone 0.5 < 0.5·ATR 1.0 is not big')
   B[29].l = 104; const G = fvgAt(B, A, 29, 0, up); assert(G.big && G.s1 && G.s2 && G.s3 && G.strong)
-  assert.equal(fvgAt(B, A, 29, 0, () => 'MIXED').strong, false); B[28].v = 14; assert.equal(fvgAt(B, A, 29, 0, up).strong, false)
+  assert.equal(fvgAt(B, A, 29, 0, () => 'MIXED').strong, false)
+  B[28].v = 14; const L = fvgAt(B, A, 29, 0, up); assert(L.s2 === false && L.strong === true, 'spot v is not volume: s2 is a record only, STRONG ignores it')
+  B[28].c = 103; assert.equal(fvgAt(B, A, 29, 0, up).strong, false, 'body 2 < 1.5·ATR 3 → not strong')
   const S = JSON.parse(fs.readFileSync(path.join(master, 'fvg_strong_study.json'), 'utf8')); assert.equal(Object.keys(S.cells).length, 12)
   for (const c of Object.values(S.cells)) assert.equal(c.verdict, c.oos.resolved < 100 ? 'UNDERPOWERED' : c.oos.bounce_lb > c.oos.control && c.train.bounce > c.train.control && c.oos.net_lb > 0 ? 'HOLDS' : 'DOES_NOT_HOLD')
   assert.equal(S.reached_95, Object.values(S.cells).some((c) => c.oos.resolved >= 100 && c.oos.bounce_lb >= 0.95))

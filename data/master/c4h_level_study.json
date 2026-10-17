@@ -1,5 +1,5 @@
 {
- "at": "2026-10-16T10:21:08.697Z",
+ "at": "2026-10-17T18:07:21.885Z",
  "levels": "closed NY 4H candle highs / lows, kept until a 1m close beyond",
  "window": [
   "2013-07-21T22:00:00.000Z",
@@ -32,23 +32,23 @@
   }
  },
  "touch": {
-  "strong_threshold_train_p66": 1.0697039425595962,
+  "strong_threshold_train_p66": 0.5756506519719837,
   "oos": {
    "all": {
     "n": 10774,
     "hold": 0.6092
    },
    "defended": {
-    "n": 4921,
-    "hold": 0.7068
+    "n": 4899,
+    "hold": 0.7103
    },
    "strong": {
-    "n": 2001,
-    "hold": 0.7471
+    "n": 2317,
+    "hold": 0.7501
    },
    "attacked": {
-    "n": 5853,
-    "hold": 0.5273
+    "n": 5875,
+    "hold": 0.5249
    }
   },
   "train": {
@@ -57,16 +57,16 @@
     "hold": 0.6364
    },
    "defended": {
-    "n": 7607,
-    "hold": 0.7533
+    "n": 7943,
+    "hold": 0.753
    },
    "strong": {
-    "n": 4073,
-    "hold": 0.7879
+    "n": 3754,
+    "hold": 0.797
    },
    "attacked": {
-    "n": 8234,
-    "hold": 0.5284
+    "n": 7898,
+    "hold": 0.5191
    }
   },
   "oos_after_hold_ft10": 0.3097

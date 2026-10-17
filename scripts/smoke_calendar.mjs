@@ -3,7 +3,7 @@ import assert from 'node:assert'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { etToUtc, blsEvents } from '../src/data/calendar.js'
+import { etToUtc, blsEvents, mergeHistory } from '../src/data/calendar.js'
 let n = 0
 const ok = async (name, fn) => { try { await fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..'), J = (...p) => JSON.parse(fs.readFileSync(path.join(root, ...p), 'utf8'))
@@ -37,5 +37,13 @@ await ok('Retail Sales + Fed speeches: ALFRED-derived releases include every Cen
   assert(H.filter((e) => e.type === 'RETAIL').length >= 160 && H.filter((e) => e.type === 'FED_CHAIR').length > 100 && H.filter((e) => e.type === 'FED_GOV').length > 500)
   assert(H.some((e) => e.type === 'FED_GOV' && e.t === Date.parse('2026-10-08T08:30:00Z') && /Waller/.test(e.who)), 'Waller 10-08 08:30 UTC')
   const S = J('data', 'master', 'event_reaction_study.json'); for (const t of ['RETAIL', 'FED_CHAIR', 'FED_GOV']) assert(S.results[t]?.events > 50, t)
+})
+await ok('history merge (bug 2026-10-17): a failed Fed source keeps every FOMC decision + speech from the previous file; fresh sources replace theirs; all fail → unchanged', () => {
+  const prev = [{ type: 'FOMC', t: 1 }, { type: 'FED_GOV', t: 2, who: 'W' }, { type: 'CPI', t: 3 }, { type: 'RETAIL', t: 4 }, { type: 'FED_CHAIR', t: 5, who: 'P' }]
+  const a = mergeHistory(prev, { bls: [{ type: 'CPI', t: 30 }, { type: 'BLS_OTHER', t: 31 }], retail: [{ t: 40 }] })   // Fed site down (as at 17:59 UTC)
+  assert.deepEqual(a.kept, ['fed_fomc', 'fed_speeches']); assert.deepEqual(a.events.map((e) => e.type + e.t), ['FOMC1', 'FED_GOV2', 'FED_CHAIR5', 'CPI30', 'RETAIL40'])
+  const b = mergeHistory(prev, { fomc: [{ t: 10 }], bls: [{ type: 'NFP', t: 20 }], retail: [{ t: 40 }], speeches: [{ type: 'FED_GOV', t: 50, name: 'X speaks' }] })
+  assert.deepEqual(b.kept, []); assert.deepEqual(b.events.map((e) => e.type + e.t), ['FOMC10', 'NFP20', 'RETAIL40', 'FED_GOV50']); assert.equal(b.events[3].who, 'X speaks')
+  const c = mergeHistory(prev, {}); assert.deepEqual(c.events.map((e) => e.t), [1, 2, 3, 4, 5]); assert.equal(c.kept.length, 4)
 })
 console.log(process.exitCode ? '✗ USD CALENDAR SMOKE FAILED' : `✅ USD CALENDAR SMOKE: ${n} passed, 0 failed`)

@@ -5,7 +5,7 @@
 import '../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
-import { CAL_DIR, fetchForexFactory, fetchFomc, blsEvents, polygonHolidays, retailEvents, fetchFedSpeeches } from '../src/data/calendar.js'
+import { CAL_DIR, fetchForexFactory, fetchFomc, blsEvents, polygonHolidays, retailEvents, fetchFedSpeeches, mergeHistory } from '../src/data/calendar.js'
 
 const now = Date.now(), sources = {}
 const tryRun = async (name, fn) => { try { const v = await fn(); sources[name] = { ok: true, at: new Date().toISOString(), n: Array.isArray(v) ? v.length : v?.events?.length ?? null }; return v } catch (e) { sources[name] = { ok: false, at: new Date().toISOString(), error: String(e.message).slice(0, 160) }; return null } }
@@ -29,6 +29,9 @@ up.sort((a, b) => a.t - b.t)
 fs.mkdirSync(CAL_DIR, { recursive: true })
 const write = (f, o) => { fs.writeFileSync(path.join(CAL_DIR, f + '.tmp'), JSON.stringify(o, null, 1)); fs.renameSync(path.join(CAL_DIR, f + '.tmp'), path.join(CAL_DIR, f)) }
 write('upcoming.json', { at: new Date(now).toISOString(), scope: 'USD events only (Forex Factory has no XAU rows; USD releases are what move gold)', sources, crosscheck, events: up, holidays })
-if (fomc.length || bls.events.length) write('history.json', { at: new Date(now).toISOString(), note: 'official release times (FOMC + Board speeches from the Fed; CPI / NFP / PPI / JOLTS from BLS; Retail Sales from Census/ALFRED) — used by study_event_reaction.mjs', events: [...fomc.map((e) => ({ type: 'FOMC', t: e.t })), ...bls.events.filter((e) => e.type !== 'BLS_OTHER').map((e) => ({ type: e.type, t: e.t })), ...retail.map((e) => ({ type: 'RETAIL', t: e.t })), ...speeches.map((e) => ({ type: e.type, t: e.t, who: e.name }))].sort((a, b) => a.t - b.t) })
+// history.json is MERGED per source (mergeHistory, src/data/calendar.js — bug 2026-10-17): a failed source keeps its types from the previous file.
+let prevH = []; try { prevH = JSON.parse(fs.readFileSync(path.join(CAL_DIR, 'history.json'), 'utf8')).events ?? [] } catch { /* first run */ }
+const { events: histEvents, kept } = mergeHistory(prevH, { fomc, bls: bls.events, retail, speeches })
+if (histEvents.length) write('history.json', { at: new Date(now).toISOString(), note: 'official release times (FOMC + Board speeches from the Fed; CPI / NFP / PPI / JOLTS from BLS; Retail Sales from Census/ALFRED) — used by study_event_reaction.mjs', kept_from_previous: kept, events: histEvents })
 const bad = Object.entries(sources).filter(([, v]) => !v.ok).map(([k]) => k), dis = crosscheck.filter((c) => c.in_ff_window && !c.agree)
 console.log(`  📅 calendar: ${up.length} upcoming USD events · sources ${bad.length ? 'FAILED: ' + bad.join(', ') : 'all ok'} · cross-check ${crosscheck.filter((c) => c.agree).length}/${crosscheck.filter((c) => c.in_ff_window).length} agree${dis.length ? ' · DISAGREE: ' + dis.map((d) => d.type + ' ' + d.official_utc).join(', ') : ''}`)

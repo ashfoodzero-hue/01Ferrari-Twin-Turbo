@@ -101,6 +101,18 @@ export function retailEvents() {
   return [...j.releases.split(','), ...(j.upcoming ? j.upcoming.split(',') : [])].map((d) => ({ src: 'CENSUS', type: 'RETAIL', name: 'Retail Sales', t: etToUtc(+d.slice(0, 4), +d.slice(5, 7), +d.slice(8, 10), hh, mm), impact: 'high' }))
 }
 
+/** history.json events MERGED per source (bug 2026-10-17: one Fed-site failure — fetch failed / HTTP 406 — rewrote history without every FOMC
+ *  decision and Fed speech, 2003 → 836 events). fresh = { fomc, bls, retail, speeches } (raw source rows); a source with no rows keeps ITS types
+ *  from prev. Returns { events (sorted), kept: [source names kept from prev] }. ONE place: fetch_calendar.mjs + smoke_calendar.mjs. */
+export const HISTORY_SOURCES = Object.freeze({ fed_fomc: ['FOMC'], bls_file: ['CPI', 'NFP', 'PPI', 'JOLTS'], retail_file: ['RETAIL'], fed_speeches: ['FED_CHAIR', 'FED_GOV'] })
+export function mergeHistory(prev, { fomc = [], bls = [], retail = [], speeches = [] }) {
+  const fresh = { fed_fomc: fomc.map((e) => ({ type: 'FOMC', t: e.t })), bls_file: bls.filter((e) => e.type !== 'BLS_OTHER').map((e) => ({ type: e.type, t: e.t })),
+    retail_file: retail.map((e) => ({ type: 'RETAIL', t: e.t })), fed_speeches: speeches.map((e) => ({ type: e.type, t: e.t, who: e.name })) }
+  const kept = [], events = []
+  for (const [src, types] of Object.entries(HISTORY_SOURCES)) { if (fresh[src].length) events.push(...fresh[src]); else { kept.push(src); events.push(...prev.filter((e) => types.includes(e.type))) } }
+  return { events: events.sort((a, b) => a.t - b.t), kept }
+}
+
 /** Fed Board speeches (Chair / Vice Chairs / Governors) with their start time — federalreserve.gov/json/ne-speeches.json (times are ET:
  *  measured 2026-10-09 against Forex Factory UTC, 2/2 agree). Entries without a time are dropped (never guessed). */
 export async function fetchFedSpeeches() {
