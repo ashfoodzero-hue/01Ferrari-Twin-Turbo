@@ -611,6 +611,67 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
   - none of this is yet a trading result, which is Phase 4B.
 
 
+## 5F. Phase 4B: the ladder sign as a trade rule, the money test (`docs/SWING_TRADE_SPEC.md`; results `data/master/swing_trade_atlas.json`; every trade `docs/swing_book/phase4_all_trades.csv`)
+
+### 5F.1 Rules (pre-registered, shown, approved 2026-10-17)
+
+- **LIVE causal trigger (no study labels).** At the close of a one-step-below candle (5m / 30m / 3H / 9H for 15m / 1H / 4H / 1D), a signal fires when all of these hold:
+  - that timeframe has just confirmed a swing low;
+  - the anchor's last CONFIRMED swing is a high (it is in a down-leg);
+  - the low equals the lowest 1m low since that anchor high (it is the anchor's running extreme).
+
+  Shorts mirror this.
+- **Execution:**
+  - entry at the next 1m open, at the ask for longs (real spread model);
+  - stop = the low − 0.10 × ATR14(anchor);
+  - **E1** target = 1R; **E2** target = the low + 3 × ATR14(anchor) (the "swing is real" level);
+  - time stop after 20 anchor candles;
+  - the stop is taken first on a shared minute; a gap through the stop fills at the gap; a gap through the target fills AT the target (conservative).
+- **One trade at a time** per anchor and exit.
+- **Random control:** 3 random entries per trade (same NY hour and year, same side, same stop and target distances in ATR).
+- **PASS:** OOS mean R > 0 with week-block LB > 0 at α = 0.05/12, excess over random with LB > 0, TRAIN mean R > 0, n ≥ 100 (4H ≥ 30; 1D described only).
+
+**Audit during the run:** a bug where the trade record's exit PRICE overwrote the exit label (E1 / E2) was caught before any result was read. That run was discarded and re-run after the fix. **Smoke:** `smoke_swing_trade` 4/4 (spread sides, stop-first, gap fill, time stop, causal trigger).
+
+### 5F.2 Results (OOS 2021-06 → 2026-10; TRAIN in brackets): **0 of 12 cells pass**
+
+| Cell | n (per day) | WR | mean R (LB) | $ / trade | PF | excess vs random (LB) | TRAIN mean R (WR) | verdict |
+|---|---|---|---|---|---|---|---|---|
+| 15m long E1 | 3,795 (2.75) | 47.5 % | −0.068 (−0.111) | −0.51 | 0.88 | +0.036 (−0.010) | −0.125 (43.4 %) | FAIL |
+| 15m short E1 | 3,882 (2.81) | 46.6 % | −0.078 (−0.118) | −0.34 | 0.91 | +0.013 (−0.033) | −0.152 (42.5 %) | FAIL |
+| 15m long E2 | 4,177 (3.02) | 59.6 % | −0.074 (−0.107) | −0.48 | 0.85 | +0.016 (−0.022) | −0.145 (56.7 %) | FAIL |
+| 15m short E2 | 4,684 (3.39) | 53.1 % | −0.091 (−0.128) | −0.48 | 0.85 | +0.003 (−0.039) | −0.174 (48.3 %) | FAIL |
+| 1H long E1 | 763 (0.55) | 51.9 % | +0.023 (−0.057) | +0.71 | 1.09 | +0.029 (−0.062) | −0.062 (46.0 %) | FAIL |
+| 1H short E1 | 796 (0.58) | 46.9 % | −0.070 (−0.159) | −0.25 | 0.97 | +0.001 (−0.092) | −0.067 (43.8 %) | FAIL |
+| 1H long E2 | 891 (0.65) | 69.6 % | −0.007 (−0.062) | −0.07 | 0.99 | +0.007 (−0.053) | −0.071 (64.9 %) | FAIL |
+| 1H short E2 | 972 (0.70) | 61.2 % | −0.073 (−0.135) | −0.82 | 0.86 | −0.018 (−0.092) | −0.057 (60.5 %) | FAIL |
+| 4H long E1 | 160 (0.12) | 60.0 % | +0.142 (−0.024) | +6.73 | 1.50 | +0.103 (−0.081) | +0.026 (50.6 %) | FAIL (LB < 0) |
+| 4H short E1 | 170 (0.12) | 47.6 % | −0.060 (−0.221) | +1.70 | 1.11 | +0.012 (−0.189) | +0.067 (50.5 %) | FAIL |
+| 4H long E2 | 179 (0.13) | 80.4 % | +0.001 (−0.095) | −0.04 | 1.00 | −0.008 (−0.138) | −0.064 (73.7 %) | FAIL |
+| 4H short E2 | 176 (0.13) | 71.6 % | −0.089 (−0.200) | −2.65 | 0.73 | −0.043 (−0.179) | +0.028 (78.1 %) | FAIL |
+| 1D long E1 / short E1 / long E2 / short E2 | 40 / 52 / 48 / 53 | 65 / 56 / 71 / 59 % | +0.256 / +0.029 / +0.241 / −0.022 | +18.3 / +20.2 / +18.1 / +4.8 | 1.73 / 1.69 / 2.00 / 1.20 | — | −0.016 / −0.125 / +0.071 / −0.016 | described only |
+
+### 5F.3 Why it loses: the root cause, MEASURED (OOS, medians)
+
+| Anchor | price already this far from the extreme at entry | risk (to the stop beyond the extreme) | E2 reward : risk | WR needed to break even (E2) | actual WR (E2) |
+|---|---|---|---|---|---|
+| 15m | 1.8 ATR | 1.9 ATR | 0.65 | 62 % | 56 % |
+| 1H | 2.1 ATR | 2.2 ATR | 0.43 | 68 % | 65 % |
+| 4H | 2.4 ATR | 2.5 ATR | 0.22 | 80 % | 76 % |
+| 1D | 1.6 ATR | 1.7 ATR | 0.78 | 58 % | 64 % (n 101, described) |
+
+- **The sign is RIGHT but LATE.** When the one-step-below timeframe confirms, about 2-2.5 anchor ATRs of the 3-ATR "real" move are already done.
+- The E2 target-hit share (4H: 262 / 355 = 74 %) confirms the live trigger reproduces Phase 3's 76-83 % "real" rate. The accuracy is real; the remaining reward is small and the stop beyond the extreme is far.
+- **E1 (1R)** needs about a 51 % WR to break even; it gets 47-54 %. The ladder carries no edge for a symmetric 1R bracket from that point.
+
+### 5F.4 What Phase 4B means
+
+1. **The ladder sign does not make money as built:** stop beyond the extreme, 1R or "3 ATR real" target, real spread. 0/12 pass, with spread costs on every trade.
+2. **High WR is a price, not an edge.** 4H E2: 76-80 % WR, still about 0 R, because the wins are about 0.23 R and the losses about 0.9 R.
+3. **The understanding (§5E) stands as understanding.** The ladder tells you WHICH swing will be real, with 60-83 % accuracy, hours early. But by then most of the move is done. It is a confirmation / context tool, not an entry with a reasonable stop.
+4. **Nothing is wired into the live app.** Any variant (a stop at the lower-timeframe structure instead of beyond the extreme, an earlier ladder step, a trailing exit) would be a NEW hypothesis needing its own pre-registered rules.
+
+
 ## 6. Observations log (small details, kept even when untested)
 
 1. **Swings are fractal in ATR units.** The median swing is 5.1-5.7 ATR and confirms 6-7 candles after the extreme on EVERY timeframe from 1m to 1W. The same "shape" repeats at every scale. (Phase 1.)
@@ -654,6 +715,10 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 
 24. **Silver and DXY add little once gold's ladder has flipped.** Silver already confirmed: +1-6 points, not provable. DXY: about 0. The 1D cells look large (silver 82 % vs 57 %) but rest on 8-24 cases with a TRAIN sign flip. Re-run them when our own history is longer. (Phase 3C.)
 25. **Waiting for silver costs little time but drops about 30 % of cases** (15m: median 15 min, 1H: 60 min) for +4 points. (Phase 3C.)
+
+26. **The ladder sign arrives after most of the move.** At the one-step-below confirmation, price is already 1.8-2.4 anchor ATRs from the extreme (15m-4H). The stop beyond the extreme is therefore far, and the reward left to the "real" level is 0.22-0.65 R. (Phase 4B, measured.)
+27. **A 76-80 % win rate can be worth 0 R.** 4H E2: wins about +0.23 R, losses about −0.90 R; breakeven needs 80 %. Always judge by R after costs. (Phase 4B; see the standing memory "WR is a price".)
+28. **The 1D trades look positive** (OOS mean R +0.24-0.26 on longs, PF 1.7-2.0), but on 40-48 trades with TRAIN about 0, so described only. A candidate to re-check as our own history grows. (Phase 4B.)
 
 ## 7. Open questions (for later phases)
 
@@ -701,5 +766,8 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 | Phase 3C rules | `docs/SWING_SILVER_SPEC.md` |
 | Phase 3C results | `docs/SWING_SILVER_ATLAS.md`, `data/master/swing_silver_atlas.json` |
 | Phase 3C complete rows | `docs/swing_book/phase3c_all_rows.csv` |
+| Phase 4 rules | `docs/SWING_TRADE_SPEC.md` |
+| Phase 4B results | `data/master/swing_trade_atlas.json` |
+| Phase 4B every trade | `docs/swing_book/phase4_all_trades.csv` (also `data/master/swing_trades.csv`) |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |

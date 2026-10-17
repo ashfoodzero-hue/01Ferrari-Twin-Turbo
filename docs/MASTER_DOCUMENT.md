@@ -1028,3 +1028,12 @@ without duplications … only use the real Win results, and ignore the rest."
   - Waiting for silver +4 pt for a short wait (15-60 min), dropping 30 % of cases.
   - 1D cells (n 8-24, TRAIN sign flips) need more data.
   - **The ladder alone stays the sign.**
+- **(ce) 2026-10-17 — SWING STUDY PHASE 4: 4A the understanding (book §5E, no new numbers); 4B the ladder as a trade rule (spec `docs/SWING_TRADE_SPEC.md`, `study_swing_trade.mjs` → `swing_trade_atlas.json` + every trade `swing_trades.csv`; smoke 4/4). Book §5F.**
+  - **0 / 12 cells pass.** Examples:
+    - 1H long E2: WR 69.6 %, −0.007 R;
+    - 4H long E2: WR 80.4 %, +0.001 R;
+    - 4H long E1: +0.142 R but LB −0.024.
+  - **Root cause, measured:** at entry, price is already 1.8-2.4 anchor ATRs from the extreme. Risk 1.9-2.5 ATR; E2 reward : risk 0.22-0.65; breakeven WR 62-80 % vs actual 56-76 %.
+  - **The sign is right but late.** The understanding stands as context; there is no entry edge with a stop beyond the extreme.
+  - 1D described only (n 40-53, longs +0.24 R).
+  - **Nothing wired live.**
