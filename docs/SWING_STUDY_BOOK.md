@@ -886,4 +886,4 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 | Phase 4D results | `data/master/swing_earlystep.json` |
 | Phase 4D every trade | `docs/swing_book/phase4d_all_trades.csv.gz` (gzip; also `data/master/swing_earlystep_trades.csv`) |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
-| Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |
+| Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(ch) — the swing Phase 1 entry is (bz2); (bz) is the parallel volume audit |
