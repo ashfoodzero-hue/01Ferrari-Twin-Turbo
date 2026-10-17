@@ -88,6 +88,8 @@ const tick = (barT) => new Promise((resolve) => {
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
 let lastMacro = null, macroRunning = false, lastLevel = null, levelRunning = false
 let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
+let lastRec = null, recRunning = false   // futures + GLD recorder (record_futures.mjs, 2026-10-17)
+let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
   execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'matrix_tick.mjs')], { timeout: 120000, maxBuffer: 8 << 20, windowsHide: true }, (err, stdout, stderr) => {
@@ -150,6 +152,17 @@ for (;;) {
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'level_tick.mjs')], { timeout: 50000, windowsHide: true }, (err, stdout, stderr) => { levelRunning = false
       if (err || /📨/.test(String(stdout))) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'level_tick.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n')
       if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
+  // FUTURES + GLD RECORDER (record_futures.mjs, 2026-10-17, Ashraf: "the App … saves our database … so we build our own history for Future and
+  // Spot for XAU, DXY, Silver"): every 15 min at 8 min past each 15m close, always (futures trade Sunday-Friday). Append-only, final minutes only,
+  // catch-up by design (a missed run loses nothing). Spot is recorded by the stream itself.
+  if (now - qKey >= 8 * 60000 && lastRec !== qKey && !recRunning) { recRunning = true; lastRec = qKey
+    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'record_futures.mjs')], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { recRunning = false
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'record_futures.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+  // DAILY RECORDING AUDIT (audit_recording.mjs, 2026-10-17): once per UTC day at/after 21:30 UTC (after the New York close) — every in-session
+  // hole classified against Polygon (provider outage vs OUR miss), duplicates, staleness → data/master/recording_audit.json
+  if (mins >= 21 * 60 + 30 && lastAudit !== day && !auditRunning) { auditRunning = true; lastAudit = day
+    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'audit_recording.mjs'), '3'], { timeout: 15 * 60000, windowsHide: true }, (err, stdout, stderr) => { auditRunning = false
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'audit_recording.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-500), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }

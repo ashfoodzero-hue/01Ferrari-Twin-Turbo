@@ -94,3 +94,21 @@ These take spot XAUUSD bars, so their volume component uses the tick count above
 - `src/master/levelRadar.js`.
 
 `src/master/goldWhale.js` uses CME futures volume, so it is not affected. Fixing these changes live behaviour: a separate task, with Ashraf's approval.
+
+## 7. Our own history: what the app records every day (2026-10-17)
+
+| Series | Recorded by | How | Folder |
+|---|---|---|---|
+| Spot XAUUSD, XAGUSD, EURUSD, USDJPY, GBPUSD, USDCAD, USDSEK, USDCHF (DXY = the six pairs) | the stream (`run_stream.mjs` / `tickStream.js`), always on | live ticks → closed 1m bars, each verified against Polygon's own minute bar (REST arbiter on disagreement), plus bid/ask spread per minute; daily reconciliation (`reconcile_1m.mjs`) | `data/history/<SYM>/1m.jsonl` + `quotes_1m.jsonl` |
+| CME gold futures (GC), CME silver futures (SI), WTI (CL), GLD ETF | `record_futures.mjs`, run by `run_twin` every 15 min | append-only, final minutes only (futures are 10 min delayed on our plan), the contract on every bar, ONE roll rule (`src/data/futuresRule.js`) shared with the importer and the live reader | `data/history/{GOLD_FUT,SILVER_FUT,WTI,GLD}/1m.jsonl` |
+| Daily audit | `audit_recording.mjs`, run by `run_twin` once a day after 21:30 UTC | every in-session hole classified against Polygon (provider outage vs OUR miss), duplicates, staleness | `data/master/recording_audit.json` (+ `.jsonl` history) |
+
+**Our history outlives Polygon's window.** Polygon keeps about 2 years of futures. `import_futures_1m.mjs` never deletes stored bars older than its new series, so our files keep growing past 2 years.
+
+**Not recordable on our plan:**
+- Futures buyer/seller footprint going forward: futures trades/quotes return 403. Databento live is paid.
+- DXY futures (ICE DX): 0 rows on Polygon. The DXY is rebuilt from the six recorded pairs.
+
+**First audit, 2026-10-17 (9 days):**
+- every spot series has 3 holes, all provider outages (Polygon has no bars either), 0 misses on our side, 0 duplicates;
+- the futures holes are minutes with no trades (silver futures is thinner).

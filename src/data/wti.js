@@ -8,9 +8,11 @@
 // ════════════════════════════════════════════════════════════════════════════════
 import { polygonKey } from './liveFeed.js'
 import { fetchJsonResilient } from './netResolve.js'
+import { FUT_RULES, CODES } from './futuresRule.js'
 
 export const WTI_DELAY_MIN = 10, FUT_DELAY_MIN = 10
-const CODES = 'FGHJKMNQUVXZ', AHEAD = { CL: 3, GC: 4 }, MONTHS = { GC: 'GJMQVZ' }   // GC: CME active months only (same rule as the importer)
+// months / how far ahead: the ONE rule in futuresRule.js (2026-10-17: GC's old 'GJMQVZ', ≤ 4 ahead let the thin October contract win in late July)
+const AHEAD = Object.fromEntries(Object.values(FUT_RULES).map((r) => [r.root, r.maxAhead])), MONTHS = Object.fromEntries(Object.values(FUT_RULES).filter((r) => r.months).map((r) => [r.root, r.months]))
 const frontCache = new Map()
 
 /** Front month = the one of the next N outright contracts with the most session volume now (10-min cache). Same rule as the importer. */

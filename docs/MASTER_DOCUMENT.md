@@ -951,3 +951,12 @@ without duplications … only use the real Win results, and ignore the rest."
     - Polygon gold news: 1,914 items, 2020-03+ only (no earlier archive).
     - `src/master/marketContext.js` gives every candle its events, news and the macro values KNOWN at its open and close, using conservative known-at rules.
   - **Retrospective finding (not fixed, task flagged):** fvg, marketState ("volume N×"), orderBlock, volumeProfile, wallDefense and levelRadar read spot `v` as volume. Their volume parts were meaningless in 2021-25.
+- **(bx) 2026-10-17 — THE APP RECORDS OUR OWN HISTORY (Ashraf: "make sure that our main App is reading and saving our database correct … building our own history for both Future and Spot for XAU, DXY, Silver"). Details: `docs/DATA_CONTRACT.md` §7.**
+  - **Spot:** the stream already records 8 symbols tick-by-tick, verified against Polygon, plus spreads.
+  - **NEW:** `scripts/record_futures.mjs` (run by run_twin every 15 min) appends CME GOLD_FUT, **SILVER_FUT (new, 2-year import, 689,222 bars)**, WTI and GLD. Final minutes only, append-only, idempotent.
+  - **NEW:** `scripts/audit_recording.mjs` (daily) classifies every hole against Polygon. First audit is clean: the spot holes are Polygon outages on 10-13 22:14-16 and 10-15 23:39-49; 0 misses on our side.
+  - **ONE futures rule** `src/data/futuresRule.js`, shared by the importer, the live reader (wti.js had the same October-gold bug) and the recorder.
+  - The importer **keeps our own bars older than Polygon's rolling 2-year window**.
+  - WTI was caught up (7,621 minutes, 10-09 → 10-16).
+  - Not available on our plan: the futures buyer/seller split going forward; DXY futures.
+  - Smoke: `smoke_recorder` 4/4.
