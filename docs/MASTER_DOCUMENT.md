@@ -1018,3 +1018,8 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Leads:** hours for 1H / 4H, days for 1D. Trade-off on 4H: 1H 57 % / 22 h, 2H 72 % / 14 h, 3H 83 % / 4 h.
   - 1m / 3m carry no evidence.
   - DXY / silver do not lead; they agree more at real swings, but only in hindsight.
+- **(cc) 2026-10-17 — SWING STUDY PHASE 3B: next candle + ladder (spec `docs/SWING_COMBINE_SPEC.md`, `study_swing_combine.mjs` → `swing_combine_atlas.json` → `docs/SWING_COMBINE_ATLAS.md`; smoke 3/3, incl. exact reproduction of Phase 3). Book §5C.**
+  - **No combination beats the ladder alone:** strong next candle +0-3 pt, not significant (1H lows 76 → 76 %, 4H lows 83 → 86 % with n 117).
+  - A weak next candle costs only 2-7 pt.
+  - The strong next candle alone: 46-58 %.
+  - The one-step-below flip already contains the next-candle information.

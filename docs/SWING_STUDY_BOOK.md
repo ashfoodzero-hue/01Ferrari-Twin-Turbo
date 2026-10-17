@@ -42,6 +42,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "yes write the Phase 2 rules … make a full book … save everything" | Phase 2 rules (§5); this book |
 | 2026-10-17 | Phase 2: "Yes, run it as written" | Phase 2 run and recorded (§5) |
 | 2026-10-17 | "yes write the Phase 3 rules"; then "Yes, run it as written" | Phase 3 run and recorded (§5B) |
+| 2026-10-17 | "yes write the rules for combining Phase 1 and Phase 3"; then "Yes, run it as written" | Phase 3B run and recorded (§5C) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -448,6 +449,43 @@ At/before-extreme footprint findings (all small):
 5. **DXY and silver turn WITH gold, not before it.** They agree more at real swings, but that can only be seen afterwards.
 
 
+## 5C. Phase 3B: the next candle combined with the ladder (`docs/SWING_COMBINE_SPEC.md`; results `docs/SWING_COMBINE_ATLAS.md`; complete tables `docs/swing_book/phase3b/`)
+
+### 5C.1 Rules (pre-registered, shown, approved 2026-10-17: "Yes, run it as written")
+
+- **Same events as Phase 3.** Anchors 15m / 1H / 4H / 1D, real swings + failed extremes, 2013-07 → 2026-10, OOS from 2021-06-23.
+- **Signs:**
+  - LADDER: the timeframe one step below (5m / 30m / 3H / 9H) or two steps below (3m / 15m / 2H / 6H) confirmed at the exact same extreme;
+  - STRONG +1: the next anchor candle closes in the top third (lows) / bottom third (highs) of its own range;
+  - DIRECTIONAL +1: the next candle is bullish (lows) / bearish (highs).
+- **No hindsight:** a combination is evaluated at T\* = the latest of its signs' known times. A candidate counts only if its outcome was still undecided at T\* (a real swing not yet confirmed; a failed extreme not yet broken).
+- **FINDING:** OOS precision above the ladder alone, a Holm-passing test vs [ladder AND NOT sign], Wilson lower bound > the ladder's precision, TRAIN the same direction, n ≥ 30.
+- **Smoke:** `smoke_swing_combine` 3/3, including CONSISTENCY: the ladder-alone cell reproduces Phase 3's evidence EXACTLY (every anchor, side and period).
+
+### 5C.2 Results (OOS; TRAIN in brackets)
+
+| Anchor | ladder alone | + strong +1 | + right-direction +1 | + both | two steps + strong | strong +1 alone | ladder + WEAK +1 |
+|---|---|---|---|---|---|---|---|
+| 15m lows | 63 % (62) | 64 % (64) | 62 % (62) | 64 % (64) | 55 % (55) | 52 % (52) | 59 % (59) |
+| 15m highs | 60 % (61) | 61 % (62) | 59 % (61) | 61 % (62) | 54 % (54) | 50 % (52) | 56 % (58) |
+| 1H lows | 76 % (73) | 76 % (72) | 76 % (71) | 76 % (71) | 61 % (56) | 54 % (50) | 73 % (71) |
+| 1H highs | 69 % (72) | 68 % (71) | 67 % (72) | 68 % (72) | 52 % (56) | 46 % (49) | 67 % (71) |
+| 4H lows | 83 % (82) | 86 % (80) | 83 % (82) | 86 % (80) | 75 % (68) | 58 % (46) | 78 % (81) |
+| 4H highs | 80 % (88) | 76 % (86) | 79 % (88) | 76 % (88) | 62 % (72) | 40 % (49) | 81 % (89) |
+| 1D lows | 68 % (59) | 74 % (63), n 27, described only | 67 % (59) | 74 % (67) | 69 % (59) | 54 % (53) | 61 % (55) |
+| 1D highs | 59 % (56) | 59 % (65) | 57 % (60) | 61 % (65) | 54 % (58) | 45 % (50) | 48 % (42) |
+
+**Verdicts:** no combination is a FINDING. 15m: "not above the ladder"; 1H / 4H / 1D: "no evidence".
+
+### 5C.3 What Phase 3B means
+
+1. **The next candle adds nothing once the ladder has flipped.** The one-step-below confirmation already contains the information of the next anchor candle: a 3× ATR move on the lower timeframe mostly IS the strong next candle. Combined: +0-3 points, not significant.
+2. **A WEAK next candle barely hurts** (−2-7 points; 1D highs −11, n 21). If the lower timeframe has flipped, the swing is likely real even when the next candle closes weak.
+3. **The strong next candle ALONE is a weak sign** (46-58 % vs the ladder's 60-83 %). Phase 1's "+1 closes strong" is real but much weaker than the ladder.
+4. **Two steps below + strong is an earlier, weaker variant:** 4H lows 75 % (TRAIN 68 %) vs 83 % for the ladder alone. It sits between the two-step ladder alone (72 %) and the one-step ladder.
+5. **Method note:** median leads come from different pools (waiting for a later sign drops the fast confirmations), so they are not comparable across cells.
+
+
 ## 6. Observations log (small details, kept even when untested)
 
 1. **Swings are fractal in ATR units.** The median swing is 5.1-5.7 ATR and confirms 6-7 candles after the extreme on EVERY timeframe from 1m to 1W. The same "shape" repeats at every scale. (Phase 1.)
@@ -485,13 +523,17 @@ At/before-extreme footprint findings (all small):
 19. **Silver agrees with real gold swings far more than with failed ones** (53-63 % vs 14-23 %), but only in hindsight (±3 candles). Whether a CONFIRMED silver swing before gold's confirmation adds evidence is not tested yet (open question). (Phase 3.)
 20. **Base rates:** of all anchor extremes with at least a 1 ATR pullback, about 40-49 % become real swings. Any "edge" must beat this, not 50 %. (Phase 3.)
 
+21. **Once the lower timeframe has flipped, the next anchor candle tells you nothing more** (+0-3 points). The lower-timeframe 3× ATR confirmation largely IS that strong candle seen from below. (Phase 3B.)
+22. **A weak next candle does not cancel a ladder flip** (−2-7 points). Don't abandon a one-step-below flip because the next anchor candle closed weak. (Phase 3B.)
+23. **Selection effect on leads:** waiting for an extra sign removes the swings that confirm fastest, so the surviving cases show LONGER median leads. Never compare medians across differently filtered pools. (Phase 3B, method.)
+
 ## 7. Open questions (for later phases)
 
 - ~~Phase 2: does the footprint add to the candle shape?~~ **Answered 2026-10-17 (§5):** mostly no. The candle shape at the same offset separates better; the footprint at the extreme marks extremes, not turns.
 - A looser absorption definition (observation 14) needs a new pre-registered addendum if wanted.
 - ~~Phase 3 timing questions~~ **Answered 2026-10-17 (§5B):** the smaller timeframe flips first (95-99 %), one step below is evidence, DXY / silver do not lead.
 - NEW: does a CONFIRMED silver swing (or DXY) before gold's own confirmation add evidence on top of the ladder? (needs a pre-registered addendum)
-- NEW: combine Phase 1 (+1 candle closes strong) with Phase 3 (one-step-below flip): is the joint precision higher?
+- ~~Combine Phase 1 (+1 closes strong) with Phase 3 (one-step-below flip)~~ **Answered 2026-10-17 (§5C):** no. The next candle adds nothing once the ladder has flipped.
 - (original Phase 3 questions, kept:)
   - when a 1H swing low forms, how many candles until 15m, 30m and 4H each print their first higher low?
   - Does the lower timeframe always flip first?
@@ -525,5 +567,8 @@ At/before-extreme footprint findings (all small):
 | Phase 3 rules | `docs/SWING_LADDER_SPEC.md` |
 | Phase 3 results | `docs/SWING_LADDER_ATLAS.md`, `data/master/swing_ladder_atlas.json` |
 | Phase 3 complete tables | `docs/swing_book/phase3/*.md`, `docs/swing_book/phase3_all_rows.csv` |
+| Phase 3B rules | `docs/SWING_COMBINE_SPEC.md` |
+| Phase 3B results | `docs/SWING_COMBINE_ATLAS.md`, `data/master/swing_combine_atlas.json` |
+| Phase 3B complete tables | `docs/swing_book/phase3b_all_rows.csv` |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |

@@ -49,3 +49,9 @@ phase('phase2', 'swing_footprint_atlas.json', 'Phase 2 footprint atlas')
         md.push('', '### Order (smaller TF first, all pairs)', '', Object.entries(s.order).map(([k, v]) => `${k}: ${pc(v.x_first)} (tie ${pc(v.tie)}, n ${v.both})`).join(' · ')) }
       fs.writeFileSync(path.join(dir, `${anc}.md`), md.join('\n') + '\n') }
     fs.writeFileSync(path.join(OUT, 'phase3_all_rows.csv'), csv.join('\n') + '\n'); console.log(`  phase3: ${csv.length - 1} rows → docs/swing_book/phase3_all_rows.csv + ${Object.keys(A.anchors).length} anchor files`) } }
+// Phase 3B (combination) — every cell, both periods
+{ const f = path.join(TURBO.master, 'swing_combine_atlas.json')
+  if (fs.existsSync(f)) { const A = JSON.parse(fs.readFileSync(f, 'utf8')), csv = ['anchor,side,cell,period,n,real,p_real,wilson_lo,wilson_hi,n_without_sign,p_real_without_sign,p,lead_min_median,verdict']
+    for (const [a, r] of Object.entries(A.anchors)) for (const side of ['L', 'H']) for (const [k, v] of Object.entries(r.sides[side].cells)) for (const sp of ['T', 'O']) { const o = v[sp]
+      csv.push([a, side, k, sp, o.n, o.real, pc(o.p_real), pc(o.wilson_lo), pc(o.wilson_hi), o.n_without_sign, pc(o.p_real_without_sign), o.p ?? '', o.lead_min_median ?? '', sp === 'O' ? v.verdict : ''].join(',')) }
+    fs.writeFileSync(path.join(OUT, 'phase3b_all_rows.csv'), csv.join('\n') + '\n'); console.log(`  phase3b: ${csv.length - 1} rows → docs/swing_book/phase3b_all_rows.csv`) } }
