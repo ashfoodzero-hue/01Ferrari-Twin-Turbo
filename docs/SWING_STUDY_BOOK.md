@@ -44,6 +44,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "yes write the Phase 3 rules"; then "Yes, run it as written" | Phase 3 run and recorded (§5B) |
 | 2026-10-17 | "yes write the rules for combining Phase 1 and Phase 3"; then "Yes, run it as written" | Phase 3B run and recorded (§5C) |
 | 2026-10-17 | "yes write the rules for silver as extra evidence"; then "Yes, run it as written" | Phase 3C run and recorded (§5D) |
+| 2026-10-17 | "yes write the Phase 4 rules"; then "Yes, run it as written" | Phase 4A understanding written (§5E); Phase 4B trade test run (§5F) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -525,6 +526,89 @@ At/before-extreme footprint findings (all small):
 3. **Waiting for silver lifts the share a few points** (15m 63 → 67 %, 1H 76 → 80 %). It costs a short wait (median 15 min on 15m, 60 min on 1H) and drops about 30 % of cases. Descriptive only.
 4. **The ladder alone remains the sign.** Silver and DXY move WITH gold; when they confirm first, it slightly helps, but not enough to prove.
 5. **For the future:** the 1D silver / DXY cells (n 8-24) should be re-run once our own recorded history has grown (observation 24).
+
+
+## 5E. What happens at swing levels: the understanding (Phase 4A, 2026-10-17)
+
+Every statement below is a measured result from Phases 1-3C, quoted with its source section. **Nothing in this chapter was computed anew.** "Real" = the extreme became a confirmed swing (3× ATR the other way before breaking). "Failed" = an extreme that looked like the turn (a ≥ 1 ATR pullback) and then broke.
+
+### The story of a swing low (Bear → Bull), in order
+
+1. **The extreme forms.** Gold makes a new low. That candle is usually LARGE (1H: 41 % of real lows are top-third-size candles, vs 29 % at failed lows and 15 % at random candles; §4.4).
+   - Classic "reversal signs" appear, but they appear at almost EVERY extreme, not just real ones:
+     - a sweep of the previous low and a close back above: 49 / 41 / 19 % (real / failed / random, 1m);
+     - a long lower wick: 33 / 26 / 16;
+     - a hammer: 24 / 17 / 10;
+     - heavy real volume: 62 / 56 / 23 (3m);
+     - delta divergence (a new low with buyers aggressive): 44 / 41 / 11 (15m);
+     - absorption (as defined): 0-9 % everywhere.
+
+     **They tell you an extreme is being made, not that it will hold** (§4.4, §5.4, observations 3, 11).
+   - **A big USD release** in the extreme candle or the 3 before raises the chance the turn is real (25 % vs 16-17 %, both sides, 1m-1H). Its surprise direction does not matter (§4.4, observation 4).
+   - **DXY and silver direction** at that moment: no information (§4.5).
+2. **The smallest timeframes turn first, at the exact same low.** 1m confirms its swing about 24 min after the 1H low candle closes, 3m about 9 min, 5m about 5 min, 15m about 1 h, 30m about 3 h (1H anchor, OOS). The order holds 95-99 % of the time up to 2H (§5B.2, observation 15).
+   - **1m and 3m flip at nearly every extreme, real or failed**, so they say nothing alone (1H: 1m flipped → 46 % real = the base 46 %; §5B.3).
+3. **The next candles hold the low and close strong.** After a real low (still holding), the next candle is bullish 75 % vs 61 % (failed) vs 48 % (random) and closes in its top third 54 / 38 / 36 (1H, up to 9 timeframes; §4.4). Real reversals trade high relative volume with stacked buying; failed ones are often low-volume (§5.3, observation 12).
+4. **THE sign: the timeframe ONE STEP BELOW confirms its turn at the exact same low.** From then on, the anchor swing is real far more often than normal, and it is known hours or days before the anchor itself confirms (§5B.3, observation 16):
+
+| Anchor | one step below | real when it has flipped (OOS / TRAIN) | base rate | known earlier by |
+|---|---|---|---|---|
+| 15m | 5m | 63 % / 62 % (highs 60 / 61) | 44 % (40) | about 1 h |
+| 1H | 30m | **76 % / 73 %** (highs 69 / 72) | 46 % (41) | about 3 h |
+| 4H | 3H | **83 % / 82 %** (highs 80 / 88) | 46 % (39) | 3-4 h |
+| 1D | 9H | 68 % / 59 % (highs 59 / 56) | 49 % (36) | 5-7 days |
+
+   - **Earlier means less sure.** 4H lows: 1H flipped → 57 %, 22 h early; 2H → 72 %, 14 h; 3H → 83 %, 4 h (§5B.3).
+5. **Nothing tested adds to that sign:**
+   - the strong next candle: +0-3 points (§5C);
+   - silver already confirmed: +1-6, not provable (§5D);
+   - DXY: about 0 (§5D);
+   - a WEAK next candle barely hurts it: −2-7 (§5C).
+6. **Most swings stay small.** Only 52 % of 1H swings become 2H swings, 25 % 4H, 4 % daily (§5B.2).
+   - Swings look the same at every scale: a median 5.1-5.7 ATR, confirmed 6-7 candles after the extreme (observation 1).
+   - On 2D / 3D, tops turn faster than bottoms (observation 2).
+
+**A swing high (Bull → Bear) mirrors all of the above** with nearly identical numbers (§4, §5B).
+
+### One table per anchor: true / not true
+
+| | 15m | 1H | 4H | 1D |
+|---|---|---|---|---|
+| Swings in OOS (per side) | 3,007 | 778 | 199 | 35 |
+| AT the extreme: large candle, USD event nearby | moderate | proven (both) | not separating | not testable (n) |
+| Next 1-3 candles strong in the new direction | proven | proven | proven (+1 candle only) | not testable |
+| Footprint (2024-26) beyond the candle | little (after the extreme) | 1 finding | none (n) | none (n) |
+| One step below flipped → real | 63 % (vs 44 %) | 76 % (vs 46 %) | 83 % (vs 46 %) | 68 % (vs 49 %), n 50 |
+| + next candle / silver / DXY | no lift | no lift | no lift | not testable |
+
+### Measured NON-signs (do not use them to call a real swing)
+
+- hammer;
+- shooting star;
+- long wick;
+- sweep-and-reclaim;
+- engulfing alone;
+- delta divergence;
+- absorption;
+- heavy volume at the extreme;
+- selling into the low (normal at every low);
+- DXY direction;
+- silver direction;
+- the surprise direction of USD news;
+- 1m / 3m flips alone;
+- the next candle once the ladder has flipped.
+
+### Limits
+
+- **Data:**
+  - real volume and footprints cover 2024-10 → 2026-10 only (Ashraf: no purchase);
+  - there is no news before 2020-03;
+  - Polygon holes exist in 2019 / 2020 / Easter 2025;
+  - 2D, 3D, 1W and 1M are underpowered (fewer than 30 OOS swings);
+  - 1D is borderline.
+- **Method:**
+  - "real" uses hindsight by definition; the ladder sign uses only what was known at the flip;
+  - none of this is yet a trading result, which is Phase 4B.
 
 
 ## 6. Observations log (small details, kept even when untested)
