@@ -1043,3 +1043,7 @@ without duplications … only use the real Win results, and ignore the rest."
   - **S1 (confirmed higher low):** rarely exists in time (1H 70-79 trades, 4H 2-7), and is barely tighter.
   - **Study verdict:** the ladder tells WHICH swing is real (60-83 %), but it is not tradeable with positive R after costs. Use it as context only.
   - 1D S2 E2 +0.27 R (n 49) is described only.
+- **(cg) 2026-10-17 — SWING STUDY PHASE 4D: entering on an EARLIER ladder step (spec `docs/SWING_EARLYSTEP_SPEC.md`, `study_swing_earlystep.mjs` → `swing_earlystep.json` + every trade; smoke 1/1 = exact reproduction of Phase 4B). Book §5H.**
+  - **0 / 24 pass. Across 4B-4D: 0 / 60.**
+  - **The trade-off is priced:** reward : risk 0.44 → 2.8 as entries get earlier, but the target-hit rate falls in proportion, staying 3-7 pt under breakeven. Examples: 4H on the 1H flip hit 49 % vs 52 % needed (+0.04 R); 15m on the 1m flip 30 % vs 34 % (−0.11 R).
+  - **Verdict:** the ladder is context, not an entry. 4H / 1D longs least bad (drift).

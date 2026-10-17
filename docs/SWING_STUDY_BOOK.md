@@ -46,6 +46,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "yes write the rules for silver as extra evidence"; then "Yes, run it as written" | Phase 3C run and recorded (§5D) |
 | 2026-10-17 | "yes write the Phase 4 rules"; then "Yes, run it as written" | Phase 4A understanding written (§5E); Phase 4B trade test run (§5F) |
 | 2026-10-17 | "yes write the rules for the tighter stop version"; then "Yes, run it as written" | Phase 4C run and recorded (§5G) |
+| 2026-10-17 | "yes write the rules for the earlier ladder step entry"; then "Yes, run it as written" | Phase 4D run and recorded (§5H) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -715,6 +716,58 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 5. **Nothing is wired live.**
 
 
+## 5H. Phase 4D: entering on an EARLIER ladder step (`docs/SWING_EARLYSTEP_SPEC.md`; results `data/master/swing_earlystep.json`; every trade `docs/swing_book/phase4d_all_trades.csv.gz`)
+
+### 5H.1 Rules (pre-registered, shown, approved 2026-10-17: "Yes, run it as written")
+
+- **The Phase 4B engine unchanged:** live causal trigger, next-1m-open entry at the ask, stop beyond the extreme (P ∓ 0.10 × ATR14 of the anchor), E1 = 1R, E2 = P ± 3 × ATR14(anchor), time stop 20 anchor candles, stop first, random control.
+- **The trigger timeframe is EARLIER:**
+  - Z2 = two steps below (3m / 15m / 2H / 6H for 15m / 1H / 4H / 1D);
+  - Z3 = three steps below (1m / 5m / 1H / 4H).
+- **Cells:** 24, K = 24.
+- **Smoke:** `smoke_swing_earlystep` 1/1, CONSISTENCY: with Z = one step below, the engine reproduces all 51,403 Phase 4B trades exactly.
+
+### 5H.2 Results (OOS; TRAIN mean R in brackets): **0 of 24 cells pass**
+
+| Cell | n (per day) | WR | mean R | distance from extreme at entry (ATR) | E2 reward : risk | E2 target hit | verdict |
+|---|---|---|---|---|---|---|---|
+| 15m long Z2 E1 / E2 | 5,155 / 5,237 (3.7) | 47.0 / 50.9 % | −0.088 / −0.088 (−0.16 / −0.17) | 1.54 | 0.89 | 46 % | FAIL |
+| 15m short Z2 E1 / E2 | 5,498 / 6,003 (4.0 / 4.4) | 46.5 / 43.8 % | −0.090 / −0.111 (−0.22 / −0.22) | 1.29 | 1.24 | 39 % | FAIL |
+| 15m long Z3 E1 / E2 | 8,333 / 7,867 (6.0 / 5.7) | 45.4 / 34.8 % | −0.128 / −0.112 (−0.23 / −0.24) | 0.95 | 1.91 | 30 % | FAIL |
+| 15m short Z3 E1 / E2 | 10,276 / 10,076 (7.4 / 7.3) | 44.8 / 26.5 % | −0.144 / −0.182 (−0.34 / −0.34) | 0.71 | 2.80 | 22 % | FAIL |
+| 1H long Z2 E1 / E2 | 1,134 / 1,214 (0.8 / 0.9) | 49.2 / 54.3 % | −0.026 / −0.028 (−0.09 / −0.12) | 1.62 | 0.81 | 50 % | FAIL |
+| 1H short Z2 E1 / E2 | 1,286 / 1,375 (0.9 / 1.0) | 45.2 / 47.0 % | −0.100 / −0.100 (−0.08 / −0.09) | 1.46 | 1.01 | 43 % | FAIL |
+| 1H long Z3 E1 / E2 | 1,819 / 1,746 (1.3) | 47.9 / 40.3 % | −0.054 / −0.011 (−0.12 / −0.14) | 1.04 | 1.73 | 34 % | FAIL |
+| 1H short Z3 E1 / E2 | 2,327 / 2,243 (1.7 / 1.6) | 46.4 / 31.5 % | −0.094 / −0.149 (−0.13 / −0.17) | 0.86 | 2.22 | 26 % | FAIL |
+| 4H long Z2 E1 / E2 | 201 / 250 (0.15 / 0.18) | 56.2 / 68.0 % | +0.074 / +0.007 (−0.01 / −0.07) | 2.08 | 0.44 | 65 % | FAIL |
+| 4H short Z2 E1 / E2 | 230 / 261 | 46.5 / 61.7 % | −0.060 / −0.074 (+0.03 / +0.01) | 2.00 | 0.49 | 60 % | FAIL |
+| 4H long Z3 E1 / E2 | 318 / 342 (0.23 / 0.25) | 51.9 / 56.1 % | +0.025 / +0.043 (−0.03 / −0.03) | 1.51 | 0.93 | 49 % | FAIL |
+| 4H short Z3 E1 / E2 | 355 / 370 | 46.5 / 48.1 % | −0.071 / −0.077 (−0.03 / +0.02) | 1.44 | 1.01 | 44 % | FAIL |
+| 1D (eight cells) | 52-86 | 40-62 % | longs +0.07 to +0.16; shorts −0.04 to −0.13 | 1.2-1.5 | 1.0-1.5 | 38-55 % | described only |
+
+**Excess over random:** positive LB only for 15m Z3 long (E1 +0.059, LB +0.022; E2 +0.096, LB +0.046). The absolute R is still negative (−0.11 to −0.13) and TRAIN is negative, so FAIL.
+
+### 5H.3 Why: the trade-off is priced (measured, E2 longs)
+
+| Entry | target hit | breakeven hit for its reward : risk | mean R |
+|---|---|---|---|
+| 15m on the 3m flip | 46 % | 53 % | −0.088 |
+| 15m on the 1m flip | 30 % | 34 % | −0.112 |
+| 1H on the 15m flip | 50 % | 55 % | −0.028 |
+| 1H on the 5m flip | 34 % | 37 % | −0.011 |
+| 4H on the 2H flip | 65 % | 69 % | +0.007 |
+| 4H on the 1H flip | 49 % | 52 % | +0.043 |
+
+**At every ladder step, the hit rate sits 3-7 points BELOW the breakeven rate implied by the reward : risk.** Entering earlier buys a better reward : risk but loses accuracy almost exactly in proportion. The spread then tips every cell to about zero or negative.
+
+### 5H.4 What Phase 4D means
+
+1. **No ladder step gives a tradeable edge** with the stop beyond the extreme: one step below (4B), two or three steps below (4D), or a tighter stop (4C). 0 / 60 cells across 4B-4D.
+2. **The market prices the swing-reversal trade almost exactly.** The accuracy we can measure (which swing is real) is matched by the payoff geometry at every entry point. This is the "WR is a price" lesson at the scale of the whole ladder.
+3. **The longs on 4H / 1D are the least bad** (+0.01 to +0.16 R, PF 1.1-1.6). They are not significant, and they are consistent with gold's 2013-26 up-drift (see the standing memory "Gold's drift is the null").
+4. **The swing study's verdict is unchanged and now stronger:** the ladder is CONTEXT (which swing is real), not an ENTRY. Nothing is wired live.
+
+
 ## 6. Observations log (small details, kept even when untested)
 
 1. **Swings are fractal in ATR units.** The median swing is 5.1-5.7 ATR and confirms 6-7 candles after the extreme on EVERY timeframe from 1m to 1W. The same "shape" repeats at every scale. (Phase 1.)
@@ -770,6 +823,10 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
     - you cannot trade that knowledge with positive R after costs, with the stop beyond the extreme (too late) or with a tighter stop (noise).
     - Use the ladder as context / confirmation, not as an entry. (Phase 4C.)
 
+32. **The ladder trade is priced at every step.** Entering earlier raises the reward : risk (0.44 → 2.8) but lowers the target-hit rate almost exactly in proportion. It stays 3-7 points under breakeven, and the spread makes it ≤ 0. (Phase 4D, measured.)
+33. **Across Phases 4B-4D: 0 of 60 trade cells pass** (one step, two / three steps, tight stops). A swing-reversal entry built on this ladder has no edge after costs on 13 years of gold. (Phase 4D.)
+34. **The least-bad cells are 4H / 1D LONGS** (+0.01 to +0.16 R). Not significant, and consistent with gold's up-drift. Treat any "long-only works" impression as drift until tested against a drift-matched control. (Phase 4D.)
+
 ## 7. Open questions (for later phases)
 
 - ~~Phase 2: does the footprint add to the candle shape?~~ **Answered 2026-10-17 (§5):** mostly no. The candle shape at the same offset separates better; the footprint at the extreme marks extremes, not turns.
@@ -822,5 +879,8 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 | Phase 4C rules | `docs/SWING_TIGHTSTOP_SPEC.md` |
 | Phase 4C results | `data/master/swing_tightstop.json` |
 | Phase 4C every trade | `docs/swing_book/phase4c_all_trades.csv` (also `data/master/swing_tightstop_trades.csv`) |
+| Phase 4D rules | `docs/SWING_EARLYSTEP_SPEC.md` |
+| Phase 4D results | `data/master/swing_earlystep.json` |
+| Phase 4D every trade | `docs/swing_book/phase4d_all_trades.csv.gz` (gzip; also `data/master/swing_earlystep_trades.csv`) |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |
