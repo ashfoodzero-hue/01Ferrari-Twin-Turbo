@@ -17,7 +17,12 @@ const here = path.dirname(fileURLToPath(import.meta.url)), root = path.join(here
 console.log('\n██ MACRO MAGNET LIVE TICK SMOKE ██')
 const st = JSON.parse(execFileSync(process.execPath, ['--max-old-space-size=4096', path.join(here, 'macro_tick.mjs'), '--static'], { encoding: 'utf8', windowsHide: true }))
 await ok('--static writes nothing and returns the latest closed bar with long + short = 100 and the Pine side rule', async () => {
-  const g = st.gold; assert(g && g.long + g.short === 100); assert.equal(g.side, g.long >= g.short ? 'LONG' : 'SHORT'); assert(st.bar_t + 8 * 3600000 > Date.now() - 6 * 3600000, 'the scored bar is not the latest closed one')
+  const g = st.gold; assert(g && g.long + g.short === 100); assert.equal(g.side, g.long >= g.short ? 'LONG' : 'SHORT')
+  // WEEKEND-AWARE (2026-10-18): the wall-clock rule cannot hold while the market is closed (the week's last 4H bar is the latest there is).
+  // Market closed (the newest stored 1m bar is > 2 h old) → the scored bar must be the 4H bar CONTAINING the last traded minute; else the clock rule.
+  const { loadBars } = await import('../src/data/backfillReader.js'), m1 = (await loadBars('XAUUSD', '1m', { from: Date.now() - 6 * 86400000 })).bars, lastT = m1.at(-1)?.t ?? 0
+  if (Date.now() - lastT > 2 * 3600000) assert(lastT >= st.bar_t && lastT < st.bar_t + 4 * 3600000, `market closed: the last traded minute ${new Date(lastT).toISOString()} is not inside the scored 4H bar ${st.bar}`)
+  else assert(st.bar_t + 8 * 3600000 > Date.now() - 6 * 3600000, 'the scored bar is not the latest closed one')
 })
 await ok('PARITY: the live score equals magnetScores on the same closed NY 4H bars', async () => {
   const { ny } = await resample4h(streamBars('XAUUSD', '1m', { from: Date.now() - 200 * 86400000 }), ['ny'], { closedBy: st.bar_t + 4 * 3600000 })
