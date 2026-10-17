@@ -47,6 +47,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "yes write the Phase 4 rules"; then "Yes, run it as written" | Phase 4A understanding written (§5E); Phase 4B trade test run (§5F) |
 | 2026-10-17 | "yes write the rules for the tighter stop version"; then "Yes, run it as written" | Phase 4C run and recorded (§5G) |
 | 2026-10-17 | "yes write the rules for the earlier ladder step entry"; then "Yes, run it as written" | Phase 4D run and recorded (§5H) |
+| 2026-10-17 | "continue here" → "Ladder context on the chart" → "Yes, build and prove it" → "Yes, make it live now" | Ladder chip built, proven 4/4 and live (observation 35) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -826,6 +827,8 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 32. **The ladder trade is priced at every step.** Entering earlier raises the reward : risk (0.44 → 2.8) but lowers the target-hit rate almost exactly in proportion. It stays 3-7 points under breakeven, and the spread makes it ≤ 0. (Phase 4D, measured.)
 33. **Across Phases 4B-4D: 0 of 60 trade cells pass** (one step, two / three steps, tight stops). A swing-reversal entry built on this ladder has no edge after costs on 13 years of gold. (Phase 4D.)
 34. **The least-bad cells are 4H / 1D LONGS** (+0.01 to +0.16 R). Not significant, and consistent with gold's up-drift. Treat any "long-only works" impression as drift until tested against a drift-matched control. (Phase 4D.)
+
+35. **The ladder is now LIVE on the chart as context (2026-10-17).** The "Ladder" chip (15m / 1H / 4H / 1D) shows each live leg extreme, which lower timeframes confirmed at that exact price, and the study's OOS odds. It updates every 3 min while the market is open and is information only. Spec `docs/LADDER_CONTEXT_SPEC.md`; proofs `smoke_ladder_context` 4/4 (window parity, replay = study, no look-ahead, wording). (Use of the study.)
 
 ## 7. Open questions (for later phases)
 
