@@ -136,7 +136,9 @@ export async function* streamBars(symbol, tf, { from = -Infinity, to = Infinity 
     if (!line) continue
     let raw
     try { raw = JSON.parse(line) } catch { continue }
-    const b = normalizeBar(corr.size ? applyCorrection(raw, corr) : raw)
+    const fixed = corr.size ? applyCorrection(raw, corr) : raw
+    if (fixed === null) continue                                   // the minute was deleted by Polygon (a `deleted` correction line)
+    const b = normalizeBar(fixed)
     if (!b || !isSaneBar(b)) continue
     if (b.t < from || b.t > to) continue
     yield b

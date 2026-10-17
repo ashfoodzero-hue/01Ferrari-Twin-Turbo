@@ -1,0 +1,307 @@
+{
+ "at": "2026-10-17T12:50:05.569Z",
+ "window": [
+  "2026-10-12T21:00:00.000Z",
+  "2026-10-16T21:00:00.000Z"
+ ],
+ "series": {
+  "XAUUSD": {
+   "role": "trade",
+   "minutes": 4907456,
+   "first": "2009-09-27T21:45:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2019-09-04..2019-10-04",
+    "2020-10-14..2020-11-13",
+    "2025-04-18..2025-04-21"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5506,
+    "identical": 5506,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "XAGUSD": {
+   "role": "context",
+   "minutes": 4454258,
+   "first": "2013-07-14T22:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2019-09-04..2019-10-04",
+    "2020-10-14..2021-01-01",
+    "2025-04-18..2025-04-21"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5505,
+    "identical": 5505,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "EURUSD": {
+   "role": "dxy",
+   "minutes": 6289763,
+   "first": "2009-09-25T04:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2020-10-26..2020-11-13"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5714,
+    "identical": 5714,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "USDJPY": {
+   "role": "dxy",
+   "minutes": 6240522,
+   "first": "2009-09-27T21:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2019-09-16..2019-10-04",
+    "2020-10-14..2020-11-13"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5742,
+    "identical": 5742,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "GBPUSD": {
+   "role": "dxy",
+   "minutes": 6264472,
+   "first": "2009-09-25T04:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2020-10-26..2020-11-13"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5742,
+    "identical": 5742,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "USDCAD": {
+   "role": "dxy",
+   "minutes": 6221815,
+   "first": "2009-09-25T04:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2019-09-26..2019-10-04",
+    "2020-10-14..2020-11-13"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5742,
+    "identical": 5742,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "USDSEK": {
+   "role": "dxy",
+   "minutes": 6155327,
+   "first": "2009-09-27T21:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2019-09-16..2019-10-04",
+    "2020-10-14..2021-01-01"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5743,
+    "identical": 5743,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "USDCHF": {
+   "role": "dxy",
+   "minutes": 6238971,
+   "first": "2009-09-25T04:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "holes_since_2013": [
+    "2019-09-26..2019-10-04",
+    "2020-10-14..2020-11-13",
+    "2021-04-29..2021-06-08"
+   ],
+   "holes_not_at_polygon": [],
+   "truth_window": {
+    "polygon": 5743,
+    "identical": 5743,
+    "different": 0,
+    "missing": 0,
+    "extra": 0
+   },
+   "volume_field_in_study_data": false
+  },
+  "GOLD_FUT": {
+   "minutes": 715230,
+   "first": "2024-10-09T00:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "contracts": [
+    "GCZ4",
+    "GCG5",
+    "GCJ5",
+    "GCM5",
+    "GCQ5",
+    "GCZ5",
+    "GCG6",
+    "GCJ6",
+    "GCM6",
+    "GCQ6",
+    "GCZ6"
+   ],
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "truth_window": {
+    "polygon": 5519,
+    "identical": 5519,
+    "different": 0,
+    "missing": 0
+   }
+  },
+  "SILVER_FUT": {
+   "minutes": 689222,
+   "first": "2024-10-17T00:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "contracts": [
+    "SIZ4",
+    "SIH5",
+    "SIK5",
+    "SIN5",
+    "SIU5",
+    "SIZ5",
+    "SIH6",
+    "SIK6",
+    "SIN6",
+    "SIU6",
+    "SIZ6"
+   ],
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "truth_window": {
+    "polygon": 5355,
+    "identical": 5355,
+    "different": 0,
+    "missing": 0
+   }
+  },
+  "WTI": {
+   "minutes": 707779,
+   "first": "2024-10-09T00:00:00.000Z",
+   "last": "2026-10-16T20:59:00.000Z",
+   "contracts": [
+    "CLX4",
+    "CLZ4",
+    "CLF5",
+    "CLG5",
+    "CLH5",
+    "CLJ5",
+    "CLK5",
+    "CLM5",
+    "CLN5",
+    "CLQ5",
+    "CLU5",
+    "CLV5",
+    "CLX5",
+    "CLZ5",
+    "CLF6",
+    "CLG6",
+    "CLH6",
+    "CLJ6",
+    "CLK6",
+    "CLM6",
+    "CLN6",
+    "CLQ6",
+    "CLU6",
+    "CLV6",
+    "CLX6",
+    "CLZ6"
+   ],
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "truth_window": {
+    "polygon": 5494,
+    "identical": 5494,
+    "different": 0,
+    "missing": 0
+   }
+  },
+  "GLD": {
+   "minutes": 351989,
+   "first": "2024-10-01T08:03:00.000Z",
+   "last": "2026-10-16T23:59:00.000Z",
+   "contracts": null,
+   "dup": 0,
+   "out_of_order": 0,
+   "invalid_ohlc": 0,
+   "truth_window": {
+    "polygon": 2858,
+    "identical": 2858,
+    "different": 0,
+    "missing": 0
+   }
+  }
+ },
+ "failures": [],
+ "gold_fut_vs_cme": {
+  "same_contract_minutes": 682457,
+  "identical_price_and_volume": 682457
+ },
+ "recording_audit": {
+  "at": "2026-10-17T12:27:23.871Z",
+  "ok": true
+ },
+ "ok": true
+}

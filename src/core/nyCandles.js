@@ -31,14 +31,15 @@ const gridStart = (t, ms) => { const off = nyOffsetMs(t), local = t + off; retur
  *  (Christmas, New Year, Good Friday: 1-2 minutes each; TradingView has no candle and does NOT count them for 2D/3D).
  *  Drops break minutes and every trading date with fewer than MIN_SESSION_MINUTES minutes. Returns { bars, dropped }. */
 export const MIN_SESSION_MINUTES = 60
-export function cleanForTv(m1) {
+export function cleanForTv(m1, { realVolume = false, keepBreakHour = false } = {}) {   // keepBreakHour: GLD (US extended hours trade 17:00-18:00 New York)
   const nyHour = (t) => { const local = t + nyOffsetMs(t); return Math.floor((local % DAY + DAY) % DAY / H) }
-  const kept = m1.filter((b) => nyHour(b.t) !== 17), per = new Map()
+  const kept = keepBreakHour ? m1.slice() : m1.filter((b) => nyHour(b.t) !== 17), per = new Map()
   for (const b of kept) { const d = tradingDate(b.t); per.set(d, (per.get(d) || 0) + 1) }
   // SPOT `v` IS NOT VOLUME (audit 2026-10-17): it is Polygon's quote/tick count and Polygon's own spot-gold quote feed thinned ~100× in
   // 2021-2025 (14:00-15:00 UTC: 18-35 k quotes/h in 2014-19, 150-200 in 2021-25, 12.7 k in 2026). It is DROPPED here so no study can read it
   // as volume. Real volume = GOLD_FUT (Polygon CME) / Databento footprints / GLD — 2024-10 onward only (Ashraf: no purchase for older years).
-  const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES).map((b) => ({ t: b.t, o: b.o, h: b.h, l: b.l, c: b.c }))
+  // realVolume: true ONLY for exchange series (GOLD_FUT, SILVER_FUT, WTI, GLD) — keeps their real `v` and contract `tk`.
+  const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES).map((b) => realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c })
   return { bars, dropped: { break_minutes: m1.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
 }
 
@@ -65,10 +66,12 @@ export function candleOpen(t, tf) {
 export function buildCandles(m1, tf) {
   if (!TFS.includes(tf)) throw new Error('nyCandles: unsupported tf ' + tf)
   const out = []; let cur = null, curKey = null
+  // real volume (exchange series only — spot bars carry no `v` after cleanForTv) is summed; a candle spanning a contract change is `roll: true`
   for (const b of m1) { const k = candleOpen(b.t, tf)
-    if (cur && k === curKey) { if (b.h > cur.h) cur.h = b.h; if (b.l < cur.l) cur.l = b.l; cur.c = b.c; cur.n++; cur.close_t = b.t + MIN; continue }
+    if (cur && k === curKey) { if (b.h > cur.h) cur.h = b.h; if (b.l < cur.l) cur.l = b.l; cur.c = b.c; cur.n++; cur.close_t = b.t + MIN
+      if (b.v != null) cur.v += b.v; if (b.tk && b.tk !== cur.tk) { cur.roll = true; cur.tk = b.tk }; continue }
     if (cur) out.push(cur)
-    cur = { t: k, o: b.o, h: b.h, l: b.l, c: b.c, n: 1, open_t: k, close_t: b.t + MIN, td: tradingDate(b.t) }; curKey = k }
+    cur = { t: k, o: b.o, h: b.h, l: b.l, c: b.c, n: 1, open_t: k, close_t: b.t + MIN, td: tradingDate(b.t), ...(b.v != null ? { v: b.v } : {}), ...(b.tk ? { tk: b.tk, roll: false } : {}) }; curKey = k }
   if (cur) out.push(cur)
   return out
 }

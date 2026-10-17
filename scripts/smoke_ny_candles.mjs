@@ -13,11 +13,12 @@ import { HISTORY_CONTINUOUS_FROM } from '../src/core/paths.js'
 
 let n = 0, failed = 0
 const ok = async (name, fn) => { try { await fn(); n++; console.log('  ✓ ' + name) } catch (e) { failed++; console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
-const ref = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'tv_anchor_reference.json'), 'utf8'))
+const SYM = process.argv[2] || 'XAUUSD'   // 2026-10-17: also XAGUSD (reference tv_anchor_reference_XAGUSD.json)
+const ref = JSON.parse(fs.readFileSync(path.join(TURBO.master, SYM === 'XAUUSD' ? 'tv_anchor_reference.json' : `tv_anchor_reference_${SYM}.json`), 'utf8'))
 const MAP = { '1': '1m', '3': '3m', '5': '5m', '15': '15m', '30': '30m', '540': '9H', '360': '6H', '240': '4H', '180': '3H', '120': '2H', '60': '1H', '1D': '1D', '2D': '2D', '3D': '3D', '1W': '1W', '1M': '1M' }
-console.log('\n██ NY CANDLES SMOKE (TradingView parity) ██')
+console.log('\n██ NY CANDLES SMOKE (TradingView parity) — ' + SYM + ' ██')
 const from = Math.min(...Object.values(ref.res).map((r) => r.bars[0][0] * 1000)) - 40 * 86400000
-const raw = (await loadBars('XAUUSD', '1m', { from: Math.max(from, HISTORY_CONTINUOUS_FROM) })).bars, cleaned = cleanForTv(raw), M = cleaned.bars
+const raw = (await loadBars(SYM, '1m', { from: Math.max(from, HISTORY_CONTINUOUS_FROM) })).bars, cleaned = cleanForTv(raw), M = cleaned.bars
 console.log('  cleaning: ' + JSON.stringify(cleaned.dropped))
 const lastMin = M.at(-1).t
 const report = {}
@@ -41,7 +42,7 @@ for (const [res, tf] of Object.entries(MAP)) await ok(`${tf}: every TradingView 
   assert(T.length >= 10, 'overlap too small')
   assert.equal(missing.length, 0, 'TradingView opens we lack: ' + missing.slice(0, 5).map((b) => new Date(b.t).toISOString()).join(', '))
   assert.equal(extra.length, 0, 'our opens TradingView lacks: ' + extra.slice(0, 5).map((b) => new Date(b.t).toISOString()).join(', '))
-  assert(med(dh) < 2 && med(dl) < 2, 'OHLC disagree by more than $2 median (feed difference too large)')
+  const px = T.at(-1).c; assert(med(dh) < 0.0005 * px && med(dl) < 0.0005 * px, 'OHLC disagree by more than 0.05 % median (feed difference too large)')
 })
 await ok('synthetic: session rules (17:00 open = next trading date · 9H cut at 17:00 · DST · 2D through a weekend · month by trading date)', async () => {
   // Wed 2026-10-14 17:00 EDT = 21:00 UTC belongs to trading date Thu 10-15
@@ -54,5 +55,5 @@ await ok('synthetic: session rules (17:00 open = next trading date · 9H cut at 
   const h9 = buildCandles(mins, '9H').map((b) => new Date(b.t).toISOString().slice(11, 16))
   assert.deepEqual(h9, ['21:00', '06:00', '15:00'])   // 17:00, 02:00, 11:00 New York (EDT)
 })
-fs.writeFileSync(path.join(TURBO.master, 'ny_candles_parity.json'), JSON.stringify({ at: new Date().toISOString(), reference: 'tv_anchor_reference.json', report }, null, 1))
+fs.writeFileSync(path.join(TURBO.master, SYM === 'XAUUSD' ? 'ny_candles_parity.json' : `ny_candles_parity_${SYM}.json`), JSON.stringify({ at: new Date().toISOString(), reference: 'tv_anchor_reference.json', report }, null, 1))
 console.log(failed ? `✗ NY CANDLES SMOKE: ${n} passed, ${failed} failed` : `✅ NY CANDLES SMOKE: ${n} passed, 0 failed`)

@@ -24,7 +24,14 @@ export function loadCorrections(file) {
 }
 
 /** The corrected bar for a store bar (or the bar itself). Pure. */
-export const applyCorrection = (bar, map) => { const c = map?.get(bar.t); return c ? { ...c } : bar }
+// DELETION (2026-10-17, measured: Polygon published EURUSD 2026-10-13 00:00-00:28 live — the stream verified them against Polygon's own CA
+// aggregate — then REMOVED them from its final history). A correction line with `deleted: true` removes that minute at read time → null.
+export const applyCorrection = (bar, map) => { const c = map?.get(bar.t); return c ? (c.deleted ? null : { ...c }) : bar }
+/** Append one deletion line (provenance mandatory): the minute t no longer exists in Polygon's current data. */
+export function appendDeletion(file, t, meta) {
+  if (!meta?.src || !meta?.ver) throw new Error('appendDeletion: src and ver are mandatory (provenance)')
+  fs.appendFileSync(file, JSON.stringify({ t, deleted: true, ...meta, corrected_at: new Date().toISOString() }) + '\n')
+}
 
 /** Append one correction line (provenance mandatory). */
 export function appendCorrection(file, bar, meta) {

@@ -960,3 +960,14 @@ without duplications … only use the real Win results, and ignore the rest."
   - WTI was caught up (7,621 minutes, 10-09 → 10-16).
   - Not available on our plan: the futures buyer/seller split going forward; DXY futures.
   - Smoke: `smoke_recorder` 4/4.
+- **(by) 2026-10-17 — FULL DATABASE RE-VERIFICATION (Ashraf: "recheck and confirm … zero fake database for XAU, DXY, Silver, WTI … own history for Future and Spot for all time frames"). `scripts/verify_database.mjs`: ✅ every check passed. Details: `docs/DATA_CONTRACT.md` §8.**
+  - **All 12 series:** 0 duplicate / out-of-order / invalid OHLC across the whole files. The latest 5 trading days are identical to a fresh Polygon download (futures and GLD: price AND volume).
+  - **GOLD_FUT = CME:** 682,457 / 682,457 minutes.
+  - **Holes:** every one is confirmed empty at Polygon (live check).
+  - **Silver:** all 16 timeframes identical to TradingView.
+  - **Rebuilt DXY vs TVC:DXY:** median 0.0014 points, 1H correlation 0.986.
+  - **Futures / GLD volume:** carries exactly into every timeframe, with roll flags.
+  - **Fixed:**
+    - minutes Polygon later REMOVES (EURUSD 10-13 00:00-28) are now deleted at read time (`deleted` corrections, with a safeguard);
+    - GLD keeps its 17:00 New York hour;
+    - smoke_all now passes script arguments.

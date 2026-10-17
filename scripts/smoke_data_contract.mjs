@@ -37,3 +37,11 @@ await ok('GLD 1m (real share volume) present from 2024-10 · macro series presen
   assert(ff.length > 17000 && Object.keys(prog.failed).length === 0 && prog.done.length >= 692)
 })
 console.log(failed ? `✗ DATA CONTRACT SMOKE: ${n} passed, ${failed} failed` : `✅ DATA CONTRACT SMOKE: ${n} passed, 0 failed`)
+// (2026-10-17) real exchange volume carries into every timeframe: the sum of candle volume = the sum of 1m volume on all 16 timeframes
+{ const { cleanForTv, buildCandles, TFS } = await import('../src/core/nyCandles.js')
+  await ok('futures + GLD: candle volume on every timeframe (1m … 1M) = the 1m volume; candles spanning a contract change are flagged roll', async () => {
+    for (const a of ['GOLD_FUT', 'SILVER_FUT', 'WTI', 'GLD']) {
+      const { bars } = cleanForTv(rd(H('history', a, '1m.jsonl')), { realVolume: true, keepBreakHour: a === 'GLD' }), tot = bars.reduce((s, b) => s + b.v, 0)
+      for (const tf of TFS) { const c = buildCandles(bars, tf), sv = c.reduce((s, x) => s + (x.v || 0), 0); assert(Math.abs(sv - tot) <= 1e-9 * tot, `${a} ${tf}: ${sv} vs ${tot}`) }
+      if (a !== 'GLD') assert(buildCandles(bars, '1D').some((x) => x.roll), a + ': no roll flagged on any day') } })
+  console.log(failed ? `✗ DATA CONTRACT SMOKE (with volume): ${n} passed, ${failed} failed` : `✅ DATA CONTRACT SMOKE (with volume): ${n} passed, 0 failed`) }

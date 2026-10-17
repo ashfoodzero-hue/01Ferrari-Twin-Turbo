@@ -112,3 +112,26 @@ These take spot XAUUSD bars, so their volume component uses the tick count above
 **First audit, 2026-10-17 (9 days):**
 - every spot series has 3 holes, all provider outages (Polygon has no bars either), 0 misses on our side, 0 duplicates;
 - the futures holes are minutes with no trades (silver futures is thinner).
+
+## 8. Full verification, 2026-10-17 (`scripts/verify_database.mjs` → `data/master/database_verification.json`)
+
+| Series | Stored minutes | Structure (dup / order / OHLC) | Latest 5 trading days vs a FRESH Polygon download |
+|---|---|---|---|
+| XAUUSD spot | 4.91 M | 0 / 0 / 0 | 5,506 / 5,506 identical |
+| XAGUSD spot | 4.45 M | 0 / 0 / 0 | 5,505 / 5,505 identical |
+| EURUSD, USDJPY, GBPUSD, USDCAD, USDSEK, USDCHF (the DXY) | 6.2-6.3 M each | 0 / 0 / 0 | all identical (5,714-5,743 each) |
+| GOLD_FUT | 715 k | 0 / 0 / 0 | 5,519 / 5,519 identical, price AND volume |
+| SILVER_FUT | 689 k | 0 / 0 / 0 | 5,355 / 5,355 identical, price AND volume |
+| WTI | 708 k | 0 / 0 / 0 | 5,494 / 5,494 identical, price AND volume |
+| GLD | 352 k | 0 / 0 / 0 | 2,858 / 2,858 identical, price AND volume |
+
+- **GOLD_FUT vs the CME exchange feed:** 682,457 / 682,457 same-contract minutes identical (price and volume).
+- **Every hole is a Polygon hole:** checked live, Polygon has no daily bar inside any of them. Each DXY pair has its own holes (for example USDSEK 2020-10-14 → 2021-01-01); a rebuilt DXY minute exists only when all six pairs exist.
+- **Timeframes vs Ashraf's TradingView:**
+  - XAUUSD and XAGUSD: every candle open identical on all 16 timeframes (`smoke_ny_candles.mjs [XAUUSD|XAGUSD]`).
+  - Our rebuilt DXY vs TVC:DXY: median difference 0.0014 index points; 1H move correlation 0.986, the same direction 95 %.
+  - TVC:DXY uses ICE's own (historically changing) session, so our DXY candles are deliberately on the GOLD grid.
+- **Real volume on every timeframe:** for futures and GLD, the sum of candle volume equals the 1m volume on all 16 timeframes. Candles that span a contract change are flagged `roll`.
+  - GLD uses `keepBreakHour` (it trades 17:00-18:00 New York).
+  - 2,226 GLD minutes (0.6 %) fall in Friday-evening extended hours or holidays when gold is closed, so there is no gold candle for them.
+- **Deletions:** Polygon REMOVED 29 EURUSD minutes (2026-10-13 00:00-00:28) after first publishing them live. `reconcile_1m.mjs` now writes `deleted` corrections for such minutes (only ≥ 6 h old, with Polygon data on both sides), and the reader skips them.
