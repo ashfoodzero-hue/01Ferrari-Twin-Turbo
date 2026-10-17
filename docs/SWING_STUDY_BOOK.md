@@ -40,6 +40,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "recheck and confirm that our database is correct and zero fake database …" | `verify_database.mjs`: all checks passed (§2.7) |
 | 2026-10-17 | "after you confirm that our data base is 100% correct then you can start next phase" | Phase 1 rules written, shown, approved: **"Yes, run it as written"** |
 | 2026-10-17 | "yes write the Phase 2 rules … make a full book … save everything" | Phase 2 rules (§5); this book |
+| 2026-10-17 | Phase 2: "Yes, run it as written" | Phase 2 run and recorded (§5) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -274,32 +275,90 @@ Polygon prints stray minutes in the 17:00 break and on holiday stubs (Christmas,
 
 ---
 
-## 5. Phase 2: the footprint at swing points (`docs/SWING_FOOTPRINT_SPEC.md`)
+## 5. Phase 2: the footprint at swing points (`docs/SWING_FOOTPRINT_SPEC.md`; results `docs/SWING_FOOTPRINT_ATLAS.md`; complete tables `docs/swing_book/phase2/`)
 
-**Status 2026-10-17: rules WRITTEN, waiting for Ashraf's go. No number computed.**
+### 5.1 Rules (pre-registered, shown, approved 2026-10-17: "Yes, run it as written")
 
-**Question:** does the order flow inside the swing candles (who was aggressive, who absorbed, where the volume sat) separate real swings from failed extremes, and does it do so earlier than the candle shape?
+- **Question:** does the order flow inside the swing candles separate real swings from failed extremes, and earlier than the candle shape?
+- **Data:** Databento CME gold footprints (exchange aggressor side), 2024-10-01 → 2026-10-08, joined to the spot candles by candle OPEN time. Roll candles are excluded.
+- **Events:** EXACTLY Phase 1's (the swings come from the full 13-year spot series, so they are identical), restricted to the window.
+- **Split:** TRAIN → OOS from 2025-12-04.
+- **Measures, at offsets −3 … +3 (addendum A applies):**
+  - delta (fraction terciles + sign);
+  - POC location;
+  - volume share in the bottom / top 10 % of the range;
+  - aggressive selling at the low / buying at the high;
+  - stacked imbalances (≥ 3 levels, 3 : 1);
+  - absorption (≥ 15 % seller volume at the low + close in the upper half, and the mirror);
+  - relative volume vs the 20 previous candles;
+  - summed delta of −3 … 0;
+  - delta divergence (a new low vs −3 … −1 with positive delta, and the mirror).
+- **FINDING:** Holm over footprint measures only. Candle-shape measures of the same events are counted as a REFERENCE (head-to-head), never in the family.
+- **Smoke:** `smoke_swing_footprint` 5/5 (planted absorption found 100 % vs 0 %; roll candles skipped).
 
-**Data:** Databento CME footprints, 2024-10-01 → 2026-10-08, joined to the spot candles by time. Roll candles are excluded.
+### 5.2 Results per timeframe
 
-**Timeframes:** 1m → 4H tested; 6H+ described only.
+| TF | window candles | footprint candles (roll) | swings H (TRAIN+OOS) | swings L | failed H / L | FINDINGS H / L |
+|---|---|---|---|---|---|---|
+| 1m | 706,429 | 708,020 (0) | 11,701+7,476 | 11,686+7,486 | 23,554 / 22,770 | 37 / 36 |
+| 3m | 235,804 | 237,386 (0) | 3,591+2,391 | 3,590+2,390 | 8,364 / 7,876 | 19 / 27 |
+| 5m | 141,537 | 142,647 (0) | 2,181+1,435 | 2,180+1,436 | 5,083 / 4,671 | 12 / 22 |
+| 15m | 47,229 | 47,626 (0) | 703+488 | 703+488 | 1,807 / 1,398 | 5 / 4 |
+| 30m | 23,641 | 23,828 (0) | 365+242 | 364+242 | 869 / 700 | 1 / 1 |
+| 1H | 11,835 | 11,925 (0) | 174+114 | 173+114 | 466 / 352 | 0 / 1 |
+| 2H | 6,184 | 6,227 (4) | 91+69 | 89+69 | 233 / 180 | 0 / 0 |
+| 3H | 4,130 | 4,159 (4) | 60+46 | 59+47 | 158 / 115 | 0 / 0 |
+| 4H | 3,106 | 3,123 (8) | 44+31 | 44+32 | 123 / 86 | 0 / 0 |
+| 6H | 2,074 | 2,084 (8) | 28+17 | 29+18 | 86 / 59 | described only |
+| 9H | 1,556 | 1,564 (8) | 19+11 | 20+11 | 69 / 42 | described only |
+| 1D | 520 | 522 (8) | 8+6 | 8+5 | 27 / 12 | described only |
 
-**Measures:**
-- delta (fraction + sign);
-- where the most-traded price sits (POC);
-- thin / heavy volume at the extreme;
-- aggressive selling at the low / buying at the high;
-- stacked imbalances ≥ 3 levels at 3 : 1;
-- absorption;
-- relative volume;
-- cumulative delta of −3 … 0;
-- delta divergence (a new low with positive delta).
+82 distinct footprint findings. By offset: −2: 1, −1: 1, **0: 4**, +1: 18, +2: 28, +3: 30. Almost all are AFTER the extreme.
 
-**Statistics:** the same as Phase 1, with its own 60/40 split inside the 2 years. A head-to-head vs the candle shape on the same events is reported.
+### 5.3 Head-to-head: the footprint vs the candle shape on the same events
 
-**Honest prior:** earlier footprint trade tests at levels found nothing tradeable; this is a different (descriptive) question.
+**The answer: the candle shape at the same offset is the stronger separator in almost every case.**
 
----
+| Footprint finding (15m / 5m example) | swing / failed / random | footprint gap | strongest candle-shape gap, same offset |
+|---|---|---|---|
+| +2 after a low trades HIGH relative volume | 33 / 19 / 28 (15m) | +14 | +2 is NOT bearish: −18 |
+| +1 after a low shows stacked BUY imbalances | 80 / 71 / 64 (15m) | +10 | +1 closes in its top third: +17 |
+| +2 after a high trades LOW relative volume | 27 / 43 / 30 (15m) | −16 | +2 is bearish: +26 |
+| +3 after a high trades HIGH relative volume | 36 / 16 / 34 (15m) | +20 | +3 sweep-high-reject: −18 |
+| +2 after a low has POSITIVE delta | 61 / 52 / 49 (5m) | +10 | +2 is bullish: +21 |
+| +3 after a low shows stacked BUY imbalances | 68 / 57 / 60 (5m) | +11 | +3 is bullish: +22 |
+| the low candle itself trades HIGH relative volume | 44 / 34 / 13 (5m) | +10 | the low candle is LARGE: +15 |
+
+### 5.4 The classic footprint "reversal signs" AT the extreme: measured, NOT separating
+
+Swing / failed / random %, OOS:
+
+| Sign | 1m | 5m | 15m | 1H |
+|---|---|---|---|---|
+| delta divergence at a low (new low, positive delta) | 39 / 38 / 10 | 41 / 42 / 10 | 44 / 41 / 11 | 51 / 48 / 12 |
+| delta divergence at a high | 42 / 40 / 11 | 46 / 46 / 12 | 52 / 48 / 14 | 67 / 51 / 16 (n 114, not significant) |
+| absorption at the low (as defined) | 9 / 9 / 9 | 2 / 2 / 1 | 0 / 0 / 0 | 0 / 0 / 0 |
+| summed delta of −3 … 0 positive, at lows | 25 / 24 / 48 | 27 / 27 / 48 | 29 / 32 / 47 | 45 / 44 / 47 |
+| high relative volume on the extreme candle (lows) | 42 / 37 / 14 | 44 / 34 / 13 ✅ | 42 / 33 / 13 | 38 / 34 / 14 |
+
+At/before-extreme footprint findings (all small):
+- 1m: high relative volume and stacked sell at highs, stacked buy at lows;
+- 3m: high relative volume and stacked buy at lows;
+- 5m and 30m: high relative volume at lows;
+- 1H: candle −2 with little aggressive buying at its high.
+
+### 5.5 What Phase 2 means
+
+1. **The order flow AT the extreme behaves like the candle shape at the extreme.**
+   - Delta divergence, heavy volume and selling into the low are 3-4× more common than at random candles, and about equally common at failed extremes.
+   - They mark an extreme being made, not one that will hold (see observation 3).
+2. **After the extreme, real swings show the reversal in the order flow too:**
+   - high relative volume and stacked imbalances in the new direction;
+   - positive delta after lows;
+   - failed extremes show LOW volume on those candles.
+   - But the plain candle direction / close at the same offset separates better (gaps of 15-26 points vs 10-20).
+3. **Two years of footprints:** 1H+ has too few swings to prove anything (0 findings on 1H+ except one).
+4. **Limitation, recorded:** the absorption definition (≥ 15 % of the candle's volume as selling in the bottom 10 % of its range) is almost never met on 15m+ (0 %). A looser definition would need a new pre-registered addendum.
 
 ## 6. Observations log (small details, kept even when untested)
 
@@ -326,9 +385,15 @@ Polygon prints stray minutes in the 17:00 break and on holiday stubs (Christmas,
 9. **Polygon's live feed can publish minutes it later removes** (EURUSD 2026-10-13 00:00-00:28). (Data.)
 10. **Polygon spot outages on 2026-10-13 22:14-16 and 2026-10-15 23:39-49 hit every symbol at once**: a provider-side outage, not ours. (Data.)
 
+11. **Delta divergence at an extreme is everywhere** (real swing 39-51 %, failed 38-48 %, random 10-16 %). Like sweeps and hammers, it marks an EXTREME, not a REAL turn. (Phase 2.)
+12. **Volume tells the follow-through.** Two candles after a real high, relative volume is HIGH 36 % vs 22 % for failed highs (15m); failed extremes' next candles are often LOW-volume (43 % vs 27 %). A real reversal leg is traded with conviction; a fake one is not. Still, the candle direction separates better. (Phase 2.)
+13. **Selling into a low is normal at every low.** Only 25-29 % of lows (real or failed) have positive summed delta over −3 … 0, vs 48 % of random candles. (Phase 2.)
+14. **Absorption as defined is almost never met above 5m** (0 % on 15m+). This is a definition limit, not proof that absorption doesn't exist. (Phase 2.)
+
 ## 7. Open questions (for later phases)
 
-- **Phase 2:** does the footprint at the extreme or at +1 add to the candle shape? Is absorption at the low a real-swing sign or just an extreme sign (like observation 3)?
+- ~~Phase 2: does the footprint add to the candle shape?~~ **Answered 2026-10-17 (§5):** mostly no. The candle shape at the same offset separates better; the footprint at the extreme marks extremes, not turns.
+- A looser absorption definition (observation 14) needs a new pre-registered addendum if wanted.
 - **Phase 3:**
   - when a 1H swing low forms, how many candles until 15m, 30m and 4H each print their first higher low?
   - Does the lower timeframe always flip first?
@@ -358,4 +423,6 @@ Polygon prints stray minutes in the 17:00 break and on holiday stubs (Christmas,
 | Phase 1 results | `docs/SWING_CANDLE_ATLAS.md`, `data/master/swing_candle_atlas.json` |
 | Phase 1 complete tables | `docs/swing_book/phase1/*.md`, `docs/swing_book/phase1_all_rows.csv` |
 | Phase 2 rules | `docs/SWING_FOOTPRINT_SPEC.md` |
+| Phase 2 results | `docs/SWING_FOOTPRINT_ATLAS.md`, `data/master/swing_footprint_atlas.json` |
+| Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |

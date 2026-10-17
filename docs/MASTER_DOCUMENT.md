@@ -1003,3 +1003,8 @@ without duplications … only use the real Win results, and ignore the rest."
     - candles +2 / +3 continue the same way (gaps of 15-25 points).
   - **4H and up: few or no findings.** 4H 2, 6H 5, 9H / 1D 0 (n 90-200), 2D+ described only.
   - Next: Phase 2 (footprint) and Phase 3 (flip ladder), each with its own pre-registered addendum.
+- **(ca) 2026-10-17 — SWING STUDY PHASE 2: CME footprint at swing points (spec `docs/SWING_FOOTPRINT_SPEC.md`, `study_swing_footprint.mjs` → `swing_footprint_atlas.json` → `docs/SWING_FOOTPRINT_ATLAS.md`; smoke 5/5). Recorded in full in `docs/SWING_STUDY_BOOK.md` §5 + appendix `docs/swing_book/phase2/` (9,960 rows).**
+  - **82 footprint findings, almost all AFTER the extreme.** Head-to-head on the same events: the candle shape at the same offset separates better (gaps of 15-26 pt vs 10-20).
+  - **AT the extreme, the classic signs mark an extreme, not a turn:** delta divergence 39-51 % real vs 38-48 % failed vs 10-16 % random; absorption 0-9 % everywhere; selling into the low is normal.
+  - **Follow-through:** real reversals trade high relative volume and stacked imbalances; failed ones are low-volume.
+  - 1H+ is underpowered (2 years).
