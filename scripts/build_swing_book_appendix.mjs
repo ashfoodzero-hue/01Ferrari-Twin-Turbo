@@ -55,3 +55,11 @@ phase('phase2', 'swing_footprint_atlas.json', 'Phase 2 footprint atlas')
     for (const [a, r] of Object.entries(A.anchors)) for (const side of ['L', 'H']) for (const [k, v] of Object.entries(r.sides[side].cells)) for (const sp of ['T', 'O']) { const o = v[sp]
       csv.push([a, side, k, sp, o.n, o.real, pc(o.p_real), pc(o.wilson_lo), pc(o.wilson_hi), o.n_without_sign, pc(o.p_real_without_sign), o.p ?? '', o.lead_min_median ?? '', sp === 'O' ? v.verdict : ''].join(',')) }
     fs.writeFileSync(path.join(OUT, 'phase3b_all_rows.csv'), csv.join('\n') + '\n'); console.log(`  phase3b: ${csv.length - 1} rows → docs/swing_book/phase3b_all_rows.csv`) } }
+// Phase 3C (silver / DXY) — every cell, both periods
+{ const f = path.join(TURBO.master, 'swing_silver_atlas.json')
+  if (fs.existsSync(f)) { const A = JSON.parse(fs.readFileSync(f, 'utf8')), csv = ['anchor,side,cell,period,pool,n,p_real,wilson_lo,wilson_hi,n_without,p_real_without,p,lead_min_median,verdict']
+    for (const [a, r] of Object.entries(A.anchors)) for (const side of ['L', 'H']) { const s = r.sides[side]
+      for (const sp of ['T', 'O']) { const o = s.R1[sp]; csv.push([a, side, 'ladder alone', sp, o.pool, o.n, pc(o.p_real), pc(o.wilson_lo), pc(o.wilson_hi), '', '', '', o.lead_min_median ?? '', 'REFERENCE'].join(',')) }
+      for (const [k, v] of Object.entries(s.A)) for (const sp of ['T', 'O']) { const o = v[sp]; csv.push([a, side, k, sp, o.pool, o.n, pc(o.p_real), pc(o.wilson_lo), pc(o.wilson_hi), o.n_without, pc(o.p_real_without), o.p ?? '', o.lead_min_median ?? '', sp === 'O' ? v.verdict : ''].join(',')) }
+      for (const sp of ['T', 'O']) { const o = s.B_wait_for_silver[sp]; csv.push([a, side, 'wait for silver (B)', sp, '', o.n, pc(o.p_real), pc(o.wilson_lo), pc(o.wilson_hi), `waited ${o.waited}`, '', '', `wait median ${o.wait_min_median ?? ''}`, 'DESCRIPTIVE'].join(',')) } }
+    fs.writeFileSync(path.join(OUT, 'phase3c_all_rows.csv'), csv.join('\n') + '\n'); console.log(`  phase3c: ${csv.length - 1} rows → docs/swing_book/phase3c_all_rows.csv`) } }

@@ -43,6 +43,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | Phase 2: "Yes, run it as written" | Phase 2 run and recorded (§5) |
 | 2026-10-17 | "yes write the Phase 3 rules"; then "Yes, run it as written" | Phase 3 run and recorded (§5B) |
 | 2026-10-17 | "yes write the rules for combining Phase 1 and Phase 3"; then "Yes, run it as written" | Phase 3B run and recorded (§5C) |
+| 2026-10-17 | "yes write the rules for silver as extra evidence"; then "Yes, run it as written" | Phase 3C run and recorded (§5D) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -486,6 +487,46 @@ At/before-extreme footprint findings (all small):
 5. **Method note:** median leads come from different pools (waiting for a later sign drops the fast confirmations), so they are not comparable across cells.
 
 
+## 5D. Phase 3C: silver and DXY as extra evidence on top of the ladder (`docs/SWING_SILVER_SPEC.md`; results `docs/SWING_SILVER_ATLAS.md`; complete rows `docs/swing_book/phase3c_all_rows.csv`)
+
+### 5D.1 Rules (pre-registered, shown, approved 2026-10-17: "Yes, run it as written")
+
+- **Same gold events as Phases 3 / 3B.** The ladder is gold's one-step-below timeframe confirming at the exact same extreme.
+- **Signs:** a silver swing of the same direction, or a DXY swing of the opposite direction, on the anchor timeframe or one step below:
+  - its extreme lies within ±3 anchor candles of gold's extreme;
+  - it was ALREADY CONFIRMED when gold's ladder flipped.
+
+  This is the knowable version of Phase 3's hindsight match.
+- **A. At the gold ladder flip:** ladder AND sign vs ladder AND NO sign, at the same moment (a fair split).
+- **B. Waiting for silver:** the decision moment is the later of the gold ladder flip and silver's confirmation. Descriptive.
+- **Smoke:** `smoke_swing_silver` 2/2, including CONSISTENCY: the ladder-alone cell reproduces Phase 3 exactly.
+
+### 5D.2 Results (OOS; with sign vs without sign; the ladder alone in the first column)
+
+| Anchor | ladder alone | silver step-below confirmed | silver anchor-TF confirmed | DXY step-below | DXY anchor-TF | silver + DXY (step) | waiting for silver (B) |
+|---|---|---|---|---|---|---|---|
+| 15m lows | 63 % (n 4,725) | 65 % vs 61 % (n 2,123) | 69 % vs 63 % (n 147) | 63 % vs 63 % | 62 % vs 63 % | 65 % vs 62 % | 67 % (n 3,286; 1,163 waited, median 15 min) |
+| 15m highs | 60 % | 61 % vs 58 % | 63 % vs 59 % (n 113) | 61 % vs 59 % | 68 % vs 59 % (n 229) | 62 % vs 59 % | 65 % |
+| 1H lows | 76 % (n 982) | 79 % vs 73 % (n 454) | 81 % vs 75 % (n 75) | 74 % vs 76 % | 79 % vs 75 % | 81 % vs 75 % (n 175) | 80 % (n 629; 175 waited, median 60 min) |
+| 1H highs | 69 % | 72 % vs 67 % | 62 % vs 69 % (n 55) | 69 % vs 69 % | 70 % vs 69 % | 71 % vs 68 % | 74 % |
+| 4H lows | 83 % (n 205) | 84 % vs 83 % (n 67) | 73 % (n 22) | 84 % vs 83 % | 90 % (n 20) | 88 % (n 25) | 85 % (n 79) |
+| 4H highs | 80 % | 82 % vs 79 % (n 76) | 71 % (n 21) | 79 % vs 81 % | 71 % (n 28) | 76 % (n 21) | 79 % (n 101) |
+| 1D lows | 68 % (n 50) | 82 % vs 57 % (n 22) — TRAIN 57 % vs 61 % (flips) | n 1 | 79 % (n 19) | n 1 | 88 % (n 8) | 83 % (n 35) |
+| 1D highs | 59 % | 63 % (n 24) | n 0 | 80 % (n 15) | n 0 | 88 % (n 8) | 65 % (n 37) |
+
+**Verdicts:**
+- **No cell is a FINDING.** All are "no evidence", "not above the ladder" (15m lows, silver step-below) or described only (n < 30).
+- The 1D cells look large but rest on 8-24 cases, and the TRAIN sign flips. They are noise until more data exists.
+
+### 5D.3 What Phase 3C means
+
+1. **Silver already confirmed adds a little (+1-6 points) but not provably.** The largest is 1H lows: 79 % vs 73 % without (TRAIN: 73 % vs 73 %, no difference).
+2. **DXY already confirmed adds nothing** (about 0 points).
+3. **Waiting for silver lifts the share a few points** (15m 63 → 67 %, 1H 76 → 80 %). It costs a short wait (median 15 min on 15m, 60 min on 1H) and drops about 30 % of cases. Descriptive only.
+4. **The ladder alone remains the sign.** Silver and DXY move WITH gold; when they confirm first, it slightly helps, but not enough to prove.
+5. **For the future:** the 1D silver / DXY cells (n 8-24) should be re-run once our own recorded history has grown (observation 24).
+
+
 ## 6. Observations log (small details, kept even when untested)
 
 1. **Swings are fractal in ATR units.** The median swing is 5.1-5.7 ATR and confirms 6-7 candles after the extreme on EVERY timeframe from 1m to 1W. The same "shape" repeats at every scale. (Phase 1.)
@@ -527,12 +568,15 @@ At/before-extreme footprint findings (all small):
 22. **A weak next candle does not cancel a ladder flip** (−2-7 points). Don't abandon a one-step-below flip because the next anchor candle closed weak. (Phase 3B.)
 23. **Selection effect on leads:** waiting for an extra sign removes the swings that confirm fastest, so the surviving cases show LONGER median leads. Never compare medians across differently filtered pools. (Phase 3B, method.)
 
+24. **Silver and DXY add little once gold's ladder has flipped.** Silver already confirmed: +1-6 points, not provable. DXY: about 0. The 1D cells look large (silver 82 % vs 57 %) but rest on 8-24 cases with a TRAIN sign flip. Re-run them when our own history is longer. (Phase 3C.)
+25. **Waiting for silver costs little time but drops about 30 % of cases** (15m: median 15 min, 1H: 60 min) for +4 points. (Phase 3C.)
+
 ## 7. Open questions (for later phases)
 
 - ~~Phase 2: does the footprint add to the candle shape?~~ **Answered 2026-10-17 (§5):** mostly no. The candle shape at the same offset separates better; the footprint at the extreme marks extremes, not turns.
 - A looser absorption definition (observation 14) needs a new pre-registered addendum if wanted.
 - ~~Phase 3 timing questions~~ **Answered 2026-10-17 (§5B):** the smaller timeframe flips first (95-99 %), one step below is evidence, DXY / silver do not lead.
-- NEW: does a CONFIRMED silver swing (or DXY) before gold's own confirmation add evidence on top of the ladder? (needs a pre-registered addendum)
+- ~~Does a CONFIRMED silver / DXY swing add evidence on top of the ladder?~~ **Answered 2026-10-17 (§5D):** not provably. Silver +1-6 points, DXY about 0. Re-test 1D later with more data.
 - ~~Combine Phase 1 (+1 closes strong) with Phase 3 (one-step-below flip)~~ **Answered 2026-10-17 (§5C):** no. The next candle adds nothing once the ladder has flipped.
 - (original Phase 3 questions, kept:)
   - when a 1H swing low forms, how many candles until 15m, 30m and 4H each print their first higher low?
@@ -570,5 +614,8 @@ At/before-extreme footprint findings (all small):
 | Phase 3B rules | `docs/SWING_COMBINE_SPEC.md` |
 | Phase 3B results | `docs/SWING_COMBINE_ATLAS.md`, `data/master/swing_combine_atlas.json` |
 | Phase 3B complete tables | `docs/swing_book/phase3b_all_rows.csv` |
+| Phase 3C rules | `docs/SWING_SILVER_SPEC.md` |
+| Phase 3C results | `docs/SWING_SILVER_ATLAS.md`, `data/master/swing_silver_atlas.json` |
+| Phase 3C complete rows | `docs/swing_book/phase3c_all_rows.csv` |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |

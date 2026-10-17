@@ -1023,3 +1023,8 @@ without duplications … only use the real Win results, and ignore the rest."
   - A weak next candle costs only 2-7 pt.
   - The strong next candle alone: 46-58 %.
   - The one-step-below flip already contains the next-candle information.
+- **(cd) 2026-10-17 — SWING STUDY PHASE 3C: silver / DXY as extra evidence (spec `docs/SWING_SILVER_SPEC.md`, `study_swing_silver.mjs` → `swing_silver_atlas.json` → `docs/SWING_SILVER_ATLAS.md`; smoke 2/2, incl. exact reproduction of Phase 3). Book §5D.**
+  - **No cell is a FINDING:** silver already confirmed +1-6 pt (1H lows 79 % vs 73 %, TRAIN flat), DXY about 0.
+  - Waiting for silver +4 pt for a short wait (15-60 min), dropping 30 % of cases.
+  - 1D cells (n 8-24, TRAIN sign flips) need more data.
+  - **The ladder alone stays the sign.**
