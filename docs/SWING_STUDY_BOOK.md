@@ -41,6 +41,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "after you confirm that our data base is 100% correct then you can start next phase" | Phase 1 rules written, shown, approved: **"Yes, run it as written"** |
 | 2026-10-17 | "yes write the Phase 2 rules … make a full book … save everything" | Phase 2 rules (§5); this book |
 | 2026-10-17 | Phase 2: "Yes, run it as written" | Phase 2 run and recorded (§5) |
+| 2026-10-17 | "yes write the Phase 3 rules"; then "Yes, run it as written" | Phase 3 run and recorded (§5B) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -360,6 +361,93 @@ At/before-extreme footprint findings (all small):
 3. **Two years of footprints:** 1H+ has too few swings to prove anything (0 findings on 1H+ except one).
 4. **Limitation, recorded:** the absorption definition (≥ 15 % of the candle's volume as selling in the bottom 10 % of its range) is almost never met on 15m+ (0 %). A looser definition would need a new pre-registered addendum.
 
+## 5B. Phase 3: the flip ladder, how Bear becomes Bull (`docs/SWING_LADDER_SPEC.md`; results `docs/SWING_LADDER_ATLAS.md`; complete tables `docs/swing_book/phase3/`)
+
+### 5B.1 Rules (pre-registered, shown, approved 2026-10-17: "Yes, run it as written")
+
+**Anchor swings:** 3× ATR ZigZag swings on 15m, 1H, 4H and 1D, 2013-07 → 2026-10. TRAIN → OOS from 2021-06-23.
+
+**"Timeframe X flipped at the same extreme":**
+- X confirmed its own swing at EXACTLY the same price, in an overlapping candle;
+- the flip time is the close of X's confirming candle;
+- X ranges over all 16 timeframes.
+
+**Measures:**
+- **A. The ladder on real swings:** the share flipped, the delay, flipped before the anchor confirmed, and the order of neighbouring timeframes.
+- **B. Evidence:**
+  - consider every anchor extreme (real or failed) that X flipped at before the anchor's outcome was known;
+  - P(real | X flipped) vs the base rate, with the lead before the anchor's confirmation;
+  - Holm, Wilson lower bound > base, same direction in TRAIN;
+  - fewer than 30 OOS → described only.
+- **C. DXY (opposite swing) and silver (same swing):** within ±3 anchor candles, the matching share, the lead / lag, and the same at failed gold extremes.
+
+**Smoke:** `smoke_swing_ladder` 2/2.
+- Synthetic exact matches pass.
+- On real data, 1H swings self-match 100 % at their own confirmation, and 15m flips at the same extreme for 99 % of 1H swings, always first.
+
+### 5B.2 A. The ladder on real swings (1H lows, OOS; the full tables for every anchor are in the atlas and appendix)
+
+| TF | flipped at the same low | median delay after the low candle | vs 1H confirmation | before 1H confirmed |
+|---|---|---|---|---|
+| 1m / 3m / 5m | 99 % | −24 min / −9 min / +5 min | ≈ −7 h | 100 % |
+| 15m | 99 % | 1.0 h | −5.3 h | 100 % |
+| 30m | 99 % | 3.0 h | −3.0 h | 97 % |
+| **1H (anchor)** | 100 % | 7.0 h | 0 | — |
+| 2H | 52 % | 15 h | +6 h | 0 % |
+| 3H / 4H | 36 % / 25 % | 1.0 d / 1.3 d | +14 h / +22 h | 0 % |
+| 6H / 9H | 16 % / 12 % | 2.0 d / 2.5 d | +1.6 d / +2.0 d | 0 % |
+| 1D / 2D / 3D / 1W / 1M | 4 / 3 / 2 / 1 / 0 % | 10 d / 19 d / 29 d / 60 d / 185 d | | 0 % |
+
+- **Order:** the smaller of two neighbouring timeframes flips first:
+  - 95-99 % of the time from 1m up to 2H;
+  - 86-89 % for 2H-6H;
+  - 6H vs 9H only 62 % (38 % ties: they share candle boundaries).
+- **Highs mirror lows almost exactly.** TRAIN and OOS shares match within a few points everywhere; no period flag.
+
+### 5B.3 B. Is a lower-timeframe flip EVIDENCE? (the knowable result; all FINDINGs pass OOS Holm, Wilson > base, same in TRAIN)
+
+| Anchor | lower timeframe flipped at the same extreme | real anchor swing when flipped (OOS) | base rate | TRAIN real / base | n flipped (OOS) | lead before the anchor confirmed |
+|---|---|---|---|---|---|---|
+| 15m lows | 3m / 5m | 52 % / **63 %** | 44 % | 52 / 62 vs 44 | 5,749 / 4,725 | 1.2 h / 55 min |
+| 15m highs | 3m / 5m | 48 % / **60 %** | 40 % | 50 / 61 vs 43 | 6,187 / 4,978 | 1.3 h / 1.0 h |
+| 1H lows | 15m / 30m | 58 % / **76 %** | 46 % | 55 / 73 vs 44 | 1,316 / 982 | 5.3 h / 3.0 h |
+| 1H highs | 15m / 30m | 52 % / **69 %** | 41 % | 55 / 72 vs 43 | 1,485 / 1,054 | 5.0 h / 3.0 h |
+| 4H lows | 1H / 2H / 3H | 57 % / 72 % / **83 %** | 46 % | 53 / 69 / 82 vs 42 | 347 / 267 / 205 | 22 h / 14 h / 4 h |
+| 4H highs | 1H / 2H / 3H | 51 % / 68 % / **80 %** | 39 % | 56 / 73 / 88 vs 43 | 383 / 280 / 205 | 19 h / 10 h / 3 h |
+| 1D lows | 9H (6H inconsistent) | **68 %** | 49 % | 59 vs 45 | 50 | 7.3 d |
+| 1D highs | 6H / 9H | 49 % / **59 %** | 36 % | 49 / 56 vs 35 | 71 / 59 | 6.3 d / 5.3 d |
+
+**No evidence:** 1m and 3m. They flip at almost every extreme, real or failed (1H: 1m flipped → 46 % vs base 46 %).
+
+**Pairs** (e.g. 15m + 30m on 1H) give the same as the larger timeframe alone: the larger one carries the information.
+
+### 5B.4 C. DXY and silver at the same moment (OOS)
+
+| Anchor | DXY opposite swing within ±3 candles: real / failed gold extremes | DXY extreme EARLIER than gold | silver same swing: real / failed | silver EARLIER than gold |
+|---|---|---|---|---|
+| 15m lows | 36 % / 24 % | 31 % (37 % same candle) | 55 % / 23 % | 23 % (55 % same) |
+| 1H lows | 40 % / 21 % | 31 % (38 % same) | 59 % / 22 % | 21 % (63 % same) |
+| 4H lows | 32 % / 24 % | 17 % (52 % same) | 53 % / 20 % | 19 % (64 % same) |
+| 1D lows (n 35) | 20 % / 14 % | 43 % | 63 % / 14 % | 23 % |
+
+- **DXY and silver do NOT lead gold.** Their turning extreme comes earlier only 17-35 % of the time (DXY) and 14-23 % (silver); mostly it is the same candle or later.
+- **But they "agree" much more at REAL gold swings than at failed ones:** silver 53-63 % vs 14-23 %; DXY 32-40 % vs 20-24 %.
+- This is a HINDSIGHT match (±3 candles includes the candles after), so it is descriptive, not a live signal.
+
+### 5B.5 What Phase 3 means: how Bear becomes Bull
+
+1. **The turn climbs the ladder from small to large timeframes, in order** (95-99 % up to 2H). 1m / 3m / 5m turn within minutes of the low; the anchor takes hours to confirm.
+2. **The flip of the timeframe ONE STEP BELOW is real evidence.** When it confirms at the very same extreme, the chance that the anchor swing is real rises:
+   - from about 40-49 % to 60-83 %;
+   - hours (1H / 4H) or days (1D) before the anchor confirms.
+3. **There is a trade-off between earlier and surer.** On a 4H low:
+   - 1H flipped → 57 %, 22 h early;
+   - 2H → 72 %, 14 h early;
+   - 3H → 83 %, 4 h early.
+4. **The very small timeframes (1m / 3m) flip at everything**, so on their own they mean nothing.
+5. **DXY and silver turn WITH gold, not before it.** They agree more at real swings, but that can only be seen afterwards.
+
+
 ## 6. Observations log (small details, kept even when untested)
 
 1. **Swings are fractal in ATR units.** The median swing is 5.1-5.7 ATR and confirms 6-7 candles after the extreme on EVERY timeframe from 1m to 1W. The same "shape" repeats at every scale. (Phase 1.)
@@ -390,11 +478,21 @@ At/before-extreme footprint findings (all small):
 13. **Selling into a low is normal at every low.** Only 25-29 % of lows (real or failed) have positive summed delta over −3 … 0, vs 48 % of random candles. (Phase 2.)
 14. **Absorption as defined is almost never met above 5m** (0 % on 15m+). This is a definition limit, not proof that absorption doesn't exist. (Phase 2.)
 
+15. **The ladder is orderly.** Each timeframe confirms the same low before the next larger one (95-99 % up to 2H), and only about half of 1H swings ever become 2H swings (52 %), a quarter 4H (25 %), 4 % 1D. Most swings stay small. (Phase 3.)
+16. **"One step below" is the sweet spot.** 30m for 1H, 3H for 4H, 5m for 15m, 9H for 1D give 60-83 % real vs a 36-49 % base. Two steps below is weaker but earlier. 1m / 3m carry nothing. (Phase 3.)
+17. **The same numbers in both periods.** TRAIN and OOS precision agree within about 5 points on every anchor (e.g. 4H lows with 3H flipped: TRAIN 82 %, OOS 83 %). The ladder looks like a structural property of price, not an era effect. (Phase 3.)
+18. **DXY does not lead gold at swings.** Its opposite turn is earlier only 17-35 % of the time (consistent with the earlier Turbo-2 finding "DXY co-moves, never leads"). (Phase 3.)
+19. **Silver agrees with real gold swings far more than with failed ones** (53-63 % vs 14-23 %), but only in hindsight (±3 candles). Whether a CONFIRMED silver swing before gold's confirmation adds evidence is not tested yet (open question). (Phase 3.)
+20. **Base rates:** of all anchor extremes with at least a 1 ATR pullback, about 40-49 % become real swings. Any "edge" must beat this, not 50 %. (Phase 3.)
+
 ## 7. Open questions (for later phases)
 
 - ~~Phase 2: does the footprint add to the candle shape?~~ **Answered 2026-10-17 (§5):** mostly no. The candle shape at the same offset separates better; the footprint at the extreme marks extremes, not turns.
 - A looser absorption definition (observation 14) needs a new pre-registered addendum if wanted.
-- **Phase 3:**
+- ~~Phase 3 timing questions~~ **Answered 2026-10-17 (§5B):** the smaller timeframe flips first (95-99 %), one step below is evidence, DXY / silver do not lead.
+- NEW: does a CONFIRMED silver swing (or DXY) before gold's own confirmation add evidence on top of the ladder? (needs a pre-registered addendum)
+- NEW: combine Phase 1 (+1 candle closes strong) with Phase 3 (one-step-below flip): is the joint precision higher?
+- (original Phase 3 questions, kept:)
   - when a 1H swing low forms, how many candles until 15m, 30m and 4H each print their first higher low?
   - Does the lower timeframe always flip first?
   - Do DXY / silver flip BEFORE gold?
@@ -424,5 +522,8 @@ At/before-extreme footprint findings (all small):
 | Phase 1 complete tables | `docs/swing_book/phase1/*.md`, `docs/swing_book/phase1_all_rows.csv` |
 | Phase 2 rules | `docs/SWING_FOOTPRINT_SPEC.md` |
 | Phase 2 results | `docs/SWING_FOOTPRINT_ATLAS.md`, `data/master/swing_footprint_atlas.json` |
+| Phase 3 rules | `docs/SWING_LADDER_SPEC.md` |
+| Phase 3 results | `docs/SWING_LADDER_ATLAS.md`, `data/master/swing_ladder_atlas.json` |
+| Phase 3 complete tables | `docs/swing_book/phase3/*.md`, `docs/swing_book/phase3_all_rows.csv` |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |

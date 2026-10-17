@@ -32,3 +32,20 @@ function phase(name, file, title) {
 fs.mkdirSync(OUT, { recursive: true })
 phase('phase1', 'swing_candle_atlas.json', 'Phase 1 candle atlas')
 phase('phase2', 'swing_footprint_atlas.json', 'Phase 2 footprint atlas')
+// Phase 3 (flip ladder) — every ladder / evidence / cross-asset row, both periods
+{ const f = path.join(TURBO.master, 'swing_ladder_atlas.json')
+  if (fs.existsSync(f)) { const A = JSON.parse(fs.readFileSync(f, 'utf8')), dir = path.join(OUT, 'phase3'); fs.mkdirSync(dir, { recursive: true })
+    const csv = ['part,anchor,side,item,period,n,share_or_real_given_flip,base,median_delay_or_lead_min,q1,q3,before_anchor_share,extra,verdict']
+    for (const [anc, r] of Object.entries(A.anchors)) { const md = [`# Phase 3 flip ladder: anchor ${anc}, every row`, '', `Source: data/master/swing_ladder_atlas.json (${A.at}).`]
+      for (const side of ['L', 'H']) { const s = r.sides[side]; md.push('', `## ${side === 'L' ? 'Lows' : 'Highs'} (real ${s.real_swings.T}+${s.real_swings.O}, failed ${s.failed.T}+${s.failed.O})`, '', '### A. Ladder', '', '| TF | period | n real | flipped | share | delay median / q1 / q3 (min) | vs anchor conf median (min) | before anchor |', '|---|---|---|---|---|---|---|---|')
+        for (const [X, row] of Object.entries(s.ladder)) for (const sp of ['T', 'O']) { const o = row[sp]; md.push(`| ${X} | ${sp} | ${o.n} | ${o.flipped} | ${pc(o.share)} | ${o.delay_min_median ?? ''} / ${o.delay_min_q1 ?? ''} / ${o.delay_min_q3 ?? ''} | ${o.vs_anchor_conf_min_median ?? ''} | ${pc(o.before_anchor_share)} |`)
+          csv.push(['ladder', anc, side, X, sp, o.n, pc(o.share), '', o.delay_min_median ?? '', o.delay_min_q1 ?? '', o.delay_min_q3 ?? '', pc(o.before_anchor_share), row.flag, ''].join(',')) }
+        md.push('', '### B. Evidence', '', '| flipped | period | candidates | base | n flipped | real given flip | Wilson lo | real if NOT flipped | lead median (min) | p | verdict |', '|---|---|---|---|---|---|---|---|---|---|---|')
+        for (const e of s.evidence) for (const sp of ['T', 'O']) { const o = e[sp]; md.push(`| ${e.key} | ${sp} | ${o.candidates} | ${pc(o.base)} | ${o.n_flipped} | ${pc(o.p_real_given_flip)} | ${pc(o.wilson_lo)} | ${pc(o.p_real_not_flipped)} | ${o.lead_min_median ?? ''} | ${o.p == null ? '' : o.p.toExponential(2)} | ${sp === 'O' ? e.verdict : ''} |`)
+          csv.push(['evidence', anc, side, e.key, sp, o.n_flipped, pc(o.p_real_given_flip), pc(o.base), o.lead_min_median ?? '', '', '', '', `not_flipped ${pc(o.p_real_not_flipped)}`, sp === 'O' ? e.verdict : ''].join(',')) }
+        md.push('', '### C. DXY / silver', '', '| series | group_period | n | matched | share | extreme earlier | same candle | extreme lead median (candles) | confirm earlier | confirm lead median (min) |', '|---|---|---|---|---|---|---|---|---|---|')
+        for (const [nm, row] of Object.entries(s.cross)) for (const [g, o] of Object.entries(row)) { md.push(`| ${nm} | ${g} | ${o.n} | ${o.matched} | ${pc(o.share)} | ${pc(o.extreme_earlier_share)} | ${pc(o.extreme_same_candle_share)} | ${o.extreme_lead_candles_median ?? ''} | ${pc(o.confirm_earlier_share)} | ${o.confirm_lead_min_median ?? ''} |`)
+          csv.push(['cross', anc, side, nm, g, o.n, pc(o.share), '', o.confirm_lead_min_median ?? '', '', '', pc(o.extreme_earlier_share), `same ${pc(o.extreme_same_candle_share)}`, ''].join(',')) }
+        md.push('', '### Order (smaller TF first, all pairs)', '', Object.entries(s.order).map(([k, v]) => `${k}: ${pc(v.x_first)} (tie ${pc(v.tie)}, n ${v.both})`).join(' · ')) }
+      fs.writeFileSync(path.join(dir, `${anc}.md`), md.join('\n') + '\n') }
+    fs.writeFileSync(path.join(OUT, 'phase3_all_rows.csv'), csv.join('\n') + '\n'); console.log(`  phase3: ${csv.length - 1} rows → docs/swing_book/phase3_all_rows.csv + ${Object.keys(A.anchors).length} anchor files`) } }

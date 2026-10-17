@@ -1008,3 +1008,13 @@ without duplications … only use the real Win results, and ignore the rest."
   - **AT the extreme, the classic signs mark an extreme, not a turn:** delta divergence 39-51 % real vs 38-48 % failed vs 10-16 % random; absorption 0-9 % everywhere; selling into the low is normal.
   - **Follow-through:** real reversals trade high relative volume and stacked imbalances; failed ones are low-volume.
   - 1H+ is underpowered (2 years).
+- **(cb) 2026-10-17 — SWING STUDY PHASE 3: THE FLIP LADDER (spec `docs/SWING_LADDER_SPEC.md`, `study_swing_ladder.mjs` → `swing_ladder_atlas.json` → `docs/SWING_LADDER_ATLAS.md`; smoke 2/2). Recorded in `docs/SWING_STUDY_BOOK.md` §5B + appendix `docs/swing_book/phase3/`.**
+  - **The turn climbs the ladder in order:** the smaller timeframe flips first, 95-99 % up to 2H.
+  - **EVIDENCE — when the timeframe ONE STEP BELOW confirms at the exact same extreme, the anchor becomes real (OOS / TRAIN):**
+    - 15m 5m → 63 / 60 % vs base 44 / 40;
+    - 1H 30m → 76 / 69 % vs 46 / 41;
+    - 4H 3H → 83 / 80 % vs 46 / 39;
+    - 1D 9H → 68 / 59 % vs 49 / 36.
+  - **Leads:** hours for 1H / 4H, days for 1D. Trade-off on 4H: 1H 57 % / 22 h, 2H 72 % / 14 h, 3H 83 % / 4 h.
+  - 1m / 3m carry no evidence.
+  - DXY / silver do not lead; they agree more at real swings, but only in hindsight.
