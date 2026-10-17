@@ -90,6 +90,7 @@ let lastMacro = null, macroRunning = false, lastLevel = null, levelRunning = fal
 let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
 let lastRec = null, recRunning = false   // futures + GLD recorder (record_futures.mjs, 2026-10-17)
 let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
+let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
   execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'matrix_tick.mjs')], { timeout: 120000, maxBuffer: 8 << 20, windowsHide: true }, (err, stdout, stderr) => {
@@ -158,6 +159,11 @@ for (;;) {
   if (now - qKey >= 8 * 60000 && lastRec !== qKey && !recRunning) { recRunning = true; lastRec = qKey
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'record_futures.mjs')], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { recRunning = false
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'record_futures.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+  // LADDER CONTEXT (ladder_tick.mjs, 2026-10-17, docs/LADDER_CONTEXT_SPEC.md; Ashraf approved "make it live"): the swing study's flip ladder per anchor,
+  // INFORMATION only — every 3 min, 30 s after each 3m close, while the market is open, + once at start. Fail-closed inside the script (no fresh minute → no write).
+  if ((lastLadder === null || (marketOpen(last3m - 1) && lastLadder !== last3m)) && now - last3m >= 30000 && !ladderRunning) { ladderRunning = true; lastLadder = last3m
+    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'ladder_tick.mjs')], { timeout: 150000, windowsHide: true }, (err, stdout, stderr) => { ladderRunning = false
+      if (err) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'ladder_tick.mjs', exit: err.code ?? 'killed', out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // DAILY RECORDING AUDIT (audit_recording.mjs, 2026-10-17): once per UTC day at/after 21:30 UTC (after the New York close) — every in-session
   // hole classified against Polygon (provider outage vs OUR miss), duplicates, staleness → data/master/recording_audit.json
   if (mins >= 21 * 60 + 30 && lastAudit !== day && !auditRunning) { auditRunning = true; lastAudit = day
