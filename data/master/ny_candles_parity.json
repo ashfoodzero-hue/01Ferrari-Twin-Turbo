@@ -1,0 +1,153 @@
+{
+ "at": "2026-10-17T10:45:53.860Z",
+ "reference": "tv_anchor_reference.json",
+ "report": {
+  "1m": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.29500000000007276,
+   "median_abs_low_diff": 0.2649999999994179
+  },
+  "3m": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.27999999999974534,
+   "median_abs_low_diff": 0.23999999999978172
+  },
+  "5m": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 298,
+   "missing": 0,
+   "data_gaps": [
+    "2026-10-15T23:40:00.000Z",
+    "2026-10-15T23:45:00.000Z"
+   ],
+   "extra": 0,
+   "median_abs_high_diff": 0.2899999999999636,
+   "median_abs_low_diff": 0.23499999999967258
+  },
+  "15m": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.2899999999999636,
+   "median_abs_low_diff": 0.22999999999956344
+  },
+  "30m": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.2899999999999636,
+   "median_abs_low_diff": 0.23500000000058208
+  },
+  "1H": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.2899999999999636,
+   "median_abs_low_diff": 0.24000000000069122
+  },
+  "2H": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.30500000000029104,
+   "median_abs_low_diff": 0.2599999999993088
+  },
+  "3H": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.3149999999995998,
+   "median_abs_low_diff": 0.2649999999994179
+  },
+  "4H": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.3150000000005093,
+   "median_abs_low_diff": 0.27999999999974534
+  },
+  "6H": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.3600000000005821,
+   "median_abs_low_diff": 0.2899999999999636
+  },
+  "9H": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.40499999999974534,
+   "median_abs_low_diff": 0.31999999999970896
+  },
+  "1D": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.4499999999998181,
+   "median_abs_low_diff": 0.4149999999999636
+  },
+  "2D": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.47999999999956344,
+   "median_abs_low_diff": 0.40499999999974534
+  },
+  "3D": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.4550000000001546,
+   "median_abs_low_diff": 0.375
+  },
+  "1W": {
+   "tv_in_overlap": 300,
+   "ours_in_overlap": 300,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.3950000000002092,
+   "median_abs_low_diff": 0.375
+  },
+  "1M": {
+   "tv_in_overlap": 159,
+   "ours_in_overlap": 159,
+   "missing": 0,
+   "data_gaps": [],
+   "extra": 0,
+   "median_abs_high_diff": 0.25,
+   "median_abs_low_diff": 0.2839999999998781
+  }
+ }
+}

@@ -78,7 +78,12 @@ All filters are read at the event minute, from closed bars only, on the same L /
 
 **Cells:** 3 filters × 4 trade cells (L4, L8, D4, D8) per side, K = 12, α = 0.05/12.
 
-**Window:** DXY 1m exists from 2021-06-26, so the addendum uses its own split: TRAIN = the first 60 % of the DXY window, OOS = the last 40 %.
+**Window:** the addendum uses its own split: TRAIN = the first 60 % of the DXY window, OOS = the last 40 %.
+
+> **CORRECTION 2026-10-17 (audit).** The original line said "DXY 1m exists from 2021-06-26". That was a misreading: 2021-06-26 was the main study's OOS split. The six DXY pairs exist from 2009-09.
+> - The script ran on the real window, 2009-09-30 → 2026-10-09, with OOS from 2019-12-18. Fast-move rows start in 2013, so TRAIN is 2013-2019.
+> - The numbers in `fast_move_bounce_dxy.json` are therefore correct for that window. Only this sentence was wrong.
+> - TRAIN n is small (2-24) because $15 fast moves were rare at pre-2020 gold prices, not because data was missing.
 
 **PASS:** all of the following, in OOS:
 - n ≥ 60;

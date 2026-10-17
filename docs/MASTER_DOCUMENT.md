@@ -920,3 +920,21 @@ without duplications … only use the real Win results, and ignore the rest."
   - **"Second entry rescues the first":** the added entry is the L trade above (negative). After an L fill, price got back $20 above the level within 4 h only **27.8 %** (OOS) of the time.
   - **Today:** the active 4H floors were 4162.97 (broken 13:18) and 4146.98. The low of 4154.60 never reached the 4146.98 floor, so a limit there would not have filled.
   - **Conclusion:** no tradeable bounce rule. Every L/D cell's WR is far below the 85 % line.
+- **(bv) 2026-10-17 — PREPARATION for the swing-candle study (Ashraf: "candles at all timeframes at the swing points … 1M down to 1m … then read the footprint … how Bear becomes a Bull"; "audit that nothing is missing"; "data history from Polygon please check"). No study numbers yet; tools + data audit only.**
+  - **TradingView-exact candles on 16 timeframes:** `src/core/nyCandles.js`.
+    - Anchors were measured from Ashraf's TradingView (OANDA:XAUUSD, CDP), stored in `tv_anchor_reference.json`, re-measured with `scripts/measure_tv_anchors.cjs`.
+    - Session rules: 17:00 New York session with the next date; 9H restarts every session; 2D/3D count weekdays straight through weekends and restart the count every 1 January.
+    - `cleanForTv` drops Polygon's stray break and holiday minutes.
+    - `smoke_ny_candles.mjs`: 17/17, with every open time identical to TradingView. Median high/low difference $0.23-0.48 (different feeds).
+  - **Data audit (Polygon history folder):**
+    - XAUUSD 1m is continuous from 2013-07-14 (4.58 M bars).
+    - **Polygon has NO gold data 2019-09-04 → 2019-10-04 and 2020-10-14 → 2020-11-13** (re-queried 2026-10-17: 0 rows even daily). Silver and four DXY pairs have holes in the same months. `src/core/dataHoles.js` finds and flags them.
+    - **Spot `v` is not volume:** it is a tick count, about 3/min in 2021-25 vs 100-250 before. Real volume comes from GOLD_FUT (Polygon CME, 2024-10 → 2026-10, no buyer/seller split) and from Databento tbbo (with the aggressor side).
+    - The DXY pairs exist from 2009-09. Correction: the (bu) addendum spec wrongly said 2021 (fixed in the spec; numbers unaffected).
+  - **Tools:**
+    - `src/master/swings.js`: ATR ZigZag plus failed-extreme controls, causal, with breaks at holes.
+    - `src/master/candleFeatures.js`: candle anatomy.
+    - `src/master/footprintTf.js`, with new 1m footprints from `build_footprints_1m.mjs` (54.86 M trades → 709,399 minutes). The 1m→5m roll-up equals the independent 5m build: 6,072 candles, 0 mismatches.
+    - `src/core/studyStats.js`: Wilson, two-proportion test, Holm, week-block bootstrap.
+  - **Smokes** (registered in smoke_all): `smoke_swing_tools` 6/6, `smoke_footprint_tf` 2/2, `smoke_study_stats` 5/5.
+  - **Method skill:** `~/.claude/skills/gold-measured-study`.
