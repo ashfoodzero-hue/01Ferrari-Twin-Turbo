@@ -989,3 +989,17 @@ without duplications … only use the real Win results, and ignore the rest."
     - UNPOWERED in every version.
   - **CME (2024-12 → 2026-10) vs DROP:** CME is better on 1 of 3 volume-wall classes (DEF>PUSH 84.2 vs 81.1 %, TRAIN 75.2 vs 70.6 %, n 733) and worse on the swing-wall and 4H-level classes behind the Telegram 🧱 alert (4H strong touch 84.0 vs 88.2 %).
   - **Proposal: DROP the volume part everywhere.** CME futures are 10 min delayed live, and the rules decide at the bar close or touch + 2. Awaiting Ashraf's approval; nothing changed live.
+- **(bz) 2026-10-17 — SWING-CANDLE STUDY PHASE 1: the candle atlas at swing points on 16 timeframes. Spec `docs/SWING_CANDLE_SPEC.md` (+ clarifications, addendum A: post-extreme selection bias found by a trial audit and fixed before the full run; addendum B: effect-size labels). `study_swing_candle_atlas.mjs` → `swing_candle_atlas.json` → `docs/SWING_CANDLE_ATLAS.md`. Smoke `smoke_swing_atlas` 4/4 (planted pattern recovered 100 % vs 0 %).**
+  - **Swings:** 3× ATR ZigZag. 1m: 128 k per side; 1H: 1,935 per side; 1D: 78 per side. 2D / 3D / 1W / 1M have < 30 OOS swings → described only.
+  - **Swings look alike on every timeframe:** a median size of 5.1-5.7 ATR, confirmed about 6-7 candles after the extreme. Only 7-21 % are confirmed by candle +1 … +3.
+  - **AT the extreme (knowable at its close):**
+    - real swing extremes are LARGE candles (1H lows 41 % vs failed 29 % vs random 15 %; highs 37 / 23 / 19) on 1m-2H;
+    - a HIGH-impact USD release in the extreme candle or the 3 before: 25 % vs 16-17 % (1H, 6 TFs, both sides);
+    - outside bar / engulfing / sweep-reclaim are moderate or tiny.
+  - **DXY and silver direction at the extreme: no meaningful difference.** Real CME volume (2-year cells): heavy volume 62 % vs 56 % at 3m/5m lows (small).
+  - **AFTER the extreme (still holding, fair comparison):** the clearest, most repeated facts (9 TFs, 1m-4H):
+    - the candle after a real low is bullish 75 % vs 61 % and closes in its top third 54 % vs 38 % (1H);
+    - mirror at highs: bearish 76 % vs 64 %;
+    - candles +2 / +3 continue the same way (gaps of 15-25 points).
+  - **4H and up: few or no findings.** 4H 2, 6H 5, 9H / 1D 0 (n 90-200), 2D+ described only.
+  - Next: Phase 2 (footprint) and Phase 3 (flip ladder), each with its own pre-registered addendum.

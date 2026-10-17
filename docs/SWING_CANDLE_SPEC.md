@@ -115,3 +115,37 @@ Items 5-6 are **sub-period cells**, reported with their own n. They never mix wi
 - Seeded randomness; the run is reproducible.
 
 Study script: `scripts/study_swing_candle_atlas.mjs`.
+
+## CLARIFICATIONS, 2026-10-17 (written before any number was computed)
+
+- **Real-volume context (§3 item 6), as two booleans:**
+  - "heavy" = the extreme candle's CME volume ≥ 1.5 × the median of its 20 previous candles;
+  - "light" = ≤ 0.67 ×.
+
+  Candles that span a contract roll are skipped.
+- **Sub-period cells use their own 60/40 split by time:**
+  - news: 2020-03-31 → cut-off;
+  - real volume: 2024-10-09 → cut-off.
+
+  Otherwise the real-volume cells would have no TRAIN at all.
+- **Surprise field (measured):** Forex Factory `better` 1 = the surprise was good for the USD (e.g. NFP 115K vs 65K), 2 = bad for the USD (e.g. CPI −0.4 % vs −0.1 %), 0 = in line.
+- **Candle span for context:** [candle open, the end of its last minute]. The window is [open of offset −3, the end of offset 0].
+
+## ADDENDUM A, 2026-10-17: selection bias in offsets +1 … +3 (found by auditing a 1D + 4H trial run, before the full run)
+
+**The problem.** In the trial, all 10 4H "findings" sat at offsets +1 … +3. A swing extreme is, by definition, never exceeded afterwards. A failed extreme (C1) is exceeded later, often by the very next candle. Comparing post-extreme candles of the two groups therefore partly restates the definition.
+
+**The fix, for all timeframes:**
+- For offset +k, a C1 event counts only if it was **still unbroken at the close of candle +k** (its superseding candle comes after i + k).
+- Both groups then share "the extreme held for k candles". The question becomes: given the low held for k candles, what tells the real swing from the failed one?
+- Offsets ≤ 0, leg context and same-time context are unchanged.
+- The trial numbers are discarded; the full run uses this rule.
+
+## ADDENDUM B, 2026-10-17: effect-size labels (presentation only; no verdict changes)
+
+On 1m-5m there are 9 k-51 k OOS swings, so differences of 1-3 points pass Holm. Each FINDING is therefore labelled by its OOS gap vs failed extremes:
+- **tiny** < 5 points;
+- **moderate** 5-10 points;
+- **clear** ≥ 10 points.
+
+The report leads with findings that repeat on ≥ 5 timeframes and are at least moderate.
