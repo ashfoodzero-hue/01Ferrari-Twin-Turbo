@@ -20,6 +20,7 @@
 //                           unbroken 1h swing highs / lows (pivot = strict extreme of 2 bars each side, last 5 days) — each with its MEASURED 13y
 //                           bounce vs a random level (day_levels_study.json); + the measured 5m order-flow result at levels (2 y CME, test-only)
 //                           and the live order-flow status (BLOCKED: no live futures trades on the current Polygon plan — red rule)
+//   GET /api/ladder         the swing study's flip ladder per anchor (15m/1H/4H/1D), live, INFORMATION only (data/master/ladder_state.json, ladder_tick.mjs)
 //   GET /api/matrix         the FERRARI MATRIX paper trade box (data/master/matrix_state.json, written by matrix_tick.mjs) + its verdict
 // Series: the live stream symbols (src/data/symbols.js) · DXY = rebuilt from its six pairs (src/data/dxy.js, validated vs the
 // official daily close: median |diff| 0.032 %) · WTI = CL front-month futures, which Polygon serves 10 MIN DELAYED on our plan —
@@ -374,6 +375,8 @@ const server = http.createServer(async (req, res) => {
     // 4H MACRO MAGNET tile (2026-10-16): the state macro_tick.mjs writes — Ashraf's Pine score + its MEASURED 13 y result + the live record — plus
     // the FORMING preview of the open 4H candle (provisional; refreshed in the background at most once a minute, never blocks a request). Read-only.
     if (u.pathname === '/api/walls') { refreshWalls(); return send(res, 200, WBF.val ?? { available: false, why: 'computing — first refresh in progress' }) }
+    // LADDER CONTEXT (2026-10-17, docs/LADDER_CONTEXT_SPEC.md): the swing study's flip ladder, live, INFORMATION only (ladder_tick.mjs → ladder_state.json)
+    if (u.pathname === '/api/ladder') { const m = J('ladder_state.json'); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 10 * 60000 } : { available: false, why: 'ladder_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/magnet') { const m = J('macro_magnet_state.json'); refreshForming(); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 5 * 3600000, forming: MGF.val } : { available: false, why: 'macro_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, watch: m?.watch && Date.now() - m.watch.barT < 6 * 60000 ? m.watch : null, wallTouch: m?.wallTouch && Date.now() - m.wallTouch.barT < 6 * 60000 ? m.wallTouch : null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }
     if (!isSeries(sym)) return send(res, 400, { error: 'unknown symbol', symbols: [...SYMBOLS.map((s) => s.sym), ...Object.keys(DERIVED)] })

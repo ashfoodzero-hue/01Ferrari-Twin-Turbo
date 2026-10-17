@@ -296,7 +296,7 @@ async function pollBias() {
   const w = b.whale, ws = b.whale_study
   const wd = !w || w.error ? '<span class="dim">unavailable</span>' : w.stale ? '<span class="dim">market closed</span>' : w.dir === 'QUIET' ? `<span class="dim">QUIET — no whale-size volume (max ${w.maxMult}× normal)</span>` : w.dir === 'MIXED' ? `<span class="dim">MIXED</span> <small>pressure ${w.pressure}</small>` : `${arrow(w.dir)} <small>pressure ${w.pressure >= 0 ? '+' : ''}${w.pressure} · ${w.big} big bar(s), up to ${w.maxMult}×</small>`
   const wtitle = 'Where heavy CME gold-futures volume (≥ 2× normal) closed inside its 15m bar, last hour, 10 min delayed. NOT true buyer/seller data (Polygon does not give us futures trades).' + (ws ? ` Measured ${ws.window}: heavy-volume direction → gold +$10 first ${(100 * ws.oos_win).toFixed(1)}% vs ${(100 * ws.oos_base).toFixed(1)}% base (n ${ws.oos_n}) — ${ws.verdict.replace(/_/g, ' ').toLowerCase()}.` : '')
-  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + gammaChip() + magnetChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
+  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + gammaChip() + magnetChip() + ladderChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
   const gb = $('gmBtn'); if (gb) gb.onclick = () => { st.gamma = st.gamma === false; save(); gmKey = '?'; gmDraw(); pollBias() }
   $('fullBtn').onclick = () => { st.full = !st.full; save(); applyLayout(); pollBias() }
 }
@@ -309,6 +309,19 @@ let MG = null
 function magnetChip() { if (!MG || !MG.gold) return ''; const g = MG.gold, pct = g.side === 'LONG' ? g.long : g.short, ts = MG.measured?.this_score
   const t = 'Your visionHunt 4H Macro Magnet, copied exactly (closed 17:00-NY 4H candles; matches your OANDA chart). The % is a POINTS SCORE, not a probability. Measured 13 y: this reading → up next 4H ' + (ts ? (100 * ts.up4).toFixed(1) + '% (n ' + ts.n + ')' : '—') + ' vs gold base ' + (MG.measured ? (100 * MG.measured.base_up4).toFixed(1) : '—') + '% → no edge. DXY on the other side: measured, adds nothing. Details in the panel.'
   return `<span class="chip" title="${esc(t)}"><b>4H Magnet</b><span class="${g.side === 'LONG' ? 'up' : 'dn'}">${g.side} ${pct}</span> <small>score · DXY ${MG.dxy_relation === 'confirms' ? 'confirms' : MG.dxy_relation === 'against' ? 'against' : '—'} · measured: no edge${ts ? ' (' + (100 * ts.up4).toFixed(1) + '% up next 4H)' : ''}${MG.stale ? ' · STALE' : ''}</small>${fChip()}</span>` }
+// LADDER CONTEXT chip (2026-10-17, docs/LADDER_CONTEXT_SPEC.md): per anchor, the live leg extreme, which lower timeframes CONFIRMED a swing at exactly
+// that price, and the swing study's measured odds (OOS, quoted from the atlas). INFORMATION ONLY — the study's trade tests found no profitable entry (0/60).
+let LD = null
+function ladderChip() { if (!LD || !LD.anchors) return ''
+  const seg = (a) => { const s = LD.anchors[a]; if (!s || !s.leg) return `${a} —`
+    const lo = s.side === 'L', steps = s.steps.map((x) => (x.flipped ? '✓' : '·')).join(''), pct = s.deepest ? Math.round(100 * s.odds.p_real) + '%' : 'base ' + Math.round(100 * (s.odds.base ?? 0)) + '%'
+    const tag = s.deepest && s.odds.label !== 'proven (OOS + TRAIN)' ? ` (${s.odds.label})` : ''
+    return `<span class="${lo ? 'up' : 'dn'}">${a} ${lo ? 'low' : 'high'} ${esc(s.extreme_txt)}</span> ${steps} <b>${pct}</b>${esc(tag)}` }
+  const tip = Object.entries(LD.anchors).map(([a, s]) => !s.leg ? `${a}: ${s.why || '—'}` : `${a} ${s.leg}-leg ${s.side === 'L' ? 'low' : 'high'} ${s.extreme_txt} · ladder ${s.steps.map((x) => x.tf + (x.flipped ? ' ✓' : ' ·')).join(', ')} · ` + (s.deepest ? `${s.deepest} flipped → ${Math.round(100 * s.odds.p_real)}% of such ${a} extremes became REAL swings (base ${Math.round(100 * s.odds.base)}%, OOS n ${s.odds.n}, ${s.odds.label})` : `no step flipped yet — base ${Math.round(100 * (s.odds.base ?? 0))}%`) + ` · last confirmed ${s.last_confirmed.type === 'L' ? 'low' : 'high'} ${s.last_confirmed.px}`).join('\n')
+    + '\n\n"Real" = the extreme became a confirmed swing (3× ATR the other way before breaking). Source: docs/SWING_STUDY_BOOK.md §5B.\n' + (Object.values(LD.anchors)[0]?.footer || '')
+  return `<span class="chip" title="${esc(tip)}"><b>Ladder</b> ${['15m', '1H', '4H', '1D'].map(seg).join(' <small>│</small> ')} <small>· info only, no trade${LD.stale ? ' · STALE' : ''}</small></span>` }
+async function pollLadder() { LD = await fetch('/api/ladder').then((x) => x.json()).catch(() => null); if (LD && LD.available === false) LD = null; pollBias() }
+setInterval(pollLadder, 60000); setTimeout(pollLadder, 2500)
 // FORMING preview of the open 4H candle (provisional — can change until the close; the official score is the closed bar above)
 function fChip() { const f = MG?.forming?.gold; if (!f) return ''; const p = f.side === 'LONG' ? f.long : f.short
   return ` <small>│ forming ${esc(f.closes_at.slice(11, 16))}:</small> <span class="${f.side === 'LONG' ? 'up' : 'dn'}" style="opacity:.75">${f.side} ${p}</span> <small>provisional</small>` }

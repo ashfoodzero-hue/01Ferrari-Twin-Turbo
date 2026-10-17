@@ -1047,3 +1047,9 @@ without duplications … only use the real Win results, and ignore the rest."
   - **0 / 24 pass. Across 4B-4D: 0 / 60.**
   - **The trade-off is priced:** reward : risk 0.44 → 2.8 as entries get earlier, but the target-hit rate falls in proportion, staying 3-7 pt under breakeven. Examples: 4H on the 1H flip hit 49 % vs 52 % needed (+0.04 R); 15m on the 1m flip 30 % vs 34 % (−0.11 R).
   - **Verdict:** the ladder is context, not an entry. 4H / 1D longs least bad (drift).
+- **(ch) 2026-10-17 — LADDER CONTEXT on the chart (rules `docs/LADDER_CONTEXT_SPEC.md`; Ashraf chose "Ladder context on the chart"). INFORMATION ONLY.**
+  - **What it shows:** per anchor (15m / 1H / 4H / 1D), the live leg's running extreme, which lower timeframes CONFIRMED a swing at exactly that price, and the swing study's OOS odds (quoted from `swing_ladder_atlas.json`).
+  - **Code:** `src/master/ladderContext.js` (pure) · `scripts/ladder_tick.mjs` → `data/master/ladder_state.json` (fail-closed; `--dry`; `--now` replay) · `GET /api/ladder` · chart chip "Ladder … · info only, no trade".
+  - **`smoke_ladder_context` 4/4:** window parity with full-history swings; replay = study flips + atlas odds (3 moments 2024-26); no look-ahead; footer present, no trade words.
+  - Preview verified on a temporary chart server (port 7446, Friday-close replay); the preview file was removed.
+  - **NOT live yet:** needs the run_twin hook (every 3 min) + a chart restart, with Ashraf's approval.
