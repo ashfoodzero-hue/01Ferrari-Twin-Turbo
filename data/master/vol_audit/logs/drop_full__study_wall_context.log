@@ -1,0 +1,14 @@
+[vol_audit] mode drop · window full · artifacts → data\master\vol_audit\drop_full
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 4,573,711
+133896 swing-wall tests · OOS base hold 0.6022 · TRAIN 0.6162
+  pre-touch AGAINST-MACRO   OOS n 18776 hold 0.5928 diff -0.9pp [-1.8, -0.1] · TRAIN -0.2pp · pre/post -0.3/-0.7 → NO_EFFECT
+  pre-touch WEAK-APPROACH   OOS n 31207 hold 0.6015 diff -0.1pp [-0.5, 0.3] · TRAIN -1.5pp · pre/post -1.6/-0.3 → NO_EFFECT
+  pre-touch RSI-EXHAUST     OOS n  2484 hold 0.5773 diff -2.5pp [-4.8, -0.1] · TRAIN -0.3pp · pre/post 0.4/-2.7 → NO_EFFECT
+  pre-touch WITH-MACRO      OOS n 17700 hold 0.6153 diff 1.3pp [0.4, 2.2] · TRAIN 0.7pp · pre/post 0.7/1.2
+  pre-touch STRONG-APPROACH OOS n  2695 hold 0.6078 diff 0.6pp [-1.6, 2.8] · TRAIN 5.7pp · pre/post 6.5/0.7
+  on top of the bubble (reported): DEFENSE+AGAINST-MACRO 0.6945 vs 0.7039 (-0.9pp, TRAIN -0.2, n 8165) · DEF>PUSH+AGAINST-MACRO 0.729 vs 0.7386 (-1.0pp, TRAIN 0.5, n 2867) · DEFENSE+WEAK-APPROACH 0.7058 vs 0.7039 (0.2pp, TRAIN -1.6, n 13615) · DEF>PUSH+WEAK-APPROACH 0.7449 vs 0.7386 (0.6pp, TRAIN -1.3, n 4857) · DEFENSE+RSI-EXHAUST 0.6909 vs 0.7039 (-1.3pp, TRAIN -0.6, n 1100) · DEF>PUSH+RSI-EXHAUST 0.7304 vs 0.7386 (-0.8pp, TRAIN 1.8, n 382) · DEFENSE+WITH-MACRO 0.7173 vs 0.7039 (1.3pp, TRAIN 0.7, n 7955) · DEF>PUSH+WITH-MACRO 0.7457 vs 0.7386 (0.7pp, TRAIN 0.4, n 2788) · DEFENSE+STRONG-APPROACH 0.693 vs 0.7039 (-1.1pp, TRAIN 5.5, n 1329) · DEF>PUSH+STRONG-APPROACH 0.7384 vs 0.7386 (-0.0pp, TRAIN 7.0, n 451)
+  swing FT10 within 4 h: all tests 0.2582 · held 0.2994 · held+defended 0.2966 · held+DEF>PUSH/STRONG 0.282 (n 7430) diff -1.7pp LB -2.6 TRAIN -0.4 · against-macro held+defended 0.2947 → REPORTED
+  swing FT20 within 4 h: all tests 0.1051 · held 0.1226 · held+defended 0.1251 · held+DEF>PUSH/STRONG 0.1227 (n 7430) diff 0.0pp LB -0.6 TRAIN 0.0 · against-macro held+defended 0.1291 → NO_EFFECT
+
+=> INFORMATIVE: none

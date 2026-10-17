@@ -1,0 +1,99 @@
+[vol_audit] mode drop · window cme2y · artifacts → data\master\vol_audit\drop_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/4h: repaired 1 provably-false print(s): 2025-11-23T20:00(l)
+{
+ "train": {
+  "n": 109,
+  "bounce": 0.5761,
+  "control": 0.5313,
+  "money_wr": 0.578,
+  "net": 3.282,
+  "net_lb": -0.91
+ },
+ "oos": {
+  "n": 64,
+  "bounce": 0.5577,
+  "control": 0.5088,
+  "money_wr": 0.4844,
+  "net": 1.706,
+  "net_lb": -7.566
+ },
+ "all": {
+  "n": 173,
+  "bounce": 0.5694,
+  "control": 0.5229,
+  "money_wr": 0.5434,
+  "net": 2.699,
+  "net_lb": -1.402
+ },
+ "stress": {
+  "n": 171,
+  "bounce": 0.5694,
+  "control": 0.5229,
+  "money_wr": 0.538,
+  "net": 2.676,
+  "net_lb": -1.633
+ },
+ "positive_years": "2/2",
+ "years": {
+  "2024": "3.858 n4",
+  "2025": "3.661 n100",
+  "2026": "1.236 n69"
+ },
+ "lo": {
+  "n": 91,
+  "bounce": 0.6173,
+  "control": 0.5823,
+  "money_wr": 0.6044,
+  "net": 6.072,
+  "net_lb": -0.023
+ },
+ "hi": {
+  "n": 82,
+  "bounce": 0.5079,
+  "control": 0.4595,
+  "money_wr": 0.4756,
+  "net": -1.045,
+  "net_lb": -6.757
+ },
+ "frontier": {
+  "0.25R": {
+   "n": 173,
+   "wr": 0.8092,
+   "net": 1.645
+  },
+  "0.5R": {
+   "n": 173,
+   "wr": 0.6705,
+   "net": 1.684
+  },
+  "0.75R": {
+   "n": 173,
+   "wr": 0.5896,
+   "net": 1.536
+  },
+  "1R": {
+   "n": 173,
+   "wr": 0.5434,
+   "net": 2.699
+  },
+  "1.5R": {
+   "n": 173,
+   "wr": 0.4798,
+   "net": 5.17
+  },
+  "2R": {
+   "n": 173,
+   "wr": 0.4509,
+   "net": 4.879
+  }
+ },
+ "tests": {
+  "T1_train": false,
+  "T2_years": true,
+  "T3_spread_x1_5": false,
+  "T4_neighbours": false
+ }
+}
+
+=> WEAK 4H ORDER BLOCKS: NOT_CONFIRMED

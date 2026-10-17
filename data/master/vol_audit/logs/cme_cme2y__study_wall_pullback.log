@@ -1,0 +1,9 @@
+[vol_audit] mode cme · window cme2y · artifacts → data\master\vol_audit\cme_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 701,356
+L4H|SPLIT4   bubbles 844 · fill 64.3% (unfilled 297, wall broke 0) · OOS n 224 (1.17/d) WR 0.4152 (LB 0.3526) $/t -0.841 [LB -1.391] risk $3.96 reached $4 0.4152 · TRAIN WR 0.3344 $/t -0.713 · SELL -0.693 BUY -0.979 · pre/post null/-0.767 → FAIL
+L4H|T4       bubbles 844 · fill 64.4% (unfilled 297, wall broke 0) · OOS n 224 (1.17/d) WR 0.4152 (LB 0.3526) $/t -0.824 [LB -1.341] risk $3.96 reached $4 0.4152 · TRAIN WR 0.3355 $/t -0.733 · SELL -0.732 BUY -0.909 · pre/post null/-0.771 → REPORTED
+L1H|SPLIT4   bubbles 3181 · fill 66.3% (unfilled 964, wall broke 0) · OOS n 782 (4.08/d) WR 0.3977 (LB 0.364) $/t -1.063 [LB -1.359] risk $3.96 reached $4 0.3977 · TRAIN WR 0.3286 $/t -0.681 · SELL -1.081 BUY -1.045 · pre/post null/-0.838 → FAIL
+L1H|T4       bubbles 3181 · fill 66.1% (unfilled 998, wall broke 0) · OOS n 786 (4.1/d) WR 0.3969 (LB 0.3633) $/t -0.969 [LB -1.242] risk $3.96 reached $4 0.3969 · TRAIN WR 0.3267 $/t -0.633 · SELL -1.044 BUY -0.895 · pre/post null/-0.768 → REPORTED
+
+=> PULLBACK LIMIT ($4 then BE): NO_PASS

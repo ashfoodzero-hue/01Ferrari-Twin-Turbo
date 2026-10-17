@@ -1,0 +1,201 @@
+{
+ "at": "2026-10-17T13:18:13.058Z",
+ "spec": "docs/SWING_WALLS_SPEC.md",
+ "volume_walls": {
+  "tests_per_day": 17.67,
+  "oos_hold_all": 0.6279,
+  "oos_hold_defense": 0.7824
+ },
+ "variants": {
+  "3m": {
+   "tests": 17258,
+   "tests_per_day": 36.05,
+   "labelled": 16684,
+   "base": {
+    "oos": 0.619,
+    "train": 0.5802
+   },
+   "strong_threshold_train_p66": 0.5986645461333316,
+   "classes": {
+    "ATTACK": {
+     "oos_n": 3850,
+     "oos_hold": 0.5229,
+     "oos_lift": -0.0962,
+     "train_hold": 0.5027,
+     "train_lift": -0.0775,
+     "by_side": {
+      "ceiling": 0.5362,
+      "floor": 0.5082
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.5106
+     },
+     "coincide_with_volume": 0.5446,
+     "swing_only": 0.5222,
+     "n_coincide": 112
+    },
+    "DEFENSE": {
+     "oos_n": 2849,
+     "oos_hold": 0.749,
+     "oos_lift": 0.13,
+     "train_hold": 0.693,
+     "train_lift": 0.1128,
+     "by_side": {
+      "ceiling": 0.7432,
+      "floor": 0.7541
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.7161
+     },
+     "coincide_with_volume": 0.7882,
+     "swing_only": 0.7478,
+     "n_coincide": 85,
+     "lift_lb": 0.1147,
+     "verdict": "SHOWN"
+    },
+    "DEF>PUSH": {
+     "oos_n": 1107,
+     "oos_hold": 0.8058,
+     "oos_lift": 0.1867,
+     "train_hold": 0.7078,
+     "train_lift": 0.1276,
+     "by_side": {
+      "ceiling": 0.8054,
+      "floor": 0.806
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.7472
+     },
+     "coincide_with_volume": 0.9375,
+     "swing_only": 0.8019,
+     "n_coincide": 32,
+     "lift_lb": 0.1559,
+     "verdict": "SHOWN"
+    },
+    "STRONG": {
+     "oos_n": 1037,
+     "oos_hold": 0.839,
+     "oos_lift": 0.2199,
+     "train_hold": 0.7194,
+     "train_lift": 0.1392,
+     "by_side": {
+      "ceiling": 0.8514,
+      "floor": 0.8303
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.7712
+     },
+     "coincide_with_volume": 0.931,
+     "swing_only": 0.8363,
+     "n_coincide": 29,
+     "lift_lb": 0.1885,
+     "verdict": "SHOWN"
+    }
+   }
+  },
+  "15m": {
+   "tests": 3417,
+   "tests_per_day": 7.14,
+   "labelled": 3315,
+   "base": {
+    "oos": 0.6551,
+    "train": 0.5791
+   },
+   "strong_threshold_train_p66": 0.9430501655035635,
+   "classes": {
+    "ATTACK": {
+     "oos_n": 718,
+     "oos_hold": 0.5543,
+     "oos_lift": -0.1007,
+     "train_hold": 0.5122,
+     "train_lift": -0.067,
+     "by_side": {
+      "ceiling": 0.5347,
+      "floor": 0.5796
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.528
+     },
+     "coincide_with_volume": 0.6471,
+     "swing_only": 0.5521,
+     "n_coincide": 17
+    },
+    "DEFENSE": {
+     "oos_n": 575,
+     "oos_hold": 0.7809,
+     "oos_lift": 0.1258,
+     "train_hold": 0.6755,
+     "train_lift": 0.0964,
+     "by_side": {
+      "ceiling": 0.7606,
+      "floor": 0.7975
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.7187
+     },
+     "coincide_with_volume": 0.8667,
+     "swing_only": 0.7786,
+     "n_coincide": 15,
+     "lift_lb": 0.0907,
+     "verdict": "SHOWN"
+    },
+    "DEF>PUSH": {
+     "oos_n": 221,
+     "oos_hold": 0.8235,
+     "oos_lift": 0.1685,
+     "train_hold": 0.6863,
+     "train_lift": 0.1072,
+     "by_side": {
+      "ceiling": 0.8333,
+      "floor": 0.8168
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.7422
+     },
+     "coincide_with_volume": 0.8333,
+     "swing_only": 0.8233,
+     "n_coincide": 6,
+     "lift_lb": 0.1107,
+     "verdict": "NOT_SHOWN"
+    },
+    "STRONG": {
+     "oos_n": 232,
+     "oos_hold": 0.8491,
+     "oos_lift": 0.1941,
+     "train_hold": 0.7029,
+     "train_lift": 0.1238,
+     "by_side": {
+      "ceiling": 0.8587,
+      "floor": 0.8429
+     },
+     "era": {
+      "pre2020": null,
+      "post2020": 0.7697
+     },
+     "coincide_with_volume": 1,
+     "swing_only": 0.8465,
+     "n_coincide": 4,
+     "lift_lb": 0.1337,
+     "verdict": "NOT_SHOWN"
+    }
+   }
+  }
+ },
+ "shown": {
+  "3m": [
+   "DEFENSE",
+   "DEF>PUSH",
+   "STRONG"
+  ],
+  "15m": [
+   "DEFENSE"
+  ]
+ }
+}

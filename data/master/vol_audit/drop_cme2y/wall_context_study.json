@@ -1,0 +1,220 @@
+{
+ "at": "2026-10-17T13:13:18.459Z",
+ "spec": "docs/WALL_CONTEXT_SPEC.md",
+ "tests": 17258,
+ "labelled": 16684,
+ "base_hold": {
+  "oos": 0.619,
+  "train": 0.5802
+ },
+ "pre_touch": {
+  "AGAINST-MACRO": {
+   "oos_n": 2635,
+   "oos_hold": 0.6171,
+   "oos_diff": -0.002,
+   "ci": [
+    -0.0191,
+    0.0166
+   ],
+   "train_diff": -0.0115,
+   "era": {
+    "pre2020": null,
+    "post2020": -0.0076
+   },
+   "by_side": {
+    "ceiling": 0.6031,
+    "floor": 0.6295
+   },
+   "verdict": "NO_EFFECT"
+  },
+  "WEAK-APPROACH": {
+   "oos_n": 4357,
+   "oos_hold": 0.6034,
+   "oos_diff": -0.0157,
+   "ci": [
+    -0.0267,
+    -0.005
+   ],
+   "train_diff": -0.0041,
+   "era": {
+    "pre2020": null,
+    "post2020": -0.0088
+   },
+   "by_side": {
+    "ceiling": 0.6118,
+    "floor": 0.5951
+   },
+   "verdict": "NO_EFFECT"
+  },
+  "RSI-EXHAUST": {
+   "oos_n": 332,
+   "oos_hold": 0.6506,
+   "oos_diff": 0.0316,
+   "ci": [
+    -0.0298,
+    0.1003
+   ],
+   "train_diff": -0.0403,
+   "era": {
+    "pre2020": null,
+    "post2020": -0.0137
+   },
+   "by_side": {
+    "ceiling": 0.6452,
+    "floor": 0.6554
+   },
+   "verdict": "NO_EFFECT"
+  },
+  "WITH-MACRO": {
+   "oos_n": 2480,
+   "oos_hold": 0.6222,
+   "oos_diff": 0.0031,
+   "ci": [
+    -0.0153,
+    0.0228
+   ],
+   "train_diff": 0.0168,
+   "era": {
+    "pre2020": null,
+    "post2020": 0.0116
+   },
+   "by_side": {
+    "ceiling": 0.6365,
+    "floor": 0.6063
+   }
+  },
+  "STRONG-APPROACH": {
+   "oos_n": 319,
+   "oos_hold": 0.7147,
+   "oos_diff": 0.0957,
+   "ci": [
+    0.0276,
+    0.1614
+   ],
+   "train_diff": 0.0387,
+   "era": {
+    "pre2020": null,
+    "post2020": 0.061
+   },
+   "by_side": {
+    "ceiling": 0.6376,
+    "floor": 0.7824
+   }
+  }
+ },
+ "on_bubble": {
+  "DEFENSE+AGAINST-MACRO": {
+   "oos_n": 1180,
+   "oos_hold": 0.7542,
+   "bubble_alone": 0.7481,
+   "diff": 0.0061,
+   "train_diff": -0.0194
+  },
+  "DEF>PUSH+AGAINST-MACRO": {
+   "oos_n": 355,
+   "oos_hold": 0.8,
+   "bubble_alone": 0.8079,
+   "diff": -0.0079,
+   "train_diff": -0.0013
+  },
+  "DEFENSE+WEAK-APPROACH": {
+   "oos_n": 1875,
+   "oos_hold": 0.7376,
+   "bubble_alone": 0.7481,
+   "diff": -0.0105,
+   "train_diff": 0.0052
+  },
+  "DEF>PUSH+WEAK-APPROACH": {
+   "oos_n": 573,
+   "oos_hold": 0.7888,
+   "bubble_alone": 0.8079,
+   "diff": -0.0191,
+   "train_diff": -0.0036
+  },
+  "DEFENSE+RSI-EXHAUST": {
+   "oos_n": 149,
+   "oos_hold": 0.7718,
+   "bubble_alone": 0.7481,
+   "diff": 0.0237,
+   "train_diff": -0.0375
+  },
+  "DEF>PUSH+RSI-EXHAUST": {
+   "oos_n": 46,
+   "oos_hold": 0.8261,
+   "bubble_alone": 0.8079,
+   "diff": 0.0182,
+   "train_diff": -0.0588
+  },
+  "DEFENSE+WITH-MACRO": {
+   "oos_n": 1132,
+   "oos_hold": 0.7588,
+   "bubble_alone": 0.7481,
+   "diff": 0.0107,
+   "train_diff": 0.022
+  },
+  "DEF>PUSH+WITH-MACRO": {
+   "oos_n": 354,
+   "oos_hold": 0.8192,
+   "bubble_alone": 0.8079,
+   "diff": 0.0113,
+   "train_diff": -0.0064
+  },
+  "DEFENSE+STRONG-APPROACH": {
+   "oos_n": 190,
+   "oos_hold": 0.8053,
+   "bubble_alone": 0.7481,
+   "diff": 0.0572,
+   "train_diff": 0.0055
+  },
+  "DEF>PUSH+STRONG-APPROACH": {
+   "oos_n": 64,
+   "oos_hold": 0.9063,
+   "bubble_alone": 0.8079,
+   "diff": 0.0984,
+   "train_diff": 0.1074
+  }
+ },
+ "swing": {
+  "ft10": {
+   "held_all": {
+    "n": 4147,
+    "rate": 0.7171
+   },
+   "held_defended": {
+    "n": 2278,
+    "rate": 0.705
+   },
+   "held_strong_or_defpush": {
+    "n": 1171,
+    "rate": 0.6968
+   },
+   "all_tests": 0.641,
+   "diff": -0.0203,
+   "lb": -0.0413,
+   "train_diff": -0.0022,
+   "against_macro_held_defended": 0.7225,
+   "verdict": "REPORTED"
+  },
+  "ft20": {
+   "held_all": {
+    "n": 4147,
+    "rate": 0.4555
+   },
+   "held_defended": {
+    "n": 2278,
+    "rate": 0.4535
+   },
+   "held_strong_or_defpush": {
+    "n": 1171,
+    "rate": 0.4705
+   },
+   "all_tests": 0.4017,
+   "diff": 0.015,
+   "lb": -0.0086,
+   "train_diff": 0.0072,
+   "against_macro_held_defended": 0.4798,
+   "verdict": "NO_EFFECT"
+  }
+ },
+ "informative": []
+}

@@ -1,0 +1,1039 @@
+{
+ "a": "raw_cme2y",
+ "b": "cme_cme2y",
+ "at": "2026-10-17T13:24:51.576Z",
+ "rows": [
+  {
+   "study": "state_gate_on_impulse",
+   "missing": [
+    "raw_cme2y",
+    "cme_cme2y"
+   ]
+  },
+  {
+   "study": "swing_walls_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 4,
+   "mattered": true,
+   "max_oos_rate_move": 0.0464,
+   "max_oos_money_move": 0,
+   "top_oos": [
+    {
+     "path": "variants.15m.classes.STRONG.oos_hold",
+     "kind": "rate",
+     "a": 0.8955,
+     "b": 0.8491,
+     "d": -0.0464,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "variants.15m.classes.DEF>PUSH.oos_hold",
+     "kind": "rate",
+     "a": 0.8696,
+     "b": 0.8235,
+     "d": -0.0461,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "variants.3m.classes.STRONG.oos_hold",
+     "kind": "rate",
+     "a": 0.8682,
+     "b": 0.839,
+     "d": -0.0292,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "variants.15m.classes.ATTACK.oos_hold",
+     "kind": "rate",
+     "a": 0.5274,
+     "b": 0.5543,
+     "d": 0.0269,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "wall_bubbles_study",
+   "identical": false,
+   "verdict_flips": [
+    {
+     "path": "rsi.DEF>PUSH+R4.verdict",
+     "a": "UNDERPOWERED",
+     "b": "NO_ADD"
+    }
+   ],
+   "oos_big_moves": 8,
+   "mattered": true,
+   "max_oos_rate_move": 0.0383,
+   "max_oos_money_move": 0,
+   "top_oos": [
+    {
+     "path": "rsi.DEFENSE+R1.oos_hold",
+     "kind": "rate",
+     "a": 0.7151,
+     "b": 0.7534,
+     "d": 0.0383,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "rsi.DEF>PUSH+R4.oos_hold",
+     "kind": "rate",
+     "a": 0.8701,
+     "b": 0.8333,
+     "d": -0.0368,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "rsi.DEFENSE+R4.oos_hold",
+     "kind": "rate",
+     "a": 0.7802,
+     "b": 0.7455,
+     "d": -0.0347,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "stacking.3+.oos_hold",
+     "kind": "rate",
+     "a": 0.7508,
+     "b": 0.7804,
+     "d": 0.0296,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "classes.DEF>PUSH.oos_hold",
+     "kind": "rate",
+     "a": 0.8145,
+     "b": 0.8417,
+     "d": 0.0272,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "stacking.2.oos_hold",
+     "kind": "rate",
+     "a": 0.7632,
+     "b": 0.7858,
+     "d": 0.0226,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "rsi.DEF>PUSH+R1.oos_hold",
+     "kind": "rate",
+     "a": 0.8261,
+     "b": 0.8052,
+     "d": -0.0209,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "classes.DEFENSE.oos_hold",
+     "kind": "rate",
+     "a": 0.7616,
+     "b": 0.7824,
+     "d": 0.0208,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "c4h_level_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 2,
+   "mattered": true,
+   "max_oos_rate_move": 0.0307,
+   "max_oos_money_move": 0,
+   "top_oos": [
+    {
+     "path": "touch.oos.strong.hold",
+     "kind": "rate",
+     "a": 0.8708,
+     "b": 0.8401,
+     "d": -0.0307,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "touch.oos.attacked.hold",
+     "kind": "rate",
+     "a": 0.5571,
+     "b": 0.5772,
+     "d": 0.0201,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "wall_context_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 2,
+   "mattered": true,
+   "max_oos_rate_move": 0.0561,
+   "max_oos_money_move": 0,
+   "top_oos": [
+    {
+     "path": "on_bubble.DEF>PUSH+RSI-EXHAUST.oos_hold",
+     "kind": "rate",
+     "a": 0.86,
+     "b": 0.8039,
+     "d": -0.0561,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "on_bubble.DEF>PUSH+STRONG-APPROACH.oos_hold",
+     "kind": "rate",
+     "a": 0.9206,
+     "b": 0.8889,
+     "d": -0.0317,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "wall_scalp_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 50,
+   "mattered": true,
+   "max_oos_rate_move": 0.2667,
+   "max_oos_money_move": 5.618,
+   "top_oos": [
+    {
+     "path": "cells.S4H|T10.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.576,
+     "b": -7.194,
+     "d": -5.618,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S4H|SPLIT.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -0.669,
+     "b": -4.36,
+     "d": -3.691,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S4H|T4.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -0.952,
+     "b": -4.53,
+     "d": -3.578,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S1H|T10.oos_by_side.BUY.net",
+     "kind": "money",
+     "a": 1.417,
+     "b": 2.387,
+     "d": 0.97,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S1H|SPLIT.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.593,
+     "b": -2.458,
+     "d": -0.865,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S4H|SPLIT.oos.net",
+     "kind": "money",
+     "a": -0.589,
+     "b": -1.44,
+     "d": -0.851,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S4H|T4.oos.net",
+     "kind": "money",
+     "a": -0.775,
+     "b": -1.588,
+     "d": -0.813,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S1H|T10.oos.net",
+     "kind": "money",
+     "a": 0.225,
+     "b": 0.975,
+     "d": 0.75,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S1H|T4.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.832,
+     "b": -2.567,
+     "d": -0.735,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S4H|T10.oos.net",
+     "kind": "money",
+     "a": 1.641,
+     "b": 1.046,
+     "d": -0.595,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S15|T4.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -0.833,
+     "b": -0.409,
+     "d": 0.424,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.S3|T10.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -0.601,
+     "b": -1.01,
+     "d": -0.409,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "wall_pullback_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 4,
+   "mattered": true,
+   "max_oos_rate_move": 0.0213,
+   "max_oos_money_move": 0.191,
+   "top_oos": [
+    {
+     "path": "cells.L1H|SPLIT4.oos.net",
+     "kind": "money",
+     "a": -1.254,
+     "b": -1.063,
+     "d": 0.191,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.L4H|SPLIT4.oos.net",
+     "kind": "money",
+     "a": -0.993,
+     "b": -0.841,
+     "d": 0.152,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.L1H|T4.oos.net",
+     "kind": "money",
+     "a": -1.121,
+     "b": -0.969,
+     "d": 0.152,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.L1H|SPLIT4.oos.wr",
+     "kind": "rate",
+     "a": 0.3764,
+     "b": 0.3977,
+     "d": 0.0213,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "wall_defense_money",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 40,
+   "mattered": true,
+   "max_oos_rate_move": 0.0657,
+   "max_oos_money_move": 1.749,
+   "top_oos": [
+    {
+     "path": "cells.STRONG+DXY+SILVER|1.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.964,
+     "b": -0.215,
+     "d": 1.749,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG|1.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -2.213,
+     "b": -0.776,
+     "d": 1.437,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.DEFENSE|1.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -2.011,
+     "b": -0.773,
+     "d": 1.238,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG+DXY+SILVER|1.oos.net",
+     "kind": "money",
+     "a": -1.955,
+     "b": -0.815,
+     "d": 1.14,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG|2.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -2.417,
+     "b": -1.349,
+     "d": 1.068,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.DEFENSE|2.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.746,
+     "b": -0.955,
+     "d": 0.791,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.ALL_ref|1.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.627,
+     "b": -0.876,
+     "d": 0.751,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG|BOUNCE.oos_by_side.SELL.net",
+     "kind": "money",
+     "a": -1.108,
+     "b": -0.528,
+     "d": 0.58,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG|1.oos_by_side.BUY.net",
+     "kind": "money",
+     "a": -1.338,
+     "b": -1.846,
+     "d": -0.508,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG|BOUNCE.oos.net",
+     "kind": "money",
+     "a": -1.199,
+     "b": -0.705,
+     "d": 0.494,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.STRONG|2.oos.net",
+     "kind": "money",
+     "a": -1.779,
+     "b": -1.291,
+     "d": 0.488,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.DEFENSE|1.oos_by_side.BUY.net",
+     "kind": "money",
+     "a": -0.873,
+     "b": -1.327,
+     "d": -0.454,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "sell_downtrend_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 23,
+   "mattered": true,
+   "max_oos_rate_move": 0.1667,
+   "max_oos_money_move": 5.735,
+   "top_oos": [
+    {
+     "path": "cells.R-STATE|S-BREAK|R2.oos.net",
+     "kind": "money",
+     "a": -12.971,
+     "b": -7.236,
+     "d": 5.735,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-STATE|S-BREAK|R1.oos.net",
+     "kind": "money",
+     "a": -12.971,
+     "b": -9.351,
+     "d": 3.62,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-STATE|S-BREAK|RH.oos.net",
+     "kind": "money",
+     "a": -12.971,
+     "b": -10.408,
+     "d": 2.563,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-STATE|S-RALLY|R2.oos.net",
+     "kind": "money",
+     "a": -3.208,
+     "b": -1.141,
+     "d": 2.067,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-STATE|S-RALLY|R1.oos.net",
+     "kind": "money",
+     "a": -2.831,
+     "b": -1.414,
+     "d": 1.417,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "reported.R-1H|S-RALLY|R1.oos.net",
+     "kind": "money",
+     "a": -1.41,
+     "b": -2.755,
+     "d": -1.345,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "reported.R-1H|S-RALLY|R2.oos.net",
+     "kind": "money",
+     "a": -1.41,
+     "b": -2.479,
+     "d": -1.069,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-4H|S-RALLY|R2.oos.net",
+     "kind": "money",
+     "a": -0.089,
+     "b": -1.055,
+     "d": -0.966,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-4H|S-RALLY|R1.oos.net",
+     "kind": "money",
+     "a": -0.677,
+     "b": -1.511,
+     "d": -0.834,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "reported.R-1H|S-RALLY|RH.oos.net",
+     "kind": "money",
+     "a": -1.284,
+     "b": -1.876,
+     "d": -0.592,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "reported.NONE|S-RALLY|RH.oos.net",
+     "kind": "money",
+     "a": -1.264,
+     "b": -1.057,
+     "d": 0.207,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.R-STATE|S-BREAK|R1.oos.wr",
+     "kind": "rate",
+     "a": 0,
+     "b": 0.1667,
+     "d": 0.1667,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "matrix_loss_autopsy",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 0,
+   "mattered": false,
+   "max_oos_rate_move": 0,
+   "max_oos_money_move": 0,
+   "top_oos": []
+  },
+  {
+   "study": "fvg_strong_study",
+   "identical": false,
+   "verdict_flips": [
+    {
+     "path": "cells.3m|0.1.verdict",
+     "a": "UNDERPOWERED",
+     "b": "DOES_NOT_HOLD"
+    },
+    {
+     "path": "cells.3m|0.25.verdict",
+     "a": "UNDERPOWERED",
+     "b": "DOES_NOT_HOLD"
+    },
+    {
+     "path": "cells.3m|0.5.verdict",
+     "a": "UNDERPOWERED",
+     "b": "DOES_NOT_HOLD"
+    },
+    {
+     "path": "cells.3m|1.verdict",
+     "a": "UNDERPOWERED",
+     "b": "DOES_NOT_HOLD"
+    }
+   ],
+   "oos_big_moves": 42,
+   "mattered": true,
+   "max_oos_rate_move": 0.3429,
+   "max_oos_money_move": 4.6643,
+   "top_oos": [
+    {
+     "path": "cells.1h|0.5.oos.net",
+     "kind": "money",
+     "a": 1.3133,
+     "b": 5.9776,
+     "d": 4.6643,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.1h|1.oos.net",
+     "kind": "money",
+     "a": 3.027,
+     "b": 5.6859,
+     "d": 2.6589,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.1h|0.25.oos.net",
+     "kind": "money",
+     "a": 1.8034,
+     "b": 3.7055,
+     "d": 1.9021,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.15m|0.5.oos.net",
+     "kind": "money",
+     "a": 1.3169,
+     "b": -0.1406,
+     "d": -1.4575,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.15m|1.oos.net",
+     "kind": "money",
+     "a": 0.4255,
+     "b": -0.8299,
+     "d": -1.2554,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.15m|0.25.oos.net",
+     "kind": "money",
+     "a": -0.3856,
+     "b": -1.3335,
+     "d": -0.9479,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.3m|1.oos.net",
+     "kind": "money",
+     "a": -1.0536,
+     "b": -1.9652,
+     "d": -0.9116,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.15m|0.1.oos.net",
+     "kind": "money",
+     "a": -1.0688,
+     "b": -1.7423,
+     "d": -0.6735,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.3m|0.25.oos.net",
+     "kind": "money",
+     "a": -1.5618,
+     "b": -2.059,
+     "d": -0.4972,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.3m|0.5.oos.net",
+     "kind": "money",
+     "a": -1.4492,
+     "b": -1.9174,
+     "d": -0.4682,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.1h|1.oos.control",
+     "kind": "rate",
+     "a": 0.3,
+     "b": 0.6429,
+     "d": 0.3429,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.3m|0.1.oos.net",
+     "kind": "money",
+     "a": -1.568,
+     "b": -1.8879,
+     "d": -0.3199,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "order_block_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 33,
+   "mattered": true,
+   "max_oos_rate_move": 0.6,
+   "max_oos_money_move": 17.0956,
+   "top_oos": [
+    {
+     "path": "cells.4h|STRONG|1R.oos.net",
+     "kind": "money",
+     "a": 25.2308,
+     "b": 8.1352,
+     "d": -17.0956,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|2R.oos.net",
+     "kind": "money",
+     "a": 25.2308,
+     "b": 10.6594,
+     "d": -14.5714,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.1h|STRONG|2R.oos.net",
+     "kind": "money",
+     "a": -5.371,
+     "b": -2.3869,
+     "d": 2.9841,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.1h|STRONG|1R.oos.net",
+     "kind": "money",
+     "a": -3.6578,
+     "b": -0.7134,
+     "d": 2.9444,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.15m|STRONG|2R.oos.net",
+     "kind": "money",
+     "a": 1.1943,
+     "b": -0.2668,
+     "d": -1.4611,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|2R.oos.control",
+     "kind": "rate",
+     "a": 1,
+     "b": 0.4,
+     "d": -0.6,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|1R.oos.bounce",
+     "kind": "rate",
+     "a": 0,
+     "b": 0.4615,
+     "d": 0.4615,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|1R.oos.control",
+     "kind": "rate",
+     "a": 1,
+     "b": 0.5417,
+     "d": -0.4583,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.15m|STRONG|1R.oos.net",
+     "kind": "money",
+     "a": 0.3565,
+     "b": -0.0393,
+     "d": -0.3958,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|2R.oos.bounce",
+     "kind": "rate",
+     "a": 0,
+     "b": 0.2609,
+     "d": 0.2609,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|1R.oos.bounce_lb",
+     "kind": "rate",
+     "a": 0,
+     "b": 0.2346,
+     "d": 0.2346,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "cells.4h|STRONG|2R.oos.money_wr",
+     "kind": "rate",
+     "a": 0.5,
+     "b": 0.3667,
+     "d": -0.1333,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "ob_weak4h_confirm",
+   "identical": true,
+   "verdict_flips": [],
+   "oos_big_moves": 0,
+   "mattered": false,
+   "max_oos_rate_move": 0,
+   "max_oos_money_move": 0,
+   "top_oos": []
+  },
+  {
+   "study": "volume_profile_study",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 9,
+   "mattered": true,
+   "max_oos_rate_move": 0.0784,
+   "max_oos_money_move": 3.8319,
+   "top_oos": [
+    {
+     "path": "spot.cells.VAL.oos.net",
+     "kind": "money",
+     "a": -4.3394,
+     "b": -0.5075,
+     "d": 3.8319,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.VAH.oos.net",
+     "kind": "money",
+     "a": -3.0217,
+     "b": -0.8248,
+     "d": 2.1969,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.POC.oos.net",
+     "kind": "money",
+     "a": -7.2206,
+     "b": -8.4745,
+     "d": -1.2539,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.VAL.oos.bounce",
+     "kind": "rate",
+     "a": 0.4141,
+     "b": 0.4925,
+     "d": 0.0784,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.VAL.oos.bounce_lb",
+     "kind": "rate",
+     "a": 0.3159,
+     "b": 0.3918,
+     "d": 0.0759,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.VAH.oos.bounce_lb",
+     "kind": "rate",
+     "a": 0.3591,
+     "b": 0.4076,
+     "d": 0.0485,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.VAH.oos.bounce",
+     "kind": "rate",
+     "a": 0.4655,
+     "b": 0.5118,
+     "d": 0.0463,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.magnet.oos.mirror",
+     "kind": "rate",
+     "a": 0.5023,
+     "b": 0.5273,
+     "d": 0.025,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "spot.cells.POC.oos.control",
+     "kind": "rate",
+     "a": 0.5328,
+     "b": 0.5109,
+     "d": -0.0219,
+     "oos": true,
+     "big": true
+    }
+   ]
+  },
+  {
+   "study": "vp_matrix_filter",
+   "identical": false,
+   "verdict_flips": [],
+   "oos_big_moves": 5,
+   "mattered": true,
+   "max_oos_rate_move": 0.0135,
+   "max_oos_money_move": 0.2904,
+   "top_oos": [
+    {
+     "path": "primary.filters.OUTSIDE_VAL.oos.net",
+     "kind": "money",
+     "a": -0.8394,
+     "b": -0.549,
+     "d": 0.2904,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "report.filters.POC_TARGET.oos.net",
+     "kind": "money",
+     "a": -0.8198,
+     "b": -1.0929,
+     "d": -0.2731,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "primary.filters.AT_VAL.oos.net",
+     "kind": "money",
+     "a": -1.3826,
+     "b": -1.6388,
+     "d": -0.2562,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "primary.filters.POC_TARGET.oos.net",
+     "kind": "money",
+     "a": -0.583,
+     "b": -0.7945,
+     "d": -0.2115,
+     "oos": true,
+     "big": true
+    },
+    {
+     "path": "report.filters.OUTSIDE_VAL.oos.net",
+     "kind": "money",
+     "a": -1.9939,
+     "b": -1.8296,
+     "d": 0.1643,
+     "oos": true,
+     "big": true
+    }
+   ]
+  }
+ ]
+}

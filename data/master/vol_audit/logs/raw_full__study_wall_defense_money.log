@@ -1,0 +1,18 @@
+[vol_audit] mode raw · window full · artifacts → data\master\vol_audit\raw_full
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 4,567,330
+  ⚠ XAGUSD/3m: repaired 6 provably-false print(s): 2017-07-06T23:06(l), 2025-12-25T23:03(l), 2026-01-30T18:15(l), 2026-01-30T18:24(l), 2026-01-30T18:30(l), 2026-01-30T18:42(l)
+REPLICATION hold rate · all 60.4% (n 36724) · defense 71.4% (n 16760) · attack 51.2% (n 19964)   [Turbo 2: 60.4 / 71.5 / ~49]
+events 40,693 · defense 18,413 · strong threshold (TRAIN p66.7) 0.731
+DEFENSE 1                  OOS n  8014 (5.81/d) WR 0.4289 $/t -0.563 [LB -0.717] R$ 4.23 netR -0.146 · TRAIN WR 0.3606 $/t -0.52 · pre20 -0.437 post20 -0.597 → FAIL
+DEFENSE 2                  OOS n  7626 (5.53/d) WR 0.3788 $/t -0.519 [LB -0.693] R$ 4.19 netR -0.132 · TRAIN WR 0.3223 $/t -0.531 · pre20 -0.443 post20 -0.568 → FAIL
+DEFENSE BOUNCE             OOS n  6834 (4.95/d) WR 0.6008 $/t -0.493 [LB -0.562] R$ 3.17 netR -0.161 · TRAIN WR 0.5397 $/t -0.463 · pre20 -0.415 post20 -0.513 → FAIL
+STRONG 1                   OOS n  2608 (1.89/d) WR 0.4325 $/t -0.599 [LB -0.858] R$ 4.78 netR -0.134 · TRAIN WR 0.3702 $/t -0.597 · pre20 -0.453 post20 -0.676 → FAIL
+STRONG 2                   OOS n  2560 (1.86/d) WR 0.393 $/t -0.568 [LB -0.877] R$ 4.73 netR -0.123 · TRAIN WR 0.329 $/t -0.615 · pre20 -0.46 post20 -0.662 → FAIL
+STRONG BOUNCE              OOS n  1733 (1.26/d) WR 0.6272 $/t -0.488 [LB -0.602] R$ 3.1 netR -0.164 · TRAIN WR 0.5725 $/t -0.515 · pre20 -0.466 post20 -0.516 → FAIL
+STRONG+DXY+SILVER 1        OOS n  1340 (0.97/d) WR 0.4254 $/t -0.635 [LB -1] R$ 4.74 netR -0.149 · TRAIN WR 0.3521 $/t -0.674 · pre20 -0.542 post20 -0.708 → FAIL
+STRONG+DXY+SILVER BOUNCE   OOS n   850 (0.62/d) WR 0.6259 $/t -0.533 [LB -0.688] R$ 3.04 netR -0.18 · TRAIN WR 0.5779 $/t -0.547 · pre20 -0.46 post20 -0.57 → FAIL
+ATTACK_ref 1               OOS n  8677 (6.29/d) WR 0.4194 $/t -0.547 [LB -0.631] R$ 2.91 netR -0.184 · TRAIN WR 0.3474 $/t -0.448 · pre20 -0.435 post20 -0.532 → REFERENCE
+ALL_ref 1                  OOS n 14068 (10.2/d) WR 0.4233 $/t -0.571 [LB -0.665] R$ 3.63 netR -0.168 · TRAIN WR 0.3521 $/t -0.485 · pre20 -0.44 post20 -0.58 → REFERENCE
+
+=> WALL DEFENSE MONEY: NO_PASS

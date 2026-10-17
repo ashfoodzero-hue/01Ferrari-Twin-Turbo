@@ -1,0 +1,14 @@
+[vol_audit] mode cme · window cme2y · artifacts → data\master\vol_audit\cme_cme2y
+  ⚠ XAUUSD/1d: repaired 1 provably-false print(s): 2025-11-23T00:00(l)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+SPOT POC: OOS bounce 0.3636 (LB 0.2745) vs control 0.5109 · TRAIN 0.4785 vs 0.5 · $/t -8.4745 (-0.3241 R, n 145) → DOES_NOT_HOLD
+SPOT VAH: OOS bounce 0.5118 (LB 0.4076) vs control 0.5691 · TRAIN 0.4802 vs 0.4479 · $/t -0.8248 (-0.0251 R, n 129) → DOES_NOT_HOLD
+SPOT VAL: OOS bounce 0.4925 (LB 0.3918) vs control 0.4435 · TRAIN 0.4192 vs 0.4601 · $/t -0.5075 (-0.0324 R, n 135) → DOES_NOT_HOLD
+SPOT POC magnet: OOS hit 0.6 (LB 0.5246) vs mirror 0.5273 · TRAIN 0.6062 vs 0.6687 · n 220 → NOT_A_MAGNET
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+FUT POC: OOS bounce 0.366 (LB 0.2793) vs control 0.4459 · TRAIN 0.4433 vs 0.484 · $/t -7.0911 (-0.2759 R, n 159) → DOES_NOT_HOLD
+FUT VAH: OOS bounce 0.5108 (LB 0.411) vs control 0.4545 · TRAIN 0.4915 vs 0.4737 · $/t -0.2231 (-0.0267 R, n 141) → DOES_NOT_HOLD
+FUT VAL: OOS bounce 0.4825 (LB 0.3853) vs control 0.5074 · TRAIN 0.4487 vs 0.5166 · $/t -1.3931 (-0.0719 R, n 145) → DOES_NOT_HOLD
+FUT POC magnet: OOS hit 0.5949 (LB 0.5223) vs mirror 0.5696 · TRAIN 0.5839 vs 0.6174 · n 237 → NOT_A_MAGNET
+
+=> TOOL 4 A1: PROFILE_LEVELS_DO_NOT_HOLD · A2: NO_MAGNET

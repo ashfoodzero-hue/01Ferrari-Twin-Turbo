@@ -971,3 +971,21 @@ without duplications … only use the real Win results, and ignore the rest."
     - minutes Polygon later REMOVES (EURUSD 10-13 00:00-28) are now deleted at read time (`deleted` corrections, with a safeguard);
     - GLD keeps its 17:00 New York hour;
     - smoke_all now passes script arguments.
+- **(bz) 2026-10-17 — VOLUME AUDIT: did spot `v` (a quote count, not volume) change any result? MEASURED: no pass or fail came from it; the live state gate was mostly driven by it.** Spec `docs/VOLUME_AUDIT_SPEC.md` (pre-registered), results `docs/VOLUME_AUDIT_RESULTS.md`, harness `scripts/vol_audit/` (studies re-run UNCHANGED under a module hook; artifacts in `data/master/vol_audit/`; self-test 4/4 modes; 75 study runs, 0 failures; nothing live changed).
+  - **No-drift:** 11 studies byte-identical. 4 drifted for MEASURED reasons:
+    - state gate: built on the old 24-year store;
+    - volume_profile: FUT only, after today's GOLD_FUT CME patch;
+    - order_block: 2 of 52,107 5m OOS events, plus the shared seeded control sequence;
+    - vp_matrix_filter: Matrix / WTI code after 10-11.
+  - **13 y, volume removed (DROP):**
+    - 0 verdicts reversed. Every change is UNDERPOWERED → FAIL / DOES_NOT_HOLD (strong FVG, STRONG order blocks, R-STATE sells).
+    - Wall bubbles stay SHOWN: DEFENSE 69.9 → 70.1 %, DEF>PUSH 73.4 → 75.0 %, STRONG 77.1 → 76.5 % (OOS n about 2.4-9.5 k).
+    - Every money test is still negative.
+  - **levelRadar:** 19,984 / 19,984 decisions identical with `v` = 0 → no volume at all.
+  - **Live state gate (IMPULSE_CONT):**
+    - OOS 2021-26: RAW blocked 580 / 658 fires (88 %); DROP blocks 106 / 658.
+    - CME era: the state differs from a real-volume state on 8.85 % of 43,452 15m bars.
+    - With CME volume, the blocked fires earn +$0.30/t (n 69), the same as the book (+$0.30, n 257).
+    - UNPOWERED in every version.
+  - **CME (2024-12 → 2026-10) vs DROP:** CME is better on 1 of 3 volume-wall classes (DEF>PUSH 84.2 vs 81.1 %, TRAIN 75.2 vs 70.6 %, n 733) and worse on the swing-wall and 4H-level classes behind the Telegram 🧱 alert (4H strong touch 84.0 vs 88.2 %).
+  - **Proposal: DROP the volume part everywhere.** CME futures are 10 min delayed live, and the rules decide at the bar close or touch + 2. Awaiting Ashraf's approval; nothing changed live.

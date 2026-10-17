@@ -1,0 +1,610 @@
+{
+ "at": "2026-10-17T13:15:06.207Z",
+ "spec": "docs/SELL_DOWNTREND_SPEC.md",
+ "red_line": "WR >= 85 % + money",
+ "cells": {
+  "R-STATE|S-RALLY|R1": {
+   "train": {
+    "n": 16,
+    "per_day": 0.06,
+    "wr": 0.4375,
+    "wr_lb": 0.1827,
+    "net": -0.34,
+    "net_lb": -3.23,
+    "avg_risk": 4.24
+   },
+   "oos": {
+    "n": 14,
+    "per_day": 0.07,
+    "wr": 0.4286,
+    "wr_lb": 0.1661,
+    "net": -2.03,
+    "net_lb": -8.553,
+    "avg_risk": 9.69
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.129
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-STATE|S-RALLY|R2": {
+   "train": {
+    "n": 15,
+    "per_day": 0.05,
+    "wr": 0.1333,
+    "wr_lb": 0.0256,
+    "net": -2.212,
+    "net_lb": -4.945,
+    "avg_risk": 4.36
+   },
+   "oos": {
+    "n": 14,
+    "per_day": 0.07,
+    "wr": 0.2857,
+    "wr_lb": 0.087,
+    "net": -1.287,
+    "net_lb": -9.845,
+    "avg_risk": 9.69
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.765
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-STATE|S-RALLY|RH": {
+   "train": {
+    "n": 16,
+    "per_day": 0.06,
+    "wr": 0.625,
+    "wr_lb": 0.3179,
+    "net": 0.032,
+    "net_lb": -2.169,
+    "avg_risk": 4.24
+   },
+   "oos": {
+    "n": 14,
+    "per_day": 0.07,
+    "wr": 0.5714,
+    "wr_lb": 0.2615,
+    "net": -1.907,
+    "net_lb": -7.54,
+    "avg_risk": 9.69
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.873
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-STATE|S-BREAK|R1": {
+   "train": {
+    "n": 48,
+    "per_day": 0.17,
+    "wr": 0.5208,
+    "wr_lb": 0.3404,
+    "net": -0.121,
+    "net_lb": -3.511,
+    "avg_risk": 9.97
+   },
+   "oos": {
+    "n": 10,
+    "per_day": 0.05,
+    "wr": 0.3,
+    "wr_lb": 0.0773,
+    "net": -5.706,
+    "net_lb": -13.951,
+    "avg_risk": 12.72
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.084
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-STATE|S-BREAK|R2": {
+   "train": {
+    "n": 45,
+    "per_day": 0.16,
+    "wr": 0.4,
+    "wr_lb": 0.2336,
+    "net": -1.089,
+    "net_lb": -5.349,
+    "avg_risk": 9.91
+   },
+   "oos": {
+    "n": 10,
+    "per_day": 0.05,
+    "wr": 0.3,
+    "wr_lb": 0.0773,
+    "net": -2.108,
+    "net_lb": -13.932,
+    "avg_risk": 12.72
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.274
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-STATE|S-BREAK|RH": {
+   "train": {
+    "n": 48,
+    "per_day": 0.17,
+    "wr": 0.625,
+    "wr_lb": 0.4362,
+    "net": -0.296,
+    "net_lb": -3.19,
+    "avg_risk": 9.97
+   },
+   "oos": {
+    "n": 10,
+    "per_day": 0.05,
+    "wr": 0.3,
+    "wr_lb": 0.0773,
+    "net": -7.505,
+    "net_lb": -13.776,
+    "avg_risk": 12.72
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.539
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-4H|S-RALLY|R1": {
+   "train": {
+    "n": 161,
+    "per_day": 0.56,
+    "wr": 0.441,
+    "wr_lb": 0.3423,
+    "net": -0.557,
+    "net_lb": -1.458,
+    "avg_risk": 4.26
+   },
+   "oos": {
+    "n": 255,
+    "per_day": 1.33,
+    "wr": 0.4706,
+    "wr_lb": 0.39,
+    "net": -0.681,
+    "net_lb": -2.275,
+    "avg_risk": 8.99
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.633
+   },
+   "verdict": "FAIL"
+  },
+  "R-4H|S-RALLY|R2": {
+   "train": {
+    "n": 152,
+    "per_day": 0.53,
+    "wr": 0.2829,
+    "wr_lb": 0.1977,
+    "net": -0.833,
+    "net_lb": -2.149,
+    "avg_risk": 4.33
+   },
+   "oos": {
+    "n": 235,
+    "per_day": 1.23,
+    "wr": 0.3234,
+    "wr_lb": 0.249,
+    "net": -0.288,
+    "net_lb": -2.494,
+    "avg_risk": 8.93
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.502
+   },
+   "verdict": "FAIL"
+  },
+  "R-4H|S-RALLY|RH": {
+   "train": {
+    "n": 166,
+    "per_day": 0.58,
+    "wr": 0.5723,
+    "wr_lb": 0.4701,
+    "net": -0.647,
+    "net_lb": -1.379,
+    "avg_risk": 4.23
+   },
+   "oos": {
+    "n": 275,
+    "per_day": 1.44,
+    "wr": 0.6,
+    "wr_lb": 0.5205,
+    "net": -0.945,
+    "net_lb": -2.088,
+    "avg_risk": 8.95
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.833
+   },
+   "verdict": "FAIL"
+  },
+  "R-4H|S-BREAK|R1": {
+   "train": {
+    "n": 71,
+    "per_day": 0.25,
+    "wr": 0.4366,
+    "wr_lb": 0.294,
+    "net": -0.104,
+    "net_lb": -2.917,
+    "avg_risk": 8.48
+   },
+   "oos": {
+    "n": 63,
+    "per_day": 0.33,
+    "wr": 0.4127,
+    "wr_lb": 0.2659,
+    "net": -1.515,
+    "net_lb": -5.177,
+    "avg_risk": 10.96
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.767
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-4H|S-BREAK|R2": {
+   "train": {
+    "n": 68,
+    "per_day": 0.24,
+    "wr": 0.3676,
+    "wr_lb": 0.2325,
+    "net": 0.917,
+    "net_lb": -2.873,
+    "avg_risk": 8.47
+   },
+   "oos": {
+    "n": 58,
+    "per_day": 0.3,
+    "wr": 0.3103,
+    "wr_lb": 0.1779,
+    "net": -0.988,
+    "net_lb": -6.063,
+    "avg_risk": 11.08
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": 0.04
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "R-4H|S-BREAK|RH": {
+   "train": {
+    "n": 79,
+    "per_day": 0.28,
+    "wr": 0.5316,
+    "wr_lb": 0.3871,
+    "net": -1.29,
+    "net_lb": -3.13,
+    "avg_risk": 8.21
+   },
+   "oos": {
+    "n": 71,
+    "per_day": 0.37,
+    "wr": 0.5915,
+    "wr_lb": 0.4363,
+    "net": -1.083,
+    "net_lb": -3.689,
+    "avg_risk": 10.78
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.192
+   },
+   "verdict": "UNDERPOWERED"
+  }
+ },
+ "reported": {
+  "R-1H|S-RALLY|R1": {
+   "train": {
+    "n": 191,
+    "per_day": 0.66,
+    "wr": 0.4503,
+    "wr_lb": 0.3587,
+    "net": -0.605,
+    "net_lb": -1.497,
+    "avg_risk": 4.33
+   },
+   "oos": {
+    "n": 196,
+    "per_day": 1.02,
+    "wr": 0.4388,
+    "wr_lb": 0.349,
+    "net": -1.17,
+    "net_lb": -2.842,
+    "avg_risk": 9.14
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.891
+   },
+   "verdict": "REPORTED"
+  },
+  "R-1H|S-RALLY|R2": {
+   "train": {
+    "n": 183,
+    "per_day": 0.64,
+    "wr": 0.2787,
+    "wr_lb": 0.2006,
+    "net": -0.984,
+    "net_lb": -2.097,
+    "avg_risk": 4.37
+   },
+   "oos": {
+    "n": 187,
+    "per_day": 0.98,
+    "wr": 0.2888,
+    "wr_lb": 0.2102,
+    "net": -1.29,
+    "net_lb": -3.598,
+    "avg_risk": 9.1
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.139
+   },
+   "verdict": "REPORTED"
+  },
+  "R-1H|S-RALLY|RH": {
+   "train": {
+    "n": 200,
+    "per_day": 0.7,
+    "wr": 0.575,
+    "wr_lb": 0.4818,
+    "net": -0.742,
+    "net_lb": -1.419,
+    "avg_risk": 4.27
+   },
+   "oos": {
+    "n": 211,
+    "per_day": 1.1,
+    "wr": 0.5782,
+    "wr_lb": 0.4874,
+    "net": -1.282,
+    "net_lb": -2.555,
+    "avg_risk": 9.07
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.02
+   },
+   "verdict": "REPORTED"
+  },
+  "R-1H|S-BREAK|R1": {
+   "train": {
+    "n": 124,
+    "per_day": 0.43,
+    "wr": 0.4597,
+    "wr_lb": 0.3469,
+    "net": -0.625,
+    "net_lb": -2.764,
+    "avg_risk": 8.4
+   },
+   "oos": {
+    "n": 63,
+    "per_day": 0.33,
+    "wr": 0.381,
+    "wr_lb": 0.2392,
+    "net": -2.537,
+    "net_lb": -6.069,
+    "avg_risk": 10.84
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.269
+   },
+   "verdict": "REPORTED"
+  },
+  "R-1H|S-BREAK|R2": {
+   "train": {
+    "n": 109,
+    "per_day": 0.38,
+    "wr": 0.3486,
+    "wr_lb": 0.2406,
+    "net": -0.988,
+    "net_lb": -3.416,
+    "avg_risk": 8.23
+   },
+   "oos": {
+    "n": 59,
+    "per_day": 0.31,
+    "wr": 0.2712,
+    "wr_lb": 0.1489,
+    "net": -1.501,
+    "net_lb": -6.492,
+    "avg_risk": 10.93
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.168
+   },
+   "verdict": "REPORTED"
+  },
+  "R-1H|S-BREAK|RH": {
+   "train": {
+    "n": 140,
+    "per_day": 0.49,
+    "wr": 0.5786,
+    "wr_lb": 0.4673,
+    "net": -0.914,
+    "net_lb": -2.397,
+    "avg_risk": 8.23
+   },
+   "oos": {
+    "n": 67,
+    "per_day": 0.35,
+    "wr": 0.5522,
+    "wr_lb": 0.3947,
+    "net": -1.832,
+    "net_lb": -4.515,
+    "avg_risk": 10.76
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -1.211
+   },
+   "verdict": "REPORTED"
+  },
+  "NONE|S-RALLY|R1": {
+   "train": {
+    "n": 765,
+    "per_day": 2.66,
+    "wr": 0.4601,
+    "wr_lb": 0.4132,
+    "net": -0.469,
+    "net_lb": -0.935,
+    "avg_risk": 4.41
+   },
+   "oos": {
+    "n": 580,
+    "per_day": 3.03,
+    "wr": 0.4552,
+    "wr_lb": 0.4015,
+    "net": -0.88,
+    "net_lb": -1.891,
+    "avg_risk": 8.85
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.646
+   },
+   "verdict": "REPORTED"
+  },
+  "NONE|S-RALLY|R2": {
+   "train": {
+    "n": 703,
+    "per_day": 2.45,
+    "wr": 0.3201,
+    "wr_lb": 0.2756,
+    "net": -0.367,
+    "net_lb": -0.996,
+    "avg_risk": 4.44
+   },
+   "oos": {
+    "n": 529,
+    "per_day": 2.76,
+    "wr": 0.3025,
+    "wr_lb": 0.2526,
+    "net": -0.978,
+    "net_lb": -2.378,
+    "avg_risk": 8.83
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.629
+   },
+   "verdict": "REPORTED"
+  },
+  "NONE|S-RALLY|RH": {
+   "train": {
+    "n": 797,
+    "per_day": 2.77,
+    "wr": 0.5985,
+    "wr_lb": 0.552,
+    "net": -0.499,
+    "net_lb": -0.837,
+    "avg_risk": 4.38
+   },
+   "oos": {
+    "n": 615,
+    "per_day": 3.21,
+    "wr": 0.587,
+    "wr_lb": 0.5339,
+    "net": -1.144,
+    "net_lb": -1.86,
+    "avg_risk": 8.83
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.78
+   },
+   "verdict": "REPORTED"
+  },
+  "NONE|S-BREAK|R1": {
+   "train": {
+    "n": 379,
+    "per_day": 1.32,
+    "wr": 0.4512,
+    "wr_lb": 0.3852,
+    "net": -0.566,
+    "net_lb": -1.788,
+    "avg_risk": 8.58
+   },
+   "oos": {
+    "n": 160,
+    "per_day": 0.84,
+    "wr": 0.4625,
+    "wr_lb": 0.3622,
+    "net": -0.841,
+    "net_lb": -3.134,
+    "avg_risk": 11.01
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.648
+   },
+   "verdict": "REPORTED"
+  },
+  "NONE|S-BREAK|R2": {
+   "train": {
+    "n": 349,
+    "per_day": 1.21,
+    "wr": 0.3467,
+    "wr_lb": 0.2831,
+    "net": -0.436,
+    "net_lb": -1.972,
+    "avg_risk": 8.56
+   },
+   "oos": {
+    "n": 150,
+    "per_day": 0.78,
+    "wr": 0.3467,
+    "wr_lb": 0.253,
+    "net": -0.002,
+    "net_lb": -3.103,
+    "avg_risk": 11.1
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.306
+   },
+   "verdict": "REPORTED"
+  },
+  "NONE|S-BREAK|RH": {
+   "train": {
+    "n": 420,
+    "per_day": 1.46,
+    "wr": 0.5929,
+    "wr_lb": 0.5286,
+    "net": -0.626,
+    "net_lb": -1.487,
+    "avg_risk": 8.49
+   },
+   "oos": {
+    "n": 180,
+    "per_day": 0.94,
+    "wr": 0.6111,
+    "wr_lb": 0.5128,
+    "net": -0.952,
+    "net_lb": -2.666,
+    "avg_risk": 10.92
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.724
+   },
+   "verdict": "REPORTED"
+  }
+ },
+ "passing": []
+}

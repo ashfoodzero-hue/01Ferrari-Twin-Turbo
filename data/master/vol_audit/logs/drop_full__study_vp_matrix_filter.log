@@ -1,0 +1,20 @@
+[vol_audit] mode drop · window full · artifacts → data\master\vol_audit\drop_full
+  ⚠ XAUUSD/1d: repaired 1 provably-false print(s): 2025-11-23T00:00(l)
+  ⚠ XAUUSD/3m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+
+── PRIMARY Matrix with WTI (2y): trades 3398 (profile available 3391)
+   ALL          OOS n 1327 WR 0.2007 · $/t -0.9078 [-1.7936, 0.0152] · TRAIN $/t -0.2699
+   AT_VAL       OOS n 295 WR 0.1852 (lift -0.0155) · $/t -0.8302 [-2.2467, 0.7799] · TRAIN $/t -0.4403 → FAIL
+   OUTSIDE_VAL  OOS n 340 WR 0.198 (lift -0.0027) · $/t -0.8623 [-2.2282, 0.6898] · TRAIN $/t 0.0406 → FAIL
+   POC_TARGET   OOS n 588 WR 0.2015 (lift 0.0008) · $/t -0.8458 [-2.4434, 0.82] · TRAIN $/t -0.0957 → FAIL
+  ⚠ XAUUSD/3m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+
+── REPORT Matrix without WTI (13y): trades 17099 (profile available 17057)
+   ALL          OOS n 8693 WR 0.1616 · $/t -0.6085 [-0.8134, -0.3916] · TRAIN $/t -0.7128
+   AT_VAL       OOS n 1558 WR 0.1635 (lift 0.0019) · $/t -0.5918 [-1.0094, -0.1515] · TRAIN $/t -0.7288 → FAIL
+   OUTSIDE_VAL  OOS n 2222 WR 0.1672 (lift 0.0056) · $/t -0.5945 [-0.9376, -0.2444] · TRAIN $/t -0.8257 → FAIL
+   POC_TARGET   OOS n 3068 WR 0.1748 (lift 0.0132) · $/t -0.4809 [-0.9324, -0.0402] · TRAIN $/t -0.7453 → FAIL
+
+=> TOOL 4 B: PROFILE_DOES_NOT_MAKE_THE_MATRIX_PROFITABLE

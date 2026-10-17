@@ -1,0 +1,189 @@
+{
+ "at": "2026-10-17T13:12:43.384Z",
+ "spec": "docs/WALL_BUBBLES_SPEC.md",
+ "events": 9583,
+ "labelled": 9394,
+ "strong_threshold_train_p66": 0.5876468878139378,
+ "replication": {
+  "all": 0.6038,
+  "defense": 0.7333,
+  "attack": 0.4898
+ },
+ "base": {
+  "oos": 0.6137,
+  "train": 0.5941
+ },
+ "classes": {
+  "ALL": {
+   "oos_n": 4654,
+   "oos_hold": 0.6137,
+   "oos_lift": 0,
+   "train_n": 4740,
+   "train_hold": 0.5941,
+   "train_lift": 0,
+   "by_side": {
+    "ceiling": 0.6085,
+    "floor": 0.6189
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": 0.6038
+   }
+  },
+  "ATTACK": {
+   "oos_n": 2484,
+   "oos_hold": 0.4839,
+   "oos_lift": -0.1298,
+   "train_n": 2512,
+   "train_hold": 0.4956,
+   "train_lift": -0.0985,
+   "by_side": {
+    "ceiling": 0.4847,
+    "floor": 0.4831
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": 0.4898
+   }
+  },
+  "DEFENSE": {
+   "oos_n": 2170,
+   "oos_hold": 0.7622,
+   "oos_lift": 0.1485,
+   "train_n": 2228,
+   "train_hold": 0.7051,
+   "train_lift": 0.111,
+   "lift_lb": 0.1319,
+   "verdict": "SHOWN",
+   "by_side": {
+    "ceiling": 0.7568,
+    "floor": 0.7674
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": 0.7333
+   }
+  },
+  "STRONG": {
+   "oos_n": 705,
+   "oos_hold": 0.8567,
+   "oos_lift": 0.2431,
+   "train_n": 742,
+   "train_hold": 0.7709,
+   "train_lift": 0.1768,
+   "lift_lb": 0.214,
+   "verdict": "SHOWN",
+   "by_side": {
+    "ceiling": 0.8588,
+    "floor": 0.8548
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": 0.8127
+   }
+  },
+  "DEF>PUSH": {
+   "oos_n": 714,
+   "oos_hold": 0.8109,
+   "oos_lift": 0.1973,
+   "train_n": 763,
+   "train_hold": 0.7064,
+   "train_lift": 0.1123,
+   "lift_lb": 0.1603,
+   "verdict": "SHOWN",
+   "by_side": {
+    "ceiling": 0.8039,
+    "floor": 0.8179
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": 0.7569
+   }
+  }
+ },
+ "rsi": {
+  "DEFENSE+R4": {
+   "oos_n": 275,
+   "oos_hold": 0.7673,
+   "class_hold": 0.7622,
+   "oos_diff": 0.0051,
+   "diff_lb": -0.0484,
+   "train_n": 309,
+   "train_diff": -0.0093,
+   "verdict": "NO_ADD"
+  },
+  "DEFENSE+RB4": {
+   "oos_n": 110,
+   "oos_hold": 0.7818,
+   "class_hold": 0.7622,
+   "oos_diff": 0.0196,
+   "diff_lb": -0.1165,
+   "train_n": 115,
+   "train_diff": 0.0166,
+   "verdict": "NO_ADD"
+  },
+  "DEFENSE+R1": {
+   "oos_n": 198,
+   "oos_hold": 0.7323,
+   "class_hold": 0.7622,
+   "oos_diff": -0.0299,
+   "diff_lb": -0.1099,
+   "train_n": 223,
+   "train_diff": 0.0169,
+   "verdict": "NO_ADD"
+  },
+  "DEF>PUSH+R4": {
+   "oos_n": 102,
+   "oos_hold": 0.8627,
+   "class_hold": 0.8109,
+   "oos_diff": 0.0518,
+   "diff_lb": -0.0213,
+   "train_n": 101,
+   "train_diff": 0.0263,
+   "verdict": "NO_ADD"
+  },
+  "DEF>PUSH+RB4": {
+   "oos_n": 36,
+   "oos_hold": 0.8333,
+   "class_hold": 0.8109,
+   "oos_diff": 0.0224,
+   "diff_lb": -0.2247,
+   "train_n": 36,
+   "train_diff": -0.012,
+   "verdict": "UNDERPOWERED"
+  },
+  "DEF>PUSH+R1": {
+   "oos_n": 77,
+   "oos_hold": 0.8052,
+   "class_hold": 0.8109,
+   "oos_diff": -0.0057,
+   "diff_lb": -0.1775,
+   "train_n": 75,
+   "train_diff": 0.0136,
+   "verdict": "UNDERPOWERED"
+  }
+ },
+ "stacking": {
+  "1": {
+   "oos_n": 1141,
+   "oos_hold": 0.7493,
+   "train_hold": 0.6955
+  },
+  "2": {
+   "oos_n": 570,
+   "oos_hold": 0.7526,
+   "train_hold": 0.7262
+  },
+  "3+": {
+   "oos_n": 459,
+   "oos_hold": 0.8061,
+   "train_hold": 0.7059
+  }
+ },
+ "shown": [
+  "DEFENSE",
+  "STRONG",
+  "DEF>PUSH"
+ ],
+ "rsi_confirms": []
+}

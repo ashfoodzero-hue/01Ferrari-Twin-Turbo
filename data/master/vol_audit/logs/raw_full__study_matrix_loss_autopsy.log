@@ -1,0 +1,30 @@
+[vol_audit] mode raw · window full · artifacts → data\master\vol_audit\raw_full
+  ⚠ XAUUSD/3m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAGUSD/3m: repaired 5 provably-false print(s): 2025-12-25T23:03(l), 2026-01-30T18:15(l), 2026-01-30T18:24(l), 2026-01-30T18:30(l), 2026-01-30T18:42(l)
+  ⚠ XAGUSD/15m: repaired 2 provably-false print(s): 2026-01-30T18:30(l), 2026-03-05T23:00(l)
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1h: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+BUY trades TRAIN 2071 (mean -0.27, WR 0.247) · OOS 1324 (mean -0.87, WR 0.277)
+  DXY 3m dist from EMA (ATR)     TRAIN gain 0.216 keep [low] · low: T -0.054/690 O 0.356/385 | high: T -0.286/691 O -0.769/505 | mid: T -0.47/690 O -2.074/434
+  DXY flipped on the signal bar  TRAIN gain 0.095 keep [yes] · yes: T -0.175/957 O -0.93/682 | no: T -0.351/1114 O -0.806/642
+  DXY 15m trend                  TRAIN gain 0.114 keep [up] · up: T -0.156/1119 O -1.057/816 | down: T -0.404/952 O -0.568/508
+  DXY 1h trend                   TRAIN gain 0.037 keep [up] · up: T -0.233/1127 O -0.83/838 | down: T -0.314/944 O -0.938/486
+  WTI flipped on the signal bar  TRAIN gain — keep [yes] · no: T -0.36/1671 O -0.837/1021 | yes: T 0.125/390 O -0.84/299
+  Silver 3m trend                TRAIN gain 0.292 keep [up] · down: T -0.478/1210 O -1.483/718 | up: T 0.022/861 O -0.143/606
+  Silver 15m trend               TRAIN gain — keep [up] · up: T -0.257/519 O -1.956/256 | down: T -0.274/1552 O -0.609/1068
+  Gold 15m trend                 TRAIN gain 0.009 keep [down] · up: T -0.306/414 O -2.426/278 | down: T -0.261/1657 O -0.456/1046
+  Gold 1h trend                  TRAIN gain 0.163 keep [down] · down: T -0.107/1078 O -0.316/767 | up: T -0.447/993 O -1.632/557
+  Depth below wall (ATR)         TRAIN gain 0.169 keep [high, low] · high: T -0.076/691 O -0.135/536 | mid: T -0.607/690 O -2.586/485 | low: T -0.127/690 O 0.577/303
+  3m ATR percentile              TRAIN gain 0.16 keep [high, mid] · low: T -0.591/689 O -1.867/583 | high: T -0.064/691 O -0.637/322 | mid: T -0.156/691 O 0.339/419
+  Session                        TRAIN gain 0.226 keep [Asia, London, late] · Asia: T -0.016/768 O -1.462/512 | NY: T -0.888/554 O -0.399/288 | London: T 0.062/411 O -1.265/297 | late: T -0.237/338 O 0.384/227
+  Market state                   TRAIN gain 0.154 keep [EQUILIBRIUM] · EQUILIBRIUM: T -0.116/1017 O -0.654/651 | PREMIUM: T -0.471/316 O -3.018/174 | DISCOUNT: T -0.301/671 O -0.223/408 | TREND/BREAKOUT: T -1.34/67 O -1.202/91
+  4H Macro long score            TRAIN gain 0.299 keep [>=65] · 35-64: T -0.324/740 O -0.317/498 | >=65: T 0.029/938 O -1.007/510 | <=34: T -0.881/393 O -1.521/316
+  Trigger candle body (ATR)      TRAIN gain 0.312 keep [mid] · high: T -0.473/691 O 0.505/447 | mid: T 0.042/690 O -1.463/466 | low: T -0.378/690 O -1.692/411
+
+TRAIN-selected top 3: Trigger candle body (ATR) (+0.312), 4H Macro long score (+0.299), Silver 3m trend (+0.292)
+OOS top1: Trigger candle body (ATR) keep mid: kept 466 mean -1.463 WR 0.283 · gain -0.593 LB -1.932 · kept LB -2.851 → NO
+OOS top2: 4H Macro long score keep >=65: kept 510 mean -1.007 WR 0.267 · gain -0.137 LB -1.35 · kept LB -2.131 → NO
+OOS top3: Silver 3m trend keep up: kept 606 mean -0.143 WR 0.289 · gain 0.727 LB -0.415 · kept LB -1.828 → NO
+OOS top1 AND top2: kept 190 mean -0.244 WR 0.321 · gain 0.625 LB -1.332 · kept LB -2.125 → NO

@@ -1,0 +1,152 @@
+{
+ "at": "2026-10-17T13:13:28.664Z",
+ "spec": "docs/WALL_PULLBACK_SPEC.md",
+ "red_line": "WR >= 85 % + money",
+ "cells": {
+  "L4H|SPLIT4": {
+   "bubbles": 837,
+   "tried": 813,
+   "fill_rate": 0.6224,
+   "unfilled": 307,
+   "cancelled_wall_broke": 0,
+   "train": {
+    "n": 278,
+    "per_day": 0.97,
+    "wr": 0.4029,
+    "wr_lb": 0.3469,
+    "net": -0.202,
+    "net_lb": -0.636,
+    "avg_risk": 2.96,
+    "reached_4": 0.3885
+   },
+   "oos": {
+    "n": 228,
+    "per_day": 1.19,
+    "wr": 0.4079,
+    "wr_lb": 0.3461,
+    "net": -0.993,
+    "net_lb": -1.519,
+    "avg_risk": 3.96,
+    "reached_4": 0.4079
+   },
+   "oos_by_side": {
+    "SELL": -0.861,
+    "BUY": -1.116
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.558
+   },
+   "verdict": "FAIL"
+  },
+  "L4H|T4": {
+   "bubbles": 837,
+   "tried": 820,
+   "fill_rate": 0.6244,
+   "unfilled": 308,
+   "cancelled_wall_broke": 0,
+   "train": {
+    "n": 283,
+    "per_day": 0.99,
+    "wr": 0.3993,
+    "wr_lb": 0.3439,
+    "net": -0.262,
+    "net_lb": -0.642,
+    "avg_risk": 2.97,
+    "reached_4": 0.3852
+   },
+   "oos": {
+    "n": 229,
+    "per_day": 1.2,
+    "wr": 0.4105,
+    "wr_lb": 0.3488,
+    "net": -0.863,
+    "net_lb": -1.404,
+    "avg_risk": 3.96,
+    "reached_4": 0.4105
+   },
+   "oos_by_side": {
+    "SELL": -0.871,
+    "BUY": -0.856
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.531
+   },
+   "verdict": "REPORTED"
+  },
+  "L1H|SPLIT4": {
+   "bubbles": 3117,
+   "tried": 2773,
+   "fill_rate": 0.6361,
+   "unfilled": 1009,
+   "cancelled_wall_broke": 0,
+   "train": {
+    "n": 975,
+    "per_day": 3.39,
+    "wr": 0.3672,
+    "wr_lb": 0.3375,
+    "net": -0.523,
+    "net_lb": -0.753,
+    "avg_risk": 2.98,
+    "reached_4": 0.3569
+   },
+   "oos": {
+    "n": 789,
+    "per_day": 4.12,
+    "wr": 0.3764,
+    "wr_lb": 0.3433,
+    "net": -1.254,
+    "net_lb": -1.54,
+    "avg_risk": 3.96,
+    "reached_4": 0.3764
+   },
+   "oos_by_side": {
+    "SELL": -1.14,
+    "BUY": -1.357
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.85
+   },
+   "verdict": "FAIL"
+  },
+  "L1H|T4": {
+   "bubbles": 3117,
+   "tried": 2869,
+   "fill_rate": 0.6347,
+   "unfilled": 1048,
+   "cancelled_wall_broke": 0,
+   "train": {
+    "n": 1028,
+    "per_day": 3.58,
+    "wr": 0.3648,
+    "wr_lb": 0.3359,
+    "net": -0.524,
+    "net_lb": -0.727,
+    "avg_risk": 2.97,
+    "reached_4": 0.3551
+   },
+   "oos": {
+    "n": 793,
+    "per_day": 4.14,
+    "wr": 0.3783,
+    "wr_lb": 0.3452,
+    "net": -1.121,
+    "net_lb": -1.411,
+    "avg_risk": 3.96,
+    "reached_4": 0.3783
+   },
+   "oos_by_side": {
+    "SELL": -1.143,
+    "BUY": -1.101
+   },
+   "era": {
+    "pre2020": null,
+    "post2020": -0.784
+   },
+   "verdict": "REPORTED"
+  }
+ },
+ "passing": []
+}

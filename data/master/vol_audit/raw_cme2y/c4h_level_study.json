@@ -1,0 +1,75 @@
+{
+ "at": "2026-10-17T13:12:17.485Z",
+ "levels": "closed NY 4H candle highs / lows, kept until a 1m close beyond",
+ "window": [
+  "2024-12-08T00:00:00.000Z",
+  "2026-10-09T06:00:00.000Z"
+ ],
+ "oos_from": "2026-01-14T03:36:00.000Z",
+ "approach": {
+  "definition": "first minute within one 5m-ATR14 of an active 4H level (no touch / approach of it in the prior 2 h)",
+  "oos": {
+   "n": 2110,
+   "touch_within_15m": 0.582,
+   "median_minutes_to_touch": 3,
+   "hold_if_touched": 0.4134,
+   "n_touched_labelled": 1224,
+   "by_side": {
+    "ceiling": 0.5608,
+    "floor": 0.6034
+   }
+  },
+  "train": {
+   "n": 3229,
+   "touch_within_15m": 0.567,
+   "median_minutes_to_touch": 4,
+   "hold_if_touched": 0.341,
+   "n_touched_labelled": 1777,
+   "by_side": {
+    "ceiling": 0.5446,
+    "floor": 0.5942
+   }
+  }
+ },
+ "touch": {
+  "strong_threshold_train_p66": 0.5769637699494259,
+  "oos": {
+   "all": {
+    "n": 1358,
+    "hold": 0.6745
+   },
+   "defended": {
+    "n": 692,
+    "hold": 0.7876
+   },
+   "strong": {
+    "n": 387,
+    "hold": 0.8708
+   },
+   "attacked": {
+    "n": 666,
+    "hold": 0.5571
+   }
+  },
+  "train": {
+   "all": {
+    "n": 2054,
+    "hold": 0.594
+   },
+   "defended": {
+    "n": 910,
+    "hold": 0.7143
+   },
+   "strong": {
+    "n": 432,
+    "hold": 0.7662
+   },
+   "attacked": {
+    "n": 1144,
+    "hold": 0.4983
+   }
+  },
+  "oos_after_hold_ft10": 0.7413
+ },
+ "scalp_reference": "study (be) wall_scalp_study.json C4H: WR 43.5 %, −$0.50/t — NOT a trade"
+}

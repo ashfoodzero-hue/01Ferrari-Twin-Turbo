@@ -1,0 +1,6 @@
+[vol_audit] mode raw · window cme2y · artifacts → data\master\vol_audit\raw_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+APPROACH (OOS): {"n":2110,"touch_within_15m":0.582,"median_minutes_to_touch":3,"hold_if_touched":0.4134,"n_touched_labelled":1224,"by_side":{"ceiling":0.5608,"floor":0.6034}}
+APPROACH (TRAIN): {"n":3229,"touch_within_15m":0.567,"median_minutes_to_touch":4,"hold_if_touched":0.341,"n_touched_labelled":1777,"by_side":{"ceiling":0.5446,"floor":0.5942}}
+TOUCH (OOS): {"all":{"n":1358,"hold":0.6745},"defended":{"n":692,"hold":0.7876},"strong":{"n":387,"hold":0.8708},"attacked":{"n":666,"hold":0.5571}} · after hold ≥$10 in 4h 0.7413 · strong p66 0.577
+TOUCH (TRAIN): {"all":{"n":2054,"hold":0.594},"defended":{"n":910,"hold":0.7143},"strong":{"n":432,"hold":0.7662},"attacked":{"n":1144,"hold":0.4983}}

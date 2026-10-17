@@ -1,0 +1,18 @@
+[vol_audit] mode raw · window cme2y · artifacts → data\master\vol_audit\raw_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 700,457
+volume walls: 8369 tests (17.48/d) · OOS hold all 0.6098 · defense 0.7616
+
+── swing walls 3m: 17258 tests (36.05/d) · OOS base hold 0.619 (TRAIN 0.5802)
+  ATTACK    OOS n  3649 hold 0.5119 lift -10.7pp · TRAIN lift -8.6pp · ceil 0.5275 floor 0.4945 · pre/post null/0.5009 · with-volume 0.4659 (n 88) swing-only 0.5131
+  DEFENSE   OOS n  3050 hold 0.7472 lift 12.8pp (LB 10.9) · TRAIN lift 12.0pp · ceil 0.7418 floor 0.7518 · pre/post null/0.7202 · with-volume 0.7237 (n 76) swing-only 0.7478 → SHOWN
+  DEF>PUSH  OOS n  1001 hold 0.8072 lift 18.8pp (LB 16.1) · TRAIN lift 17.6pp · ceil 0.8106 floor 0.8046 · pre/post null/0.7765 · with-volume 0.7273 (n 22) swing-only 0.809 → SHOWN
+  STRONG    OOS n  1055 hold 0.8682 lift 24.9pp (LB 22.1) · TRAIN lift 20.5pp · ceil 0.8545 floor 0.878 · pre/post null/0.8211 · with-volume 0.92 (n 25) swing-only 0.867 → SHOWN
+
+── swing walls 15m: 3417 tests (7.14/d) · OOS base hold 0.6551 (TRAIN 0.5791)
+  ATTACK    OOS n   658 hold 0.5274 lift -12.8pp · TRAIN lift -8.9pp · ceil 0.5174 floor 0.5404 · pre/post null/0.5036 · with-volume 0.5 (n 14) swing-only 0.528
+  DEFENSE   OOS n   635 hold 0.7874 lift 13.2pp (LB 10.1) · TRAIN lift 12.0pp · ceil 0.7586 floor 0.8116 · pre/post null/0.7369 · with-volume 0.8 (n 5) swing-only 0.7873 → SHOWN
+  DEF>PUSH  OOS n   207 hold 0.8696 lift 21.4pp (LB 15.3) · TRAIN lift 16.6pp · ceil 0.8372 floor 0.8926 · pre/post null/0.7964 · with-volume 0 (n 1) swing-only 0.8738 → NOT_SHOWN
+  STRONG    OOS n   268 hold 0.8955 lift 24.1pp (LB 18.9) · TRAIN lift 22.5pp · ceil 0.8667 floor 0.9141 · pre/post null/0.8484 · with-volume 1 (n 2) swing-only 0.8947 → NOT_SHOWN
+
+=> SWING-WALL bubble classes SHOWN: {"3m":["DEFENSE","DEF>PUSH","STRONG"],"15m":["DEFENSE"]}

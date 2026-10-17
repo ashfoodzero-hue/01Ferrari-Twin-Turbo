@@ -1,0 +1,16 @@
+[vol_audit] mode raw · window cme2y · artifacts → data\master\vol_audit\raw_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/1h: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+  ⚠ XAUUSD/4h: repaired 1 provably-false print(s): 2025-11-23T20:00(l)
+1m bars 643,393
+  ⚠ XAUUSD/3m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+3m  STRONG: X0.1: bounce 0.8868/0.9434 $-1.568 n53 U · X0.25: bounce 0.8113/0.8679 $-1.5618 n53 U · X0.5: bounce 0.6981/0.7843 $-1.4492 n53 U · X1: bounce 0.6226/0.7451 $-1.0536 n53 U
+3m  factors (X0.25, OOS bounce/control n): BIG 0.7066/0.7363 n4677 · S1 0.7506/0.7789 n1355 · S2 0.7198/0.7867 n514 · S3 0.7131/0.7558 n826 · S4 0.7066/0.7363 n4677 · STRONG 0.8113/0.8679 n53
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+15m STRONG: X0.1: bounce 1/0.9524 $-1.0688 n21 U · X0.25: bounce 0.9048/0.8 $-0.3856 n21 U · X0.5: bounce 0.9048/0.65 $1.3169 n21 U · X1: bounce 0.75/0.5 $0.4255 n20 U
+15m factors (X0.25, OOS bounce/control n): BIG 0.7742/0.7707 n797 · S1 0.8284/0.8192 n268 · S2 0.8202/0.8239 n178 · S3 0.7871/0.8224 n155 · S4 0.7742/0.7707 n797 · STRONG 0.9048/0.8 n21
+  ⚠ XAUUSD/1h: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1h  STRONG: X0.1: bounce 1/0.9 $2.2971 n10 U · X0.25: bounce 0.9/0.7 $1.8034 n10 U · X0.5: bounce 0.7/0.6 $1.3133 n10 U · X1: bounce 0.5556/0.3 $3.027 n9 U
+1h  factors (X0.25, OOS bounce/control n): BIG 0.8174/0.7963 n219 · S1 0.8861/0.75 n79 · S2 0.9111/0.7111 n45 · S3 0.7833/0.8966 n60 · S4 0.8174/0.7963 n219 · STRONG 0.9/0.7 n10
+
+=> STRONG FVG: STRONG_FVG_DOES_NOT_HOLD · best OOS bounce null · any cell ≥ 95 % (Wilson LB): false

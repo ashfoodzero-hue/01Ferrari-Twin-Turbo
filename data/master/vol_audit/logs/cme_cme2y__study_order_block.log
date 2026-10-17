@@ -1,0 +1,29 @@
+[vol_audit] mode cme · window cme2y · artifacts → data\master\vol_audit\cme_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 643,393
+  ⚠ XAUUSD/5m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+5m  ALL    1R  OOS bounce 0.4867 (LB 0.4708) vs random 0.4985 · money WR 0.3961 $/t -1.0505 [LB -1.3367] n 7349 risk $6.64 · TRAIN bounce 0.4926/0.501 $/t -0.5942 → DOES_NOT_HOLD
+5m  ALL    2R  OOS bounce 0.329 (LB 0.3142) vs random 0.3305 · money WR 0.2651 $/t -1.0155 [LB -1.383] n 7349 risk $6.64 · TRAIN bounce 0.3257/0.338 $/t -0.6067 → DOES_NOT_HOLD
+5m  STRONG 1R  OOS bounce 0.4782 (LB 0.44) vs random 0.4915 · money WR 0.401 $/t -1.2923 [LB -2.1124] n 1252 risk $7.7 · TRAIN bounce 0.4674/0.5006 $/t -0.7408 → DOES_NOT_HOLD
+5m  STRONG 2R  OOS bounce 0.337 (LB 0.3017) vs random 0.2987 · money WR 0.2835 $/t -0.9298 [LB -2.118] n 1252 risk $7.7 · TRAIN bounce 0.3025/0.3397 $/t -0.6552 → DOES_NOT_HOLD
+5m  strength buckets (OOS, 1R): {"1.5-2":{"resolved":3183,"bounce":0.4857,"control":0.5006,"money_wr":0.391,"net":-1.0354,"trades":3169},"2-2.5":{"resolved":1976,"bounce":0.4863,"control":0.5013,"money_wr":0.3948,"net":-1.0425,"trades":1973},"2.5-3.5":{"resolved":1573,"bounce":0.4819,"control":0.4939,"money_wr":0.402,"net":-1.0985,"trades":1572},"3.5-+":{"resolved":642,"bounce":0.5047,"control":0.4905,"money_wr":0.411,"net":-1.0316,"trades":635}}
+  ⚠ XAUUSD/15m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+15m ALL    1R  OOS bounce 0.5048 (LB 0.477) vs random 0.493 · money WR 0.4564 $/t -0.5528 [LB -1.4551] n 2419 risk $12.09 · TRAIN bounce 0.481/0.5078 $/t -0.5764 → DOES_NOT_HOLD
+15m ALL    2R  OOS bounce 0.3304 (LB 0.3047) vs random 0.3476 · money WR 0.301 $/t -0.9741 [LB -2.1203] n 2419 risk $12.09 · TRAIN bounce 0.3276/0.3338 $/t -0.4617 → DOES_NOT_HOLD
+15m STRONG 1R  OOS bounce 0.5082 (LB 0.4468) vs random 0.4791 · money WR 0.4648 $/t -0.0393 [LB -2.293] n 497 risk $13.93 · TRAIN bounce 0.4735/0.5241 $/t -0.6614 → DOES_NOT_HOLD
+15m STRONG 2R  OOS bounce 0.3438 (LB 0.2874) vs random 0.3671 · money WR 0.3219 $/t -0.2668 [LB -3.2917] n 497 risk $13.93 · TRAIN bounce 0.3136/0.3386 $/t -0.3297 → DOES_NOT_HOLD
+15m strength buckets (OOS, 1R): {"1.5-2":{"resolved":1019,"bounce":0.4985,"control":0.5159,"money_wr":0.4437,"net":-0.9793,"trades":1021},"2-2.5":{"resolved":605,"bounce":0.519,"control":0.4587,"money_wr":0.4843,"net":-0.0892,"trades":605},"2.5-3.5":{"resolved":554,"bounce":0.491,"control":0.4843,"money_wr":0.4383,"net":-0.9764,"trades":559},"3.5-+":{"resolved":231,"bounce":0.5281,"control":0.5022,"money_wr":0.4829,"net":1.1215,"trades":234}}
+  ⚠ XAUUSD/1h: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1h  ALL    1R  OOS bounce 0.4483 (LB 0.3915) vs random 0.5267 · money WR 0.4224 $/t -3.4189 [LB -6.503] n 580 risk $22.54 · TRAIN bounce 0.5032/0.4758 $/t -0.5264 → DOES_NOT_HOLD
+1h  ALL    2R  OOS bounce 0.2938 (LB 0.243) vs random 0.3242 · money WR 0.3 $/t -3.2217 [LB -6.8375] n 580 risk $22.54 · TRAIN bounce 0.3364/0.3235 $/t -0.4311 → DOES_NOT_HOLD
+1h  STRONG 1R  OOS bounce 0.4787 (LB 0.3449) vs random 0.4646 · money WR 0.4369 $/t -0.7134 [LB -7.5556] n 103 risk $25.16 · TRAIN bounce 0.5/0.4375 $/t -0.2064 → UNDERPOWERED
+1h  STRONG 2R  OOS bounce 0.2614 (LB 0.1558) vs random 0.2581 · money WR 0.2816 $/t -2.3869 [LB -10.9736] n 103 risk $25.16 · TRAIN bounce 0.3525/0.3209 $/t 0.1979 → UNDERPOWERED
+1h  strength buckets (OOS, 1R): {"1.5-2":{"resolved":200,"bounce":0.42,"control":0.526,"money_wr":0.4095,"net":-3.5858,"trades":210},"2-2.5":{"resolved":178,"bounce":0.4382,"control":0.5486,"money_wr":0.4086,"net":-4.4202,"trades":186},"2.5-3.5":{"resolved":117,"bounce":0.5214,"control":0.4696,"money_wr":0.4836,"net":-2.0395,"trades":122},"3.5-+":{"resolved":56,"bounce":0.4286,"control":0.5738,"money_wr":0.3871,"net":-2.5636,"trades":62}}
+  ⚠ XAUUSD/4h: repaired 1 provably-false print(s): 2025-11-23T20:00(l)
+4h  ALL    1R  OOS bounce 0.4604 (LB 0.35) vs random 0.5455 · money WR 0.4611 $/t -1.2382 [LB -10.1057] n 167 risk $43.64 · TRAIN bounce 0.5138/0.486 $/t 1.0807 → DOES_NOT_HOLD
+4h  ALL    2R  OOS bounce 0.2783 (LB 0.1804) vs random 0.3611 · money WR 0.4012 $/t 0.2153 [LB -10.8316] n 167 risk $43.64 · TRAIN bounce 0.3069/0.2983 $/t 0.6043 → DOES_NOT_HOLD
+4h  STRONG 1R  OOS bounce 0.4615 (LB 0.2346) vs random 0.5417 · money WR 0.4667 $/t 8.1352 [LB -14.6983] n 30 risk $54.15 · TRAIN bounce 0.2703/0.3421 $/t -8.1627 → UNDERPOWERED
+4h  STRONG 2R  OOS bounce 0.2609 (LB 0.0944) vs random 0.4 · money WR 0.3667 $/t 10.6594 [LB -19.2015] n 30 risk $54.15 · TRAIN bounce 0.2/0.2571 $/t -5.843 → UNDERPOWERED
+4h  strength buckets (OOS, 1R): {"1.5-2":{"resolved":52,"bounce":0.5577,"control":0.5962,"money_wr":0.4844,"net":1.7056,"trades":64},"2-2.5":{"resolved":45,"bounce":0.3778,"control":0.4286,"money_wr":0.4545,"net":-4.3576,"trades":55},"2.5-3.5":{"resolved":30,"bounce":0.4333,"control":0.5926,"money_wr":0.4412,"net":-1.1361,"trades":34},"3.5-+":{"resolved":12,"bounce":0.4167,"control":0.6364,"money_wr":0.4286,"net":-2.6892,"trades":14}}
+
+=> ORDER BLOCKS: ORDER_BLOCKS_DO_NOT_HOLD

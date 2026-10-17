@@ -1,0 +1,1879 @@
+{
+ "at": "2026-10-17T13:25:47.220Z",
+ "tags": [
+  "raw_full",
+  "drop_full",
+  "raw_cme2y",
+  "drop_cme2y",
+  "cme_cme2y"
+ ],
+ "rows": [
+  {
+   "module": "wallDefense",
+   "label": "volume walls DEFENSE hold",
+   "raw_full": {
+    "oos": {
+     "n": 9007,
+     "rate": 0.699
+    },
+    "train": {
+     "n": 7753,
+     "rate": 0.7313
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 9511,
+     "rate": 0.7007
+    },
+    "train": {
+     "n": 9994,
+     "rate": 0.7211
+    },
+    "verdict": "SHOWN"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 1774,
+     "rate": 0.7616
+    },
+    "train": {
+     "n": 2077,
+     "rate": 0.6972
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 2170,
+     "rate": 0.7622
+    },
+    "train": {
+     "n": 2228,
+     "rate": 0.7051
+    },
+    "verdict": "SHOWN"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 2036,
+     "rate": 0.7824
+    },
+    "train": {
+     "n": 1838,
+     "rate": 0.7176
+    },
+    "verdict": "SHOWN"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "volume walls DEF>PUSH hold",
+   "raw_full": {
+    "oos": {
+     "n": 3314,
+     "rate": 0.7342
+    },
+    "train": {
+     "n": 2868,
+     "rate": 0.7887
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 3224,
+     "rate": 0.75
+    },
+    "train": {
+     "n": 3211,
+     "rate": 0.7677
+    },
+    "verdict": "SHOWN"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 620,
+     "rate": 0.8145
+    },
+    "train": {
+     "n": 815,
+     "rate": 0.7301
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 714,
+     "rate": 0.8109
+    },
+    "train": {
+     "n": 763,
+     "rate": 0.7064
+    },
+    "verdict": "SHOWN"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 733,
+     "rate": 0.8417
+    },
+    "train": {
+     "n": 678,
+     "rate": 0.7522
+    },
+    "verdict": "SHOWN"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "volume walls STRONG hold",
+   "raw_full": {
+    "oos": {
+     "n": 2413,
+     "rate": 0.7712
+    },
+    "train": {
+     "n": 2584,
+     "rate": 0.8177
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 3419,
+     "rate": 0.7651
+    },
+    "train": {
+     "n": 3331,
+     "rate": 0.7896
+    },
+    "verdict": "SHOWN"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 507,
+     "rate": 0.8718
+    },
+    "train": {
+     "n": 692,
+     "rate": 0.7717
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 705,
+     "rate": 0.8567
+    },
+    "train": {
+     "n": 742,
+     "rate": 0.7709
+    },
+    "verdict": "SHOWN"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 586,
+     "rate": 0.8703
+    },
+    "train": {
+     "n": 612,
+     "rate": 0.8039
+    },
+    "verdict": "SHOWN"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "volume walls ATTACK hold",
+   "raw_full": {
+    "oos": {
+     "n": 9336,
+     "rate": 0.5105
+    },
+    "train": {
+     "n": 10628,
+     "rate": 0.5124
+    }
+   },
+   "drop_full": {
+    "oos": {
+     "n": 10163,
+     "rate": 0.5093
+    },
+    "train": {
+     "n": 13222,
+     "rate": 0.5077
+    }
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 2075,
+     "rate": 0.48
+    },
+    "train": {
+     "n": 2269,
+     "rate": 0.5095
+    }
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 2484,
+     "rate": 0.4839
+    },
+    "train": {
+     "n": 2512,
+     "rate": 0.4956
+    }
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 2353,
+     "rate": 0.4943
+    },
+    "train": {
+     "n": 2091,
+     "rate": 0.5041
+    }
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "swing 3m DEF>PUSH hold",
+   "raw_full": {
+    "oos": {
+     "n": 7970,
+     "rate": 0.738
+    },
+    "train": {
+     "rate": 0.7624
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 7369,
+     "rate": 0.7386
+    },
+    "train": {
+     "rate": 0.7562
+    },
+    "verdict": "SHOWN"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 1001,
+     "rate": 0.8072
+    },
+    "train": {
+     "rate": 0.7563
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 937,
+     "rate": 0.8079
+    },
+    "train": {
+     "rate": 0.7603
+    },
+    "verdict": "SHOWN"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 1107,
+     "rate": 0.8058
+    },
+    "train": {
+     "rate": 0.7078
+    },
+    "verdict": "SHOWN"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "swing 3m STRONG hold",
+   "raw_full": {
+    "oos": {
+     "n": 5891,
+     "rate": 0.7829
+    },
+    "train": {
+     "rate": 0.7938
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 7037,
+     "rate": 0.7716
+    },
+    "train": {
+     "rate": 0.789
+    },
+    "verdict": "SHOWN"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 1055,
+     "rate": 0.8682
+    },
+    "train": {
+     "rate": 0.7853
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 1099,
+     "rate": 0.8535
+    },
+    "train": {
+     "rate": 0.7956
+    },
+    "verdict": "SHOWN"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 1037,
+     "rate": 0.839
+    },
+    "train": {
+     "rate": 0.7194
+    },
+    "verdict": "SHOWN"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "swing 15m STRONG hold",
+   "raw_full": {
+    "oos": {
+     "n": 845,
+     "rate": 0.7882
+    },
+    "train": {
+     "rate": 0.8114
+    },
+    "verdict": "SHOWN"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1556,
+     "rate": 0.7648
+    },
+    "train": {
+     "rate": 0.816
+    },
+    "verdict": "SHOWN"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 268,
+     "rate": 0.8955
+    },
+    "train": {
+     "rate": 0.8042
+    },
+    "verdict": "NOT_SHOWN"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 264,
+     "rate": 0.9091
+    },
+    "train": {
+     "rate": 0.8211
+    },
+    "verdict": "NOT_SHOWN"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 232,
+     "rate": 0.8491
+    },
+    "train": {
+     "rate": 0.7029
+    },
+    "verdict": "NOT_SHOWN"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "4H level touch: defended hold",
+   "raw_full": {
+    "oos": {
+     "n": 4921,
+     "rate": 0.7068
+    },
+    "train": {
+     "n": 7607,
+     "rate": 0.7533
+    }
+   },
+   "drop_full": {
+    "oos": {
+     "n": 4899,
+     "rate": 0.7103
+    },
+    "train": {
+     "n": 7943,
+     "rate": 0.753
+    }
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 692,
+     "rate": 0.7876
+    },
+    "train": {
+     "n": 910,
+     "rate": 0.7143
+    }
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 695,
+     "rate": 0.7856
+    },
+    "train": {
+     "n": 907,
+     "rate": 0.7166
+    }
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 620,
+     "rate": 0.7903
+    },
+    "train": {
+     "n": 861,
+     "rate": 0.6992
+    }
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "4H level touch: strong hold (Telegram 🧱)",
+   "raw_full": {
+    "oos": {
+     "n": 2001,
+     "rate": 0.7471
+    },
+    "train": {
+     "n": 4073,
+     "rate": 0.7879
+    }
+   },
+   "drop_full": {
+    "oos": {
+     "n": 2317,
+     "rate": 0.7501
+    },
+    "train": {
+     "n": 3754,
+     "rate": 0.797
+    }
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 387,
+     "rate": 0.8708
+    },
+    "train": {
+     "n": 432,
+     "rate": 0.7662
+    }
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 372,
+     "rate": 0.8817
+    },
+    "train": {
+     "n": 417,
+     "rate": 0.7674
+    }
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 369,
+     "rate": 0.8401
+    },
+    "train": {
+     "n": 449,
+     "rate": 0.7261
+    }
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "wall-defense money STRONG bounce",
+   "raw_full": {
+    "oos": {
+     "n": 1733,
+     "rate": 0.6272,
+     "net": -0.488
+    },
+    "train": {
+     "n": 1366,
+     "rate": 0.5725,
+     "net": -0.515
+    },
+    "verdict": "FAIL"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 2366,
+     "rate": 0.6327,
+     "net": -0.501
+    },
+    "train": {
+     "n": 2225,
+     "rate": 0.551,
+     "net": -0.485
+    },
+    "verdict": "FAIL"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 123,
+     "rate": 0.6829,
+     "net": -1.199
+    },
+    "train": {
+     "n": 385,
+     "rate": 0.6416,
+     "net": -0.731
+    },
+    "verdict": "FAIL"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 216,
+     "rate": 0.6713,
+     "net": -1.281
+    },
+    "train": {
+     "n": 439,
+     "rate": 0.6583,
+     "net": -0.649
+    },
+    "verdict": "FAIL"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 142,
+     "rate": 0.6901,
+     "net": -0.705
+    },
+    "train": {
+     "n": 270,
+     "rate": 0.6407,
+     "net": -0.411
+    },
+    "verdict": "FAIL"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "wall-defense money DEFENSE bounce",
+   "raw_full": {
+    "oos": {
+     "n": 6834,
+     "rate": 0.6008,
+     "net": -0.493
+    },
+    "train": {
+     "n": 5792,
+     "rate": 0.5397,
+     "net": -0.463
+    },
+    "verdict": "FAIL"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 7112,
+     "rate": 0.6036,
+     "net": -0.507
+    },
+    "train": {
+     "n": 7728,
+     "rate": 0.5349,
+     "net": -0.461
+    },
+    "verdict": "FAIL"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 891,
+     "rate": 0.6195,
+     "net": -1.067
+    },
+    "train": {
+     "n": 1405,
+     "rate": 0.6007,
+     "net": -0.67
+    },
+    "verdict": "FAIL"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 1091,
+     "rate": 0.6343,
+     "net": -0.951
+    },
+    "train": {
+     "n": 1540,
+     "rate": 0.6097,
+     "net": -0.649
+    },
+    "verdict": "FAIL"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 922,
+     "rate": 0.6584,
+     "net": -0.786
+    },
+    "train": {
+     "n": 1164,
+     "rate": 0.6323,
+     "net": -0.524
+    },
+    "verdict": "FAIL"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "wall scalp C4H T4",
+   "raw_full": {
+    "oos": {
+     "n": 2020,
+     "rate": 0.4351,
+     "net": -0.501
+    },
+    "train": {
+     "n": 3903,
+     "rate": 0.3331,
+     "net": -0.494
+    },
+    "verdict": "FAIL"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 2241,
+     "rate": 0.4395,
+     "net": -0.483
+    },
+    "train": {
+     "n": 3494,
+     "rate": 0.346,
+     "net": -0.475
+    },
+    "verdict": "FAIL"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 380,
+     "rate": 0.6158,
+     "net": -0.911
+    },
+    "train": {
+     "n": 425,
+     "rate": 0.4941,
+     "net": -0.638
+    },
+    "verdict": "FAIL"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 359,
+     "rate": 0.6295,
+     "net": -0.749
+    },
+    "train": {
+     "n": 412,
+     "rate": 0.4951,
+     "net": -0.637
+    },
+    "verdict": "FAIL"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 370,
+     "rate": 0.627,
+     "net": -0.623
+    },
+    "train": {
+     "n": 452,
+     "rate": 0.4823,
+     "net": -0.55
+    },
+    "verdict": "FAIL"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "wall scalp cells passing",
+   "raw_full": {
+    "count": "0/15"
+   },
+   "drop_full": {
+    "count": "0/15"
+   },
+   "raw_cme2y": {
+    "count": "0/15"
+   },
+   "drop_cme2y": {
+    "count": "0/15"
+   },
+   "cme_cme2y": {
+    "count": "0/15"
+   }
+  },
+  {
+   "module": "wallDefense",
+   "label": "pullback L4H SPLIT4",
+   "raw_full": {
+    "oos": {
+     "n": 1328,
+     "rate": 0.3381,
+     "net": -0.376
+    },
+    "train": {
+     "n": 2274,
+     "rate": 0.1838,
+     "net": -0.597
+    },
+    "verdict": "FAIL"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1457,
+     "rate": 0.3384,
+     "net": -0.406
+    },
+    "train": {
+     "n": 1968,
+     "rate": 0.2053,
+     "net": -0.516
+    },
+    "verdict": "FAIL"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 228,
+     "rate": 0.4079,
+     "net": -0.993
+    },
+    "train": {
+     "n": 278,
+     "rate": 0.4029,
+     "net": -0.202
+    },
+    "verdict": "FAIL"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 215,
+     "rate": 0.4233,
+     "net": -0.778
+    },
+    "train": {
+     "n": 267,
+     "rate": 0.4045,
+     "net": -0.249
+    },
+    "verdict": "FAIL"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 224,
+     "rate": 0.4152,
+     "net": -0.841
+    },
+    "train": {
+     "n": 311,
+     "rate": 0.3344,
+     "net": -0.713
+    },
+    "verdict": "FAIL"
+   }
+  },
+  {
+   "module": "marketState",
+   "label": "sell-downtrend R-STATE S-BREAK R2",
+   "raw_full": {
+    "oos": {
+     "n": 9,
+     "rate": 0,
+     "net": -11.882
+    },
+    "train": {
+     "n": 726,
+     "rate": 0.3705,
+     "net": -0.685
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 401,
+     "rate": 0.3691,
+     "net": -0.858
+    },
+    "train": {
+     "n": 930,
+     "rate": 0.3634,
+     "net": -0.739
+    },
+    "verdict": "FAIL"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 3,
+     "rate": 0,
+     "net": -12.971
+    },
+    "train": {
+     "n": 5,
+     "rate": 0,
+     "net": -10.954
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 10,
+     "rate": 0.3,
+     "net": -2.108
+    },
+    "train": {
+     "n": 45,
+     "rate": 0.4,
+     "net": -1.089
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 6,
+     "rate": 0.1667,
+     "net": -7.236
+    },
+    "train": {
+     "n": 35,
+     "rate": 0.4,
+     "net": -0.709
+    },
+    "verdict": "UNDERPOWERED"
+   }
+  },
+  {
+   "module": "fvg",
+   "label": "STRONG FVG 3m X0.25 bounce",
+   "raw_full": {
+    "oos": {
+     "n": 109,
+     "rate": 0.8257,
+     "ctl": 0.8073,
+     "net": -0.99
+    },
+    "train": {
+     "n": 2068,
+     "rate": 0.7515,
+     "ctl": 0.8142,
+     "net": -0.4395
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1156,
+     "rate": 0.7465,
+     "ctl": 0.7593,
+     "net": -0.724
+    },
+    "train": {
+     "n": 2857,
+     "rate": 0.7497,
+     "ctl": 0.8027,
+     "net": -0.4274
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 53,
+     "rate": 0.8113,
+     "ctl": 0.8679,
+     "net": -1.5618
+    },
+    "train": {
+     "n": 53,
+     "rate": 0.8302,
+     "ctl": 0.7736,
+     "net": -0.4904
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 217,
+     "rate": 0.7742,
+     "ctl": 0.8111,
+     "net": -1.9006
+    },
+    "train": {
+     "n": 269,
+     "rate": 0.7175,
+     "ctl": 0.7993,
+     "net": -0.699
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 183,
+     "rate": 0.7705,
+     "ctl": 0.8142,
+     "net": -2.059
+    },
+    "train": {
+     "n": 196,
+     "rate": 0.7347,
+     "ctl": 0.7908,
+     "net": -0.6935
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "fvg",
+   "label": "STRONG FVG 3m X0.5 bounce",
+   "raw_full": {
+    "oos": {
+     "n": 109,
+     "rate": 0.7431,
+     "ctl": 0.6881,
+     "net": -0.9377
+    },
+    "train": {
+     "n": 2067,
+     "rate": 0.6662,
+     "ctl": 0.7174,
+     "net": -0.4319
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1156,
+     "rate": 0.6358,
+     "ctl": 0.6623,
+     "net": -0.7545
+    },
+    "train": {
+     "n": 2856,
+     "rate": 0.6576,
+     "ctl": 0.6995,
+     "net": -0.4194
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 53,
+     "rate": 0.6981,
+     "ctl": 0.7843,
+     "net": -1.4492
+    },
+    "train": {
+     "n": 53,
+     "rate": 0.7736,
+     "ctl": 0.6415,
+     "net": -0.5103
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 217,
+     "rate": 0.6544,
+     "ctl": 0.7336,
+     "net": -1.7623
+    },
+    "train": {
+     "n": 269,
+     "rate": 0.6245,
+     "ctl": 0.6914,
+     "net": -0.7833
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 183,
+     "rate": 0.6557,
+     "ctl": 0.7333,
+     "net": -1.9174
+    },
+    "train": {
+     "n": 196,
+     "rate": 0.6582,
+     "ctl": 0.6786,
+     "net": -0.7256
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "fvg",
+   "label": "STRONG FVG 15m X0.25 bounce",
+   "raw_full": {
+    "oos": {
+     "n": 41,
+     "rate": 0.8293,
+     "ctl": 0.7805,
+     "net": -0.5395
+    },
+    "train": {
+     "n": 499,
+     "rate": 0.8156,
+     "ctl": 0.8206,
+     "net": -0.4685
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 384,
+     "rate": 0.8021,
+     "ctl": 0.8153,
+     "net": -0.6969
+    },
+    "train": {
+     "n": 641,
+     "rate": 0.8112,
+     "ctl": 0.8488,
+     "net": -0.4456
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 21,
+     "rate": 0.9048,
+     "ctl": 0.8,
+     "net": -0.3856
+    },
+    "train": {
+     "n": 19,
+     "rate": 0.7895,
+     "ctl": 0.8421,
+     "net": -0.518
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 55,
+     "rate": 0.8364,
+     "ctl": 0.8333,
+     "net": -1.2798
+    },
+    "train": {
+     "n": 68,
+     "rate": 0.8529,
+     "ctl": 0.7647,
+     "net": -0.547
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 51,
+     "rate": 0.8431,
+     "ctl": 0.8163,
+     "net": -1.3335
+    },
+    "train": {
+     "n": 62,
+     "rate": 0.8387,
+     "ctl": 0.8852,
+     "net": -0.6486
+    },
+    "verdict": "UNDERPOWERED"
+   }
+  },
+  {
+   "module": "orderBlock",
+   "label": "OB 5m STRONG 1R",
+   "raw_full": {
+    "oos": {
+     "n": 761,
+     "rate": 0.4928,
+     "ctl": 0.4861,
+     "net": -0.8593
+    },
+    "train": {
+     "n": 12673,
+     "rate": 0.4925,
+     "ctl": 0.4986,
+     "net": -0.3901
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 15043,
+     "rate": 0.4925,
+     "ctl": 0.493,
+     "net": -0.5136
+    },
+    "train": {
+     "n": 25648,
+     "rate": 0.498,
+     "ctl": 0.5004,
+     "net": -0.4042
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 403,
+     "rate": 0.4864,
+     "ctl": 0.4912,
+     "net": -1.1912
+    },
+    "train": {
+     "n": 325,
+     "rate": 0.4831,
+     "ctl": 0.4862,
+     "net": -0.5219
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 2215,
+     "rate": 0.4885,
+     "ctl": 0.4929,
+     "net": -1.0792
+    },
+    "train": {
+     "n": 3402,
+     "rate": 0.4832,
+     "ctl": 0.4993,
+     "net": -0.6417
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 1261,
+     "rate": 0.4782,
+     "ctl": 0.4915,
+     "net": -1.2923
+    },
+    "train": {
+     "n": 1797,
+     "rate": 0.4674,
+     "ctl": 0.5006,
+     "net": -0.7408
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "orderBlock",
+   "label": "OB 15m STRONG 1R",
+   "raw_full": {
+    "oos": {
+     "n": 354,
+     "rate": 0.5226,
+     "ctl": 0.4522,
+     "net": 0.1681
+    },
+    "train": {
+     "n": 5292,
+     "rate": 0.5011,
+     "ctl": 0.5005,
+     "net": -0.3602
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 5483,
+     "rate": 0.4904,
+     "ctl": 0.5028,
+     "net": -0.3764
+    },
+    "train": {
+     "n": 8817,
+     "rate": 0.5039,
+     "ctl": 0.4997,
+     "net": -0.3662
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 207,
+     "rate": 0.5411,
+     "ctl": 0.5248,
+     "net": 0.3565
+    },
+    "train": {
+     "n": 137,
+     "rate": 0.4818,
+     "ctl": 0.5362,
+     "net": -0.0937
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 785,
+     "rate": 0.5019,
+     "ctl": 0.5079,
+     "net": -0.3573
+    },
+    "train": {
+     "n": 1213,
+     "rate": 0.479,
+     "ctl": 0.5133,
+     "net": -0.5741
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 490,
+     "rate": 0.5082,
+     "ctl": 0.4791,
+     "net": -0.0393
+    },
+    "train": {
+     "n": 773,
+     "rate": 0.4735,
+     "ctl": 0.5241,
+     "net": -0.6614
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "orderBlock",
+   "label": "OB 1h STRONG 1R",
+   "raw_full": {
+    "oos": {
+     "n": 80,
+     "rate": 0.5125,
+     "ctl": 0.5056,
+     "net": -1.0693
+    },
+    "train": {
+     "n": 1043,
+     "rate": 0.5283,
+     "ctl": 0.4962,
+     "net": -0.0895
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1395,
+     "rate": 0.4659,
+     "ctl": 0.4985,
+     "net": -1.0181
+    },
+    "train": {
+     "n": 2007,
+     "rate": 0.5122,
+     "ctl": 0.4892,
+     "net": -0.2483
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 41,
+     "rate": 0.4634,
+     "ctl": 0.5,
+     "net": -3.6578
+    },
+    "train": {
+     "n": 36,
+     "rate": 0.5833,
+     "ctl": 0.3243,
+     "net": 2.0569
+    },
+    "verdict": "UNDERPOWERED"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 173,
+     "rate": 0.4913,
+     "ctl": 0.5581,
+     "net": -2.2161
+    },
+    "train": {
+     "n": 280,
+     "rate": 0.4821,
+     "ctl": 0.4591,
+     "net": -0.8721
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 94,
+     "rate": 0.4787,
+     "ctl": 0.4646,
+     "net": -0.7134
+    },
+    "train": {
+     "n": 148,
+     "rate": 0.5,
+     "ctl": 0.4375,
+     "net": -0.2064
+    },
+    "verdict": "UNDERPOWERED"
+   }
+  },
+  {
+   "module": "orderBlock",
+   "label": "OB 5m ALL 1R (no volume)",
+   "raw_full": {
+    "oos": {
+     "n": 51963,
+     "rate": 0.5014,
+     "ctl": 0.4952,
+     "net": -0.4758
+    },
+    "train": {
+     "n": 77220,
+     "rate": 0.4975,
+     "ctl": 0.4989,
+     "net": -0.4054
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 51963,
+     "rate": 0.5014,
+     "ctl": 0.4952,
+     "net": -0.4758
+    },
+    "train": {
+     "n": 77220,
+     "rate": 0.4975,
+     "ctl": 0.4989,
+     "net": -0.4054
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 7374,
+     "rate": 0.4867,
+     "ctl": 0.4985,
+     "net": -1.0505
+    },
+    "train": {
+     "n": 11281,
+     "rate": 0.4926,
+     "ctl": 0.501,
+     "net": -0.5942
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 7374,
+     "rate": 0.4867,
+     "ctl": 0.4985,
+     "net": -1.0505
+    },
+    "train": {
+     "n": 11281,
+     "rate": 0.4926,
+     "ctl": 0.501,
+     "net": -0.5942
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 7374,
+     "rate": 0.4867,
+     "ctl": 0.4985,
+     "net": -1.0505
+    },
+    "train": {
+     "n": 11281,
+     "rate": 0.4926,
+     "ctl": 0.501,
+     "net": -0.5942
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "orderBlock",
+   "label": "weak 4H OB (disp only)",
+   "raw_full": {
+    "oos": {
+     "n": 489,
+     "rate": 0.5638,
+     "ctl": 0.5154,
+     "net": 1.188
+    },
+    "train": {
+     "n": 692,
+     "rate": 0.4968,
+     "ctl": 0.4976,
+     "net": -0.738
+    }
+   },
+   "drop_full": {
+    "oos": {
+     "n": 489,
+     "rate": 0.5638,
+     "ctl": 0.5154,
+     "net": 1.188
+    },
+    "train": {
+     "n": 692,
+     "rate": 0.4968,
+     "ctl": 0.4976,
+     "net": -0.738
+    }
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 64,
+     "rate": 0.5577,
+     "ctl": 0.5088,
+     "net": 1.706
+    },
+    "train": {
+     "n": 109,
+     "rate": 0.5761,
+     "ctl": 0.5313,
+     "net": 3.282
+    }
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 64,
+     "rate": 0.5577,
+     "ctl": 0.5088,
+     "net": 1.706
+    },
+    "train": {
+     "n": 109,
+     "rate": 0.5761,
+     "ctl": 0.5313,
+     "net": 3.282
+    }
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 64,
+     "rate": 0.5577,
+     "ctl": 0.5088,
+     "net": 1.706
+    },
+    "train": {
+     "n": 109,
+     "rate": 0.5761,
+     "ctl": 0.5313,
+     "net": 3.282
+    }
+   }
+  },
+  {
+   "module": "volumeProfile",
+   "label": "prev-day SPOT POC bounce",
+   "raw_full": {
+    "oos": {
+     "n": 996,
+     "rate": 0.4859,
+     "ctl": 0.5041,
+     "net": -1.4835
+    },
+    "train": {
+     "n": 1437,
+     "rate": 0.5136,
+     "ctl": 0.4886,
+     "net": -0.3986
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1006,
+     "rate": 0.4911,
+     "ctl": 0.4913,
+     "net": -1.413
+    },
+    "train": {
+     "n": 1379,
+     "rate": 0.5018,
+     "ctl": 0.4895,
+     "net": -0.5993
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 142,
+     "rate": 0.3803,
+     "ctl": 0.5328,
+     "net": -7.2206
+    },
+    "train": {
+     "n": 197,
+     "rate": 0.4721,
+     "ctl": 0.5561,
+     "net": -0.5256
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 143,
+     "rate": 0.4126,
+     "ctl": 0.4552,
+     "net": -5.9467
+    },
+    "train": {
+     "n": 196,
+     "rate": 0.4694,
+     "ctl": 0.5187,
+     "net": -1.0389
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 143,
+     "rate": 0.3636,
+     "ctl": 0.5109,
+     "net": -8.4745
+    },
+    "train": {
+     "n": 209,
+     "rate": 0.4785,
+     "ctl": 0.5,
+     "net": -0.761
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "volumeProfile",
+   "label": "prev-day SPOT VAH bounce",
+   "raw_full": {
+    "oos": {
+     "n": 916,
+     "rate": 0.476,
+     "ctl": 0.5125,
+     "net": -1.0755
+    },
+    "train": {
+     "n": 1283,
+     "rate": 0.4871,
+     "ctl": 0.504,
+     "net": -0.6861
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 922,
+     "rate": 0.4772,
+     "ctl": 0.5017,
+     "net": -1.1178
+    },
+    "train": {
+     "n": 1290,
+     "rate": 0.4907,
+     "ctl": 0.4834,
+     "net": -0.603
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 116,
+     "rate": 0.4655,
+     "ctl": 0.5804,
+     "net": -3.0217
+    },
+    "train": {
+     "n": 199,
+     "rate": 0.4673,
+     "ctl": 0.5134,
+     "net": -0.9625
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 119,
+     "rate": 0.4706,
+     "ctl": 0.531,
+     "net": -3.3426
+    },
+    "train": {
+     "n": 201,
+     "rate": 0.4627,
+     "ctl": 0.5183,
+     "net": -1.2222
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 127,
+     "rate": 0.5118,
+     "ctl": 0.5691,
+     "net": -0.8248
+    },
+    "train": {
+     "n": 202,
+     "rate": 0.4802,
+     "ctl": 0.4479,
+     "net": -0.5845
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "volumeProfile",
+   "label": "prev-day SPOT VAL bounce",
+   "raw_full": {
+    "oos": {
+     "n": 872,
+     "rate": 0.4908,
+     "ctl": 0.4701,
+     "net": -1.2811
+    },
+    "train": {
+     "n": 1300,
+     "rate": 0.5046,
+     "ctl": 0.4681,
+     "net": -0.5818
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 865,
+     "rate": 0.496,
+     "ctl": 0.5139,
+     "net": -1.1175
+    },
+    "train": {
+     "n": 1308,
+     "rate": 0.5076,
+     "ctl": 0.482,
+     "net": -0.4758
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 128,
+     "rate": 0.4141,
+     "ctl": 0.4538,
+     "net": -4.3394
+    },
+    "train": {
+     "n": 167,
+     "rate": 0.4132,
+     "ctl": 0.4625,
+     "net": -2.994
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 125,
+     "rate": 0.424,
+     "ctl": 0.4655,
+     "net": -3.982
+    },
+    "train": {
+     "n": 166,
+     "rate": 0.4217,
+     "ctl": 0.45,
+     "net": -2.6199
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 134,
+     "rate": 0.4925,
+     "ctl": 0.4435,
+     "net": -0.5075
+    },
+    "train": {
+     "n": 167,
+     "rate": 0.4192,
+     "ctl": 0.4601,
+     "net": -3.332
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  {
+   "module": "volumeProfile",
+   "label": "SPOT naked-POC magnet hit",
+   "raw_full": {
+    "oos": {
+     "n": 1552,
+     "rate": 0.5805,
+     "ctl": 0.5773
+    },
+    "train": {
+     "n": 2253,
+     "rate": 0.5877,
+     "ctl": 0.5921
+    },
+    "verdict": "NOT_A_MAGNET"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 1544,
+     "rate": 0.5842,
+     "ctl": 0.579
+    },
+    "train": {
+     "n": 2217,
+     "rate": 0.5507,
+     "ctl": 0.5489
+    },
+    "verdict": "NOT_A_MAGNET"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 217,
+     "rate": 0.5853,
+     "ctl": 0.5023
+    },
+    "train": {
+     "n": 319,
+     "rate": 0.5674,
+     "ctl": 0.6113
+    },
+    "verdict": "NOT_A_MAGNET"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 213,
+     "rate": 0.5775,
+     "ctl": 0.5352
+    },
+    "train": {
+     "n": 318,
+     "rate": 0.566,
+     "ctl": 0.5818
+    },
+    "verdict": "NOT_A_MAGNET"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 220,
+     "rate": 0.6,
+     "ctl": 0.5273
+    },
+    "train": {
+     "n": 320,
+     "rate": 0.6062,
+     "ctl": 0.6687
+    },
+    "verdict": "NOT_A_MAGNET"
+   }
+  },
+  {
+   "module": "volumeProfile",
+   "label": "Matrix filter AT_VAL",
+   "raw_full": {
+    "oos": {
+     "n": 305,
+     "rate": 0.1655,
+     "net": -1.3826
+    },
+    "train": {
+     "n": 329,
+     "rate": 0.1851,
+     "net": -0.5177
+    },
+    "verdict": "FAIL"
+   },
+   "drop_full": {
+    "oos": {
+     "n": 295,
+     "rate": 0.1852,
+     "net": -0.8302
+    },
+    "train": {
+     "n": 343,
+     "rate": 0.1881,
+     "net": -0.4403
+    },
+    "verdict": "FAIL"
+   },
+   "raw_cme2y": {
+    "oos": {
+     "n": 305,
+     "rate": 0.1655,
+     "net": -1.3826
+    },
+    "train": {
+     "n": 305,
+     "rate": 0.1765,
+     "net": -0.7878
+    },
+    "verdict": "FAIL"
+   },
+   "drop_cme2y": {
+    "oos": {
+     "n": 295,
+     "rate": 0.1852,
+     "net": -0.8302
+    },
+    "train": {
+     "n": 312,
+     "rate": 0.1797,
+     "net": -0.733
+    },
+    "verdict": "FAIL"
+   },
+   "cme_cme2y": {
+    "oos": {
+     "n": 308,
+     "rate": 0.1748,
+     "net": -1.6388
+    },
+    "train": {
+     "n": 368,
+     "rate": 0.1808,
+     "net": -0.2888
+    },
+    "verdict": "FAIL"
+   }
+  }
+ ]
+}

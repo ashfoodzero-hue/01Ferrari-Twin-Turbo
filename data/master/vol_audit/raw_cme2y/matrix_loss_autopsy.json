@@ -1,0 +1,523 @@
+{
+ "at": "2026-10-17T13:16:17.393Z",
+ "spec": "docs/MATRIX_LOSS_AUTOPSY_SPEC.md",
+ "buys": {
+  "train": 2071,
+  "oos": 1324
+ },
+ "all": {
+  "train_net": -0.27,
+  "oos_net": -0.87,
+  "train_wr": 0.247,
+  "oos_wr": 0.277
+ },
+ "cuts": {
+  "f1": [
+   -0.9094786804258569,
+   -0.39352248182908367
+  ],
+  "f10": [
+   -2.0122259488844634,
+   -1.1243400779082051
+  ],
+  "f11": [
+   0.43291666666666667,
+   0.7891666666666667
+  ],
+  "f15": [
+   0.31841314646661595,
+   0.7235674204648054
+  ]
+ },
+ "facts": {
+  "f1": {
+   "name": "DXY 3m dist from EMA (ATR)",
+   "table": {
+    "low": {
+     "train_n": 690,
+     "train_net": -0.054,
+     "train_wr": 0.267,
+     "oos_n": 385,
+     "oos_net": 0.356,
+     "oos_wr": 0.304
+    },
+    "high": {
+     "train_n": 691,
+     "train_net": -0.286,
+     "train_wr": 0.24,
+     "oos_n": 505,
+     "oos_net": -0.769,
+     "oos_wr": 0.25
+    },
+    "mid": {
+     "train_n": 690,
+     "train_net": -0.47,
+     "train_wr": 0.233,
+     "oos_n": 434,
+     "oos_net": -2.074,
+     "oos_wr": 0.286
+    }
+   },
+   "keep_bins": [
+    "low"
+   ],
+   "train_gain": 0.216
+  },
+  "f2": {
+   "name": "DXY flipped on the signal bar",
+   "table": {
+    "yes": {
+     "train_n": 957,
+     "train_net": -0.175,
+     "train_wr": 0.259,
+     "oos_n": 682,
+     "oos_net": -0.93,
+     "oos_wr": 0.282
+    },
+    "no": {
+     "train_n": 1114,
+     "train_net": -0.351,
+     "train_wr": 0.236,
+     "oos_n": 642,
+     "oos_net": -0.806,
+     "oos_wr": 0.273
+    }
+   },
+   "keep_bins": [
+    "yes"
+   ],
+   "train_gain": 0.095
+  },
+  "f3": {
+   "name": "DXY 15m trend",
+   "table": {
+    "up": {
+     "train_n": 1119,
+     "train_net": -0.156,
+     "train_wr": 0.249,
+     "oos_n": 816,
+     "oos_net": -1.057,
+     "oos_wr": 0.268
+    },
+    "down": {
+     "train_n": 952,
+     "train_net": -0.404,
+     "train_wr": 0.244,
+     "oos_n": 508,
+     "oos_net": -0.568,
+     "oos_wr": 0.291
+    }
+   },
+   "keep_bins": [
+    "up"
+   ],
+   "train_gain": 0.114
+  },
+  "f4": {
+   "name": "DXY 1h trend",
+   "table": {
+    "up": {
+     "train_n": 1127,
+     "train_net": -0.233,
+     "train_wr": 0.255,
+     "oos_n": 838,
+     "oos_net": -0.83,
+     "oos_wr": 0.272
+    },
+    "down": {
+     "train_n": 944,
+     "train_net": -0.314,
+     "train_wr": 0.237,
+     "oos_n": 486,
+     "oos_net": -0.938,
+     "oos_wr": 0.286
+    }
+   },
+   "keep_bins": [
+    "up"
+   ],
+   "train_gain": 0.037
+  },
+  "f5": {
+   "name": "WTI flipped on the signal bar",
+   "table": {
+    "no": {
+     "train_n": 1671,
+     "train_net": -0.36,
+     "train_wr": 0.239,
+     "oos_n": 1021,
+     "oos_net": -0.837,
+     "oos_wr": 0.281
+    },
+    "yes": {
+     "train_n": 390,
+     "train_net": 0.125,
+     "train_wr": 0.282,
+     "oos_n": 299,
+     "oos_net": -0.84,
+     "oos_wr": 0.268
+    }
+   },
+   "keep_bins": [
+    "yes"
+   ],
+   "train_gain": null
+  },
+  "f6": {
+   "name": "Silver 3m trend",
+   "table": {
+    "down": {
+     "train_n": 1210,
+     "train_net": -0.478,
+     "train_wr": 0.226,
+     "oos_n": 718,
+     "oos_net": -1.483,
+     "oos_wr": 0.267
+    },
+    "up": {
+     "train_n": 861,
+     "train_net": 0.022,
+     "train_wr": 0.276,
+     "oos_n": 606,
+     "oos_net": -0.143,
+     "oos_wr": 0.289
+    }
+   },
+   "keep_bins": [
+    "up"
+   ],
+   "train_gain": 0.292
+  },
+  "f7": {
+   "name": "Silver 15m trend",
+   "table": {
+    "up": {
+     "train_n": 519,
+     "train_net": -0.257,
+     "train_wr": 0.237,
+     "oos_n": 256,
+     "oos_net": -1.956,
+     "oos_wr": 0.258
+    },
+    "down": {
+     "train_n": 1552,
+     "train_net": -0.274,
+     "train_wr": 0.25,
+     "oos_n": 1068,
+     "oos_net": -0.609,
+     "oos_wr": 0.282
+    }
+   },
+   "keep_bins": [
+    "up"
+   ],
+   "train_gain": null
+  },
+  "f8": {
+   "name": "Gold 15m trend",
+   "table": {
+    "up": {
+     "train_n": 414,
+     "train_net": -0.306,
+     "train_wr": 0.246,
+     "oos_n": 278,
+     "oos_net": -2.426,
+     "oos_wr": 0.216
+    },
+    "down": {
+     "train_n": 1657,
+     "train_net": -0.261,
+     "train_wr": 0.247,
+     "oos_n": 1046,
+     "oos_net": -0.456,
+     "oos_wr": 0.293
+    }
+   },
+   "keep_bins": [
+    "down"
+   ],
+   "train_gain": 0.009
+  },
+  "f9": {
+   "name": "Gold 1h trend",
+   "table": {
+    "down": {
+     "train_n": 1078,
+     "train_net": -0.107,
+     "train_wr": 0.256,
+     "oos_n": 767,
+     "oos_net": -0.316,
+     "oos_wr": 0.292
+    },
+    "up": {
+     "train_n": 993,
+     "train_net": -0.447,
+     "train_wr": 0.237,
+     "oos_n": 557,
+     "oos_net": -1.632,
+     "oos_wr": 0.257
+    }
+   },
+   "keep_bins": [
+    "down"
+   ],
+   "train_gain": 0.163
+  },
+  "f10": {
+   "name": "Depth below wall (ATR)",
+   "table": {
+    "high": {
+     "train_n": 691,
+     "train_net": -0.076,
+     "train_wr": 0.272,
+     "oos_n": 536,
+     "oos_net": -0.135,
+     "oos_wr": 0.306
+    },
+    "mid": {
+     "train_n": 690,
+     "train_net": -0.607,
+     "train_wr": 0.245,
+     "oos_n": 485,
+     "oos_net": -2.586,
+     "oos_wr": 0.247
+    },
+    "low": {
+     "train_n": 690,
+     "train_net": -0.127,
+     "train_wr": 0.223,
+     "oos_n": 303,
+     "oos_net": 0.577,
+     "oos_wr": 0.274
+    }
+   },
+   "keep_bins": [
+    "high",
+    "low"
+   ],
+   "train_gain": 0.169
+  },
+  "f11": {
+   "name": "3m ATR percentile",
+   "table": {
+    "low": {
+     "train_n": 689,
+     "train_net": -0.591,
+     "train_wr": 0.193,
+     "oos_n": 583,
+     "oos_net": -1.867,
+     "oos_wr": 0.22
+    },
+    "high": {
+     "train_n": 691,
+     "train_net": -0.064,
+     "train_wr": 0.295,
+     "oos_n": 322,
+     "oos_net": -0.637,
+     "oos_wr": 0.342
+    },
+    "mid": {
+     "train_n": 691,
+     "train_net": -0.156,
+     "train_wr": 0.252,
+     "oos_n": 419,
+     "oos_net": 0.339,
+     "oos_wr": 0.308
+    }
+   },
+   "keep_bins": [
+    "high",
+    "mid"
+   ],
+   "train_gain": 0.16
+  },
+  "f12": {
+   "name": "Session",
+   "table": {
+    "Asia": {
+     "train_n": 768,
+     "train_net": -0.016,
+     "train_wr": 0.233,
+     "oos_n": 512,
+     "oos_net": -1.462,
+     "oos_wr": 0.273
+    },
+    "NY": {
+     "train_n": 554,
+     "train_net": -0.888,
+     "train_wr": 0.255,
+     "oos_n": 288,
+     "oos_net": -0.399,
+     "oos_wr": 0.33
+    },
+    "London": {
+     "train_n": 411,
+     "train_net": 0.062,
+     "train_wr": 0.273,
+     "oos_n": 297,
+     "oos_net": -1.265,
+     "oos_wr": 0.246
+    },
+    "late": {
+     "train_n": 338,
+     "train_net": -0.237,
+     "train_wr": 0.234,
+     "oos_n": 227,
+     "oos_net": 0.384,
+     "oos_wr": 0.26
+    }
+   },
+   "keep_bins": [
+    "Asia",
+    "London",
+    "late"
+   ],
+   "train_gain": 0.226
+  },
+  "f13": {
+   "name": "Market state",
+   "table": {
+    "EQUILIBRIUM": {
+     "train_n": 1017,
+     "train_net": -0.116,
+     "train_wr": 0.257,
+     "oos_n": 651,
+     "oos_net": -0.654,
+     "oos_wr": 0.296
+    },
+    "PREMIUM": {
+     "train_n": 316,
+     "train_net": -0.471,
+     "train_wr": 0.215,
+     "oos_n": 174,
+     "oos_net": -3.018,
+     "oos_wr": 0.178
+    },
+    "DISCOUNT": {
+     "train_n": 671,
+     "train_net": -0.301,
+     "train_wr": 0.241,
+     "oos_n": 408,
+     "oos_net": -0.223,
+     "oos_wr": 0.287
+    },
+    "TREND/BREAKOUT": {
+     "train_n": 67,
+     "train_net": -1.34,
+     "train_wr": 0.299,
+     "oos_n": 91,
+     "oos_net": -1.202,
+     "oos_wr": 0.286
+    }
+   },
+   "keep_bins": [
+    "EQUILIBRIUM"
+   ],
+   "train_gain": 0.154
+  },
+  "f14": {
+   "name": "4H Macro long score",
+   "table": {
+    "35-64": {
+     "train_n": 740,
+     "train_net": -0.324,
+     "train_wr": 0.247,
+     "oos_n": 498,
+     "oos_net": -0.317,
+     "oos_wr": 0.301
+    },
+    ">=65": {
+     "train_n": 938,
+     "train_net": 0.029,
+     "train_wr": 0.258,
+     "oos_n": 510,
+     "oos_net": -1.007,
+     "oos_wr": 0.267
+    },
+    "<=34": {
+     "train_n": 393,
+     "train_net": -0.881,
+     "train_wr": 0.219,
+     "oos_n": 316,
+     "oos_net": -1.521,
+     "oos_wr": 0.256
+    }
+   },
+   "keep_bins": [
+    ">=65"
+   ],
+   "train_gain": 0.299
+  },
+  "f15": {
+   "name": "Trigger candle body (ATR)",
+   "table": {
+    "high": {
+     "train_n": 691,
+     "train_net": -0.473,
+     "train_wr": 0.253,
+     "oos_n": 447,
+     "oos_net": 0.505,
+     "oos_wr": 0.32
+    },
+    "mid": {
+     "train_n": 690,
+     "train_net": 0.042,
+     "train_wr": 0.268,
+     "oos_n": 466,
+     "oos_net": -1.463,
+     "oos_wr": 0.283
+    },
+    "low": {
+     "train_n": 690,
+     "train_net": -0.378,
+     "train_wr": 0.219,
+     "oos_n": 411,
+     "oos_net": -1.692,
+     "oos_wr": 0.224
+    }
+   },
+   "keep_bins": [
+    "mid"
+   ],
+   "train_gain": 0.312
+  }
+ },
+ "tests": {
+  "top1: Trigger candle body (ATR) keep mid": {
+   "oos_kept_n": 466,
+   "oos_kept_net": -1.463,
+   "oos_kept_wr": 0.283,
+   "oos_gain": -0.593,
+   "gain_lb": -1.932,
+   "kept_lb": -2.851,
+   "verdict": "NO"
+  },
+  "top2: 4H Macro long score keep >=65": {
+   "oos_kept_n": 510,
+   "oos_kept_net": -1.007,
+   "oos_kept_wr": 0.267,
+   "oos_gain": -0.137,
+   "gain_lb": -1.35,
+   "kept_lb": -2.131,
+   "verdict": "NO"
+  },
+  "top3: Silver 3m trend keep up": {
+   "oos_kept_n": 606,
+   "oos_kept_net": -0.143,
+   "oos_kept_wr": 0.289,
+   "oos_gain": 0.727,
+   "gain_lb": -0.415,
+   "kept_lb": -1.828,
+   "verdict": "NO"
+  },
+  "top1 AND top2": {
+   "oos_kept_n": 190,
+   "oos_kept_net": -0.244,
+   "oos_kept_wr": 0.321,
+   "oos_gain": 0.625,
+   "gain_lb": -1.332,
+   "kept_lb": -2.125,
+   "verdict": "NO"
+  }
+ }
+}

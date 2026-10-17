@@ -1,0 +1,18 @@
+[vol_audit] mode cme · window cme2y · artifacts → data\master\vol_audit\cme_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 700,457
+REPLICATION (no-drift vs study (an) 60.4 / 71.4 / 51.2): all 61.7% · defense 75.2% · attack 49.9% (n 8318)
+  ALL       OOS n  4389 hold 0.6279 lift 0.0pp · TRAIN 0.604 lift 0.0pp · ceiling 0.6261 floor 0.6298 · pre/post2020 null/0.6166
+  ATTACK    OOS n  2353 hold 0.4943 lift -13.4pp · TRAIN 0.5041 lift -10.0pp · ceiling 0.4975 floor 0.4909 · pre/post2020 null/0.4989
+  DEFENSE   OOS n  2036 hold 0.7824 lift 15.4pp (LB 13.8) · TRAIN 0.7176 lift 11.4pp · ceiling 0.7802 floor 0.7845 · pre/post2020 null/0.7517 → SHOWN
+  STRONG    OOS n   586 hold 0.8703 lift 24.2pp (LB 21.0) · TRAIN 0.8039 lift 20.0pp · ceiling 0.8669 floor 0.8737 · pre/post2020 null/0.8364 → SHOWN
+  DEF>PUSH  OOS n   733 hold 0.8417 lift 21.4pp (LB 18.4) · TRAIN 0.7522 lift 14.8pp · ceiling 0.8552 floor 0.8283 · pre/post2020 null/0.7987 → SHOWN
+  stacking (DEFENSE, by defended-test count at the same wall): {"1":{"oos_n":1084,"oos_hold":0.7814,"train_hold":0.7287},"2":{"oos_n":565,"oos_hold":0.7858,"train_hold":0.7078},"3+":{"oos_n":387,"oos_hold":0.7804,"train_hold":0.6975}}
+  DEFENSE + R4     OOS n  275 hold 0.7455 vs 0.7824 diff -3.7pp (LB -8.1) · TRAIN n 291 diff 0.1pp → NO_ADD
+  DEFENSE + RB4    OOS n   94 hold 0.7979 vs 0.7824 diff 1.6pp (LB -11.5) · TRAIN n 84 diff -0.3pp → UNDERPOWERED
+  DEFENSE + R1     OOS n  223 hold 0.7534 vs 0.7824 diff -2.9pp (LB -9.2) · TRAIN n 214 diff 1.1pp → NO_ADD
+  DEF>PUSH + R4    OOS n  102 hold 0.8333 vs 0.8417 diff -0.8pp (LB -9.2) · TRAIN n 112 diff 1.6pp → NO_ADD
+  DEF>PUSH + RB4   OOS n   33 hold 0.7879 vs 0.8417 diff -5.4pp (LB -32.1) · TRAIN n 28 diff -3.8pp → UNDERPOWERED
+  DEF>PUSH + R1    OOS n   77 hold 0.8052 vs 0.8417 diff -3.7pp (LB -13.1) · TRAIN n 84 diff 2.2pp → UNDERPOWERED
+
+=> SHOWN bubble classes: DEFENSE, STRONG, DEF>PUSH · RSI confirms: none

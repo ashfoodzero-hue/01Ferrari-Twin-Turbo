@@ -95,6 +95,13 @@ These take spot XAUUSD bars, so their volume component uses the tick count above
 
 `src/master/goldWhale.js` uses CME futures volume, so it is not affected. Fixing these changes live behaviour: a separate task, with Ashraf's approval.
 
+**MEASURED 2026-10-17** (`docs/VOLUME_AUDIT_RESULTS.md`, MASTER_DOCUMENT §7 (bz)); still NOT changed live:
+- No published pass or fail came from the tick count; the wall bubbles stay SHOWN with no volume at all.
+- `levelRadar` reads no volume (19,984 / 19,984 decisions identical).
+- The live market-state gate blocked 88 % of OOS fires on the tick count.
+- CME volume is 10 min delayed live.
+- Proposal: drop the volume part in every module.
+
 ## 7. Our own history: what the app records every day (2026-10-17)
 
 | Series | Recorded by | How | Folder |

@@ -1,0 +1,62 @@
+{
+ "at": "2026-10-17T13:19:59.028Z",
+ "from": "2024-12-08T00:00:00.000Z",
+ "to": "2026-10-09T06:00:00.000Z",
+ "bars": 43452,
+ "state_counts": {
+  "raw": {
+   "EQUILIBRIUM": 21495,
+   "PREMIUM": 12360,
+   "DISCOUNT": 7507,
+   "BREAKOUT_DOWN": 212,
+   "TREND_DOWN": 737,
+   "BREAKOUT_UP": 261,
+   "TREND_UP": 880
+  },
+  "cme": {
+   "EQUILIBRIUM": 20328,
+   "PREMIUM": 10588,
+   "DISCOUNT": 6643,
+   "BREAKOUT_UP": 811,
+   "TREND_UP": 2727,
+   "BREAKOUT_DOWN": 603,
+   "TREND_DOWN": 1752
+  },
+  "drop": {
+   "EQUILIBRIUM": 19834,
+   "PREMIUM": 9950,
+   "DISCOUNT": 6442,
+   "BREAKOUT_UP": 1173,
+   "TREND_UP": 3384,
+   "BREAKOUT_DOWN": 709,
+   "TREND_DOWN": 1960
+  }
+ },
+ "state_differs_pct": {
+  "raw_cme": 8.85,
+  "raw_drop": 11.82,
+  "cme_drop": 3.07
+ },
+ "allowed_side_differs_pct": {
+  "raw_cme": 8.85,
+  "raw_drop": 11.82,
+  "cme_drop": 3.07
+ },
+ "by_year": {
+  "2024": {
+   "n": 1458,
+   "raw_cme_state_diff": 238,
+   "raw_drop_state_diff": 263
+  },
+  "2025": {
+   "n": 23638,
+   "raw_cme_state_diff": 2562,
+   "raw_drop_state_diff": 3322
+  },
+  "2026": {
+   "n": 18356,
+   "raw_cme_state_diff": 1045,
+   "raw_drop_state_diff": 1551
+  }
+ }
+}

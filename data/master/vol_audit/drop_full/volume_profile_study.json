@@ -1,0 +1,209 @@
+{
+ "at": "2026-10-17T13:07:36.067Z",
+ "rules": {
+  "bin_atr1d": 0.02,
+  "value_area": 0.7,
+  "z_bounce": 2.39,
+  "z_magnet": 2.24,
+  "min_n": 100,
+  "spot_volume": "tick activity (quote updates)",
+  "fut_volume": "CME GC contracts, basis-adjusted"
+ },
+ "spot": {
+  "window": "2013-07-21 → 2026-10-09T06:00",
+  "split": "2021-06-26",
+  "profiled_days": 3347,
+  "cells": {
+   "POC": {
+    "train": {
+     "events": 1400,
+     "resolved": 1379,
+     "bounce": 0.5018,
+     "bounce_lb": 0.4697,
+     "control": 0.4895,
+     "trades": 1369,
+     "net": -0.5993,
+     "net_lb": -0.8396,
+     "net_R": -0.1513
+    },
+    "oos": {
+     "events": 1021,
+     "resolved": 1006,
+     "bounce": 0.4911,
+     "bounce_lb": 0.4535,
+     "control": 0.4913,
+     "trades": 1009,
+     "net": -1.413,
+     "net_lb": -2.2742,
+     "net_R": -0.0981
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "VAH": {
+    "train": {
+     "events": 1314,
+     "resolved": 1290,
+     "bounce": 0.4907,
+     "bounce_lb": 0.4575,
+     "control": 0.4834,
+     "trades": 1300,
+     "net": -0.603,
+     "net_lb": -0.8463,
+     "net_R": -0.1804
+    },
+    "oos": {
+     "events": 937,
+     "resolved": 922,
+     "bounce": 0.4772,
+     "bounce_lb": 0.4382,
+     "control": 0.5017,
+     "trades": 934,
+     "net": -1.1178,
+     "net_lb": -2.0048,
+     "net_R": -0.1074
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "VAL": {
+    "train": {
+     "events": 1320,
+     "resolved": 1308,
+     "bounce": 0.5076,
+     "bounce_lb": 0.4746,
+     "control": 0.482,
+     "trades": 1286,
+     "net": -0.4758,
+     "net_lb": -0.7176,
+     "net_R": -0.1232
+    },
+    "oos": {
+     "events": 877,
+     "resolved": 865,
+     "bounce": 0.496,
+     "bounce_lb": 0.4555,
+     "control": 0.5139,
+     "trades": 866,
+     "net": -1.1175,
+     "net_lb": -2.0241,
+     "net_R": -0.0673
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  "magnet": {
+   "train": {
+    "n": 2217,
+    "hit": 0.5507,
+    "hit_lb": 0.527,
+    "mirror": 0.5489
+   },
+   "oos": {
+    "n": 1544,
+    "hit": 0.5842,
+    "hit_lb": 0.5559,
+    "mirror": 0.579
+   },
+   "verdict": "NOT_A_MAGNET"
+  }
+ },
+ "fut": {
+  "window": "2024-10-11 → 2026-10-09T06:00",
+  "split": "2025-12-21",
+  "profiled_days": 513,
+  "cells": {
+   "POC": {
+    "train": {
+     "events": 225,
+     "resolved": 223,
+     "bounce": 0.4484,
+     "bounce_lb": 0.3711,
+     "control": 0.5789,
+     "trades": 224,
+     "net": -1.1642,
+     "net_lb": -2.8991,
+     "net_R": -0.1372
+    },
+    "oos": {
+     "events": 159,
+     "resolved": 153,
+     "bounce": 0.366,
+     "bounce_lb": 0.2793,
+     "control": 0.5634,
+     "trades": 159,
+     "net": -7.0911,
+     "net_lb": -11.3156,
+     "net_R": -0.2759
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "VAH": {
+    "train": {
+     "events": 210,
+     "resolved": 209,
+     "bounce": 0.4833,
+     "bounce_lb": 0.4022,
+     "control": 0.5545,
+     "trades": 210,
+     "net": -0.7817,
+     "net_lb": -2.5259,
+     "net_R": -0.1156
+    },
+    "oos": {
+     "events": 141,
+     "resolved": 139,
+     "bounce": 0.5108,
+     "bounce_lb": 0.411,
+     "control": 0.4925,
+     "trades": 141,
+     "net": -0.2231,
+     "net_lb": -4.8466,
+     "net_R": -0.0267
+    },
+    "verdict": "DOES_NOT_HOLD"
+   },
+   "VAL": {
+    "train": {
+     "events": 188,
+     "resolved": 185,
+     "bounce": 0.4378,
+     "bounce_lb": 0.3538,
+     "control": 0.4837,
+     "trades": 186,
+     "net": -2.5582,
+     "net_lb": -4.3378,
+     "net_R": -0.1697
+    },
+    "oos": {
+     "events": 145,
+     "resolved": 143,
+     "bounce": 0.4825,
+     "bounce_lb": 0.3853,
+     "control": 0.4621,
+     "trades": 145,
+     "net": -1.3931,
+     "net_lb": -6.3869,
+     "net_R": -0.0719
+    },
+    "verdict": "DOES_NOT_HOLD"
+   }
+  },
+  "magnet": {
+   "train": {
+    "n": 356,
+    "hit": 0.5702,
+    "hit_lb": 0.5109,
+    "mirror": 0.6208
+   },
+   "oos": {
+    "n": 237,
+    "hit": 0.5949,
+    "hit_lb": 0.5223,
+    "mirror": 0.5696
+   },
+   "verdict": "NOT_A_MAGNET"
+  }
+ },
+ "holding": [],
+ "verdict_bounce": "PROFILE_LEVELS_DO_NOT_HOLD",
+ "verdict_magnet": "NO_MAGNET"
+}

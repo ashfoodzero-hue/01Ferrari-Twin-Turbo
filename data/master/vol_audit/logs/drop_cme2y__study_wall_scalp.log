@@ -1,0 +1,30 @@
+[vol_audit] mode drop · window cme2y · artifacts → data\master\vol_audit\drop_cme2y
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 701,356
+
+── C4H: 3501 tests, 801 strong-defence bubbles (1.67/day)
+  T4    OOS n   359 (1.87/d) WR 0.6295 (LB 0.5584) $/t -0.749 [LB -1.802] risk $11.09 · reached 100 pips 0.0251 · TRAIN WR 0.4951 $/t -0.637 · SELL -0.928 BUY -0.603 → FAIL
+  T10   OOS n   352 (1.84/d) WR 0.4716 (LB 0.4007) $/t -0.115 [LB -1.525] risk $11.13 · reached 100 pips 0.4716 · TRAIN WR 0.3534 $/t -0.519 · SELL -0.377 BUY 0.093 → FAIL
+  SPLIT OOS n   359 (1.87/d) WR 0.6295 (LB 0.5584) $/t -0.493 [LB -1.548] risk $11.09 · reached 100 pips 0.3175 · TRAIN WR 0.4963 $/t -0.62 · SELL -0.673 BUY -0.348 → FAIL
+
+── S4H: 265 tests, 54 strong-defence bubbles (0.11/day)
+  T4    OOS n    24 (0.13/d) WR 0.6667 (LB 0.3958) $/t -1.025 [LB -5.13] risk $16.64 · reached 100 pips 0.0417 · TRAIN WR 0.3333 $/t -1.809 · SELL -1.571 BUY -0.753 → UNDERPOWERED
+  T10   OOS n    24 (0.13/d) WR 0.5833 (LB 0.3241) $/t 1.179 [LB -5.071] risk $16.64 · reached 100 pips 0.5833 · TRAIN WR 0.2667 $/t -0.825 · SELL -3.207 BUY 3.372 → UNDERPOWERED
+  SPLIT OOS n    24 (0.13/d) WR 0.6667 (LB 0.3958) $/t -0.955 [LB -5.654] risk $16.64 · reached 100 pips 0.3333 · TRAIN WR 0.3333 $/t -1.495 · SELL -1.623 BUY -0.621 → UNDERPOWERED
+
+── S1H: 792 tests, 176 strong-defence bubbles (0.37/day)
+  T4    OOS n    80 (0.42/d) WR 0.6375 (LB 0.4859) $/t -0.987 [LB -3.141] risk $12.32 · reached 100 pips 0.0375 · TRAIN WR 0.4792 $/t -0.794 · SELL -2.621 BUY -0.058 → UNDERPOWERED
+  T10   OOS n    80 (0.42/d) WR 0.4875 (LB 0.3435) $/t -0.325 [LB -3.517] risk $12.32 · reached 100 pips 0.5 · TRAIN WR 0.3368 $/t -0.817 · SELL -2.501 BUY 0.912 → UNDERPOWERED
+  SPLIT OOS n    80 (0.42/d) WR 0.6375 (LB 0.4859) $/t -0.682 [LB -2.986] risk $12.32 · reached 100 pips 0.325 · TRAIN WR 0.4737 $/t -0.456 · SELL -2.592 BUY 0.405 → UNDERPOWERED
+
+── S15: 3416 tests, 724 strong-defence bubbles (1.51/day)
+  T4    OOS n   324 (1.69/d) WR 0.6049 (LB 0.5297) $/t -0.962 [LB -1.986] risk $11.16 · reached 100 pips 0.0278 · TRAIN WR 0.5053 $/t -0.551 · SELL -1.162 BUY -0.813 → FAIL
+  T10   OOS n   316 (1.65/d) WR 0.4399 (LB 0.3663) $/t -0.635 [LB -2.102] risk $11.18 · reached 100 pips 0.4367 · TRAIN WR 0.3389 $/t -0.719 · SELL -0.291 BUY -0.885 → FAIL
+  SPLIT OOS n   324 (1.69/d) WR 0.6049 (LB 0.5297) $/t -0.765 [LB -1.748] risk $11.16 · reached 100 pips 0.2994 · TRAIN WR 0.5082 $/t -0.573 · SELL -0.867 BUY -0.689 → FAIL
+
+── S3: 17250 tests, 3456 strong-defence bubbles (7.22/day)
+  T4    OOS n  1297 (6.77/d) WR 0.559 (LB 0.5213) $/t -1.221 [LB -1.676] risk $8.96 · reached 100 pips 0.0185 · TRAIN WR 0.4946 $/t -0.496 · SELL -1.073 BUY -1.337 → FAIL
+  T10   OOS n  1152 (6.02/d) WR 0.4063 (LB 0.3677) $/t -0.899 [LB -1.638] risk $9.18 · reached 100 pips 0.4019 · TRAIN WR 0.3271 $/t -0.532 · SELL -0.26 BUY -1.375 → FAIL
+  SPLIT OOS n  1248 (6.52/d) WR 0.5641 (LB 0.5258) $/t -1.07 [LB -1.567] risk $9.03 · reached 100 pips 0.2604 · TRAIN WR 0.4924 $/t -0.475 · SELL -0.817 BUY -1.266 → FAIL
+
+=> WALL SCALP (WR ≥ 85 % + money): NO_PASS

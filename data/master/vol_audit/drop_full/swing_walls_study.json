@@ -1,0 +1,203 @@
+{
+ "at": "2026-10-17T12:30:06.461Z",
+ "spec": "docs/SWING_WALLS_SPEC.md",
+ "volume_walls": {
+  "tests_per_day": 13.9,
+  "oos_hold_all": 0.6018,
+  "oos_hold_defense": 0.7007
+ },
+ "variants": {
+  "3m": {
+   "tests": 133896,
+   "tests_per_day": 38.83,
+   "labelled": 114751,
+   "base": {
+    "oos": 0.6022,
+    "train": 0.6162
+   },
+   "strong_threshold_train_p66": 0.5818631575021762,
+   "classes": {
+    "ATTACK": {
+     "oos_n": 26589,
+     "oos_hold": 0.5219,
+     "oos_lift": -0.0803,
+     "train_hold": 0.5254,
+     "train_lift": -0.0908,
+     "by_side": {
+      "ceiling": 0.5106,
+      "floor": 0.5357
+     },
+     "era": {
+      "pre2020": 0.5161,
+      "post2020": 0.5308
+     },
+     "coincide_with_volume": 0.5201,
+     "swing_only": 0.522,
+     "n_coincide": 819
+    },
+    "DEFENSE": {
+     "oos_n": 20972,
+     "oos_hold": 0.7039,
+     "oos_lift": 0.1018,
+     "train_hold": 0.724,
+     "train_lift": 0.1078,
+     "by_side": {
+      "ceiling": 0.6699,
+      "floor": 0.7292
+     },
+     "era": {
+      "pre2020": 0.7184,
+      "post2020": 0.7135
+     },
+     "coincide_with_volume": 0.6868,
+     "swing_only": 0.7045,
+     "n_coincide": 613,
+     "lift_lb": 0.0949,
+     "verdict": "SHOWN"
+    },
+    "DEF>PUSH": {
+     "oos_n": 7369,
+     "oos_hold": 0.7386,
+     "oos_lift": 0.1365,
+     "train_hold": 0.7562,
+     "train_lift": 0.14,
+     "by_side": {
+      "ceiling": 0.7094,
+      "floor": 0.7587
+     },
+     "era": {
+      "pre2020": 0.7521,
+      "post2020": 0.7463
+     },
+     "coincide_with_volume": 0.75,
+     "swing_only": 0.7383,
+     "n_coincide": 204,
+     "lift_lb": 0.1239,
+     "verdict": "SHOWN"
+    },
+    "STRONG": {
+     "oos_n": 7037,
+     "oos_hold": 0.7716,
+     "oos_lift": 0.1695,
+     "train_hold": 0.789,
+     "train_lift": 0.1728,
+     "by_side": {
+      "ceiling": 0.7417,
+      "floor": 0.7898
+     },
+     "era": {
+      "pre2020": 0.7857,
+      "post2020": 0.7788
+     },
+     "coincide_with_volume": 0.7817,
+     "swing_only": 0.7713,
+     "n_coincide": 197,
+     "lift_lb": 0.1559,
+     "verdict": "SHOWN"
+    }
+   }
+  },
+  "15m": {
+   "tests": 29070,
+   "tests_per_day": 8.43,
+   "labelled": 25765,
+   "base": {
+    "oos": 0.6017,
+    "train": 0.6335
+   },
+   "strong_threshold_train_p66": 0.5722697582262007,
+   "classes": {
+    "ATTACK": {
+     "oos_n": 5675,
+     "oos_hold": 0.5211,
+     "oos_lift": -0.0807,
+     "train_hold": 0.522,
+     "train_lift": -0.1115,
+     "by_side": {
+      "ceiling": 0.5008,
+      "floor": 0.5483
+     },
+     "era": {
+      "pre2020": 0.5109,
+      "post2020": 0.5313
+     },
+     "coincide_with_volume": 0.5029,
+     "swing_only": 0.5216,
+     "n_coincide": 171
+    },
+    "DEFENSE": {
+     "oos_n": 4574,
+     "oos_hold": 0.7018,
+     "oos_lift": 0.1001,
+     "train_hold": 0.7507,
+     "train_lift": 0.1171,
+     "by_side": {
+      "ceiling": 0.6639,
+      "floor": 0.7319
+     },
+     "era": {
+      "pre2020": 0.7409,
+      "post2020": 0.7233
+     },
+     "coincide_with_volume": 0.6466,
+     "swing_only": 0.7032,
+     "n_coincide": 116,
+     "lift_lb": 0.0865,
+     "verdict": "SHOWN"
+    },
+    "DEF>PUSH": {
+     "oos_n": 1566,
+     "oos_hold": 0.7337,
+     "oos_lift": 0.132,
+     "train_hold": 0.7848,
+     "train_lift": 0.1512,
+     "by_side": {
+      "ceiling": 0.684,
+      "floor": 0.7691
+     },
+     "era": {
+      "pre2020": 0.7759,
+      "post2020": 0.7537
+     },
+     "coincide_with_volume": 0.6471,
+     "swing_only": 0.7366,
+     "n_coincide": 51,
+     "lift_lb": 0.1054,
+     "verdict": "SHOWN"
+    },
+    "STRONG": {
+     "oos_n": 1556,
+     "oos_hold": 0.7648,
+     "oos_lift": 0.1631,
+     "train_hold": 0.816,
+     "train_lift": 0.1825,
+     "by_side": {
+      "ceiling": 0.7351,
+      "floor": 0.7836
+     },
+     "era": {
+      "pre2020": 0.8138,
+      "post2020": 0.7798
+     },
+     "coincide_with_volume": 0.6216,
+     "swing_only": 0.7683,
+     "n_coincide": 37,
+     "lift_lb": 0.1357,
+     "verdict": "SHOWN"
+    }
+   }
+  }
+ },
+ "shown": {
+  "3m": [
+   "DEFENSE",
+   "DEF>PUSH",
+   "STRONG"
+  ],
+  "15m": [
+   "DEFENSE",
+   "DEF>PUSH",
+   "STRONG"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+[vol_audit] mode drop · window full · artifacts → data\master\vol_audit\drop_full
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 4,573,711
+market states on 15m …
+setups: S-RALLY 13032 · S-BREAK 9541
+R-STATE|S-RALLY|R1     OOS n    98 (0.07/d) WR 0.4592 (LB 0.3335) $/t -0.459 [LB -1.609] risk $3.7 · TRAIN WR 0.3444 $/t -0.581 · pre/post -0.606/-0.459 → UNDERPOWERED
+R-STATE|S-RALLY|R2     OOS n    97 (0.07/d) WR 0.3299 (LB 0.2191) $/t -0.246 [LB -1.795] risk $3.71 · TRAIN WR 0.251 $/t -0.545 · pre/post -0.535/-0.349 → UNDERPOWERED
+R-STATE|S-RALLY|RH     OOS n   101 (0.07/d) WR 0.6238 (LB 0.4925) $/t -0.356 [LB -1.372] risk $3.69 · TRAIN WR 0.4818 $/t -0.54 · pre/post -0.575/-0.363 → FAIL
+R-STATE|S-BREAK|R1     OOS n   419 (0.3/d) WR 0.4463 (LB 0.3836) $/t -0.82 [LB -1.768] risk $7.92 · TRAIN WR 0.4173 $/t -0.775 · pre/post -0.701/-0.927 → FAIL
+R-STATE|S-BREAK|R2     OOS n   401 (0.29/d) WR 0.3691 (LB 0.3082) $/t -0.858 [LB -2.003] risk $7.83 · TRAIN WR 0.3634 $/t -0.739 · pre/post -0.61/-1.03 → FAIL
+R-STATE|S-BREAK|RH     OOS n   439 (0.32/d) WR 0.5831 (LB 0.5202) $/t -0.782 [LB -1.526] risk $7.87 · TRAIN WR 0.543 $/t -0.599 · pre/post -0.651/-0.657 → FAIL
+R-4H|S-RALLY|R1        OOS n  1223 (0.89/d) WR 0.4554 (LB 0.4182) $/t -0.386 [LB -0.742] risk $3.86 · TRAIN WR 0.3745 $/t -0.499 · pre/post -0.495/-0.417 → FAIL
+R-4H|S-RALLY|R2        OOS n  1119 (0.81/d) WR 0.3137 (LB 0.2783) $/t -0.335 [LB -0.841] risk $3.9 · TRAIN WR 0.271 $/t -0.503 · pre/post -0.522/-0.354 → FAIL
+R-4H|S-RALLY|RH        OOS n  1299 (0.94/d) WR 0.5905 (LB 0.5541) $/t -0.459 [LB -0.712] risk $3.84 · TRAIN WR 0.5006 $/t -0.461 · pre/post -0.479/-0.439 → FAIL
+R-4H|S-BREAK|R1        OOS n   684 (0.5/d) WR 0.4561 (LB 0.4066) $/t -0.513 [LB -1.199] risk $6.36 · TRAIN WR 0.438 $/t -0.396 · pre/post -0.393/-0.492 → FAIL
+R-4H|S-BREAK|R2        OOS n   621 (0.45/d) WR 0.372 (LB 0.3225) $/t -0.023 [LB -0.981] risk $6.37 · TRAIN WR 0.3402 $/t -0.483 · pre/post -0.465/-0.143 → FAIL
+R-4H|S-BREAK|RH        OOS n   781 (0.57/d) WR 0.6146 (LB 0.5678) $/t -0.391 [LB -0.847] risk $6.16 · TRAIN WR 0.5576 $/t -0.434 · pre/post -0.448/-0.383 → FAIL
+R-1H|S-RALLY|R1        OOS n  1100 (0.8/d) WR 0.4264 (LB 0.3876) $/t -0.534 [LB -0.903] risk $3.78 · TRAIN WR 0.3855 $/t -0.493 · pre/post -0.466/-0.555 → REPORTED
+R-1H|S-RALLY|R2        OOS n  1032 (0.75/d) WR 0.3052 (LB 0.2688) $/t -0.405 [LB -0.899] risk $3.8 · TRAIN WR 0.2677 $/t -0.553 · pre/post -0.514/-0.489 → REPORTED
+R-1H|S-RALLY|RH        OOS n  1178 (0.85/d) WR 0.5764 (LB 0.5381) $/t -0.507 [LB -0.75] risk $3.74 · TRAIN WR 0.5139 $/t -0.441 · pre/post -0.446/-0.484 → REPORTED
+R-1H|S-BREAK|R1        OOS n   762 (0.55/d) WR 0.458 (LB 0.411) $/t -0.612 [LB -1.245] risk $6.56 · TRAIN WR 0.4361 $/t -0.417 · pre/post -0.427/-0.562 → REPORTED
+R-1H|S-BREAK|R2        OOS n   696 (0.5/d) WR 0.3491 (LB 0.3032) $/t -0.635 [LB -1.445] risk $6.51 · TRAIN WR 0.3442 $/t -0.417 · pre/post -0.441/-0.564 → REPORTED
+R-1H|S-BREAK|RH        OOS n   850 (0.62/d) WR 0.6059 (LB 0.561) $/t -0.519 [LB -1.02] risk $6.44 · TRAIN WR 0.5535 $/t -0.499 · pre/post -0.537/-0.471 → REPORTED
+NONE|S-RALLY|R1        OOS n  3701 (2.68/d) WR 0.4445 (LB 0.423) $/t -0.442 [LB -0.635] risk $3.7 · TRAIN WR 0.3805 $/t -0.499 · pre/post -0.466/-0.491 → REPORTED
+NONE|S-RALLY|R2        OOS n  3388 (2.46/d) WR 0.3117 (LB 0.2911) $/t -0.368 [LB -0.631] risk $3.73 · TRAIN WR 0.2654 $/t -0.545 · pre/post -0.493/-0.467 → REPORTED
+NONE|S-RALLY|RH        OOS n  3960 (2.87/d) WR 0.5843 (LB 0.5636) $/t -0.487 [LB -0.626] risk $3.67 · TRAIN WR 0.5085 $/t -0.458 · pre/post -0.452/-0.486 → REPORTED
+NONE|S-BREAK|R1        OOS n  2128 (1.54/d) WR 0.4554 (LB 0.4271) $/t -0.499 [LB -0.876] risk $6.6 · TRAIN WR 0.4247 $/t -0.495 · pre/post -0.471/-0.526 → REPORTED
+NONE|S-BREAK|R2        OOS n  1943 (1.41/d) WR 0.3572 (LB 0.3291) $/t -0.461 [LB -0.987] risk $6.61 · TRAIN WR 0.3408 $/t -0.504 · pre/post -0.447/-0.534 → REPORTED
+NONE|S-BREAK|RH        OOS n  2431 (1.76/d) WR 0.5989 (LB 0.5725) $/t -0.499 [LB -0.79] risk $6.46 · TRAIN WR 0.5451 $/t -0.509 · pre/post -0.486/-0.527 → REPORTED
+
+=> SELL in downtrends (WR ≥ 85 % + money): NO_PASS

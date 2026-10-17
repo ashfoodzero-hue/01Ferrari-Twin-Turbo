@@ -1,0 +1,552 @@
+{
+ "at": "2026-10-17T13:16:34.219Z",
+ "window": "2024-12-08 → 2026-10-09T06:00",
+ "split": "2026-01-14",
+ "rules": {
+  "strong": "BIG ≥0.5ATR + body ≥1.5ATR + activity ≥1.5×20-bar mean + 1h & 4h EMA stack agree + first retest ≤20 bars",
+  "xs": [
+   0.1,
+   0.25,
+   0.5,
+   1
+  ],
+  "z": 2.64,
+  "min_n": 100
+ },
+ "cells": {
+  "3m|0.1": {
+   "tf": "3m",
+   "x": 0.1,
+   "train": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.8491,
+    "bounce_lb": 0.6799,
+    "control": 0.8302,
+    "trades": 52,
+    "net": -0.7359,
+    "net_lb": -1.1715,
+    "net_R": -0.3112
+   },
+   "oos": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.8868,
+    "bounce_lb": 0.7248,
+    "control": 0.9434,
+    "trades": 52,
+    "net": -1.568,
+    "net_lb": -2.4584,
+    "net_R": -0.3349
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "3m|0.25": {
+   "tf": "3m",
+   "x": 0.25,
+   "train": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.8302,
+    "bounce_lb": 0.6582,
+    "control": 0.7736,
+    "trades": 52,
+    "net": -0.4904,
+    "net_lb": -0.9633,
+    "net_R": -0.2347
+   },
+   "oos": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.8113,
+    "bounce_lb": 0.6369,
+    "control": 0.8679,
+    "trades": 52,
+    "net": -1.5618,
+    "net_lb": -2.6501,
+    "net_R": -0.3106
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "3m|0.5": {
+   "tf": "3m",
+   "x": 0.5,
+   "train": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.7736,
+    "bounce_lb": 0.5956,
+    "control": 0.6415,
+    "trades": 52,
+    "net": -0.5103,
+    "net_lb": -1.0976,
+    "net_R": -0.28
+   },
+   "oos": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.6981,
+    "bounce_lb": 0.5169,
+    "control": 0.7843,
+    "trades": 52,
+    "net": -1.4492,
+    "net_lb": -2.6969,
+    "net_R": -0.3206
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "3m|1": {
+   "tf": "3m",
+   "x": 1,
+   "train": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.5849,
+    "bounce_lb": 0.4068,
+    "control": 0.5385,
+    "trades": 52,
+    "net": -0.4821,
+    "net_lb": -1.2793,
+    "net_R": -0.2995
+   },
+   "oos": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.6226,
+    "bounce_lb": 0.4425,
+    "control": 0.7451,
+    "trades": 52,
+    "net": -1.0536,
+    "net_lb": -2.6135,
+    "net_R": -0.3486
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "15m|0.1": {
+   "tf": "15m",
+   "x": 0.1,
+   "train": {
+    "events": 19,
+    "resolved": 19,
+    "bounce": 0.8421,
+    "bounce_lb": 0.5403,
+    "control": 0.9474,
+    "trades": 19,
+    "net": -0.8307,
+    "net_lb": -2.8079,
+    "net_R": -0.0995
+   },
+   "oos": {
+    "events": 21,
+    "resolved": 21,
+    "bounce": 1,
+    "bounce_lb": 0.7508,
+    "control": 0.9524,
+    "trades": 21,
+    "net": -1.0688,
+    "net_lb": -4.5521,
+    "net_R": -0.0301
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "15m|0.25": {
+   "tf": "15m",
+   "x": 0.25,
+   "train": {
+    "events": 19,
+    "resolved": 19,
+    "bounce": 0.7895,
+    "bounce_lb": 0.4868,
+    "control": 0.8421,
+    "trades": 19,
+    "net": -0.518,
+    "net_lb": -2.7103,
+    "net_R": -0.0662
+   },
+   "oos": {
+    "events": 21,
+    "resolved": 21,
+    "bounce": 0.9048,
+    "bounce_lb": 0.626,
+    "control": 0.8,
+    "trades": 21,
+    "net": -0.3856,
+    "net_lb": -4.0805,
+    "net_R": 0.0094
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "15m|0.5": {
+   "tf": "15m",
+   "x": 0.5,
+   "train": {
+    "events": 19,
+    "resolved": 19,
+    "bounce": 0.7368,
+    "bounce_lb": 0.4365,
+    "control": 0.7368,
+    "trades": 19,
+    "net": -1.6391,
+    "net_lb": -4.483,
+    "net_R": -0.1471
+   },
+   "oos": {
+    "events": 21,
+    "resolved": 21,
+    "bounce": 0.9048,
+    "bounce_lb": 0.626,
+    "control": 0.65,
+    "trades": 21,
+    "net": 1.3169,
+    "net_lb": -2.7858,
+    "net_R": 0.0801
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "15m|1": {
+   "tf": "15m",
+   "x": 1,
+   "train": {
+    "events": 19,
+    "resolved": 19,
+    "bounce": 0.5789,
+    "bounce_lb": 0.3011,
+    "control": 0.6316,
+    "trades": 19,
+    "net": -2.2862,
+    "net_lb": -6.324,
+    "net_R": -0.0718
+   },
+   "oos": {
+    "events": 21,
+    "resolved": 20,
+    "bounce": 0.75,
+    "bounce_lb": 0.456,
+    "control": 0.5,
+    "trades": 21,
+    "net": 0.4255,
+    "net_lb": -5.125,
+    "net_R": 0.0741
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1h|0.1": {
+   "tf": "1h",
+   "x": 0.1,
+   "train": {
+    "events": 7,
+    "resolved": 7,
+    "bounce": 1,
+    "bounce_lb": 0.5011,
+    "control": 0.8571,
+    "trades": 5,
+    "net": 1.1572,
+    "net_lb": 0.9699,
+    "net_R": 0.0994
+   },
+   "oos": {
+    "events": 10,
+    "resolved": 10,
+    "bounce": 1,
+    "bounce_lb": 0.5893,
+    "control": 0.9,
+    "trades": 10,
+    "net": 2.2971,
+    "net_lb": 1.8474,
+    "net_R": 0.0965
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1h|0.25": {
+   "tf": "1h",
+   "x": 0.25,
+   "train": {
+    "events": 7,
+    "resolved": 7,
+    "bounce": 1,
+    "bounce_lb": 0.5011,
+    "control": 0.8571,
+    "trades": 5,
+    "net": 2.8929,
+    "net_lb": 2.4247,
+    "net_R": 0.2485
+   },
+   "oos": {
+    "events": 10,
+    "resolved": 10,
+    "bounce": 0.9,
+    "bounce_lb": 0.4828,
+    "control": 0.7,
+    "trades": 10,
+    "net": 1.8034,
+    "net_lb": -6.9592,
+    "net_R": 0.1272
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1h|0.5": {
+   "tf": "1h",
+   "x": 0.5,
+   "train": {
+    "events": 7,
+    "resolved": 7,
+    "bounce": 1,
+    "bounce_lb": 0.5011,
+    "control": 0.5714,
+    "trades": 5,
+    "net": 5.7858,
+    "net_lb": 4.8494,
+    "net_R": 0.4969
+   },
+   "oos": {
+    "events": 10,
+    "resolved": 10,
+    "bounce": 0.7,
+    "bounce_lb": 0.3129,
+    "control": 0.6,
+    "trades": 10,
+    "net": 1.3133,
+    "net_lb": -11.3527,
+    "net_R": 0.0717
+   },
+   "verdict": "UNDERPOWERED"
+  },
+  "1h|1": {
+   "tf": "1h",
+   "x": 1,
+   "train": {
+    "events": 7,
+    "resolved": 7,
+    "bounce": 0.7143,
+    "bounce_lb": 0.2709,
+    "control": 0.4286,
+    "trades": 5,
+    "net": 1.6854,
+    "net_lb": -6.0025,
+    "net_R": -0.0117
+   },
+   "oos": {
+    "events": 10,
+    "resolved": 9,
+    "bounce": 0.5556,
+    "bounce_lb": 0.2021,
+    "control": 0.3,
+    "trades": 10,
+    "net": 3.027,
+    "net_lb": -12.9169,
+    "net_R": 0.1184
+   },
+   "verdict": "UNDERPOWERED"
+  }
+ },
+ "factors": {
+  "3m": {
+   "BIG": {
+    "events": 4677,
+    "resolved": 4677,
+    "bounce": 0.7066,
+    "bounce_lb": 0.6888,
+    "control": 0.7363,
+    "trades": 4633,
+    "net": -1.2293,
+    "net_lb": -1.3306,
+    "net_R": -0.3598
+   },
+   "S1": {
+    "events": 1355,
+    "resolved": 1355,
+    "bounce": 0.7506,
+    "bounce_lb": 0.7183,
+    "control": 0.7789,
+    "trades": 1345,
+    "net": -1.3842,
+    "net_lb": -1.6454,
+    "net_R": -0.2961
+   },
+   "S2": {
+    "events": 514,
+    "resolved": 514,
+    "bounce": 0.7198,
+    "bounce_lb": 0.6649,
+    "control": 0.7867,
+    "trades": 510,
+    "net": -1.4931,
+    "net_lb": -1.8538,
+    "net_R": -0.3928
+   },
+   "S3": {
+    "events": 826,
+    "resolved": 826,
+    "bounce": 0.7131,
+    "bounce_lb": 0.6699,
+    "control": 0.7558,
+    "trades": 815,
+    "net": -1.3515,
+    "net_lb": -1.6343,
+    "net_R": -0.3583
+   },
+   "S4": {
+    "events": 4677,
+    "resolved": 4677,
+    "bounce": 0.7066,
+    "bounce_lb": 0.6888,
+    "control": 0.7363,
+    "trades": 4633,
+    "net": -1.2293,
+    "net_lb": -1.3327,
+    "net_R": -0.3598
+   },
+   "STRONG": {
+    "events": 53,
+    "resolved": 53,
+    "bounce": 0.8113,
+    "bounce_lb": 0.6369,
+    "control": 0.8679,
+    "trades": 52,
+    "net": -1.5618,
+    "net_lb": -2.7154,
+    "net_R": -0.3106
+   }
+  },
+  "15m": {
+   "BIG": {
+    "events": 797,
+    "resolved": 797,
+    "bounce": 0.7742,
+    "bounce_lb": 0.7328,
+    "control": 0.7707,
+    "trades": 791,
+    "net": -0.8611,
+    "net_lb": -1.3984,
+    "net_R": -0.1226
+   },
+   "S1": {
+    "events": 268,
+    "resolved": 268,
+    "bounce": 0.8284,
+    "bounce_lb": 0.7594,
+    "control": 0.8192,
+    "trades": 267,
+    "net": -0.538,
+    "net_lb": -1.5356,
+    "net_R": -0.0628
+   },
+   "S2": {
+    "events": 178,
+    "resolved": 178,
+    "bounce": 0.8202,
+    "bounce_lb": 0.7326,
+    "control": 0.8239,
+    "trades": 177,
+    "net": -0.8444,
+    "net_lb": -1.8041,
+    "net_R": -0.0863
+   },
+   "S3": {
+    "events": 155,
+    "resolved": 155,
+    "bounce": 0.7871,
+    "bounce_lb": 0.6889,
+    "control": 0.8224,
+    "trades": 155,
+    "net": -0.9505,
+    "net_lb": -2.1326,
+    "net_R": -0.1072
+   },
+   "S4": {
+    "events": 797,
+    "resolved": 797,
+    "bounce": 0.7742,
+    "bounce_lb": 0.7328,
+    "control": 0.7707,
+    "trades": 791,
+    "net": -0.8611,
+    "net_lb": -1.4175,
+    "net_R": -0.1226
+   },
+   "STRONG": {
+    "events": 21,
+    "resolved": 21,
+    "bounce": 0.9048,
+    "bounce_lb": 0.626,
+    "control": 0.8,
+    "trades": 21,
+    "net": -0.3856,
+    "net_lb": -3.9432,
+    "net_R": 0.0094
+   }
+  },
+  "1h": {
+   "BIG": {
+    "events": 222,
+    "resolved": 219,
+    "bounce": 0.8174,
+    "bounce_lb": 0.739,
+    "control": 0.7963,
+    "trades": 222,
+    "net": -0.3309,
+    "net_lb": -2.4101,
+    "net_R": -0.0107
+   },
+   "S1": {
+    "events": 81,
+    "resolved": 79,
+    "bounce": 0.8861,
+    "bounce_lb": 0.7591,
+    "control": 0.75,
+    "trades": 81,
+    "net": 1.5772,
+    "net_lb": -1.2052,
+    "net_R": 0.0415
+   },
+   "S2": {
+    "events": 47,
+    "resolved": 45,
+    "bounce": 0.9111,
+    "bounce_lb": 0.7381,
+    "control": 0.7111,
+    "trades": 47,
+    "net": 2.5191,
+    "net_lb": -0.6537,
+    "net_R": 0.0741
+   },
+   "S3": {
+    "events": 60,
+    "resolved": 60,
+    "bounce": 0.7833,
+    "bounce_lb": 0.6177,
+    "control": 0.8966,
+    "trades": 60,
+    "net": -1.4136,
+    "net_lb": -5.7723,
+    "net_R": -0.0202
+   },
+   "S4": {
+    "events": 222,
+    "resolved": 219,
+    "bounce": 0.8174,
+    "bounce_lb": 0.739,
+    "control": 0.7963,
+    "trades": 222,
+    "net": -0.3309,
+    "net_lb": -2.1879,
+    "net_R": -0.0107
+   },
+   "STRONG": {
+    "events": 10,
+    "resolved": 10,
+    "bounce": 0.9,
+    "bounce_lb": 0.4828,
+    "control": 0.7,
+    "trades": 10,
+    "net": 1.8034,
+    "net_lb": -6.8349,
+    "net_R": 0.1272
+   }
+  }
+ },
+ "holding": [],
+ "best_oos_bounce": null,
+ "reached_95": false,
+ "verdict": "STRONG_FVG_DOES_NOT_HOLD"
+}

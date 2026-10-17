@@ -1,0 +1,154 @@
+{
+ "at": "2026-10-17T13:16:59.805Z",
+ "rule": "4h OB, displacement 1.5-2 ATR, first retest, limit at near edge, 1 R",
+ "train": {
+  "n": 109,
+  "bounce": 0.5761,
+  "control": 0.5313,
+  "money_wr": 0.578,
+  "net": 3.282,
+  "net_lb": -0.91
+ },
+ "oos": {
+  "n": 64,
+  "bounce": 0.5577,
+  "control": 0.5088,
+  "money_wr": 0.4844,
+  "net": 1.706,
+  "net_lb": -7.566
+ },
+ "all": {
+  "n": 173,
+  "bounce": 0.5694,
+  "control": 0.5229,
+  "money_wr": 0.5434,
+  "net": 2.699,
+  "net_lb": -1.402
+ },
+ "spread_x1_5": {
+  "n": 171,
+  "bounce": 0.5694,
+  "control": 0.5229,
+  "money_wr": 0.538,
+  "net": 2.676,
+  "net_lb": -1.633
+ },
+ "years": {
+  "2024": {
+   "n": 4,
+   "bounce": 0.75,
+   "control": 0.3333,
+   "money_wr": 0.75,
+   "net": 3.858,
+   "net_lb": -6.774
+  },
+  "2025": {
+   "n": 100,
+   "bounce": 0.5783,
+   "control": 0.5341,
+   "money_wr": 0.58,
+   "net": 3.661,
+   "net_lb": -0.704
+  },
+  "2026": {
+   "n": 69,
+   "bounce": 0.5439,
+   "control": 0.5161,
+   "money_wr": 0.4783,
+   "net": 1.236,
+   "net_lb": -7.652
+  }
+ },
+ "positive_years": "2/2",
+ "neighbours": {
+  "1.5-1.75": {
+   "n": 91,
+   "bounce": 0.6173,
+   "control": 0.5823,
+   "money_wr": 0.6044,
+   "net": 6.072,
+   "net_lb": -0.023
+  },
+  "1.75-2": {
+   "n": 82,
+   "bounce": 0.5079,
+   "control": 0.4595,
+   "money_wr": 0.4756,
+   "net": -1.045,
+   "net_lb": -6.757
+  }
+ },
+ "by_side_era": {
+  "BUY 2013-2021": {
+   "n": 0,
+   "bounce": null,
+   "control": null,
+   "money_wr": null,
+   "net": null,
+   "net_lb": null
+  },
+  "BUY 2022-2026": {
+   "n": 91,
+   "bounce": 0.6447,
+   "control": 0.5375,
+   "money_wr": 0.6264,
+   "net": 5.053,
+   "net_lb": -1.423
+  },
+  "SELL 2013-2021": {
+   "n": 0,
+   "bounce": null,
+   "control": null,
+   "money_wr": null,
+   "net": null,
+   "net_lb": null
+  },
+  "SELL 2022-2026": {
+   "n": 82,
+   "bounce": 0.4853,
+   "control": 0.5068,
+   "money_wr": 0.4512,
+   "net": 0.086,
+   "net_lb": -5.624
+  }
+ },
+ "frontier": {
+  "0.25R": {
+   "n": 173,
+   "wr": 0.8092,
+   "net": 1.645
+  },
+  "0.5R": {
+   "n": 173,
+   "wr": 0.6705,
+   "net": 1.684
+  },
+  "0.75R": {
+   "n": 173,
+   "wr": 0.5896,
+   "net": 1.536
+  },
+  "1R": {
+   "n": 173,
+   "wr": 0.5434,
+   "net": 2.699
+  },
+  "1.5R": {
+   "n": 173,
+   "wr": 0.4798,
+   "net": 5.17
+  },
+  "2R": {
+   "n": 173,
+   "wr": 0.4509,
+   "net": 4.879
+  }
+ },
+ "tests": {
+  "T1_train": false,
+  "T2_years": true,
+  "T3_spread_x1_5": false,
+  "T4_neighbours": false
+ },
+ "verdict": "NOT_CONFIRMED"
+}

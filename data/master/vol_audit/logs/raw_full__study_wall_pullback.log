@@ -1,0 +1,9 @@
+[vol_audit] mode raw · window full · artifacts → data\master\vol_audit\raw_full
+  ⚠ XAUUSD/1m: repaired 1 provably-false print(s): 2025-11-23T22:00(lc)
+1m bars 4,573,711
+L4H|SPLIT4   bubbles 6757 · fill 57.3% (unfilled 2685, wall broke 0) · OOS n 1328 (0.96/d) WR 0.3381 (LB 0.3132) $/t -0.376 [LB -0.547] risk $2.42 reached $4 0.2854 · TRAIN WR 0.1838 $/t -0.597 · SELL -0.547 BUY -0.233 · pre/post -0.569/-0.459 → FAIL
+L4H|T4       bubbles 6757 · fill 57.4% (unfilled 2708, wall broke 0) · OOS n 1341 (0.97/d) WR 0.3348 (LB 0.3101) $/t -0.399 [LB -0.561] risk $2.41 reached $4 0.2834 · TRAIN WR 0.1827 $/t -0.611 · SELL -0.546 BUY -0.277 · pre/post -0.573/-0.491 → REPORTED
+L1H|SPLIT4   bubbles 25077 · fill 57.8% (unfilled 8211, wall broke 0) · OOS n 4577 (3.32/d) WR 0.3336 (LB 0.3201) $/t -0.453 [LB -0.564] risk $2.5 reached $4 0.2816 · TRAIN WR 0.2055 $/t -0.504 · SELL -0.69 BUY -0.269 · pre/post -0.473/-0.491 → FAIL
+L1H|T4       bubbles 25077 · fill 58.1% (unfilled 8525, wall broke 0) · OOS n 4805 (3.48/d) WR 0.3282 (LB 0.3151) $/t -0.479 [LB -0.583] risk $2.48 reached $4 0.2755 · TRAIN WR 0.2037 $/t -0.515 · SELL -0.687 BUY -0.317 · pre/post -0.496/-0.504 → REPORTED
+
+=> PULLBACK LIMIT ($4 then BE): NO_PASS

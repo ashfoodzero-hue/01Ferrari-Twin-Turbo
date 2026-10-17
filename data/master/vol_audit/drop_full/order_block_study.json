@@ -1,0 +1,721 @@
+{
+ "at": "2026-10-17T13:06:03.920Z",
+ "window": "2013-07-21 → 2026-10-09T06:00",
+ "split": "2021-06-26",
+ "rules": {
+  "ob": {
+   "k": 3,
+   "disp": 1.5,
+   "strongDisp": 2.5,
+   "strongVol": 1.5,
+   "volBars": 20
+  },
+  "retest_within_bars": 50,
+  "stop": "far edge ∓ 0.1·ATR",
+  "targets_R": [
+   1,
+   2
+  ],
+  "z": 2.73,
+  "money_alpha": 0.003125,
+  "min_n": 100
+ },
+ "cells": {
+  "5m|ALL|1R": {
+   "tf": "5m",
+   "group": "ALL",
+   "target_R": 1,
+   "train": {
+    "events": 77490,
+    "resolved": 77220,
+    "bounce": 0.4975,
+    "bounce_lb": 0.4926,
+    "control": 0.4989,
+    "trades": 75830,
+    "net": -0.4054,
+    "net_lb": -0.415,
+    "net_R": -0.613,
+    "money_wr": 0.2152,
+    "net_lb_bonf": -0.4186,
+    "avg_risk": 0.98
+   },
+   "oos": {
+    "events": 52105,
+    "resolved": 51963,
+    "bounce": 0.5014,
+    "bounce_lb": 0.4954,
+    "control": 0.4952,
+    "trades": 51609,
+    "net": -0.4758,
+    "net_lb": -0.5101,
+    "net_R": -0.2857,
+    "money_wr": 0.3747,
+    "net_lb_bonf": -0.5204,
+    "avg_risk": 2.5
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|ALL|2R": {
+   "tf": "5m",
+   "group": "ALL",
+   "target_R": 2,
+   "train": {
+    "events": 77490,
+    "resolved": 76866,
+    "bounce": 0.3358,
+    "bounce_lb": 0.3312,
+    "control": 0.3362,
+    "trades": 75830,
+    "net": -0.4076,
+    "net_lb": -0.4195,
+    "net_R": -0.6125,
+    "money_wr": 0.1459,
+    "net_lb_bonf": -0.425,
+    "avg_risk": 0.98
+   },
+   "oos": {
+    "events": 52105,
+    "resolved": 51776,
+    "bounce": 0.332,
+    "bounce_lb": 0.3264,
+    "control": 0.3314,
+    "trades": 51609,
+    "net": -0.489,
+    "net_lb": -0.5345,
+    "net_R": -0.3043,
+    "money_wr": 0.2469,
+    "net_lb_bonf": -0.5509,
+    "avg_risk": 2.5
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|STRONG|1R": {
+   "tf": "5m",
+   "group": "STRONG",
+   "target_R": 1,
+   "train": {
+    "events": 25724,
+    "resolved": 25648,
+    "bounce": 0.498,
+    "bounce_lb": 0.4895,
+    "control": 0.5004,
+    "trades": 25175,
+    "net": -0.4042,
+    "net_lb": -0.4234,
+    "net_R": -0.5833,
+    "money_wr": 0.2277,
+    "net_lb_bonf": -0.4311,
+    "avg_risk": 1.06
+   },
+   "oos": {
+    "events": 15084,
+    "resolved": 15043,
+    "bounce": 0.4925,
+    "bounce_lb": 0.4813,
+    "control": 0.493,
+    "trades": 14941,
+    "net": -0.5136,
+    "net_lb": -0.5861,
+    "net_R": -0.2805,
+    "money_wr": 0.3754,
+    "net_lb_bonf": -0.615,
+    "avg_risk": 2.88
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "5m|STRONG|2R": {
+   "tf": "5m",
+   "group": "STRONG",
+   "target_R": 2,
+   "train": {
+    "events": 25724,
+    "resolved": 25536,
+    "bounce": 0.3379,
+    "bounce_lb": 0.3299,
+    "control": 0.3372,
+    "trades": 25175,
+    "net": -0.395,
+    "net_lb": -0.4209,
+    "net_R": -0.5792,
+    "money_wr": 0.1554,
+    "net_lb_bonf": -0.4296,
+    "avg_risk": 1.06
+   },
+   "oos": {
+    "events": 15084,
+    "resolved": 14996,
+    "bounce": 0.3266,
+    "bounce_lb": 0.3163,
+    "control": 0.3302,
+    "trades": 14941,
+    "net": -0.4879,
+    "net_lb": -0.5904,
+    "net_R": -0.2959,
+    "money_wr": 0.248,
+    "net_lb_bonf": -0.6404,
+    "avg_risk": 2.88
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|ALL|1R": {
+   "tf": "15m",
+   "group": "ALL",
+   "target_R": 1,
+   "train": {
+    "events": 24570,
+    "resolved": 24291,
+    "bounce": 0.5102,
+    "bounce_lb": 0.5014,
+    "control": 0.5045,
+    "trades": 24067,
+    "net": -0.3859,
+    "net_lb": -0.4154,
+    "net_R": -0.3504,
+    "money_wr": 0.3425,
+    "net_lb_bonf": -0.4225,
+    "avg_risk": 1.76
+   },
+   "oos": {
+    "events": 16779,
+    "resolved": 16623,
+    "bounce": 0.4979,
+    "bounce_lb": 0.4873,
+    "control": 0.4996,
+    "trades": 16618,
+    "net": -0.3942,
+    "net_lb": -0.5116,
+    "net_R": -0.1592,
+    "money_wr": 0.4344,
+    "net_lb_bonf": -0.5298,
+    "avg_risk": 4.56
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|ALL|2R": {
+   "tf": "15m",
+   "group": "ALL",
+   "target_R": 2,
+   "train": {
+    "events": 24570,
+    "resolved": 24000,
+    "bounce": 0.3406,
+    "bounce_lb": 0.3323,
+    "control": 0.3348,
+    "trades": 24067,
+    "net": -0.3921,
+    "net_lb": -0.4269,
+    "net_R": -0.3495,
+    "money_wr": 0.2352,
+    "net_lb_bonf": -0.4416,
+    "avg_risk": 1.76
+   },
+   "oos": {
+    "events": 16779,
+    "resolved": 16456,
+    "bounce": 0.3278,
+    "bounce_lb": 0.3179,
+    "control": 0.3315,
+    "trades": 16618,
+    "net": -0.4568,
+    "net_lb": -0.6044,
+    "net_R": -0.175,
+    "money_wr": 0.2907,
+    "net_lb_bonf": -0.6634,
+    "avg_risk": 4.56
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|STRONG|1R": {
+   "tf": "15m",
+   "group": "STRONG",
+   "target_R": 1,
+   "train": {
+    "events": 8934,
+    "resolved": 8817,
+    "bounce": 0.5039,
+    "bounce_lb": 0.4894,
+    "control": 0.4997,
+    "trades": 8755,
+    "net": -0.3662,
+    "net_lb": -0.4149,
+    "net_R": -0.3244,
+    "money_wr": 0.3531,
+    "net_lb_bonf": -0.435,
+    "avg_risk": 1.94
+   },
+   "oos": {
+    "events": 5535,
+    "resolved": 5483,
+    "bounce": 0.4904,
+    "bounce_lb": 0.472,
+    "control": 0.5028,
+    "trades": 5491,
+    "net": -0.3764,
+    "net_lb": -0.589,
+    "net_R": -0.1613,
+    "money_wr": 0.4322,
+    "net_lb_bonf": -0.6614,
+    "avg_risk": 5.24
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "15m|STRONG|2R": {
+   "tf": "15m",
+   "group": "STRONG",
+   "target_R": 2,
+   "train": {
+    "events": 8934,
+    "resolved": 8677,
+    "bounce": 0.3349,
+    "bounce_lb": 0.3212,
+    "control": 0.3351,
+    "trades": 8755,
+    "net": -0.3678,
+    "net_lb": -0.4354,
+    "net_R": -0.3251,
+    "money_wr": 0.2432,
+    "net_lb_bonf": -0.4628,
+    "avg_risk": 1.94
+   },
+   "oos": {
+    "events": 5535,
+    "resolved": 5397,
+    "bounce": 0.327,
+    "bounce_lb": 0.3098,
+    "control": 0.3343,
+    "trades": 5491,
+    "net": -0.2823,
+    "net_lb": -0.5735,
+    "net_R": -0.1541,
+    "money_wr": 0.2983,
+    "net_lb_bonf": -0.6701,
+    "avg_risk": 5.24
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|ALL|1R": {
+   "tf": "1h",
+   "group": "ALL",
+   "target_R": 1,
+   "train": {
+    "events": 5804,
+    "resolved": 5570,
+    "bounce": 0.518,
+    "bounce_lb": 0.4997,
+    "control": 0.4972,
+    "trades": 5706,
+    "net": -0.2601,
+    "net_lb": -0.367,
+    "net_R": -0.1413,
+    "money_wr": 0.4437,
+    "net_lb_bonf": -0.4137,
+    "avg_risk": 3.53
+   },
+   "oos": {
+    "events": 4063,
+    "resolved": 3901,
+    "bounce": 0.4886,
+    "bounce_lb": 0.4668,
+    "control": 0.4942,
+    "trades": 4028,
+    "net": -0.885,
+    "net_lb": -1.2565,
+    "net_R": -0.117,
+    "money_wr": 0.4543,
+    "net_lb_bonf": -1.4436,
+    "avg_risk": 8.75
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|ALL|2R": {
+   "tf": "1h",
+   "group": "ALL",
+   "target_R": 2,
+   "train": {
+    "events": 5804,
+    "resolved": 5258,
+    "bounce": 0.3332,
+    "bounce_lb": 0.3157,
+    "control": 0.3216,
+    "trades": 5706,
+    "net": -0.2555,
+    "net_lb": -0.3992,
+    "net_R": -0.1465,
+    "money_wr": 0.3191,
+    "net_lb_bonf": -0.4416,
+    "avg_risk": 3.53
+   },
+   "oos": {
+    "events": 4063,
+    "resolved": 3744,
+    "bounce": 0.3202,
+    "bounce_lb": 0.2998,
+    "control": 0.3251,
+    "trades": 4028,
+    "net": -0.7738,
+    "net_lb": -1.2676,
+    "net_R": -0.1089,
+    "money_wr": 0.325,
+    "net_lb_bonf": -1.4702,
+    "avg_risk": 8.75
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|STRONG|1R": {
+   "tf": "1h",
+   "group": "STRONG",
+   "target_R": 1,
+   "train": {
+    "events": 2128,
+    "resolved": 2007,
+    "bounce": 0.5122,
+    "bounce_lb": 0.4818,
+    "control": 0.4892,
+    "trades": 2095,
+    "net": -0.2483,
+    "net_lb": -0.4379,
+    "net_R": -0.1257,
+    "money_wr": 0.4501,
+    "net_lb_bonf": -0.5217,
+    "avg_risk": 3.95
+   },
+   "oos": {
+    "events": 1481,
+    "resolved": 1395,
+    "bounce": 0.4659,
+    "bounce_lb": 0.4298,
+    "control": 0.4985,
+    "trades": 1468,
+    "net": -1.0181,
+    "net_lb": -1.7131,
+    "net_R": -0.1481,
+    "money_wr": 0.4401,
+    "net_lb_bonf": -1.9819,
+    "avg_risk": 9.58
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "1h|STRONG|2R": {
+   "tf": "1h",
+   "group": "STRONG",
+   "target_R": 2,
+   "train": {
+    "events": 2128,
+    "resolved": 1844,
+    "bounce": 0.333,
+    "bounce_lb": 0.3037,
+    "control": 0.3053,
+    "trades": 2095,
+    "net": -0.183,
+    "net_lb": -0.4159,
+    "net_R": -0.1224,
+    "money_wr": 0.3379,
+    "net_lb_bonf": -0.5402,
+    "avg_risk": 3.95
+   },
+   "oos": {
+    "events": 1481,
+    "resolved": 1322,
+    "bounce": 0.2995,
+    "bounce_lb": 0.2664,
+    "control": 0.3183,
+    "trades": 1468,
+    "net": -1.1975,
+    "net_lb": -2.0172,
+    "net_R": -0.1424,
+    "money_wr": 0.3215,
+    "net_lb_bonf": -2.3397,
+    "avg_risk": 9.58
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|ALL|1R": {
+   "tf": "4h",
+   "group": "ALL",
+   "target_R": 1,
+   "train": {
+    "events": 1773,
+    "resolved": 1516,
+    "bounce": 0.5112,
+    "bounce_lb": 0.4762,
+    "control": 0.5092,
+    "trades": 1737,
+    "net": -0.3669,
+    "net_lb": -0.6814,
+    "net_R": -0.0943,
+    "money_wr": 0.4646,
+    "net_lb_bonf": -0.8049,
+    "avg_risk": 6.46
+   },
+   "oos": {
+    "events": 1273,
+    "resolved": 1095,
+    "bounce": 0.4995,
+    "bounce_lb": 0.4584,
+    "control": 0.4806,
+    "trades": 1261,
+    "net": -0.3014,
+    "net_lb": -1.3949,
+    "net_R": -0.0579,
+    "money_wr": 0.4782,
+    "net_lb_bonf": -1.7267,
+    "avg_risk": 16.27
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|ALL|2R": {
+   "tf": "4h",
+   "group": "ALL",
+   "target_R": 2,
+   "train": {
+    "events": 1773,
+    "resolved": 1245,
+    "bounce": 0.2876,
+    "bounce_lb": 0.2539,
+    "control": 0.3115,
+    "trades": 1737,
+    "net": -0.4487,
+    "net_lb": -0.8103,
+    "net_R": -0.1052,
+    "money_wr": 0.3777,
+    "net_lb_bonf": -0.9439,
+    "avg_risk": 6.46
+   },
+   "oos": {
+    "events": 1273,
+    "resolved": 924,
+    "bounce": 0.2846,
+    "bounce_lb": 0.246,
+    "control": 0.2878,
+    "trades": 1261,
+    "net": -0.3167,
+    "net_lb": -1.5688,
+    "net_R": -0.0705,
+    "money_wr": 0.3807,
+    "net_lb_bonf": -2.2983,
+    "avg_risk": 16.27
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|STRONG|1R": {
+   "tf": "4h",
+   "group": "STRONG",
+   "target_R": 1,
+   "train": {
+    "events": 572,
+    "resolved": 475,
+    "bounce": 0.5305,
+    "bounce_lb": 0.468,
+    "control": 0.474,
+    "trades": 559,
+    "net": 0.2716,
+    "net_lb": -0.3436,
+    "net_R": -0.0396,
+    "money_wr": 0.4919,
+    "net_lb_bonf": -0.621,
+    "avg_risk": 7.36
+   },
+   "oos": {
+    "events": 446,
+    "resolved": 374,
+    "bounce": 0.4385,
+    "bounce_lb": 0.3703,
+    "control": 0.4902,
+    "trades": 444,
+    "net": -1.9276,
+    "net_lb": -3.9518,
+    "net_R": -0.149,
+    "money_wr": 0.4324,
+    "net_lb_bonf": -4.8414,
+    "avg_risk": 17.07
+   },
+   "verdict": "DOES_NOT_HOLD"
+  },
+  "4h|STRONG|2R": {
+   "tf": "4h",
+   "group": "STRONG",
+   "target_R": 2,
+   "train": {
+    "events": 572,
+    "resolved": 376,
+    "bounce": 0.2899,
+    "bounce_lb": 0.2306,
+    "control": 0.2965,
+    "trades": 559,
+    "net": 0.1367,
+    "net_lb": -0.5645,
+    "net_R": -0.0565,
+    "money_wr": 0.4043,
+    "net_lb_bonf": -0.8834,
+    "avg_risk": 7.36
+   },
+   "oos": {
+    "events": 446,
+    "resolved": 323,
+    "bounce": 0.2415,
+    "bounce_lb": 0.1828,
+    "control": 0.3049,
+    "trades": 444,
+    "net": -1.6778,
+    "net_lb": -3.9999,
+    "net_R": -0.1577,
+    "money_wr": 0.3468,
+    "net_lb_bonf": -4.8376,
+    "avg_risk": 17.07
+   },
+   "verdict": "DOES_NOT_HOLD"
+  }
+ },
+ "diagnostic": {
+  "5m": {
+   "order_blocks": 154323,
+   "by_displacement_1R_oos": {
+    "1.5-2": {
+     "resolved": 22693,
+     "bounce": 0.5073,
+     "control": 0.4929,
+     "money_wr": 0.3735,
+     "net": -0.4524,
+     "trades": 22523
+    },
+    "2-2.5": {
+     "resolved": 14227,
+     "bounce": 0.5014,
+     "control": 0.5012,
+     "money_wr": 0.3758,
+     "net": -0.4731,
+     "trades": 14145
+    },
+    "2.5-3.5": {
+     "resolved": 10997,
+     "bounce": 0.5001,
+     "control": 0.4919,
+     "money_wr": 0.3794,
+     "net": -0.4986,
+     "trades": 10919
+    },
+    "3.5-+": {
+     "resolved": 4046,
+     "bounce": 0.4716,
+     "control": 0.4959,
+     "money_wr": 0.3645,
+     "net": -0.5544,
+     "trades": 4022
+    }
+   }
+  },
+  "15m": {
+   "order_blocks": 49770,
+   "by_displacement_1R_oos": {
+    "1.5-2": {
+     "resolved": 6892,
+     "bounce": 0.5067,
+     "control": 0.4924,
+     "money_wr": 0.4364,
+     "net": -0.4431,
+     "trades": 6892
+    },
+    "2-2.5": {
+     "resolved": 4248,
+     "bounce": 0.4932,
+     "control": 0.5075,
+     "money_wr": 0.434,
+     "net": -0.3377,
+     "trades": 4235
+    },
+    "2.5-3.5": {
+     "resolved": 3747,
+     "bounce": 0.4887,
+     "control": 0.507,
+     "money_wr": 0.4317,
+     "net": -0.4667,
+     "trades": 3748
+    },
+    "3.5-+": {
+     "resolved": 1736,
+     "bounce": 0.4942,
+     "control": 0.4936,
+     "money_wr": 0.4332,
+     "net": -0.1821,
+     "trades": 1743
+    }
+   }
+  },
+  "1h": {
+   "order_blocks": 12619,
+   "by_displacement_1R_oos": {
+    "1.5-2": {
+     "resolved": 1464,
+     "bounce": 0.5,
+     "control": 0.4941,
+     "money_wr": 0.4617,
+     "net": -0.588,
+     "trades": 1490
+    },
+    "2-2.5": {
+     "resolved": 1042,
+     "bounce": 0.5029,
+     "control": 0.4883,
+     "money_wr": 0.4636,
+     "net": -1.1159,
+     "trades": 1070
+    },
+    "2.5-3.5": {
+     "resolved": 919,
+     "bounce": 0.4875,
+     "control": 0.4922,
+     "money_wr": 0.4603,
+     "net": -0.8021,
+     "trades": 956
+    },
+    "3.5-+": {
+     "resolved": 476,
+     "bounce": 0.4244,
+     "control": 0.5105,
+     "money_wr": 0.4023,
+     "net": -1.4213,
+     "trades": 512
+    }
+   }
+  },
+  "4h": {
+   "order_blocks": 3801,
+   "by_displacement_1R_oos": {
+    "1.5-2": {
+     "resolved": 431,
+     "bounce": 0.5638,
+     "control": 0.4953,
+     "money_wr": 0.5215,
+     "net": 1.188,
+     "trades": 489
+    },
+    "2-2.5": {
+     "resolved": 290,
+     "bounce": 0.4828,
+     "control": 0.4453,
+     "money_wr": 0.4756,
+     "net": -0.3205,
+     "trades": 328
+    },
+    "2.5-3.5": {
+     "resolved": 281,
+     "bounce": 0.4591,
+     "control": 0.4783,
+     "money_wr": 0.4448,
+     "net": -1.0811,
+     "trades": 335
+    },
+    "3.5-+": {
+     "resolved": 93,
+     "bounce": 0.3763,
+     "control": 0.5309,
+     "money_wr": 0.3945,
+     "net": -4.5293,
+     "trades": 109
+    }
+   }
+  }
+ },
+ "holding": [],
+ "verdict": "ORDER_BLOCKS_DO_NOT_HOLD"
+}

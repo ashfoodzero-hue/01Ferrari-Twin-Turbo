@@ -1,0 +1,186 @@
+{
+ "at": "2026-10-17T13:18:41.569Z",
+ "tape_to": "2026-10-09T06:00:00.000Z",
+ "rules": {
+  "profile": "spot tick activity, prior full day",
+  "bin_atr1d": 0.02,
+  "tol_atr1d": 0.25,
+  "min_n": 100
+ },
+ "primary": {
+  "arm": "PRIMARY Matrix with WTI (2y)",
+  "trades": 3398,
+  "all": {
+   "oos": {
+    "n": 1327,
+    "wr": 0.2007,
+    "wr_lb": 0.179,
+    "net": -0.9078,
+    "net_lb": -1.7936,
+    "net_ub": 0.0152
+   },
+   "train": {
+    "n": 2071,
+    "wr": 0.1858,
+    "wr_lb": 0.169,
+    "net": -0.2699,
+    "net_lb": -0.6164,
+    "net_ub": 0.0931
+   }
+  },
+  "filters": {
+   "AT_VAL": {
+    "oos": {
+     "n": 295,
+     "wr": 0.1852,
+     "wr_lb": 0.1434,
+     "net": -0.8302,
+     "net_lb": -2.2467,
+     "net_ub": 0.7799
+    },
+    "train": {
+     "n": 312,
+     "wr": 0.1797,
+     "wr_lb": 0.1401,
+     "net": -0.733,
+     "net_lb": -1.5953,
+     "net_ub": 0.0877
+    },
+    "lift_wr": -0.0155,
+    "lift_net": 0.0776,
+    "verdict": "FAIL"
+   },
+   "OUTSIDE_VAL": {
+    "oos": {
+     "n": 340,
+     "wr": 0.198,
+     "wr_lb": 0.1571,
+     "net": -0.8623,
+     "net_lb": -2.1949,
+     "net_ub": 0.6327
+    },
+    "train": {
+     "n": 523,
+     "wr": 0.2093,
+     "wr_lb": 0.1751,
+     "net": 0.0249,
+     "net_lb": -0.6527,
+     "net_ub": 0.7032
+    },
+    "lift_wr": -0.0027,
+    "lift_net": 0.0455,
+    "verdict": "FAIL"
+   },
+   "POC_TARGET": {
+    "oos": {
+     "n": 588,
+     "wr": 0.2015,
+     "wr_lb": 0.1695,
+     "net": -0.8458,
+     "net_lb": -2.4919,
+     "net_ub": 0.8128
+    },
+    "train": {
+     "n": 654,
+     "wr": 0.2037,
+     "wr_lb": 0.1733,
+     "net": 0.1021,
+     "net_lb": -0.6001,
+     "net_ub": 0.8637
+    },
+    "lift_wr": 0.0008,
+    "lift_net": 0.062,
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "report": {
+  "arm": "REPORT Matrix without WTI (13y)",
+  "trades": 4355,
+  "all": {
+   "oos": {
+    "n": 1823,
+    "wr": 0.185,
+    "wr_lb": 0.167,
+    "net": -1.4713,
+    "net_lb": -2.1856,
+    "net_ub": -0.7406
+   },
+   "train": {
+    "n": 2532,
+    "wr": 0.1943,
+    "wr_lb": 0.1787,
+    "net": -0.3286,
+    "net_lb": -0.7783,
+    "net_ub": 0.0935
+   }
+  },
+  "filters": {
+   "AT_VAL": {
+    "oos": {
+     "n": 414,
+     "wr": 0.1636,
+     "wr_lb": 0.13,
+     "net": -1.9376,
+     "net_lb": -3.1268,
+     "net_ub": -0.7361
+    },
+    "train": {
+     "n": 437,
+     "wr": 0.203,
+     "wr_lb": 0.1666,
+     "net": -0.0947,
+     "net_lb": -0.8835,
+     "net_ub": 0.683
+    },
+    "lift_wr": -0.0214,
+    "lift_net": -0.4663,
+    "verdict": "FAIL"
+   },
+   "OUTSIDE_VAL": {
+    "oos": {
+     "n": 402,
+     "wr": 0.1671,
+     "wr_lb": 0.1318,
+     "net": -2.1147,
+     "net_lb": -3.4342,
+     "net_ub": -0.7975
+    },
+    "train": {
+     "n": 755,
+     "wr": 0.2106,
+     "wr_lb": 0.1816,
+     "net": 0.0504,
+     "net_lb": -0.532,
+     "net_ub": 0.7099
+    },
+    "lift_wr": -0.0179,
+    "lift_net": -0.6434,
+    "verdict": "FAIL"
+   },
+   "POC_TARGET": {
+    "oos": {
+     "n": 846,
+     "wr": 0.1961,
+     "wr_lb": 0.1696,
+     "net": -1.0042,
+     "net_lb": -2.1124,
+     "net_ub": 0.244
+    },
+    "train": {
+     "n": 874,
+     "wr": 0.2208,
+     "wr_lb": 0.1934,
+     "net": 0.0453,
+     "net_lb": -0.8688,
+     "net_ub": 1.028
+    },
+    "lift_wr": 0.0111,
+    "lift_net": 0.4671,
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "verdict": "PROFILE_DOES_NOT_MAKE_THE_MATRIX_PROFITABLE",
+ "passing": []
+}
