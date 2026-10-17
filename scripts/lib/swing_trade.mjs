@@ -23,7 +23,7 @@ export function liveSignals({ M, R, CA, swA, CX, swX }) {
     const i0 = R.at(st.t0), i1 = R.at(tX)
     const ext = s.type === 'L' ? R.minLow(i0, i1) : R.maxHigh(i0, i1)
     if (Math.abs(ext - s.px) > 1e-9) continue   // P must be the anchor's current running extreme
-    out.push({ t: tX, side: s.type === 'L' ? 'long' : 'short', P: s.px }) }
+    out.push({ t: tX, side: s.type === 'L' ? 'long' : 'short', P: s.px, tP: CX[s.i].t }) }   // tP = the extreme candle open (Phase 4C structure lookup)
   return out.sort((a, b) => a.t - b.t)
 }
 /**

@@ -1037,3 +1037,9 @@ without duplications … only use the real Win results, and ignore the rest."
   - **The sign is right but late.** The understanding stands as context; there is no entry edge with a stop beyond the extreme.
   - 1D described only (n 40-53, longs +0.24 R).
   - **Nothing wired live.**
+- **(cf) 2026-10-17 — SWING STUDY PHASE 4C: ladder trade with a TIGHTER stop (spec `docs/SWING_TIGHTSTOP_SPEC.md`, `study_swing_tightstop.mjs` → `swing_tightstop.json` + every trade; smoke 2/2 incl. exact reproduction of all 51,403 Phase 4B trades). Book §5G.**
+  - **0 / 24 pass.**
+  - **S2 (1× lower-TF ATR):** noise stops; 15m WR 27-42 %, −0.19 to −0.30 R (the far stop on the same signals: −0.07).
+  - **S1 (confirmed higher low):** rarely exists in time (1H 70-79 trades, 4H 2-7), and is barely tighter.
+  - **Study verdict:** the ladder tells WHICH swing is real (60-83 %), but it is not tradeable with positive R after costs. Use it as context only.
+  - 1D S2 E2 +0.27 R (n 49) is described only.

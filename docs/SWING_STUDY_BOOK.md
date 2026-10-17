@@ -45,6 +45,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "yes write the rules for combining Phase 1 and Phase 3"; then "Yes, run it as written" | Phase 3B run and recorded (§5C) |
 | 2026-10-17 | "yes write the rules for silver as extra evidence"; then "Yes, run it as written" | Phase 3C run and recorded (§5D) |
 | 2026-10-17 | "yes write the Phase 4 rules"; then "Yes, run it as written" | Phase 4A understanding written (§5E); Phase 4B trade test run (§5F) |
+| 2026-10-17 | "yes write the rules for the tighter stop version"; then "Yes, run it as written" | Phase 4C run and recorded (§5G) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -672,6 +673,48 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 4. **Nothing is wired into the live app.** Any variant (a stop at the lower-timeframe structure instead of beyond the extreme, an earlier ladder step, a trailing exit) would be a NEW hypothesis needing its own pre-registered rules.
 
 
+## 5G. Phase 4C: the ladder trade with a TIGHTER stop (`docs/SWING_TIGHTSTOP_SPEC.md`; results `data/master/swing_tightstop.json`; every trade `docs/swing_book/phase4c_all_trades.csv`)
+
+### 5G.1 Rules (pre-registered, shown, approved 2026-10-17: "Yes, run it as written")
+
+- **Unchanged from Phase 4B:** the live trigger, entry, fills, time stop and random control.
+- **S1, structure stop:** below the latest higher low on Y (two steps below: 3m / 15m / 2H / 6H) that was CONFIRMED by the signal time, came after the extreme and lies above it, minus 0.10 × ATR14(Y). No such low → no trade.
+- **S2, volatility stop:** entry ∓ 1.0 × ATR14(X), where X is one step below.
+- **Exits:** E1 = 1R, E2 = the extreme ± 3 × ATR14(anchor).
+- **Cells:** 24, K = 24.
+- **Head-to-head:** every trade is also simulated with Phase 4B's stop on the same signal.
+- **Smoke:** `smoke_swing_tightstop` 2/2, including CONSISTENCY: with Phase 4B's stop, the engine reproduces all 51,403 Phase 4B trades exactly, cell for cell.
+
+### 5G.2 Results (OOS; TRAIN mean R in brackets): **0 of 24 cells pass**
+
+| Cell | n (per day) | WR | mean R | median risk (anchor ATR) | reward : risk | same signals with the 4B stop | verdict |
+|---|---|---|---|---|---|---|---|
+| 15m long S1 E1 / E2 | 205 / 205 (0.15) | 48.8 / 51.7 % | −0.016 / −0.034 (−0.23 / −0.25) | 1.54 | 1.0 / 0.85 | −0.037 / −0.033 | FAIL |
+| 15m short S1 E1 / E2 | 274 / 275 (0.20) | 48.2 / 44.0 % | −0.053 / −0.122 (−0.25 / −0.31) | 1.32 | 1.0 / 1.16 | −0.091 / −0.160 | FAIL |
+| 15m long S2 E1 / E2 | 4,705 / 4,429 (3.4 / 3.2) | 37.7 / 29.0 % | **−0.291 / −0.298** (−0.56 / −0.58) | 0.60 | 1.0 / 1.88 | −0.077 / −0.076 | FAIL |
+| 15m short S2 E1 / E2 | 5,002 / 4,809 (3.6 / 3.5) | 42.1 / 26.8 % | **−0.187 / −0.242** (−0.56 / −0.58) | 0.58 | 1.0 / 2.35 | −0.073 / −0.094 | FAIL |
+| 1H long S1 E1 / E2 | 74 / 70 | 52.7 / 61.4 % | −0.008 / −0.070 | 1.88 / 1.79 | 1.0 / 0.51 | +0.036 / −0.044 | described only (n < 100) |
+| 1H short S1 E1 / E2 | 79 / 79 | 46.8 / 58.2 % | −0.062 / −0.008 | 1.58 | 1.0 / 0.65 | +0.039 / −0.004 | described only |
+| 1H long S2 E1 / E2 | 987 / 931 (0.7) | 46.1 / 44.8 % | −0.106 / −0.080 (−0.24 / −0.25) | 0.71 | 1.0 / 1.20 | +0.023 / −0.003 | FAIL |
+| 1H short S2 E1 / E2 | 1,063 / 1,018 (0.75) | 44.4 / 37.6 % | −0.131 / −0.171 (−0.23 / −0.26) | 0.70 | 1.0 / 1.47 | −0.063 / −0.061 | FAIL |
+| 4H S1 (all four) | 2-7 | — | — | 1.9-2.3 | — | — | described only (structure almost never exists in time) |
+| 4H long S2 E1 / E2 | 207 / 183 (0.15) | 49.3 / 63.4 % | −0.027 / −0.034 (−0.12 / −0.13) | 0.85 | 1.0 / 0.60 | +0.111 / −0.002 | FAIL |
+| 4H short S2 E1 / E2 | 206 / 177 | 45.6 / 54.8 % | −0.100 / −0.131 | 0.86 | 1.0 / 0.76 | −0.072 / −0.086 | FAIL |
+| 1D S2 (four) | 49-60 | 37-55 % | long E2 +0.267, short E2 +0.160 (TRAIN +0.12 / −0.14) | 0.54-0.57 | 1.0 / 2.4-2.5 | — | described only |
+
+### 5G.3 What Phase 4C means
+
+1. **A tighter stop makes the ladder trade WORSE, not better.**
+   - The volatility stop (about 0.6-0.85 anchor ATR) is hit by normal noise: the 15m WR falls to 27-42 % and R to −0.19 to −0.30.
+   - The same signals with the far stop lose only −0.07.
+2. **The structure stop barely exists in time.** At the moment the one-step-below timeframe confirms, the timeframe two steps below has usually not yet CONFIRMED a higher low (1H: 70-79 trades over 5 years; 4H: 2-7). When it exists, it is only slightly tighter (1.3-1.9 ATR).
+3. **Combined with Phase 4B:** the ladder sign is a reliable CONTEXT sign (which swing is real) but not an entry edge:
+   - with the stop beyond the extreme: right but late (§5F);
+   - with a tighter stop: stopped out by noise.
+4. **Only 1D S2 E2 shows positive R** (+0.27 longs, n 49; TRAIN +0.12): described only. It stays on the list to re-test with more history (observation 28).
+5. **Nothing is wired live.**
+
+
 ## 6. Observations log (small details, kept even when untested)
 
 1. **Swings are fractal in ATR units.** The median swing is 5.1-5.7 ATR and confirms 6-7 candles after the extreme on EVERY timeframe from 1m to 1W. The same "shape" repeats at every scale. (Phase 1.)
@@ -719,6 +762,13 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 26. **The ladder sign arrives after most of the move.** At the one-step-below confirmation, price is already 1.8-2.4 anchor ATRs from the extreme (15m-4H). The stop beyond the extreme is therefore far, and the reward left to the "real" level is 0.22-0.65 R. (Phase 4B, measured.)
 27. **A 76-80 % win rate can be worth 0 R.** 4H E2: wins about +0.23 R, losses about −0.90 R; breakeven needs 80 %. Always judge by R after costs. (Phase 4B; see the standing memory "WR is a price".)
 28. **The 1D trades look positive** (OOS mean R +0.24-0.26 on longs, PF 1.7-2.0), but on 40-48 trades with TRAIN about 0, so described only. A candidate to re-check as our own history grows. (Phase 4B.)
+
+29. **Tight stops near a fresh swing are noise traps.** A 1× lower-timeframe-ATR stop (about 0.6-0.85 anchor ATR) gets hit before the move most of the time (15m WR 27-42 %). The swing's normal wiggle is larger than that. (Phase 4C.)
+30. **Structure arrives later than the ladder.** When the one-step-below timeframe confirms, a CONFIRMED higher low on the timeframe below it usually does not exist yet. "Stop under the higher low" is rarely available at the ladder moment. (Phase 4C.)
+31. **The swing study's verdict (Phases 1-4C):**
+    - you can learn WHICH swing is real (the ladder: 60-83 %, hours early);
+    - you cannot trade that knowledge with positive R after costs, with the stop beyond the extreme (too late) or with a tighter stop (noise).
+    - Use the ladder as context / confirmation, not as an entry. (Phase 4C.)
 
 ## 7. Open questions (for later phases)
 
@@ -769,5 +819,8 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 | Phase 4 rules | `docs/SWING_TRADE_SPEC.md` |
 | Phase 4B results | `data/master/swing_trade_atlas.json` |
 | Phase 4B every trade | `docs/swing_book/phase4_all_trades.csv` (also `data/master/swing_trades.csv`) |
+| Phase 4C rules | `docs/SWING_TIGHTSTOP_SPEC.md` |
+| Phase 4C results | `data/master/swing_tightstop.json` |
+| Phase 4C every trade | `docs/swing_book/phase4c_all_trades.csv` (also `data/master/swing_tightstop_trades.csv`) |
 | Phase 2 complete tables | `docs/swing_book/phase2/*.md`, `docs/swing_book/phase2_all_rows.csv` |
 | Project log | `docs/MASTER_DOCUMENT.md` §7, entries (bs)-(bz) |
