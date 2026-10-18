@@ -31,7 +31,24 @@ const gridStart = (t, ms) => { const off = nyOffsetMs(t), local = t + off; retur
  *  (Christmas, New Year, Good Friday: 1-2 minutes each; TradingView has no candle and does NOT count them for 2D/3D).
  *  Drops break minutes and every trading date with fewer than MIN_SESSION_MINUTES minutes. Returns { bars, dropped }. */
 export const MIN_SESSION_MINUTES = 60
-export function cleanForTv(m1, { realVolume = false, keepBreakHour = false } = {}) {   // keepBreakHour: GLD (US extended hours trade 17:00-18:00 New York)
+// REOPEN CLAMP (2026-10-18; Ashraf: "Measure 2 rules, keep best"). At the 18:00 New York reopen the bid spread blows out for a few minutes and
+// Polygon's bid prints dip / spike (e.g. 2026-03-26 22:01Z low 4297.44 vs TradingView 4375). Measured vs TradingView on 1 year of reopen candles,
+// > $2 off: 15m 123/226 as stored → 39 clamped (31 dropped); 1H 115 → 39 (39); 4H 99 → 38 (38); 5m 50/75 → 37 (dropping deletes all 75
+// candles). Rule kept: the minutes 18:00-18:04 NY are CLAMPED to the low / high range of the next 10 non-reopen minutes (within 16 min).
+// Uses later minutes → TradingView-style STUDY candles only (opt in: reopenClamp: true). The live signal feed (loadBars) stays raw = causal.
+const NY_HM = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+const reopenMinute = (t) => { const p = NY_HM.formatToParts(new Date(t)); const h = +p.find((x) => x.type === 'hour').value % 24, m = +p.find((x) => x.type === 'minute').value; return h === 18 && m < 5 }
+function clampReopen(bars) {
+  let n = 0
+  for (let i = 0; i < bars.length; i++) { const b = bars[i]; if (!reopenMinute(b.t)) continue
+    let lo = Infinity, hi = -Infinity, k = 0
+    for (let j = i + 1; j < bars.length && bars[j].t < b.t + 16 * 60000 && k < 10; j++) { if (reopenMinute(bars[j].t)) continue; lo = Math.min(lo, bars[j].l); hi = Math.max(hi, bars[j].h); k++ }
+    if (!k) continue
+    const cl = (x) => Math.min(hi, Math.max(lo, x)), o = cl(b.o), c = cl(b.c), h = Math.max(cl(b.h), o, c), l = Math.min(cl(b.l), o, c)
+    if (o !== b.o || c !== b.c || h !== b.h || l !== b.l) { bars[i] = { ...b, o, h, l, c }; n++ } }
+  return n
+}
+export function cleanForTv(m1, { realVolume = false, keepBreakHour = false, reopenClamp = false } = {}) {   // keepBreakHour: GLD (US extended hours trade 17:00-18:00 New York)
   const nyHour = (t) => { const local = t + nyOffsetMs(t); return Math.floor((local % DAY + DAY) % DAY / H) }
   // NO WEEKEND SESSIONS (2026-10-18, audit_timeframes.mjs): a minute whose trading date is a Saturday or Sunday belongs to no TradingView candle
   // (Polygon prints Sunday-afternoon quotes before the 18:00 New York open on some weeks; GLD trades Friday 18:00-20:00 ET). Kept, they formed
@@ -45,7 +62,8 @@ export function cleanForTv(m1, { realVolume = false, keepBreakHour = false } = {
   // as volume. Real volume = GOLD_FUT (Polygon CME) / Databento footprints / GLD — 2024-10 onward only (Ashraf: no purchase for older years).
   // realVolume: true ONLY for exchange series (GOLD_FUT, SILVER_FUT, WTI, GLD) — keeps their real `v` and contract `tk`.
   const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES).map((b) => realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c })
-  return { bars, dropped: { weekend_minutes: weekendMinutes, break_minutes: noWeekend.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
+  const reopenClamped = reopenClamp ? clampReopen(bars) : 0
+  return { bars, dropped: { reopen_clamped: reopenClamped, weekend_minutes: weekendMinutes, break_minutes: noWeekend.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
 }
 
 /** The TradingView candle OPEN (UTC ms) of the `tf` candle that holds minute t — the ONE timing rule (candles, footprints, everything).

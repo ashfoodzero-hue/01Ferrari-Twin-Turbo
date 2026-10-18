@@ -16,7 +16,7 @@ import { TFS, cleanForTv, buildCandles } from '../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { zigzag } from '../src/master/swings.js'
 
-const M = cleanForTv((await loadBars('XAUUSD', '1m', { from: HISTORY_CONTINUOUS_FROM })).bars).bars, holes = findHoles(M)
+const M = cleanForTv((await loadBars('XAUUSD', '1m', { from: HISTORY_CONTINUOUS_FROM })).bars, { reopenClamp: true }).bars, holes = findHoles(M)   // reopen clamp (nyCandles, measured)
 const LAST = M.at(-1).t, FROM = LAST - 365 * 86400000, K = 3
 const dir = path.join(TURBO.root, 'docs', 'swing_book', 'xau_1y_swings'); fs.mkdirSync(dir, { recursive: true })
 const iso = (t) => new Date(t).toISOString().replace('.000Z', 'Z')

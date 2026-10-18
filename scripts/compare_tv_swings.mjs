@@ -19,7 +19,7 @@ import { zigzag } from '../src/master/swings.js'
 
 const TV = JSON.parse(fs.readFileSync(process.argv[2], 'utf8')).res
 const RES = { '1m': '1', '3m': '3', '5m': '5', '15m': '15', '30m': '30', '1H': '60', '2H': '120', '3H': '180', '4H': '240', '6H': '360', '9H': '540', '1D': '1D', '2D': '2D', '3D': '3D', '1W': '1W', '1M': '1M' }
-const M = cleanForTv((await loadBars('XAUUSD', '1m', { from: HISTORY_CONTINUOUS_FROM })).bars).bars, holes = findHoles(M), LAST = M.at(-1).t, FROM = LAST - 365 * 86400000
+const M = cleanForTv((await loadBars('XAUUSD', '1m', { from: HISTORY_CONTINUOUS_FROM })).bars, { reopenClamp: true }).bars, holes = findHoles(M), LAST = M.at(-1).t, FROM = LAST - 365 * 86400000
 const med = (v) => (v.length ? v.slice().sort((a, b) => a - b)[v.length >> 1] : null), p95 = (v) => (v.length ? v.slice().sort((a, b) => a - b)[Math.floor(0.95 * (v.length - 1))] : null)
 const out = { at: new Date().toISOString(), window: [new Date(FROM).toISOString(), new Date(LAST).toISOString()], tf: {} }
 for (const tf of TFS) {
