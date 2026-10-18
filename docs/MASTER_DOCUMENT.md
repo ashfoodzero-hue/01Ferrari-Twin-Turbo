@@ -1116,3 +1116,16 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Bug fixed:** `verify_database` window was hard-coded (12-16 Oct); it is now rolling to the last market close.
   - **Feed facts:** spot real-time ticks; futures 10-min-delayed 1m bars (plan), context only.
   - **Smokes:** data_health 14/14 (+ pre-open schedule + verdict), recorder 5/5 (+ revisions).
+- **(cl) 2026-10-18 — EVERY TIMEFRAME BUILT PERFECTLY: full-history audit + 3 history fixes (Ashraf: "confirm … our history for each time frame is built perfectly"; then "Measure 2020 first"). Details: `docs/DATA_CONTRACT.md` §10.**
+  - **`audit_timeframes.mjs`:** 12 series × 16 TradingView timeframes, independent regroup + live-loader parity, self-tested. ✅ all pass after the fixes.
+  - **Fix 1, repair at 1 minute only:** the coarse-candle repair had erased the real 2017-07-06 silver flash crash. XAU unchanged.
+  - **Fix 2, Polygon's 2020-11-15 → 12-31 New-York-local stamps (+5 h, `sourceQuirks.js`):**
+    - Proven by structure, by our store = Polygon, and by TradingView daily ($3.32 → $0.60 vs controls $0.27-0.75).
+    - Raw switch `TWIN_RAW_POLYGON_TIMES=1`.
+  - **Fix 3, weekend-dated minutes dropped in `cleanForTv`** (counted).
+  - **Measured effect on earlier results:**
+    - IMPULSE_CONT TRAIN net/t −0.1964 → −0.2977 (OOS = live label unchanged).
+    - Level Radar (superseded) 166 / 9,124 candidates differ.
+    - Both reproduce exactly on the raw stamps; their smokes now certify that.
+  - **New tools:** `smoke_source_quirks` 4/4; TradingView daily reference `data/master/tv_daily_reference_2018_2026.json` (via `scripts/measure_tv_daily.cjs`, chart restored).
+  - **Live check (market closed):** pre-open READY 15/15 · store = Polygon on 11 series · stream 8/8 · TradingView anchors XAU / XAG 17/17.

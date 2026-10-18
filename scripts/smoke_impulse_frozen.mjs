@@ -9,6 +9,10 @@ import path from 'node:path'
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { TURBO } from '../src/core/paths.js'
+// The frozen artifact was computed on Polygon's RAW stamps, before the 2026-10-18 sourceQuirks fix (2020-11-15 → 12-31 New-York-local stamps).
+// MEASURED: with raw stamps every number reproduces exactly; with the fix only TRAIN moves (net/t −0.1964 → −0.2977, per_day 0.3087 → 0.3097),
+// OOS is unchanged. So this check replays the raw stamps — it certifies the code, not the corrected history (MASTER_DOCUMENT §7 (cl)).
+process.env.TWIN_RAW_POLYGON_TIMES = '1'
 
 let n = 0
 const ok = (name, fn) => { try { fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }

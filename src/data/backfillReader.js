@@ -18,6 +18,7 @@ import readline from 'node:readline'
 import { canonTf, normalizeBar, isSaneBar, sortBars, repairBadPrints, repairStream } from './bars.js'   // repairBadPrints: the array form (tests / external callers)
 import { refHistoryFile, correctionsFile } from '../core/paths.js'
 import { loadCorrections, applyCorrection } from './corrections.js'
+import { quirksFor, fixTime } from './sourceQuirks.js'
 
 /** Resolve the first existing candidate file for (symbol, tf). Throws if none. */
 export function resolveHistoryFile(symbol, tf) {
@@ -137,6 +138,7 @@ export async function* streamBars(symbol, tf, { from = -Infinity, to = Infinity,
   }
   const file = resolveHistoryFile(symbol, tf)
   const corr = loadCorrections(correctionsFile(symbol))          // Polygon's re-issued minutes supersede the stored ones (corrections.js)
+  const qs = quirksFor(symbol)                                    // measured Polygon timestamp defects (sourceQuirks.js) — fixed at read time
   const start = Number.isFinite(from) ? seekOffset(file, from - SEEK_MARGIN_MS) : 0
   const rl = readline.createInterface({
     input: fs.createReadStream(file, { encoding: 'utf8', start }),
@@ -150,6 +152,7 @@ export async function* streamBars(symbol, tf, { from = -Infinity, to = Infinity,
     if (fixed === null) continue                                   // the minute was deleted by Polygon (a `deleted` correction line)
     const b = normalizeBar(fixed)
     if (!b || !isSaneBar(b)) continue
+    if (qs.length) { const t2 = fixTime(b.t, qs); if (t2 !== b.t) { b.t = t2; b.quirk = 'ny-local-2020' } }   // sourceQuirks.js (measured)
     if (b.t < from || b.t > to) continue
     yield b
   }

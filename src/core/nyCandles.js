@@ -33,14 +33,19 @@ const gridStart = (t, ms) => { const off = nyOffsetMs(t), local = t + off; retur
 export const MIN_SESSION_MINUTES = 60
 export function cleanForTv(m1, { realVolume = false, keepBreakHour = false } = {}) {   // keepBreakHour: GLD (US extended hours trade 17:00-18:00 New York)
   const nyHour = (t) => { const local = t + nyOffsetMs(t); return Math.floor((local % DAY + DAY) % DAY / H) }
-  const kept = keepBreakHour ? m1.slice() : m1.filter((b) => nyHour(b.t) !== 17), per = new Map()
+  // NO WEEKEND SESSIONS (2026-10-18, audit_timeframes.mjs): a minute whose trading date is a Saturday or Sunday belongs to no TradingView candle
+  // (Polygon prints Sunday-afternoon quotes before the 18:00 New York open on some weeks; GLD trades Friday 18:00-20:00 ET). Kept, they formed
+  // 1M / 3H / 4H / 6H candles outside their own window (USDCAD, USDCHF, GLD). Dropped and counted (dropped.weekend_minutes).
+  const wkd = (t) => { const d = new Date(tradingDate(t)).getUTCDay(); return d === 0 || d === 6 }
+  const noWeekend = m1.filter((b) => !wkd(b.t)), weekendMinutes = m1.length - noWeekend.length
+  const kept = keepBreakHour ? noWeekend : noWeekend.filter((b) => nyHour(b.t) !== 17), per = new Map()
   for (const b of kept) { const d = tradingDate(b.t); per.set(d, (per.get(d) || 0) + 1) }
   // SPOT `v` IS NOT VOLUME (audit 2026-10-17): it is Polygon's quote/tick count and Polygon's own spot-gold quote feed thinned ~100× in
   // 2021-2025 (14:00-15:00 UTC: 18-35 k quotes/h in 2014-19, 150-200 in 2021-25, 12.7 k in 2026). It is DROPPED here so no study can read it
   // as volume. Real volume = GOLD_FUT (Polygon CME) / Databento footprints / GLD — 2024-10 onward only (Ashraf: no purchase for older years).
   // realVolume: true ONLY for exchange series (GOLD_FUT, SILVER_FUT, WTI, GLD) — keeps their real `v` and contract `tk`.
   const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES).map((b) => realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c })
-  return { bars, dropped: { break_minutes: m1.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
+  return { bars, dropped: { weekend_minutes: weekendMinutes, break_minutes: noWeekend.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
 }
 
 /** The TradingView candle OPEN (UTC ms) of the `tf` candle that holds minute t — the ONE timing rule (candles, footprints, everything).

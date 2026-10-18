@@ -9,6 +9,10 @@ import path from 'node:path'
 import { loadBars } from '../src/data/backfillReader.js'
 import { TURBO, HISTORY_CONTINUOUS_FROM } from '../src/core/paths.js'
 import { buildRadar, decisionAt, RADAR } from '../src/master/levelRadar.js'
+// The study's frozen candidates were computed on Polygon's RAW stamps, before the 2026-10-18 sourceQuirks fix. MEASURED: raw stamps → all 9,124
+// reproduce; fixed stamps → 166 differ (2020-11 → 2021-06, all through levels formed in the corrected weeks). The check certifies the CODE on the
+// tape the study used, so it replays the raw stamps (MASTER_DOCUMENT §7 (cl)).
+process.env.TWIN_RAW_POLYGON_TIMES = '1'
 
 let n = 0
 const ok = (name, fn) => { try { fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }

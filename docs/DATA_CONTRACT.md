@@ -218,3 +218,37 @@ Ashraf asked: "how we can tell if we have any issue with full system database? a
 - **Feed delay (facts, unchanged):**
   - spot = real-time ticks (Polygon forex WebSocket, measured);
   - futures = **Futures Starter: 1m bars, 10 min delayed, no ticks / bid-ask**. They are delayed CONTEXT only: whale gauge, WTI, footprint BLOCKED live.
+
+## 10. History built perfectly on every timeframe — full audit + three fixes (2026-10-18)
+
+Ashraf: "confirm that our database reading live perfectly and our history for each time frame is built perfectly". Then he chose "Measure 2020 first" for the weekend-dated minutes.
+
+- **`scripts/audit_timeframes.mjs`** (→ `data/master/timeframe_audit.json`):
+  - **Scope:** all 12 series × the 16 TradingView timeframes, whole history.
+  - **Method:** an independent, order-free regroup of every minute. It must equal each candle exactly: open, high, low, close, minute count and real volume. It also requires no duplicate / out-of-order candle, every minute in exactly one candle, and every candle inside its own window.
+  - **Live loader:** the 3m / 15m / 1h candles the live code reads, compared with the TradingView build.
+  - **Self-test:** 5 corruption kinds, all caught.
+- **Fix 1, bad-print repair at 1 minute only** (`bars.repairOne` / `repairStream`):
+  - **Bug:** on 3m / 15m / 1h candles the rule erased the REAL silver flash crash of 2017-07-06 (≈ −10 %, recovered inside one candle, so the candle's neighbours "agreed").
+  - **Fix:** every timeframe is now built from repaired 1m bars, judged with a 4-day neighbour margin, so a window never changes a verdict.
+  - **Result:** XAU candles unchanged. The crash is kept on every timeframe. The 2025-11-23 XAU false print is still repaired, even in a small window.
+- **Fix 2, Polygon's 2020-11-15 → 12-31 New-York-local stamps** (`src/data/sourceQuirks.js`, +5 h at read time; the files stay = Polygon):
+  - **Affected:** XAUUSD, EURUSD, USDJPY, GBPUSD, USDCAD, USDCHF. XAG / SEK have no data there.
+  - **Evidence:**
+    - Structure: break at 17:00 "UTC", Sunday open 17:00 / 18:00 "UTC", Christmas Eve stop at 13:45 "UTC".
+    - Our store = Polygon's current minutes exactly.
+    - TradingView daily close difference: $3.32 as stored vs $0.27-0.75 in the controls; $0.60 at +5 h.
+  - The research switch `TWIN_RAW_POLYGON_TIMES=1` replays the raw stamps (used by the two frozen-artifact smokes).
+- **Fix 3, weekend-dated minutes dropped in `cleanForTv`:** a Saturday / Sunday trading date has no TradingView session.
+  - **Dropped:** XAU 452, XAG 336, the DXY pairs 2,130-55,839 (USDCHF), GLD 5,618 (Friday extended hours).
+  - They had formed USDCAD 1M and USDCHF 3H/4H/6H candles outside their own window. The count is reported in `dropped.weekend_minutes`.
+- **Result:**
+  - ✅ 12 series × 16 timeframes: every candle = its minutes.
+  - **Live loader:** XAU 1,531,248 / 306,760 / 76,846 and XAG 1,511,016 / 302,987 / 75,900 candles identical (3m / 15m / 1h).
+  - **TradingView anchors:** XAU and XAG 17/17.
+  - `smoke_source_quirks` 4/4.
+- **Effect on earlier results** (measured, nothing hidden):
+  - IMPULSE_CONT frozen book: TRAIN net/t −0.1964 → −0.2977, per_day 0.3087 → 0.3097. OOS unchanged (it is the live label).
+  - Level Radar (superseded study): 166 of 9,124 candidates differ, 2020-11 → 2021-06.
+  - Both reproduce exactly under the raw switch, which is what their smokes now certify.
+  - Every other suite passed unchanged on the fixed data.
