@@ -103,6 +103,18 @@ async function refreshForming() {
     const pick = (r) => r && { long: r.long, short: r.short, side: r.side, A: r.A, B: r.B, C: r.C, D: r.D, bsl: r.bsl, ssl: r.ssl, rsi: +r.rsi.toFixed(2), bar: new Date(r.partial.t).toISOString(), closes_at: new Date(r.partial.closes_at).toISOString(), minutes: r.partial.minutes, last_minute: new Date(r.partial.last_minute).toISOString() }
     MGF.val = fg ? { provisional: true, gold: pick(fg), dxy: pick(fd), dxy_relation: !fd ? 'none' : fd.side !== fg.side ? 'confirms' : 'against', computed_at: new Date().toISOString() } : null
   } catch (e) { MGF.val = { provisional: true, error: e.message } } finally { MGF.at = Date.now(); MGF.busy = false } }
+// TRENDLINES page (2026-10-18; Ashraf: "this charts for each time frame we need it in Extra Tab on the App … for each asset"). Read-only: candles + real
+// lines from data/master/trendlines_display_<asset>_<tf>.json and the MEASURED lift vs placebo per kind of line from trendlines_study.json
+// (scripts/study_trendlines.mjs + report_trendlines.mjs, rules src/master/trendlines.js). Nothing here is a signal.
+const TL_PAGE = path.join(TURBO.root, 'ops', 'trendlines', 'index.html'), TL_ASSETS = { xau: 'XAU', xag: 'Silver', dxy_ice: 'DXY', wti: 'WTI' }, TL_TFS = ['1W', '1D', '4H', '1H'], TLC = new Map()
+function trendlines(asset, tf) {
+  if (!TL_ASSETS[asset] || !TL_TFS.includes(tf)) return { available: false, why: 'unknown asset / timeframe', assets: TL_ASSETS, tfs: TL_TFS }
+  const f = path.join(TURBO.master, `trendlines_display_${asset}_${tf}.json`); if (!fs.existsSync(f)) return { available: false, why: 'study_trendlines.mjs has not been run for this asset', assets: TL_ASSETS, tfs: TL_TFS }
+  const m = fs.statSync(f).mtimeMs, c = TLC.get(f); let d = c && c.m === m ? c.d : null
+  if (!d) { d = JSON.parse(fs.readFileSync(f, 'utf8')); TLC.set(f, { m, d }) }
+  const st = J('trendlines_study.json'), key = `${d.symbol}|${tf}`
+  return { available: true, assets: TL_ASSETS, tfs: TL_TFS, ...d, measured: st?.by_kind?.[key] ?? null, measured_at: st?.at ?? null, study_summary: st ? { ...(st.walk_forward ?? {}), holm_more: (st.cells ?? []).filter((x) => x.holm_pass && x.all?.lift > 0).length } : null, walk_forward_pass: (st?.cells ?? []).filter((x) => x.walk_forward_pass && x.sym === d.symbol && x.tf === tf).map((x) => x.cell) }
+}
 const send = (res, code, body, type = 'application/json') => { res.writeHead(code, { 'content-type': type, 'cache-control': 'no-store' }); res.end(type === 'application/json' ? JSON.stringify(body) : body) }
 const readHb = () => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, 'stream_heartbeat.json'), 'utf8')) } catch { return null } }
 
@@ -359,6 +371,8 @@ const server = http.createServer(async (req, res) => {
   try {
     const u = new URL(req.url, 'http://127.0.0.1'), sym = (u.searchParams.get('sym') || 'XAUUSD').toUpperCase(), tf = u.searchParams.get('tf') || '15m'
     if (u.pathname === '/' || u.pathname === '/index.html') return send(res, 200, fs.readFileSync(PAGE, 'utf8'), 'text/html; charset=utf-8')
+    if (u.pathname === '/trendlines') return send(res, 200, fs.readFileSync(TL_PAGE, 'utf8'), 'text/html; charset=utf-8')
+    if (u.pathname === '/api/trendlines') return send(res, 200, trendlines(u.searchParams.get('asset') || 'xau', u.searchParams.get('tf') || '4H'))
     if (u.pathname === '/api/series') return send(res, 200, { series: [...SYMBOLS.map((s) => ({ sym: s.sym, role: s.role, delayed: false })), ...Object.entries(DERIVED).map(([k, v]) => ({ sym: k, ...v }))], tfs: Object.keys(TF) })
     if (u.pathname === '/api/symbols') return send(res, 200, { symbols: SYMBOLS, tfs: Object.keys(TF) })
     if (u.pathname === '/api/drivers') return send(res, 200, await drivers())

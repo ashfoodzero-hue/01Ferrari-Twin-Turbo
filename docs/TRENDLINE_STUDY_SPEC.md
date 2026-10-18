@@ -1,6 +1,6 @@
 # Trendlines on 1W / 1D / 4H / 1H: which are respected (6 years), how they match the last 3 years, and an Extra tab in the app
 
-Written 2026-10-18. Status: **WRITTEN, NOT RUN.** Method: Claude skill `trendline-study` (added 2026-10-18).
+Written 2026-10-18. Status: **RUN 2026-10-18** (Ashraf: "Yes, run it as written, WTI on 2 years only"). Results: `docs/TRENDLINE_STUDY_ATLAS.md`; app page http://127.0.0.1:7444/trendlines. Method: Claude skill `trendline-study`. Audit added (before its numbers): independent second evaluator + positive control (`scripts/audit_trendlines.mjs`); chance level of the walk-forward measured by the reversed test.
 
 ## Request (Ashraf, 2026-10-18)
 

@@ -1,0 +1,19 @@
+{
+ "at": "2026-10-18T18:39:01.802Z",
+ "symbol": "WTI",
+ "tf": "4H",
+ "independent_evaluator": {
+  "evaluations": 3000,
+  "differences": 0
+ },
+ "positive_control": {
+  "real": [
+   65,
+   66
+  ],
+  "placebo": [
+   94,
+   207
+  ]
+ }
+}
