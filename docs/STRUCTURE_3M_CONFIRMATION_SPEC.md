@@ -1,6 +1,6 @@
 # 3m structure confirmation at the swing tips — XAU, XAG, DXY, WTI (last year)
 
-Written 2026-10-18. Status: **WRITTEN, NOT RUN.** Shown to Ashraf before any number is computed.
+Written 2026-10-18. Status: **RUN 2026-10-18** (Ashraf: "Yes, run it as written"). Results: `docs/STRUCTURE_3M_CONFIRMATION_ATLAS.md`. Exact operational choices: header of `scripts/study_structure_3m.mjs`. Audit check added after the first run (before its numbers): precision against EVERY failed extreme, since the pullback filter is known only afterwards.
 
 ## Request (Ashraf, 2026-10-18)
 
