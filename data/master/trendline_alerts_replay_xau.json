@@ -1,0 +1,32 @@
+{
+ "at": "2026-10-18T20:04:16.831Z",
+ "symbol": "XAUUSD",
+ "days": 180,
+ "window": [
+  "2026-04-19T21:00:00.000Z",
+  "2026-10-16T21:00:00.000Z"
+ ],
+ "ticks": 176490,
+ "truth": 224,
+ "truth_by_type": {
+  "T 4H": 95,
+  "R 4H": 47,
+  "B 4H": 57,
+  "T 1D": 11,
+  "R 1D": 9,
+  "B 1D": 5
+ },
+ "alerts": 226,
+ "missing": 0,
+ "extra": 0,
+ "bounced_then_broken_same_candle": 1,
+ "explained_keys": [
+  "R:XAUUSD|4H|support|1774558800000|1777467600000:1777885200000"
+ ],
+ "missing_keys": [],
+ "extra_keys": [],
+ "at_alert_minutes_after_candle_open": {
+  "p50": 149,
+  "n": 106
+ }
+}
