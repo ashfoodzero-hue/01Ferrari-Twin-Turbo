@@ -26,7 +26,7 @@ for (const SYM of SYMS) {
   const L = readJ(path.join(TURBO.master, `trendline_live_lines_${SHORT[SYM]}.json`))
   if (!L) { state.assets[SYM] = { status: 'no lines file (trendline_lines.mjs not run)', blocked: TL_ALERT_BLOCKED[SYM] ?? null, tf: {} }; continue }
   const from = Math.min(...TL_ALERT_TFS.map((tf) => L.tf[tf]?.last_closed ?? now)) - 60000
-  const M = kit(SYM).clean(await raw1m(SYM, from)).filter((b) => b.t + 60000 <= now)
+  const M = kit(SYM, { live: true }).clean(await raw1m(SYM, from)).filter((b) => b.t + 60000 <= now)   // live: keep the forming session's first hour
   const r = tickCheck(SYM, L, M, now, { lagMin: SYM === 'WTI' ? 15 : 5 })
   state.assets[SYM] = { status: r.status, blocked: TL_ALERT_BLOCKED[SYM] ?? null, price: r.price ?? null, last_minute: r.last_minute ? new Date(r.last_minute).toISOString() : null, lines_refreshed: L.at, tf: r.tf }
   events.push(...r.events) }

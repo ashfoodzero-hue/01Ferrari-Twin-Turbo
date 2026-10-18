@@ -48,7 +48,7 @@ export function clampReopen(bars) {   // exported: series_1m applies it to non-g
     if (o !== b.o || c !== b.c || h !== b.h || l !== b.l) { bars[i] = { ...b, o, h, l, c }; n++ } }
   return n
 }
-export function cleanForTv(m1, { realVolume = false, keepBreakHour = false, reopenClamp = false } = {}) {   // keepBreakHour: GLD (US extended hours trade 17:00-18:00 New York)
+export function cleanForTv(m1, { realVolume = false, keepBreakHour = false, reopenClamp = false, keepLastDate = false } = {}) {   // keepBreakHour: GLD (US extended hours trade 17:00-18:00 New York)
   const nyHour = (t) => { const local = t + nyOffsetMs(t); return Math.floor((local % DAY + DAY) % DAY / H) }
   // NO WEEKEND SESSIONS (2026-10-18, audit_timeframes.mjs): a minute whose trading date is a Saturday or Sunday belongs to no TradingView candle
   // (Polygon prints Sunday-afternoon quotes before the 18:00 New York open on some weeks; GLD trades Friday 18:00-20:00 ET). Kept, they formed
@@ -61,7 +61,10 @@ export function cleanForTv(m1, { realVolume = false, keepBreakHour = false, reop
   // 2021-2025 (14:00-15:00 UTC: 18-35 k quotes/h in 2014-19, 150-200 in 2021-25, 12.7 k in 2026). It is DROPPED here so no study can read it
   // as volume. Real volume = GOLD_FUT (Polygon CME) / Databento footprints / GLD — 2024-10 onward only (Ashraf: no purchase for older years).
   // realVolume: true ONLY for exchange series (GOLD_FUT, SILVER_FUT, WTI, GLD) — keeps their real `v` and contract `tk`.
-  const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES).map((b) => realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c })
+  // keepLastDate (2026-10-19, LIVE use only): the forming session has < 60 minutes for its whole first hour; dropping it as a "stub" hid every
+  // session's first hour from the live jobs (trendline alerts, S/R refresh). History / studies keep the default (holiday stubs dropped).
+  const lastD = keepLastDate && kept.length ? tradingDate(kept.at(-1).t) : null
+  const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= MIN_SESSION_MINUTES || tradingDate(b.t) === lastD).map((b) => realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c })
   const reopenClamped = reopenClamp ? clampReopen(bars) : 0
   return { bars, dropped: { reopen_clamped: reopenClamped, weekend_minutes: weekendMinutes, break_minutes: noWeekend.length - kept.length, stub_minutes: kept.length - bars.length, stub_sessions: [...per.values()].filter((v) => v < MIN_SESSION_MINUTES).length } }
 }

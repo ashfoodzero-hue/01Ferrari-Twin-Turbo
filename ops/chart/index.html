@@ -229,8 +229,10 @@ async function poll() {
     })
     const r = R[0]; if (!r) throw new Error('main')
     const q = r.quote, pill = $('streamPill')
-    pill.textContent = r.delayed ? 'DELAYED 10 min' : r.stream.live ? 'LIVE · ticks verified' : r.stream.market_open === false ? 'MARKET CLOSED' : 'STALE'
-    pill.className = 'pill ' + (r.delayed ? 'mid' : r.stream.live ? 'ok' : r.stream.market_open === false ? 'mid' : 'bad'); pill.title = r.stream.why || ''
+    // 2026-10-18: never say LIVE while the data-health verdict is STALE (the stream counted empty "quiet" minutes as verified during a Polygon outage)
+    const liveOk = r.stream.live && !window.HEALTH_STALE
+    pill.textContent = r.delayed ? 'DELAYED 10 min' : liveOk ? 'LIVE · ticks verified' : r.stream.market_open === false ? 'MARKET CLOSED' : window.HEALTH_STALE ? 'NOT LIVE · no ticks (STALE)' : 'STALE'
+    pill.className = 'pill ' + (r.delayed ? 'mid' : liveOk ? 'ok' : r.stream.market_open === false ? 'mid' : 'bad'); pill.title = window.HEALTH_STALE ? (window.HEALTH_WHY || '') : r.stream.why || ''
     $('quote').innerHTML = q ? `${LABEL[r.sym] || r.sym} <b>${fmt(q.bid)}</b>` + (q.derived ? '<span class="ask">rebuilt live</span>' : `<span class="ask">ask ${fmt(q.ask)} · spread ${(q.ask - q.bid).toFixed(dec(q.bid))}</span>`) : (LABEL[r.sym] || r.sym)
     const g = r.geometry
     $('stateMsg').textContent = g?.message || '—'; $('rHigh').textContent = fmt(g?.rangeHigh); $('rLow').textContent = fmt(g?.rangeLow)
@@ -335,6 +337,7 @@ setInterval(pollLadder, 60000); setTimeout(pollLadder, 2500)
 // DATA HEALTH banner (2026-10-18): STALE = flashing red, signals stopped · WARN = amber note, signals continue · OK = hidden. Every 30 s.
 async function pollHealth() { const el = $('dbHealth'), h = await fetch('/api/health').then((x) => x.json()).catch(() => null)
   if (!h) { el.className = 'stale'; el.innerHTML = '⛔ DATABASE STALE — chart server unreachable<small>Signals cannot be trusted until the app answers again.</small>'; return }
+  window.HEALTH_STALE = h.state === 'STALE'; window.HEALTH_WHY = h.halt_why || ''
   const lines = (h.issues ?? []).filter((x) => h.state === 'STALE' ? x.sev === 'CRITICAL' : true).map((x) => esc(x.text))
   if (h.state === 'STALE') { el.className = 'stale'; el.innerHTML = '⛔ DATABASE STALE — SIGNALS STOPPED' + `<small>${lines.length ? lines.join('<br>') : esc(h.halt_why || '')}</small>` }
   else if (h.state === 'WARN') { el.className = 'warn'; el.innerHTML = '⚠ DATA WARNING — signals continue' + `<small>${lines.join('<br>')}${h.market && !h.market.open ? '<br>' + esc(h.market.note) : ''}</small>` }

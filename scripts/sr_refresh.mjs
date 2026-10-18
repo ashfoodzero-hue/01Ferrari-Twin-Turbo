@@ -18,7 +18,7 @@ import { closedCandles, srLevelsAt } from './lib/sr_live.mjs'
 
 const SYM = process.argv[2] || 'XAUUSD', DRY = process.argv.includes('--dry'), SH = SHORT[SYM], now = Date.now(), DELAYED = SYM === 'WTI'
 const readJ = (f) => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, f), 'utf8')) } catch { return null } }
-const M = (await clean1m(SYM)).filter((b) => b.t + 60000 <= now), lag = now - M.at(-1).t, lagMax = (DELAYED ? 20 : 5) * 60000
+const M = (await clean1m(SYM, { live: true })).filter((b) => b.t + 60000 <= now), lag = now - M.at(-1).t, lagMax = (DELAYED ? 20 : 5) * 60000
 if (marketOpen(now) && marketOpen(now - 40 * 60000) && lag > lagMax) { console.log(`  🧱 sr_refresh ${SYM}: newest minute ${Math.round(lag / 60000)} min old while the market is open — STALE, nothing written`); process.exit(2) }
 const study = readJ(`sr_levels_${SH}.json`), S = readJ('sr_levels_study.json')
 const CC = closedCandles(SYM, M, now), R = srLevelsAt(SYM, CC, { study, S })

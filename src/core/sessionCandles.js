@@ -95,11 +95,14 @@ export function makeSession(spec) {
     throw new Error('sessionCandles: unsupported tf ' + tf)
   }
   /** TradingView parity cleaning: weekend trading dates dropped, the break hour dropped (if the session has one), sessions < 60 minutes dropped. */
-  function clean(m1, { realVolume = false } = {}) {
+  // keepLastDate (2026-10-19, LIVE use only): never drop the LATEST trading date for being short — live, the forming session has < 60 minutes for its
+  // whole first hour, and dropping it hid every session's first hour from the live jobs. History / studies keep the default (stubs dropped).
+  function clean(m1, { realVolume = false, keepLastDate = false } = {}) {
     const wk = (t) => { const d = tradingDate(t), w = new Date(d).getUTCDay(); return w === 0 || w === 6 || (spec.dropFullClosures && fullClosure(d)) }   // dxyIce: TradingView shows no Christmas / New Year session
     const a = m1.filter((b) => !wk(b.t)), kept = spec.breakHour == null ? a : a.filter((b) => nyHour(b.t) !== spec.breakHour), per = new Map()
     for (const b of kept) { const d = tradingDate(b.t); per.set(d, (per.get(d) || 0) + 1) }
-    const bars = kept.filter((b) => per.get(tradingDate(b.t)) >= 60).map((b) => (realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c }))
+    const lastD = keepLastDate && kept.length ? tradingDate(kept.at(-1).t) : null
+    const bars = kept.filter((b) => { const d = tradingDate(b.t); return per.get(d) >= 60 || d === lastD }).map((b) => (realVolume ? { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v ?? 0, ...(b.tk ? { tk: b.tk } : {}) } : { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c }))
     return { bars, dropped: { weekend_minutes: m1.length - a.length, break_minutes: a.length - kept.length, stub_minutes: kept.length - bars.length } }
   }
   function buildCandles(m1, tf) {

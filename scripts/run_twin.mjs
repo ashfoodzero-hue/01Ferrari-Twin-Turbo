@@ -95,7 +95,8 @@ let lastLadder = null, ladderRunning = false   // ladder context, information on
 let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
 const TL_SYMS = ['XAUUSD', 'XAGUSD', 'DXY_ICE', 'WTI']   // major-trendline alerts (2026-10-18): minute tick + per-asset line refresh queue
 let lastTl = null, tlRunning = false, tlRefreshing = null, tlQueue = [...TL_SYMS]   // every asset is refreshed once at start
-let lastSr = null, srRefreshing = null, srQueue = [...TL_SYMS]   // S/R levels (sr_refresh.mjs, 2026-10-18): every asset at start + after each 1H close
+const SR_SYMS = [...TL_SYMS, 'DXY']   // + gold-grid DXY (2026-10-19): the S/R tab's DXY warning compares XAU and DXY on identical candle times
+let lastSr = null, srRefreshing = null, srQueue = [...SR_SYMS]   // S/R levels (sr_refresh.mjs, 2026-10-18): every asset at start + after each 1H close
 let lastPre = null, preRunning = false, sesAt = 0, ses = null   // pre-open readiness check (preopen_check.mjs, 2026-10-18)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
@@ -183,7 +184,7 @@ for (;;) {
   // 4 min after every hour (every 1H close; higher timeframes close on hours too) while the market is open, all four assets queued, one at a time,
   // after the trendline refresh queue (never two full-history children together). Fail-closed inside (stale newest minute → exit 2, nothing written).
   const hKey = now - (now % 3600000)
-  if (marketOpen(hKey - 1) && now - hKey >= 4 * 60000 && lastSr !== hKey) { lastSr = hKey; for (const s of TL_SYMS) if (srRefreshing !== s && !srQueue.includes(s)) srQueue.push(s) }
+  if (marketOpen(hKey - 1) && now - hKey >= 4 * 60000 && lastSr !== hKey) { lastSr = hKey; for (const s of SR_SYMS) if (srRefreshing !== s && !srQueue.includes(s)) srQueue.push(s) }
   if (!srRefreshing && !tlRefreshing && srQueue.length) { const s = srQueue.shift(); srRefreshing = s
     execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'sr_refresh.mjs'), s], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { srRefreshing = null
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `sr_refresh.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }

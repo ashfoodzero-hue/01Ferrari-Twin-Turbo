@@ -23,9 +23,10 @@ export async function raw1m(sym, from = HISTORY_CONTINUOUS_FROM) {
   return (await loadBars(sym, '1m', { from })).bars
 }
 /** The candle kit of an instrument: { clean(raw) → minutes, build(minutes, tf) → candles, session } */
-export function kit(sym, { reopenClamp = REOPEN_CLAMP.has(sym) } = {}) {
-  if (SES[sym]) { const S = SES[sym]; return { session: S.spec.name, clean: (raw) => { const b = S.clean(raw, { realVolume: sym === 'WTI' }).bars; if (reopenClamp) clampReopen(b); return b }, build: (M, tf) => S.buildCandles(M, tf) } }
-  return { session: 'gold', clean: (raw) => cleanForTv(raw, { reopenClamp }).bars, build: (M, tf) => nyBuild(M, tf) }
+// live: true (2026-10-19) keeps the forming session even while it has < 60 minutes (keepLastDate) — for the LIVE jobs only; studies keep the default.
+export function kit(sym, { reopenClamp = REOPEN_CLAMP.has(sym), live = false } = {}) {
+  if (SES[sym]) { const S = SES[sym]; return { session: S.spec.name, clean: (raw) => { const b = S.clean(raw, { realVolume: sym === 'WTI', keepLastDate: live }).bars; if (reopenClamp) clampReopen(b); return b }, build: (M, tf) => S.buildCandles(M, tf) } }
+  return { session: 'gold', clean: (raw) => cleanForTv(raw, { reopenClamp, keepLastDate: live }).bars, build: (M, tf) => nyBuild(M, tf) }
 }
 /** Cleaned 1m bars for an instrument's TradingView-style candles. */
-export async function clean1m(sym, { from = HISTORY_CONTINUOUS_FROM, reopenClamp } = {}) { return kit(sym, reopenClamp === undefined ? {} : { reopenClamp }).clean(await raw1m(sym, from)) }
+export async function clean1m(sym, { from = HISTORY_CONTINUOUS_FROM, reopenClamp, live = false } = {}) { return kit(sym, { ...(reopenClamp === undefined ? {} : { reopenClamp }), live }).clean(await raw1m(sym, from)) }

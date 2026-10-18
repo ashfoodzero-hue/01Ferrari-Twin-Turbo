@@ -36,6 +36,8 @@ import { streamStatus } from '../src/data/tickStream.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { marketStateGeometry, readMarketState } from '../src/master/marketState.js'
 import { loadDxyBars, dxyValue, DXY_WEIGHTS } from '../src/data/dxy.js'
+import { candleOpen } from '../src/core/nyCandles.js'
+import { dxyWarning, WARN_TFS } from '../src/master/srDxyWarning.js'
 import { polygonKey } from '../src/data/liveFeed.js'
 import { fetchJsonResilient } from '../src/data/netResolve.js'
 import { wtiBars, futBars } from '../src/data/wti.js'
@@ -131,6 +133,27 @@ function srLevels(asset, tf) {
   return { available: true, assets: TL_ASSETS, tfs: SR_TFS_UI, ...d, live: live ? { at: live.at, last_minute: live.last_minute, source: live.source, delayed: live.delayed, tf: live.tf[tf] } : null,
     stale, market_open: open, health: h ? { state: h.state, at: h.at, analysis_feeds: h.checks?.analysis_feeds ?? null, issues: (h.issues ?? []).filter((x) => /SR_|FEED|STREAM|FUTURES/.test(x.code)) } : null,
     measured: st?.by_class?.[`${d.symbol}|${tf}`] ?? null, measured_at: st?.at ?? null, study_summary: st?.summary ?? null }
+}
+// DXY WARNING on the S/R tab (2026-10-19; Ashraf: "add the DXY warning to the S/R tab"): the forming 1H / 4H candle of XAU and of the gold-grid DXY
+// (identical candle times) from the live minutes, checked against the hourly levels (sr_live_xau.json, sr_live_dxy.json) by src/master/srDxyWarning.js.
+// Fail-closed: 18:00-18:16 New York (reopen settling), stale minutes (> 5 min while open) → no warning computed. Cached 30 s.
+const DXW = { at: 0, val: null }
+async function dxyWarn() {
+  if (Date.now() - DXW.at < 30000 && DXW.val) return DXW.val
+  const now = Date.now(), ny = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(now))
+  const nm = (+ny.find((x) => x.type === 'hour').value % 24) * 60 + +ny.find((x) => x.type === 'minute').value
+  let val
+  try {
+    if (nm >= 18 * 60 && nm < 18 * 60 + 16) val = { state: 'reopen settling (18:00-18:16 New York) — checked after' }
+    else { const from = now - 2 * 86400000, X = (await loadBars('XAUUSD', '1m', { from })).bars.filter((b) => b.t + 60000 <= now), D = (await loadDxyBars('1m', { from })).bars.filter((b) => b.t + 60000 <= now)
+      const fresh = (M) => M.length && now - M.at(-1).t <= 5 * 60000
+      if (!fresh(X) || !fresh(D)) val = { state: 'no fresh minutes (market closed or feed stale) — no warning' }
+      else { const formX = {}, formD = {}, prevOpen = {}
+        for (const tf of WARN_TFS) { const fo = candleOpen(now, tf), agg = (M) => { const s = M.filter((b) => b.t >= fo); return s.length ? { t: fo, h: Math.max(...s.map((b) => b.h)), l: Math.min(...s.map((b) => b.l)) } : null }
+          formX[tf] = agg(X); formD[tf] = agg(D); const before = X.filter((b) => b.t < fo).at(-1); prevOpen[tf] = before ? candleOpen(before.t, tf) : null }
+        val = { state: 'checked', tf: dxyWarning({ xau: J('sr_live_xau.json'), dxy: J('sr_live_dxy.json'), formX, formD, prevOpen, study: J('xau_dxy_sr.json') }) } } }
+  } catch (e) { val = { state: 'error: ' + e.message } }
+  DXW.at = Date.now(); DXW.val = { at: new Date(now).toISOString(), ...val }; return DXW.val
 }
 const send = (res, code, body, type = 'application/json') => { res.writeHead(code, { 'content-type': type, 'cache-control': 'no-store' }); res.end(type === 'application/json' ? JSON.stringify(body) : body) }
 const readHb = () => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, 'stream_heartbeat.json'), 'utf8')) } catch { return null } }
@@ -389,7 +412,7 @@ const server = http.createServer(async (req, res) => {
     const u = new URL(req.url, 'http://127.0.0.1'), sym = (u.searchParams.get('sym') || 'XAUUSD').toUpperCase(), tf = u.searchParams.get('tf') || '15m'
     if (u.pathname === '/' || u.pathname === '/index.html') return send(res, 200, fs.readFileSync(PAGE, 'utf8'), 'text/html; charset=utf-8')
     if (u.pathname === '/sr') return send(res, 200, fs.readFileSync(SR_PAGE, 'utf8'), 'text/html; charset=utf-8')
-    if (u.pathname === '/api/sr') return send(res, 200, srLevels(u.searchParams.get('asset') || 'xau', u.searchParams.get('tf') || '4H'))
+    if (u.pathname === '/api/sr') { const a = u.searchParams.get('asset') || 'xau', r = srLevels(a, u.searchParams.get('tf') || '4H'); if (a === 'xau' && r.available) r.dxy_warning = await dxyWarn(); return send(res, 200, r) }
     if (u.pathname === '/trendlines') return send(res, 200, fs.readFileSync(TL_PAGE, 'utf8'), 'text/html; charset=utf-8')
     if (u.pathname === '/api/trendlines') return send(res, 200, trendlines(u.searchParams.get('asset') || 'xau', u.searchParams.get('tf') || '4H'))
     if (u.pathname === '/api/series') return send(res, 200, { series: [...SYMBOLS.map((s) => ({ sym: s.sym, role: s.role, delayed: false })), ...Object.entries(DERIVED).map(([k, v]) => ({ sym: k, ...v }))], tfs: Object.keys(TF) })

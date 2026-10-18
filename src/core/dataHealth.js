@@ -26,6 +26,7 @@ export const HEALTH_RULE = Object.freeze({
   futMaxAgeMs: { GOLD_FUT: 45 * MIN, SILVER_FUT: 60 * MIN, WTI: 60 * MIN },   // recorder: 12-min finality + 15-min cadence ≈ 27 min normal
   recorderMaxGapMs: 45 * MIN,            // record_futures runs every 15 min, always
   reconcileMaxAgeMs: 30 * H, auditMaxAgeMs: 30 * H, verifyMaxAgeMs: 8.5 * 24 * H, calendarMaxAgeMs: 75 * MIN,
+  noTickMaxMs: 10 * MIN,                 // 2026-10-18: newest REAL tick per stream symbol, once the market has been open this long (quiet minutes are not data)
   healthMaxAgeMs: 10 * MIN,              // the gate fails CLOSED when data_health.json is older than this (the watcher itself stopped)
   diskCritGB: 5, diskWarnGB: 20,         // free space on the data drive: a full disk silently stops every append (stores, ledgers, logs)
   // analysis feeds (2026-10-18, Ashraf: "make sure we have no stales during feeding … monitor health feeding with zerostale"): DERIVED from the raw feeds
@@ -35,7 +36,8 @@ export const HEALTH_RULE = Object.freeze({
   tlTickMaxAgeMs: 5 * MIN,               // trendline minute check: every minute
 })
 const FUT = ['GOLD_FUT', 'SILVER_FUT', 'WTI']
-const ANALYSIS_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti'], SYM_OF = { xau: 'XAUUSD', xag: 'XAGUSD', dxy_ice: 'DXY_ICE', wti: 'WTI' }
+const SR_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti', 'dxy'], TL_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti'], ANALYSIS_ASSETS = SR_ASSETS   // dxy = gold-grid DXY (S/R only: the DXY warning)
+const SYM_OF = { xau: 'XAUUSD', xag: 'XAGUSD', dxy_ice: 'DXY_ICE', wti: 'WTI', dxy: 'DXY' }
 const readJ = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return null } }
 const lastLines = (f, n) => { try { return fs.readFileSync(f, 'utf8').trim().split('\n').slice(-n).map((l) => { try { return JSON.parse(l) } catch { return null } }).filter(Boolean) } catch { return [] } }
 const lastStoredT = (file) => { try { const size = fs.statSync(file).size; if (!size) return null; const fd = fs.openSync(file, 'r')
@@ -100,6 +102,14 @@ export function assessHealth(I, R = HEALTH_RULE) {
   const lagBad = lag.filter((x) => !(x.t && now - x.t <= R.xauSettleMaxMs))
   if (settledOpen && lagBad.length) add('SYMBOL_STREAM', 'CRITICAL', `Live minutes not confirmed for ${lagBad.map((x) => `${x.s} (since ${iso(x.t)})`).join(', ')} — silver / DXY inputs stale.`)
   checks.stream_symbols = `${others.length - lagBad.length}/${others.length} silver + DXY pairs settled within ${R.xauSettleMaxMs / MIN} min`
+  // 2c. REAL PRICES ARRIVING (2026-10-18 22:20 UTC, Ashraf: "i think we are stale and no health warning"): measured — Polygon sent NO gold / silver
+  //     quote after the Sunday open (last 21:00, FX pairs stopped 21:56) while the stream marked every empty minute "quiet" = settled, and the 40-min
+  //     reopen grace hid it. A settled-but-empty minute is NOT live data: once the market has been open noTickMaxMs, the newest REAL tick of gold,
+  //     silver and every DXY pair must be younger than noTickMaxMs, regardless of the grace. Otherwise CRITICAL → STALE → every signal stops.
+  const tickOpen = open && marketOpen(now - R.noTickMaxMs), noTick = []
+  for (const s of ['XAUUSD', ...others]) { const v = I.stream?.symbols?.[s]?.last_tick_at, t = v ? Date.parse(v) : null; if (tickOpen && !(t && now - t <= R.noTickMaxMs)) noTick.push(`${s} (last tick ${iso(t)}${t ? ', ' + ago(now - t) + ' ago' : ''})`) }
+  if (noTick.length) add('NO_LIVE_TICKS', 'CRITICAL', `No live prices from Polygon while the market is open: ${noTick.join(', ')}. Minutes marked "quiet" are not live data — signals stopped until real ticks return.`)
+  checks.live_ticks = I.stream?.symbols ? ['XAUUSD', ...others].map((s) => { const v = I.stream.symbols[s]?.last_tick_at; return `${s} ${v ? iso(Date.parse(v)).slice(11, 16) : '—'}` }).join(' · ') : 'no stream heartbeat'
   // 3. reconcile_1m — the stored 1m minutes vs Polygon (fixes ours; a failure means a symbol could not be checked)
   const rc = I.reconcile, rcT = rc ? Date.parse(rc.at) : null
   if (rc && rc.ok === false) add('RECONCILE_FAILED', 'CRITICAL', `Gap repair (reconcile vs Polygon) FAILED at ${iso(rcT)}: ${(rc.errors ?? []).join(', ') || 'see reconcile_history.jsonl'} — it retries by itself.`)
@@ -149,8 +159,8 @@ export function assessHealth(I, R = HEALTH_RULE) {
     const srJudged = settledOpen && marketOpen(now - R.srMaxAgeMs), tlJudged = settledOpen && marketOpen(now - R.tlLinesMaxAgeMs)
     for (const sh of ANALYSIS_ASSETS) { const f = I.feeds[sh] ?? {}
       if (srJudged && age(f.sr) > R.srMaxAgeMs) srOld.push(`${SYM_OF[sh]} (${f.sr ? ago(age(f.sr)) + ' old' : 'never'})`)
-      if (tlJudged && age(f.tl) > R.tlLinesMaxAgeMs) tlOld.push(`${SYM_OF[sh]} (${f.tl ? ago(age(f.tl)) + ' old' : 'never'})`)
-      for (const kind of ['sr_refresh', 'trendline_lines']) { const rs = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}`).slice(-2)
+      if (TL_ASSETS.includes(sh) && tlJudged && age(f.tl) > R.tlLinesMaxAgeMs) tlOld.push(`${SYM_OF[sh]} (${f.tl ? ago(age(f.tl)) + ' old' : 'never'})`)
+      for (const kind of TL_ASSETS.includes(sh) ? ['sr_refresh', 'trendline_lines'] : ['sr_refresh']) { const rs = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}`).slice(-2)
         if (rs.length === 2 && rs.every((r) => r.exit !== 0)) failed.push(`${kind} ${SYM_OF[sh]} (exit ${rs.at(-1).exit}${rs.at(-1).exit === 2 ? ' = stale minutes' : ''})`) } }
     if (srOld.length) add('SR_FEED_STALE', 'WARN', `S/R levels not refreshed: ${srOld.join(', ')} (every hour) — the S/R tab shows STALE.`)
     if (tlOld.length) add('TL_FEED_STALE', 'WARN', `Trendline lines not refreshed: ${tlOld.join(', ')} (after each 4H close) — trendline alerts wait.`)

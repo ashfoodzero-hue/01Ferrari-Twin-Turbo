@@ -16,7 +16,7 @@ import { liveLines } from './lib/trendline_live.mjs'
 import { sendAlerts } from './lib/trendline_alerts.mjs'
 
 const SYM = process.argv[2] || 'XAUUSD', DRY = process.argv.includes('--dry'), SH = SHORT[SYM], now = Date.now()
-const M = (await clean1m(SYM)).filter((b) => b.t + 60000 <= now)
+const M = (await clean1m(SYM, { live: true })).filter((b) => b.t + 60000 <= now)   // live: keep the forming session's first hour
 const yearsBack = (t, y) => { const d = new Date(t); d.setUTCFullYear(d.getUTCFullYear() - y); return d.getTime() }, FROM = SYM === 'WTI' ? M[0].t : yearsBack(M.at(-1).t, 6)
 const { live, events, display } = liveLines(SYM, M, now, { display: true, displayFrom: FROM, dp: SYM.startsWith('DXY') ? 4 : SYM === 'XAGUSD' ? 3 : 2 })
 for (const [tf, T] of Object.entries(live.tf)) {

@@ -15,7 +15,7 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..'), src 
 console.log('\n██ DATA HEALTH SMOKE ██')
 const MIN = 60000, H = 3600000, TUE = Date.parse('2026-10-20T10:00:00Z')
 const healthy = (now, over = {}) => ({ now, fresh: { app: { alive: true }, flows: [] }, halted: false,
-  stream: { symbols: Object.fromEntries(['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'GBPUSD', 'USDCAD', 'USDSEK', 'USDCHF'].map((s) => [s, { settled_through: new Date(now - MIN).toISOString() }])) },
+  stream: { symbols: Object.fromEntries(['XAUUSD', 'XAGUSD', 'EURUSD', 'USDJPY', 'GBPUSD', 'USDCAD', 'USDSEK', 'USDCHF'].map((s) => [s, { settled_through: new Date(now - MIN).toISOString(), last_tick_at: new Date(now - MIN).toISOString() }])) },
   reconcile: { at: new Date(now - 2 * H).toISOString(), ok: true, errors: [] }, audit: { at: new Date(now - 12 * H).toISOString(), ok: true, series: {} },
   verify: { at: new Date(now - 3 * 24 * H).toISOString(), ok: true, failures: [] },
   recorder: [{ at: new Date(now - 20 * MIN).toISOString(), exit: 0 }, { at: new Date(now - 5 * MIN).toISOString(), exit: 0 }],
@@ -23,7 +23,7 @@ const healthy = (now, over = {}) => ({ now, fresh: { app: { alive: true }, flows
   calendar: { at: new Date(now - 10 * MIN).toISOString(), sources: { a: { ok: true }, b: { ok: true } }, holidays: [] }, history: { events: [1, 2], kept_from_previous: [] }, diskFreeGB: 300, ...over })
 const codes = (a) => a.issues.map((x) => x.code).sort()
 
-await ok('healthy inputs on an open Tuesday → OK, no issues, 11 check lines (incl. the market, silver/DXY stream, pre-open), market OPEN', () => { const a = assessHealth(healthy(TUE)); assert.equal(a.state, 'OK'); assert.deepEqual(a.issues, []); assert.equal(Object.keys(a.checks).length, 11); assert.equal(a.market.status, 'OPEN'); assert(/live feed expected/.test(a.checks.market)) })
+await ok('healthy inputs on an open Tuesday → OK, no issues, 12 check lines (incl. the market, silver/DXY stream, live ticks, pre-open), market OPEN', () => { const a = assessHealth(healthy(TUE)); assert.equal(a.state, 'OK'); assert.deepEqual(a.issues, []); assert.equal(Object.keys(a.checks).length, 12); assert.equal(a.market.status, 'OPEN'); assert(/live feed expected/.test(a.checks.market)) })
 await ok('every CRITICAL rule → STALE (gold stream, reconcile, audit, full check, recorder ×2 failed, recorder silent, futures, halt, app down, live flow)', () => {
   const C = [
     ['XAU_STREAM', { stream: { symbols: { XAUUSD: { settled_through: new Date(TUE - 5 * MIN).toISOString() } } } }],
@@ -58,11 +58,12 @@ await ok('MARKET WORKING TIME is stated: weekend / Christmas / winter Sunday →
   const xmas = assessHealth(healthy(Date.parse('2026-12-25T15:00:00Z'), oldFeed)); assert.equal(xmas.market.status, 'HOLIDAY'); assert(/Christmas/.test(xmas.market.label)); assert.equal(xmas.market.next_open, '2026-12-27T23:00:00.000Z'); assert(!codes(xmas).includes('XAU_STREAM'))
   const win = assessHealth(healthy(Date.parse('2026-11-08T22:30:00Z'), oldFeed)); assert.equal(win.market.status, 'WEEKEND'); assert(!codes(win).some((c) => ['XAU_STREAM', 'FLOW_STALE', 'FUTURES_STALE'].includes(c)), 'winter Sunday 22:30Z is still closed')
 })
-await ok(`REOPEN GRACE: Sunday 22:10 UTC with Friday-old live files and stream → no alarm; Sunday 22:50 (> ${HEALTH_RULE.reopenGraceMs / MIN} min) → STALE`, () => {
+await ok(`REOPEN GRACE + NO_LIVE_TICKS: Sunday 22:05 (open < 10 min) Friday-old feed → no alarm; 22:12 → STALE by NO_LIVE_TICKS alone (the 2026-10-18 outage: quiet minutes are not data); 22:50 (> ${HEALTH_RULE.reopenGraceMs / MIN} min) → STALE with every live check`, () => {
   const fri = Date.parse('2026-10-16T20:59:00Z'), over = (now) => ({ stream: { symbols: { XAUUSD: { settled_through: new Date(fri).toISOString() } } }, futLast: { GOLD_FUT: now - 5 * MIN, SILVER_FUT: now - 5 * MIN, WTI: now - 5 * MIN },
     fresh: { app: { alive: true }, flows: [{ file: 'signal_tiers.json', critical: true, state: 'STALE', why: 'x' }] } })
-  const t1 = Date.parse('2026-10-18T22:10:00Z'), t2 = Date.parse('2026-10-18T22:50:00Z')
-  assert.equal(assessHealth(healthy(t1, over(t1))).state, 'OK'); const b = assessHealth(healthy(t2, over(t2))); assert.equal(b.state, 'STALE'); assert.deepEqual(codes(b), ['FLOW_STALE', 'SYMBOL_STREAM', 'XAU_STREAM'])
+  const t0 = Date.parse('2026-10-18T22:05:00Z'), t1 = Date.parse('2026-10-18T22:12:00Z'), t2 = Date.parse('2026-10-18T22:50:00Z')
+  assert.equal(assessHealth(healthy(t0, over(t0))).state, 'OK'); const a = assessHealth(healthy(t1, over(t1))); assert.equal(a.state, 'STALE'); assert.deepEqual(codes(a), ['NO_LIVE_TICKS']); assert(a.issues[0].text.includes('XAUUSD (last tick'))
+  const b = assessHealth(healthy(t2, over(t2))); assert.equal(b.state, 'STALE'); assert.deepEqual(codes(b), ['FLOW_STALE', 'NO_LIVE_TICKS', 'SYMBOL_STREAM', 'XAU_STREAM'])
 })
 await ok('FUTURES quiet hours: no futures alarm while the window touches 21:00-22:59 UTC (CME break, both DST seasons) or a US holiday closure', () => {
   const t = Date.parse('2026-10-20T23:20:00Z'), old = { futLast: { GOLD_FUT: t - 90 * MIN, SILVER_FUT: t - 90 * MIN, WTI: t - 90 * MIN } }
@@ -126,7 +127,7 @@ await ok('PRE-OPEN result in the verdict: NOT READY → WARN until the open + 2 
   const b = assessHealth(healthy(TUE, po(true, TUE + 5 * MIN))); assert.deepEqual(codes(b), []); assert(/^READY .* \(2\/2 checks/.test(b.checks.preopen), b.checks.preopen)
 })
 await ok('ANALYSIS FEEDS (S/R + trendlines, 2026-10-18): fresh → no issue; an asset\'s S/R older than 75 min / trendline lines older than 4.5 h / minute check older than 5 min / 2 failed refreshes → WARN (never STALE: derived feeds do not halt raw-data signals); closed market → not judged', () => {
-  const fresh = (now) => ({ feeds: Object.fromEntries(['xau', 'xag', 'dxy_ice', 'wti'].map((s) => [s, { sr: new Date(now - 30 * MIN).toISOString(), tl: new Date(now - 2 * H).toISOString() }])), tlTick: new Date(now - MIN).toISOString(), feedRuns: [] })
+  const fresh = (now) => ({ feeds: Object.fromEntries(['xau', 'xag', 'dxy_ice', 'wti', 'dxy'].map((s) => [s, { sr: new Date(now - 30 * MIN).toISOString(), tl: s === 'dxy' ? null : new Date(now - 2 * H).toISOString() }])), tlTick: new Date(now - MIN).toISOString(), feedRuns: [] })
   const a0 = assessHealth(healthy(TUE, fresh(TUE))); assert.equal(a0.state, 'OK'); assert.deepEqual(a0.issues, []); assert(/XAUUSD S\/R/.test(a0.checks.analysis_feeds) && / ok$/.test(a0.checks.analysis_feeds))
   const f1 = fresh(TUE); f1.feeds.xag.sr = new Date(TUE - 80 * MIN).toISOString(); let a = assessHealth(healthy(TUE, f1)); assert.equal(a.state, 'WARN'); assert.deepEqual(codes(a), ['SR_FEED_STALE']); assert(/XAGUSD/.test(a.issues[0].text))
   const f2 = fresh(TUE); f2.feeds.dxy_ice.tl = null; a = assessHealth(healthy(TUE, f2)); assert.deepEqual(codes(a), ['TL_FEED_STALE']); assert.equal(a.issues[0].sev, 'WARN')
@@ -134,7 +135,7 @@ await ok('ANALYSIS FEEDS (S/R + trendlines, 2026-10-18): fresh → no issue; an 
   const f4 = fresh(TUE); f4.feedRuns = [{ script: 'sr_refresh.mjs WTI', exit: 2 }, { script: 'sr_refresh.mjs WTI', exit: 2 }]; a = assessHealth(healthy(TUE, f4)); assert.deepEqual(codes(a), ['FEED_REFRESH_FAILED']); assert(/stale minutes/.test(a.issues[0].text))
   const SUN = Date.parse('2026-10-18T12:00:00Z'), f5 = fresh(SUN); f5.feeds.xau.sr = null; f5.tlTick = null; assert.deepEqual(codes(assessHealth(healthy(SUN, f5))).filter((c) => /FEED|TL_/.test(c)), [])
 })
-await ok('REAL files: the live inputs produce a verdict with all 12 checks (whatever its state today)', () => {
-  const a = assessHealth(readHealthInputs()); assert(['OK', 'WARN', 'STALE'].includes(a.state)); assert.deepEqual(Object.keys(a.checks).sort(), ['analysis_feeds', 'app', 'calendar', 'disk', 'full_check', 'futures', 'gold_stream', 'market', 'preopen', 'reconcile', 'recording_audit', 'stream_symbols'])
+await ok('REAL files: the live inputs produce a verdict with all 13 checks (whatever its state today)', () => {
+  const a = assessHealth(readHealthInputs()); assert(['OK', 'WARN', 'STALE'].includes(a.state)); assert.deepEqual(Object.keys(a.checks).sort(), ['analysis_feeds', 'app', 'calendar', 'disk', 'full_check', 'futures', 'gold_stream', 'live_ticks', 'market', 'preopen', 'reconcile', 'recording_audit', 'stream_symbols'])
 })
 console.log(process.exitCode ? '✗ DATA HEALTH SMOKE FAILED' : `✅ DATA HEALTH SMOKE: ${n} passed, 0 failed`)
