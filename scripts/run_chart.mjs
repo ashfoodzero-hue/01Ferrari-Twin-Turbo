@@ -116,6 +116,22 @@ function trendlines(asset, tf) {
   const liveAlerts = lt ? { at: lt.at, stale: Date.now() - Date.parse(lt.at) > 5 * 60000, status: la?.status ?? 'not checked', blocked: la?.blocked ?? null, price: la?.price ?? null, tf: la?.tf ?? {}, recent: (lt.recent ?? []).filter((x) => x.sym === d.symbol) } : null
   return { available: true, assets: TL_ASSETS, tfs: TL_TFS, ...d, live_alerts: liveAlerts, measured: st?.by_kind?.[key] ?? null, measured_at: st?.at ?? null, study_summary: st ? { ...(st.walk_forward ?? {}), holm_more: (st.cells ?? []).filter((x) => x.holm_pass && x.all?.lift > 0).length } : null, walk_forward_pass: (st?.cells ?? []).filter((x) => x.walk_forward_pass && x.sym === d.symbol && x.tf === tf).map((x) => x.cell) }
 }
+// S/R LEVELS page (2026-10-18; Ashraf: "build the real strong S/R levels at 1H, 4H, 1D, 1W, 1Month for all XAU, DXY, Silver, WTI … no stales").
+// Read-only: candles + levels (sr_display_<asset>_<tf>.json), the live near-price levels with their own records (sr_live_<asset>.json, sr_refresh.mjs
+// hourly), the MEASURED class hold % vs placebo (sr_levels_study.json) and the feed health (data_health.json). STALE is decided here, never hidden.
+const SR_PAGE = path.join(TURBO.root, 'ops', 'sr', 'index.html'), SR_TFS_UI = ['1H', '4H', '1D', '1W', '1M'], SRC = new Map()
+function srLevels(asset, tf) {
+  if (!TL_ASSETS[asset] || !SR_TFS_UI.includes(tf)) return { available: false, why: 'unknown asset / timeframe', assets: TL_ASSETS, tfs: SR_TFS_UI }
+  const f = path.join(TURBO.master, `sr_display_${asset}_${tf}.json`); if (!fs.existsSync(f)) return { available: false, why: 'sr_refresh.mjs / study_sr_levels.mjs has not run for this asset', assets: TL_ASSETS, tfs: SR_TFS_UI }
+  const m = fs.statSync(f).mtimeMs, c = SRC.get(f); let d = c && c.m === m ? c.d : null
+  if (!d) { d = JSON.parse(fs.readFileSync(f, 'utf8')); SRC.set(f, { m, d }) }
+  const live = J(`sr_live_${asset}.json`), st = J('sr_levels_study.json'), h = J('data_health.json'), g = signalsHalted()
+  const liveAge = live ? Date.now() - Date.parse(live.at) : null, open = !!h?.market_open
+  const stale = !live ? 'no live refresh yet' : g.halted ? `DATA STALE — ${g.why}` : open && liveAge > 75 * 60000 ? `S/R not refreshed for ${Math.round(liveAge / 60000)} min (every hour)` : null
+  return { available: true, assets: TL_ASSETS, tfs: SR_TFS_UI, ...d, live: live ? { at: live.at, last_minute: live.last_minute, source: live.source, delayed: live.delayed, tf: live.tf[tf] } : null,
+    stale, market_open: open, health: h ? { state: h.state, at: h.at, analysis_feeds: h.checks?.analysis_feeds ?? null, issues: (h.issues ?? []).filter((x) => /SR_|FEED|STREAM|FUTURES/.test(x.code)) } : null,
+    measured: st?.by_class?.[`${d.symbol}|${tf}`] ?? null, measured_at: st?.at ?? null, study_summary: st?.summary ?? null }
+}
 const send = (res, code, body, type = 'application/json') => { res.writeHead(code, { 'content-type': type, 'cache-control': 'no-store' }); res.end(type === 'application/json' ? JSON.stringify(body) : body) }
 const readHb = () => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, 'stream_heartbeat.json'), 'utf8')) } catch { return null } }
 
@@ -372,6 +388,8 @@ const server = http.createServer(async (req, res) => {
   try {
     const u = new URL(req.url, 'http://127.0.0.1'), sym = (u.searchParams.get('sym') || 'XAUUSD').toUpperCase(), tf = u.searchParams.get('tf') || '15m'
     if (u.pathname === '/' || u.pathname === '/index.html') return send(res, 200, fs.readFileSync(PAGE, 'utf8'), 'text/html; charset=utf-8')
+    if (u.pathname === '/sr') return send(res, 200, fs.readFileSync(SR_PAGE, 'utf8'), 'text/html; charset=utf-8')
+    if (u.pathname === '/api/sr') return send(res, 200, srLevels(u.searchParams.get('asset') || 'xau', u.searchParams.get('tf') || '4H'))
     if (u.pathname === '/trendlines') return send(res, 200, fs.readFileSync(TL_PAGE, 'utf8'), 'text/html; charset=utf-8')
     if (u.pathname === '/api/trendlines') return send(res, 200, trendlines(u.searchParams.get('asset') || 'xau', u.searchParams.get('tf') || '4H'))
     if (u.pathname === '/api/series') return send(res, 200, { series: [...SYMBOLS.map((s) => ({ sym: s.sym, role: s.role, delayed: false })), ...Object.entries(DERIVED).map(([k, v]) => ({ sym: k, ...v }))], tfs: Object.keys(TF) })

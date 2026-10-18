@@ -28,8 +28,14 @@ export const HEALTH_RULE = Object.freeze({
   reconcileMaxAgeMs: 30 * H, auditMaxAgeMs: 30 * H, verifyMaxAgeMs: 8.5 * 24 * H, calendarMaxAgeMs: 75 * MIN,
   healthMaxAgeMs: 10 * MIN,              // the gate fails CLOSED when data_health.json is older than this (the watcher itself stopped)
   diskCritGB: 5, diskWarnGB: 20,         // free space on the data drive: a full disk silently stops every append (stores, ledgers, logs)
+  // analysis feeds (2026-10-18, Ashraf: "make sure we have no stales during feeding … monitor health feeding with zerostale"): DERIVED from the raw feeds
+  // above (whose staleness is CRITICAL and halts every signal) → WARN here (Telegram after 3 checks); each feature refuses its own output when stale.
+  srMaxAgeMs: 75 * MIN,                  // S/R refresh: every hour at :04, 4 assets one at a time (≈ 6 min) → 75 min tolerates one slow cycle
+  tlLinesMaxAgeMs: 4.5 * H,              // trendline line refresh: after each asset's 4H close
+  tlTickMaxAgeMs: 5 * MIN,               // trendline minute check: every minute
 })
 const FUT = ['GOLD_FUT', 'SILVER_FUT', 'WTI']
+const ANALYSIS_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti'], SYM_OF = { xau: 'XAUUSD', xag: 'XAGUSD', dxy_ice: 'DXY_ICE', wti: 'WTI' }
 const readJ = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return null } }
 const lastLines = (f, n) => { try { return fs.readFileSync(f, 'utf8').trim().split('\n').slice(-n).map((l) => { try { return JSON.parse(l) } catch { return null } }).filter(Boolean) } catch { return [] } }
 const lastStoredT = (file) => { try { const size = fs.statSync(file).size; if (!size) return null; const fd = fs.openSync(file, 'r')
@@ -51,6 +57,10 @@ export function readHealthInputs(now = Date.now()) {
     history: readJ(path.join(TURBO.root, 'data', 'calendar', 'history.json')),
     preopen: readJ(path.join(TURBO.master, 'preopen_check.json')),
     diskFreeGB: (() => { try { const s = fs.statfsSync(TURBO.root); return +(s.bavail * s.bsize / 1e9).toFixed(1) } catch { return null } })(),
+    // analysis feeds (2026-10-18): S/R levels + major-trendline alerts, per asset — when each was last written, and the refresh children's exits
+    feeds: Object.fromEntries(ANALYSIS_ASSETS.map((sh) => [sh, { sr: readJ(path.join(TURBO.master, `sr_live_${sh}.json`))?.at ?? null, tl: readJ(path.join(TURBO.master, `trendline_live_lines_${sh}.json`))?.at ?? null }])),
+    tlTick: readJ(path.join(TURBO.master, 'trendline_tick_state.json'))?.at ?? null,
+    feedRuns: runs.filter((r) => /^(sr_refresh|trendline_lines)\.mjs /.test(r.script ?? '')).slice(-40),
   }
 }
 
@@ -132,6 +142,22 @@ export function assessHealth(I, R = HEALTH_RULE) {
   if (I.diskFreeGB != null && I.diskFreeGB < R.diskCritGB) add('DISK_FULL', 'CRITICAL', `Data drive almost full: ${I.diskFreeGB} GB free — new minutes cannot be saved safely.`)
   else if (I.diskFreeGB != null && I.diskFreeGB < R.diskWarnGB) add('DISK_LOW', 'WARN', `Data drive low: ${I.diskFreeGB} GB free (alarm at ${R.diskCritGB} GB).`)
   checks.disk = I.diskFreeGB != null ? `${I.diskFreeGB} GB free` : 'unknown'
+  // 9. ANALYSIS FEEDS (S/R levels hourly, trendline lines per 4H close, trendline minute check) — judged once the market has been open 40 min and is
+  //    still open long enough for a refresh cycle; plus two failed refreshes in a row of the same asset (exit 2 = the refresh saw stale minutes).
+  if (I.feeds && checks.app === 'running') {
+    const age = (t) => (t ? now - Date.parse(t) : Infinity), srOld = [], tlOld = [], failed = []
+    const srJudged = settledOpen && marketOpen(now - R.srMaxAgeMs), tlJudged = settledOpen && marketOpen(now - R.tlLinesMaxAgeMs)
+    for (const sh of ANALYSIS_ASSETS) { const f = I.feeds[sh] ?? {}
+      if (srJudged && age(f.sr) > R.srMaxAgeMs) srOld.push(`${SYM_OF[sh]} (${f.sr ? ago(age(f.sr)) + ' old' : 'never'})`)
+      if (tlJudged && age(f.tl) > R.tlLinesMaxAgeMs) tlOld.push(`${SYM_OF[sh]} (${f.tl ? ago(age(f.tl)) + ' old' : 'never'})`)
+      for (const kind of ['sr_refresh', 'trendline_lines']) { const rs = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}`).slice(-2)
+        if (rs.length === 2 && rs.every((r) => r.exit !== 0)) failed.push(`${kind} ${SYM_OF[sh]} (exit ${rs.at(-1).exit}${rs.at(-1).exit === 2 ? ' = stale minutes' : ''})`) } }
+    if (srOld.length) add('SR_FEED_STALE', 'WARN', `S/R levels not refreshed: ${srOld.join(', ')} (every hour) — the S/R tab shows STALE.`)
+    if (tlOld.length) add('TL_FEED_STALE', 'WARN', `Trendline lines not refreshed: ${tlOld.join(', ')} (after each 4H close) — trendline alerts wait.`)
+    if (settledOpen && age(I.tlTick) > R.tlTickMaxAgeMs) add('TL_TICK_STALE', 'WARN', `Trendline alert check has not run for ${I.tlTick ? ago(age(I.tlTick)) : 'ever'} (every minute).`)
+    if (failed.length) add('FEED_REFRESH_FAILED', 'WARN', `Analysis refresh failed twice in a row: ${failed.join(', ')}.`)
+    checks.analysis_feeds = ANALYSIS_ASSETS.map((sh) => `${SYM_OF[sh]} S/R ${I.feeds[sh]?.sr ? iso(Date.parse(I.feeds[sh].sr)).slice(11, 16) : '—'} · TL ${I.feeds[sh]?.tl ? iso(Date.parse(I.feeds[sh].tl)).slice(11, 16) : '—'}`).join(' | ') + ` · TL check ${I.tlTick ? iso(Date.parse(I.tlTick)).slice(11, 16) : '—'}` + (srOld.length || tlOld.length || failed.length ? ' · ⚠' : ' · ok')
+  }
   const state = issues.some((x) => x.sev === 'CRITICAL') ? 'STALE' : issues.length ? 'WARN' : 'OK'
   return { at: new Date(now).toISOString(), state, market_open: open, market, issues, checks }
 }
