@@ -48,6 +48,7 @@ Started 2026-10-17. This is a living record, kept for Ashraf.
 | 2026-10-17 | "yes write the rules for the tighter stop version"; then "Yes, run it as written" | Phase 4C run and recorded (§5G) |
 | 2026-10-17 | "yes write the rules for the earlier ladder step entry"; then "Yes, run it as written" | Phase 4D run and recorded (§5H) |
 | 2026-10-17 | "continue here" → "Ladder context on the chart" → "Yes, build and prove it" → "Yes, make it live now" | Ladder chip built, proven 4/4 and live (observation 35) |
+| 2026-10-18 | "we need to understand the next move for swings on 15m time frames" (all four meanings); then "Yes, run it as written" | 15m next-move study run on the corrected history (§5I, observations 36-40) |
 
 ## 2. The data foundation (the full details: `docs/DATA_CONTRACT.md`)
 
@@ -768,6 +769,54 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 3. **The longs on 4H / 1D are the least bad** (+0.01 to +0.16 R, PF 1.1-1.6). They are not significant, and they are consistent with gold's 2013-26 up-drift (see the standing memory "Gold's drift is the null").
 4. **The swing study's verdict is unchanged and now stronger:** the ladder is CONTEXT (which swing is real), not an ENTRY. Nothing is wired live.
 
+## 5I. 15m swings: the NEXT MOVE (`docs/SWING_NEXTMOVE_15M_SPEC.md`; results `data/master/swing_nextmove_15m.json`, atlas `docs/SWING_NEXTMOVE_15M_ATLAS.md`, every event `docs/swing_book/nextmove15m/events_k3.csv`)
+
+### 5I.1 Rules (pre-registered, shown, approved 2026-10-18: "Yes, run it as written")
+- 15m ZigZag swings, k = 3 ATR; robustness k = 2, 5.
+- Everything is measured **from the confirmation close**: no hindsight.
+- Data 2013-07 → 2026-10-09 06:00, on the 2026-10-18 corrected history. TRAIN until 2021-06-23, OOS after.
+- The four questions:
+  - **Q1:** does the leg carry on (race ±X ATR vs random closes, same hour + year)?
+  - **Q2:** size.
+  - **Q3:** timing.
+  - **Q4:** does the next extreme stop at a known level?
+- **ADDENDUM A** (written after the first run, before its numbers): a distance-matched placebo for Q4.
+
+### 5I.2 Results — 15,331 events (9,317 TRAIN / 6,014 OOS)
+- **Q1, direction: NO EDGE (0 / 6 cells).**
+  - After confirmation the leg continues **+X ATR before −X ATR** as often as a random 15m close does.
+  - X = 1, OOS: 50.3 % vs control 49.1 % (TRAIN 48.8 % vs 49.2 %).
+  - Every cell at 0.5 / 1 / 2 ATR, either side, fails. k = 2 and k = 5 flip signs.
+- **Q2, size (in ATR: stable TRAIN ↔ OOS; dollars grow with price):**
+
+  | Measure (ATR of the confirmation candle) | P25 | **P50** | P75 | P90 |
+  |---|---|---|---|---|
+  | Full leg (swing → next swing), OOS | 3.83 | **4.97** | 7.18 | 10.25 |
+  | **Remaining after confirmation**, OOS | 0.91 | **1.95** | 4.09 | 7.20 |
+  | Adverse move before the next extreme, OOS | 0.10 | **0.52** | 1.09 | 1.69 |
+
+  OOS in dollars: remaining median $6.43, adverse median $1.60.
+- **Q3, timing:**
+  - The next extreme comes a median **7 bars** (≈ 1 h 45 m) after confirmation (P25 1, P75 19, P90 34).
+  - It is confirmed a median **16 bars** after (P75 28).
+  - The hazard is highest right away: 11.9 % in the first bar, then 6-9 % per bar.
+- **Q4, where it ends:**
+  - The pre-registered verdict flagged the previous opposite 15m swing (7.0 % vs shifted 5.3 %) and the next $10 round number (10.2 % vs 6.2 %).
+  - **ADDENDUM A REFUTES both:** with the distance matched, 7.0 % vs 7.7 % and 10.2 % vs 10.0 %. The "effect" was the level sitting close to price.
+  - **No level type attracts the next extreme (0 / 6 robust).**
+  - The previous day's high / low is hit LESS often than chance (3.2 % vs 4.0 %, Holm-significant): legs run through it.
+  - Round numbers equal uniform chance (OOS 22.3 % vs 21.7 %).
+- **Context splits, 0 pass:** 1H / 4H direction, session, lag, leg-so-far, USD release ±60 min, ladder state. The ladder is uninformative here: 98.5 % of 15m swings already have all three lower timeframes flipped at confirmation.
+
+### 5I.3 What it means
+1. **At confirmation, the 15m leg's DIRECTION is a coin flip.** The swing is real (it confirmed), but whether the next ATR goes with it or against it is chance.
+2. **Its SIZE and TIMING are stable and usable as expectations, not signals:**
+   - **Size:** half the legs give ≥ 1.95 ATR more after confirmation, a quarter give < 0.9 ATR.
+   - **Adverse:** the typical adverse move first is about 0.5 ATR, and 1.1 ATR at P75.
+   - **Timing:** the turn usually comes within 2-5 hours.
+3. **Known levels do not mark where the leg ends** (all match the distance placebo), consistent with "levels get BROKEN" (Twin studies 2026-10-08 → 10-16).
+4. **No trade rule follows from this study.** A target / stop sizing from Q2 would need its own pre-registered, cost-priced test, and Q1 says it would start from a coin flip.
+
 
 ## 6. Observations log (small details, kept even when untested)
 
@@ -830,6 +879,12 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 
 35. **The ladder is now LIVE on the chart as context (2026-10-17).** The "Ladder" chip (15m / 1H / 4H / 1D) shows each live leg extreme, which lower timeframes confirmed at that exact price, and the study's OOS odds. It updates every 3 min while the market is open and is information only. Spec `docs/LADDER_CONTEXT_SPEC.md`; proofs `smoke_ladder_context` 4/4 (window parity, replay = study, no look-ahead, wording). (Use of the study.)
 
+36. **15m direction after confirmation is a coin flip** (Q1 0 / 6; 50.3 % vs 49.1 % at 1 ATR, OOS n 6,014). (§5I)
+37. **15m leg size in ATR is stable 2013 → 2026:** remaining after confirmation, median 1.95 ATR (TRAIN 1.94); adverse first 0.5 ATR; full leg 4.9-5.0 ATR. In dollars it doubled with the price level, so always size in ATR. (§5I)
+38. **A placebo that changes distance is not a control.** Q4's shifted-level control made "nearby" levels look like magnets. The distance-matched placebo (ADDENDUM A) removed both apparent effects. Use distance-matched placebos for every future level test. (§5I)
+39. **The previous day's high / low is passed THROUGH, not stopped at** (3.2 % hits vs 4.0 % placebo). (§5I)
+40. **k = 2 asymmetry, untested:** at k = 2 the leg after a confirmed LOW continues up LESS than random (−6.7 pp OOS, −5.1 pp TRAIN) and after a HIGH continues down MORE (+7.4 / +3.1 pp). At k = 3 the signs disagree, so it is not a finding. Kept for a later pre-registered look. (§5I)
+
 ## 7. Open questions (for later phases)
 
 - ~~Phase 2: does the footprint add to the candle shape?~~ **Answered 2026-10-17 (§5):** mostly no. The candle shape at the same offset separates better; the footprint at the extreme marks extremes, not turns.
@@ -879,6 +934,9 @@ Every statement below is a measured result from Phases 1-3C, quoted with its sou
 | Phase 4 rules | `docs/SWING_TRADE_SPEC.md` |
 | Phase 4B results | `data/master/swing_trade_atlas.json` |
 | Phase 4B every trade | `docs/swing_book/phase4_all_trades.csv` (also `data/master/swing_trades.csv`) |
+| 15m next-move rules (+ ADDENDUM A) | `docs/SWING_NEXTMOVE_15M_SPEC.md` |
+| 15m next-move results | `docs/SWING_NEXTMOVE_15M_ATLAS.md`, `data/master/swing_nextmove_15m.json` (`scripts/study_swing_nextmove15m.mjs`, core `scripts/lib/swing_nextmove.mjs`, smoke `smoke_swing_nextmove.mjs`) |
+| 15m next-move every event | `docs/swing_book/nextmove15m/events_k3.csv` |
 | Phase 4C rules | `docs/SWING_TIGHTSTOP_SPEC.md` |
 | Phase 4C results | `data/master/swing_tightstop.json` |
 | Phase 4C every trade | `docs/swing_book/phase4c_all_trades.csv` (also `data/master/swing_tightstop_trades.csv`) |

@@ -1129,3 +1129,16 @@ without duplications … only use the real Win results, and ignore the rest."
     - Both reproduce exactly on the raw stamps; their smokes now certify that.
   - **New tools:** `smoke_source_quirks` 4/4; TradingView daily reference `data/master/tv_daily_reference_2018_2026.json` (via `scripts/measure_tv_daily.cjs`, chart restored).
   - **Live check (market closed):** pre-open READY 15/15 · store = Polygon on 11 series · stream 8/8 · TradingView anchors XAU / XAG 17/17.
+- **(cm) 2026-10-18 — 15m SWINGS: THE NEXT MOVE (spec `docs/SWING_NEXTMOVE_15M_SPEC.md` + ADDENDUM A; Ashraf: all four meanings, "Yes, run it as written"). Book `docs/SWING_STUDY_BOOK.md` §5I, observations 36-40; atlas `docs/SWING_NEXTMOVE_15M_ATLAS.md` (generated from the JSON); every event `docs/swing_book/nextmove15m/events_k3.csv`.**
+  - 15,331 confirmed 15m swings (k = 3; 6,014 OOS), all measured from the confirmation close, on the corrected history.
+  - **Q1, direction:** 0 / 6. The leg continues like a random close (OOS 50.3 % vs 49.1 % at 1 ATR); k = 2 / 5 flip signs.
+  - **Q2, size (ATR, stable TRAIN ↔ OOS):**
+    - remaining after confirmation: median 1.95 ATR (P25 0.91, P75 4.09);
+    - adverse first: median 0.52 ATR (P75 1.09);
+    - full leg: median 4.97 ATR.
+    - Dollars doubled with the price level.
+  - **Q3, timing:** the next extreme comes a median 7 bars after confirmation (P75 19), confirmed at a median 16 bars.
+  - **Q4, levels:** the pre-registered check flagged the previous opposite 15m swing and $10 round numbers. **ADDENDUM A** (distance-matched placebo, written before its numbers) REFUTES both: 7.0 vs 7.7 %, 10.2 vs 10.0 %. 0 / 6 robust. The previous-day extreme is hit LESS than chance (passed through).
+  - **Splits:** 0 pass. The ladder is uninformative at 15m confirmation (98.5 % have all three steps flipped).
+  - **No trade rule.** Lesson: a level control must match DISTANCE (observation 38).
+  - **Code:** `scripts/lib/swing_nextmove.mjs`, `study_swing_nextmove15m.mjs`, `report_swing_nextmove15m.mjs`, `smoke_swing_nextmove` 6/6.

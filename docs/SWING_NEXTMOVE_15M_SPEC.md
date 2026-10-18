@@ -77,3 +77,12 @@ Each known at the confirmation close:
 - **Hindsight:** counting from the swing extreme instead of the confirmation would show 3 ATR of "free" move. All "next move" measures start at the confirmation close.
 - **Level selection:** only levels known at the confirmation time, each with its exact known time.
 - **Same-minute ambiguity:** 1m race, adverse touch first.
+
+## ADDENDUM A (2026-10-18, written AFTER the first run, BEFORE these numbers)
+
+**Why:** Q4's pre-registered control shifts each level by ±1-3 ATR, which also changes its DISTANCE from the confirmation price. The next extreme lands mostly within about 2 ATR of the confirmation (Q2: remaining-move median ≈ 1.95 ATR). So a level type that tends to sit close by construction (the first $10 above price, the previous opposite swing) can beat that control on distance alone.
+
+**Added check (robustness; the pre-registered verdict stays as reported):** a DISTANCE-MATCHED placebo.
+- For each event with a level at distance d (in ATR, in the leg direction), take the remaining move of a RANDOM OTHER event of the same side and the same TRAIN / OOS part, and test whether it lands within ±0.25 ATR of d. This keeps the distance distribution and the move distribution exactly and removes only the coupling "this leg ↔ this level". Seeded, 5 placebo draws per level.
+- A Q4 claim is called **ROBUST** only if it also beats this placebo: OOS Holm-passing, Wilson LB of the real hit rate > the placebo rate, TRAIN agrees.
+- Also reported: the plain round-number test, i.e. is the next extreme closer to a $10 / $50 multiple than a uniform position inside the band would give (expected = 0.5·ATR / step).
