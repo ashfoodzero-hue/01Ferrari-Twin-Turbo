@@ -1,6 +1,6 @@
 # XAU and DXY together at S/R levels, on the same timeframe
 
-Written 2026-10-19, before any number. Status: **RUN 2026-10-19** — results `docs/XAU_DXY_SR_ATLAS.md`: no lift; DXY agreeing does not help ( (Ashraf: "what if XAU and DXY check them at the same time frame at S/R level and tell me what u find").
+Written 2026-10-19, before any number. Status: **RUN 2026-10-19** — results `docs/XAU_DXY_SR_ATLAS.md`: no lift; DXY agreeing does not help (Ashraf: "what if XAU and DXY check them at the same time frame at S/R level and tell me what u find").
 
 ## Idea
 
