@@ -1,0 +1,30 @@
+{
+ "at": "2026-10-18T19:45:26.789Z",
+ "symbol": "WTI",
+ "days": 90,
+ "window": [
+  "2026-07-18T21:00:00.000Z",
+  "2026-10-16T21:00:00.000Z"
+ ],
+ "ticks": 89126,
+ "truth": 84,
+ "truth_by_type": {
+  "T 4H": 29,
+  "R 4H": 17,
+  "B 4H": 19,
+  "T 1D": 8,
+  "R 1D": 6,
+  "B 1D": 5
+ },
+ "alerts": 84,
+ "missing": 0,
+ "extra": 0,
+ "bounced_then_broken_same_candle": 0,
+ "explained_keys": [],
+ "missing_keys": [],
+ "extra_keys": [],
+ "at_alert_minutes_after_candle_open": {
+  "p50": 157,
+  "n": 37
+ }
+}

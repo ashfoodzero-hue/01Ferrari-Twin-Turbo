@@ -112,8 +112,9 @@ function trendlines(asset, tf) {
   const f = path.join(TURBO.master, `trendlines_display_${asset}_${tf}.json`); if (!fs.existsSync(f)) return { available: false, why: 'study_trendlines.mjs has not been run for this asset', assets: TL_ASSETS, tfs: TL_TFS }
   const m = fs.statSync(f).mtimeMs, c = TLC.get(f); let d = c && c.m === m ? c.d : null
   if (!d) { d = JSON.parse(fs.readFileSync(f, 'utf8')); TLC.set(f, { m, d }) }
-  const st = J('trendlines_study.json'), key = `${d.symbol}|${tf}`
-  return { available: true, assets: TL_ASSETS, tfs: TL_TFS, ...d, measured: st?.by_kind?.[key] ?? null, measured_at: st?.at ?? null, study_summary: st ? { ...(st.walk_forward ?? {}), holm_more: (st.cells ?? []).filter((x) => x.holm_pass && x.all?.lift > 0).length } : null, walk_forward_pass: (st?.cells ?? []).filter((x) => x.walk_forward_pass && x.sym === d.symbol && x.tf === tf).map((x) => x.cell) }
+  const st = J('trendlines_study.json'), key = `${d.symbol}|${tf}`, lt = J('trendline_tick_state.json'), la = lt?.assets?.[d.symbol]
+  const liveAlerts = lt ? { at: lt.at, stale: Date.now() - Date.parse(lt.at) > 5 * 60000, status: la?.status ?? 'not checked', blocked: la?.blocked ?? null, price: la?.price ?? null, tf: la?.tf ?? {}, recent: (lt.recent ?? []).filter((x) => x.sym === d.symbol) } : null
+  return { available: true, assets: TL_ASSETS, tfs: TL_TFS, ...d, live_alerts: liveAlerts, measured: st?.by_kind?.[key] ?? null, measured_at: st?.at ?? null, study_summary: st ? { ...(st.walk_forward ?? {}), holm_more: (st.cells ?? []).filter((x) => x.holm_pass && x.all?.lift > 0).length } : null, walk_forward_pass: (st?.cells ?? []).filter((x) => x.walk_forward_pass && x.sym === d.symbol && x.tf === tf).map((x) => x.cell) }
 }
 const send = (res, code, body, type = 'application/json') => { res.writeHead(code, { 'content-type': type, 'cache-control': 'no-store' }); res.end(type === 'application/json' ? JSON.stringify(body) : body) }
 const readHb = () => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, 'stream_heartbeat.json'), 'utf8')) } catch { return null } }

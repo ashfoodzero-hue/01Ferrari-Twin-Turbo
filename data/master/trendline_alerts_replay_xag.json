@@ -1,0 +1,28 @@
+{
+ "at": "2026-10-18T19:25:00.867Z",
+ "symbol": "XAGUSD",
+ "days": 90,
+ "window": [
+  "2026-07-18T21:00:00.000Z",
+  "2026-10-16T21:00:00.000Z"
+ ],
+ "ticks": 89408,
+ "truth": 68,
+ "truth_by_type": {
+  "T 4H": 28,
+  "B 4H": 27,
+  "R 4H": 7,
+  "T 1D": 3,
+  "B 1D": 2,
+  "R 1D": 1
+ },
+ "alerts": 68,
+ "missing": 0,
+ "extra": 0,
+ "missing_keys": [],
+ "extra_keys": [],
+ "at_alert_minutes_after_candle_open": {
+  "p50": 114,
+  "n": 31
+ }
+}

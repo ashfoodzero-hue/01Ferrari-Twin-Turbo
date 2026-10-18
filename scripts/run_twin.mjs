@@ -93,6 +93,8 @@ let lastRec = null, recRunning = false   // futures + GLD recorder (record_futur
 let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
 let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
+const TL_SYMS = ['XAUUSD', 'XAGUSD', 'DXY_ICE', 'WTI']   // major-trendline alerts (2026-10-18): minute tick + per-asset line refresh queue
+let lastTl = null, tlRunning = false, tlRefreshing = null, tlQueue = [...TL_SYMS]   // every asset is refreshed once at start
 let lastPre = null, preRunning = false, sesAt = 0, ses = null   // pre-open readiness check (preopen_check.mjs, 2026-10-18)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
@@ -161,6 +163,20 @@ for (;;) {
   if (marketOpen(lKey - 1) && now - lKey >= 20000 && lastLevel !== lKey && !levelRunning) { levelRunning = true; lastLevel = lKey
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'level_tick.mjs')], { timeout: 50000, windowsHide: true }, (err, stdout, stderr) => { levelRunning = false
       if (err || /📨/.test(String(stdout))) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'level_tick.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n')
+      if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
+  // MAJOR TRENDLINE ALERTS (2026-10-18, Ashraf: "when ever it reach those major trend lines from both sides we need alert for either a bounce or a major
+  // break" → 4H + 1D, Telegram + app; then DXY, silver, WTI). trendline_tick.mjs every minute 25 s after the close while the market is open (📐 AT LINE,
+  // ✅ BOUNCED); an asset whose tick reports "a newer candle closed" is queued for trendline_lines.mjs (full-history line refresh, ❌ BROKEN at the close),
+  // one asset at a time — so every session's own 4H / 1D close (gold, ICE DXY, CME WTI) is handled without a fixed clock. Information only.
+  if (marketOpen(lKey - 1) && now - lKey >= 25000 && lastTl !== lKey && !tlRunning) { tlRunning = true; lastTl = lKey
+    execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'trendline_tick.mjs')], { timeout: 50000, windowsHide: true }, (err, stdout, stderr) => { tlRunning = false
+      if (err || /📨/.test(String(stdout))) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'trendline_tick.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n')
+      if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || ''))
+      try { const st = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'trendline_tick_state.json'), 'utf8'))
+        for (const [s, a] of Object.entries(st.assets ?? {})) if ((a.status?.startsWith('no lines file') || Object.values(a.tf ?? {}).some((x) => x.status?.startsWith('a newer candle closed'))) && tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) } catch { /* no state yet */ } }) }
+  if (!tlRefreshing && tlQueue.length) { const s = tlQueue.shift(); tlRefreshing = s
+    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'trendline_lines.mjs'), s], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { tlRefreshing = null
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `trendline_lines.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
       if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   // FUTURES + GLD RECORDER (record_futures.mjs, 2026-10-17, Ashraf: "the App … saves our database … so we build our own history for Future and
   // Spot for XAU, DXY, Silver"): every 15 min at 8 min past each 15m close, always (futures trade Sunday-Friday). Append-only, final minutes only,

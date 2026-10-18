@@ -1,0 +1,30 @@
+{
+ "at": "2026-10-18T19:35:37.126Z",
+ "symbol": "DXY_ICE",
+ "days": 90,
+ "window": [
+  "2026-07-18T21:00:00.000Z",
+  "2026-10-16T21:00:00.000Z"
+ ],
+ "ticks": 92286,
+ "truth": 87,
+ "truth_by_type": {
+  "T 4H": 36,
+  "R 4H": 14,
+  "B 4H": 31,
+  "T 1D": 2,
+  "R 1D": 2,
+  "B 1D": 2
+ },
+ "alerts": 87,
+ "missing": 0,
+ "extra": 0,
+ "bounced_then_broken_same_candle": 0,
+ "explained_keys": [],
+ "missing_keys": [],
+ "extra_keys": [],
+ "at_alert_minutes_after_candle_open": {
+  "p50": 110,
+  "n": 38
+ }
+}

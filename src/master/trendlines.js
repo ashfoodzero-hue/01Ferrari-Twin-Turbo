@@ -42,7 +42,8 @@ export function buildLines(C, pivots, A, { prev = TL.PREV, tol = TL.TOL } = {}) 
   return lines
 }
 
-/** Run one line (offset 0 = real; d × atrBirth = placebo) through the touch / outcome rules.
+/** Run one line (offset 0 = real; d × atrBirth = placebo) through the touch / outcome rules. An open line also reports its live state for the
+ *  live alerts (scripts/trendline_tick.mjs): armed (a touch would count now) or pending (touched, waiting for bounce / break).
  *  → { born, touches: [{ i, test, outcome 'respect'|'break'|'open', resolvedI }], endI, end: 'break'|'break_unarmed'|'open' } */
 export function evaluateLine(C, A, ln, offset = 0, { tol = TL.TOL, away = TL.AWAY, R = TL.R } = {}) {
   const s = ln.side === 'support' ? 1 : -1, v = (x) => ln.p1 + ln.slope * (x - ln.i1) + offset, N = C.length
@@ -60,9 +61,9 @@ export function evaluateLine(C, A, ln, offset = 0, { tol = TL.TOL, away = TL.AWA
     for (; j < N; j++) { const a2 = A[j - 1] || a
       if (beyond(j, a2)) { t.outcome = 'break'; t.resolvedI = j; return { born: true, touches, endI: j, end: 'break' } }
       if (far(j) >= R * a2) { t.outcome = 'respect'; t.resolvedI = j; break } }
-    if (j >= N) return { born: true, touches, endI: N - 1, end: 'open' }
+    if (j >= N) return { born: true, touches, endI: N - 1, end: 'open', armed: false, pending: t }
     armed = false; k = j }
-  return { born: true, touches, endI: N - 1, end: 'open' }
+  return { born: true, touches, endI: N - 1, end: 'open', armed, pending: null }
 }
 /** Line value at candle index x (for drawing). */
 export const lineAt = (ln, x, offset = 0) => ln.p1 + ln.slope * (x - ln.i1) + offset
