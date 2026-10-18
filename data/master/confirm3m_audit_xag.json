@@ -1,0 +1,20 @@
+{
+ "at": "2026-10-18T21:52:32.378Z",
+ "symbol": "XAGUSD",
+ "finder": {
+  "lib": 718,
+  "naive": 718,
+  "only_naive": 0,
+  "only_lib": 0,
+  "sample": []
+ },
+ "prefix_differences": 0,
+ "simulator": {
+  "checks": 2400,
+  "differences": 0
+ },
+ "positive_control_1R": {
+  "won": 1436,
+  "n": 1500
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "at": "2026-10-18T21:18:09.390Z",
+ "symbol": "XAUUSD",
+ "finder": {
+  "lib": 745,
+  "naive": 745,
+  "only_naive": 0,
+  "only_lib": 0,
+  "sample": []
+ },
+ "prefix_differences": 0,
+ "simulator": {
+  "checks": 2400,
+  "differences": 0
+ },
+ "positive_control_1R": {
+  "won": 1500,
+  "n": 1500
+ }
+}

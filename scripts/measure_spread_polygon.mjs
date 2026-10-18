@@ -22,7 +22,9 @@ const Y0 = +(process.argv[2] || 2013), Y1 = +(process.argv[3] || new Date().getU
 // MEASURED 2026-10-08: Polygon's quote archive carries only ~2-3 quotes/minute in 2021-2025 (~150 in other years), so a 1-minute
 // sample is too thin there. SPREAD_WIN_MIN widens each sample window (same hours/days); re-run those years with 10.
 const WIN_MIN = +(process.env.SPREAD_WIN_MIN || 1)
-const OUT = path.join(TURBO.master, 'spread_table.json'), RAW = path.join(TURBO.master, 'spread_samples.jsonl')
+// SPREAD_SYM (2026-10-19, for the 3m-confirmation money test): XAGUSD → its own table / samples files; the default stays gold, files unchanged.
+const SYM = process.env.SPREAD_SYM || 'XAUUSD', SUF = SYM === 'XAUUSD' ? '' : '_' + SYM
+const OUT = path.join(TURBO.master, `spread_table${SUF}.json`), RAW = path.join(TURBO.master, `spread_samples${SUF}.jsonl`)
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const med = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return s[Math.floor((s.length - 1) / 2)] }
 const pct = (a, p) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(p * (s.length - 1)))] }
@@ -39,7 +41,7 @@ for (let y = Y0; y <= Y1; y++) for (let m = 0; m < 12; m++) {
     const wait = last + 260 - Date.now(); if (wait > 0) await sleep(wait); last = Date.now()
     let j = null
     for (let a = 0; a < 3 && !j; a++) {
-      try { const r = await fetchJsonResilient(`https://api.polygon.io/v3/quotes/C:XAUUSD?timestamp.gte=${t0 * 1e6}&timestamp.lt=${(t0 + WIN_MIN * 60000) * 1e6}&limit=1000&order=asc&apiKey=${KEY}`, { timeoutMs: 15000 }); if (r.status === 429) { await sleep(10000); continue } j = r.json } catch { await sleep(3000) }
+      try { const r = await fetchJsonResilient(`https://api.polygon.io/v3/quotes/C:${SYM}?timestamp.gte=${t0 * 1e6}&timestamp.lt=${(t0 + WIN_MIN * 60000) * 1e6}&limit=1000&order=asc&apiKey=${KEY}`, { timeoutMs: 15000 }); if (r.status === 429) { await sleep(10000); continue } j = r.json } catch { await sleep(3000) }
     }
     calls++
     const sp = (j?.results ?? []).map((q) => q.ask_price - q.bid_price).filter((x) => Number.isFinite(x) && x >= 0)
@@ -54,7 +56,7 @@ for (const r of rows) {
   ((table[r.y] ??= {})[r.h] ??= []).push(r.med); (byYear[r.y] ??= []).push(r.med); (byHour[r.h] ??= []).push(r.med)
 }
 const sum = (a) => ({ median: +med(a).toFixed(4), p75: +pct(a, 0.75).toFixed(4), n: a.length })
-const out = { generated_utc: new Date().toISOString(), source: 'polygon /v3/quotes/C:XAUUSD', unit: 'USD full spread (ask − bid)',
+const out = { generated_utc: new Date().toISOString(), source: `polygon /v3/quotes/C:${SYM}`, unit: 'USD full spread (ask − bid)',
   sampling: 'one window starting hh:30 per (2nd Wednesday of each month, UTC hour) — 1 minute, or 10 minutes for 2021-2025 where the quote archive is thin (win_min per sample); statistic = median of the window-medians; samples with < 5 quotes dropped', samples: rows.length,
   dropped_thin: fs.readFileSync(RAW, 'utf8').trim().split('\n').length - rows.length,
   by_year_hour: Object.fromEntries(Object.entries(table).map(([y, hs]) => [y, Object.fromEntries(Object.entries(hs).map(([h, a]) => [h, sum(a)]))])),
