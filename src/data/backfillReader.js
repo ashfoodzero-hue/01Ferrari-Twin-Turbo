@@ -15,7 +15,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO } from '../core/paths.js'
 import readline from 'node:readline'
-import { canonTf, normalizeBar, isSaneBar, sortBars, repairBadPrints } from './bars.js'
+import { canonTf, normalizeBar, isSaneBar, sortBars, repairBadPrints, repairStream } from './bars.js'   // repairBadPrints: the array form (tests / external callers)
 import { refHistoryFile, correctionsFile } from '../core/paths.js'
 import { loadCorrections, applyCorrection } from './corrections.js'
 
@@ -111,7 +111,15 @@ export async function* resampleClosed(bars1m, ms) {
   if (cur && lastMinute + 60000 === G.end(cur.t)) yield cur       // trailing bucket only if its final minute exists
 }
 
-export async function* streamBars(symbol, tf, { from = -Infinity, to = Infinity } = {}) {
+/** REPAIRED 1m bars of [from, to] (2026-10-18). The bad-print rule judges a minute by its neighbours, so the window is read with REPAIR_MARGIN
+ *  either side (covers weekends + holidays: the first minute after a weekend is judged against Friday's close — the known 2025-11-23T22:00
+ *  XAU print sits exactly there) and then cut. Every window of every timeframe therefore judges each minute from the SAME neighbours. */
+const REPAIR_MARGIN_MS = 4 * 86400000
+async function* repaired1m(symbol, from, to, onRepair) {
+  for await (const b of repairStream(streamBars(symbol, '1m', { from: from - REPAIR_MARGIN_MS, to: to + REPAIR_MARGIN_MS }), (r) => { if (r.t >= from && r.t <= to) onRepair(r) }))
+    if (b.t >= from && b.t <= to) yield b
+}
+export async function* streamBars(symbol, tf, { from = -Infinity, to = Infinity, onRepair = () => {} } = {}) {
   const k = canonTf(tf)
   if (k !== '1m') {
     const ms = RESAMPLE_TF_MS[k] ?? CALENDAR_TF[k]
@@ -119,7 +127,9 @@ export async function* streamBars(symbol, tf, { from = -Infinity, to = Infinity 
     const G = gridOf(ms)
     const from1 = Number.isFinite(from) ? G.key(from) : -Infinity
     const to1 = Number.isFinite(to) ? G.end(G.key(to)) - 1 : Infinity
-    for await (const b of resampleClosed(streamBars(symbol, '1m', { from: from1, to: to1 }), ms)) {
+    // bad prints are repaired on the 1m bars BEFORE resampling (bars.js — the rule is only proven at 1 minute; on a coarse candle it erased the
+    // real 2017-07-06 silver crash)
+    for await (const b of resampleClosed(repaired1m(symbol, from1, to1, onRepair), ms)) {
       if (b.t < from || b.t > to) continue
       yield b
     }
@@ -178,8 +188,9 @@ export async function loadBars(symbol, tf, opts = {}) {
       `Run \`npm run validate:data\` for the full report.`)
   }
   const file = resolveHistoryFile(symbol, tf)
-  const bars = []
-  for await (const b of streamBars(symbol, tf, { from, to })) {
+  const bars = [], repaired = [], onRepair = (r) => repaired.push(r)
+  const src = canonTf(tf) === '1m' ? repaired1m(symbol, from ?? -Infinity, to ?? Infinity, onRepair) : streamBars(symbol, tf, { from, to, onRepair })
+  for await (const b of src) {
     bars.push(b)
     if (bars.length >= limit) break
   }
@@ -188,7 +199,8 @@ export async function loadBars(symbol, tf, opts = {}) {
   // bad tick that POLYGON ITSELF serves, so it cannot be re-fetched away. Repaired here, at the ONE chokepoint
   // every consumer reads through, under neighbour-consistency conditions that provably cannot fire on a real
   // crash (a real crash's next bar CONFIRMS the new price; this repair requires the next bar to DENY it).
-  const { repaired } = repairBadPrints(bars)
+  // (2026-10-18) the repair now happens on the 1m stream itself (repaired1m) — for 1m AND for every coarser timeframe, which is built from the
+  // repaired minutes and never re-judged as a candle. Same rule (bars.repairOne), same neighbours whatever the window.
   if (repaired.length) console.warn(`  ⚠ ${symbol}/${tf}: repaired ${repaired.length} provably-false print(s): ${repaired.map((r) => r.iso.slice(0, 16) + '(' + r.fields.join('') + ')').join(', ')}`)
   const stats = {
     kept: bars.length,

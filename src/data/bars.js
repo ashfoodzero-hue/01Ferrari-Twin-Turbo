@@ -101,24 +101,42 @@ export function sortBars(bars) {
 const NEIGHBOR_TOL = 0.03    // prev.c and next.o must agree within 3% for the bar to be judged at all
 const DEVIATION_TOL = 0.10   // a field must sit >10% outside the neighbour envelope to be called a bad print
 
-/** Repair provably-false prints in an ASCENDING bar array, in place. Returns { bars, repaired } */
+// ⚠ 1-MINUTE ONLY (2026-10-18, measured by audit_timeframes.mjs). Applied to RESAMPLED candles the rule erased a REAL crash: the silver flash
+// crash of 2017-07-06 ~23:00Z (≈ −10 % in minutes, recovered) fits inside one 3m / 15m / 1h candle, so that candle's neighbours "agree" and its
+// genuine low was clamped — while the 1m bars, whose next minute CONFIRMED the crash, were rightly left alone. The neighbour proof only holds at
+// 1 minute: loadBars / streamBars now repair the 1m bars and build every coarser candle FROM them (the same minutes TradingView candles use).
+/** The rule for ONE bar between its (already repaired) neighbours, in place. @returns the repaired fields ([] = untouched) */
+export function repairOne(prev, b, next) {
+  if (!prev?.c || !next?.o) return []
+  if (Math.abs(next.o - prev.c) > NEIGHBOR_TOL * prev.c) return []          // neighbours disagree → could be REAL → never touch
+  const lo = Math.min(prev.c, next.o), hi = Math.max(prev.c, next.o)
+  const fields = []
+  if (b.l < lo * (1 - DEVIATION_TOL)) { b.l = Math.min(b.o <= hi * (1 + DEVIATION_TOL) && b.o >= lo * (1 - DEVIATION_TOL) ? b.o : lo, lo); fields.push('l') }
+  if (b.h > hi * (1 + DEVIATION_TOL)) { b.h = Math.max(b.o <= hi * (1 + DEVIATION_TOL) && b.o >= lo * (1 - DEVIATION_TOL) ? b.o : hi, hi); fields.push('h') }
+  if (b.c < lo * (1 - DEVIATION_TOL) || b.c > hi * (1 + DEVIATION_TOL)) { b.c = Math.max(lo, Math.min(hi, b.c < lo ? lo : hi)); fields.push('c') }
+  if (fields.length) {
+    // keep OHLC internally coherent after the clamp
+    b.h = Math.max(b.h, b.o, b.c); b.l = Math.min(b.l, b.o, b.c)
+    b._repaired = fields
+  }
+  return fields
+}
+/** Repair provably-false prints in an ASCENDING 1m bar array, in place. Returns { bars, repaired } */
 export function repairBadPrints(bars) {
   const repaired = []
   for (let i = 1; i < bars.length - 1; i++) {
-    const prev = bars[i - 1], b = bars[i], next = bars[i + 1]
-    if (!prev?.c || !next?.o) continue
-    if (Math.abs(next.o - prev.c) > NEIGHBOR_TOL * prev.c) continue          // neighbours disagree → could be REAL → never touch
-    const lo = Math.min(prev.c, next.o), hi = Math.max(prev.c, next.o)
-    const fields = []
-    if (b.l < lo * (1 - DEVIATION_TOL)) { b.l = Math.min(b.o <= hi * (1 + DEVIATION_TOL) && b.o >= lo * (1 - DEVIATION_TOL) ? b.o : lo, lo); fields.push('l') }
-    if (b.h > hi * (1 + DEVIATION_TOL)) { b.h = Math.max(b.o <= hi * (1 + DEVIATION_TOL) && b.o >= lo * (1 - DEVIATION_TOL) ? b.o : hi, hi); fields.push('h') }
-    if (b.c < lo * (1 - DEVIATION_TOL) || b.c > hi * (1 + DEVIATION_TOL)) { b.c = Math.max(lo, Math.min(hi, b.c < lo ? lo : hi)); fields.push('c') }
-    if (fields.length) {
-      // keep OHLC internally coherent after the clamp
-      b.h = Math.max(b.h, b.o, b.c); b.l = Math.min(b.l, b.o, b.c)
-      b._repaired = fields
-      repaired.push({ t: b.t, iso: new Date(b.t).toISOString(), fields })
-    }
+    const fields = repairOne(bars[i - 1], bars[i], bars[i + 1])
+    if (fields.length) repaired.push({ t: bars[i].t, iso: new Date(bars[i].t).toISOString(), fields })
   }
   return { bars, repaired }
+}
+/** The same rule over an ascending 1m STREAM (identical to repairBadPrints on the same bars: a 3-bar window, each bar judged between its
+ *  already-repaired predecessor and its raw successor). onRepair({t, iso, fields}) is called for every repaired bar. */
+export async function* repairStream(src, onRepair = () => {}) {
+  let prev = null, cur = null
+  for await (const nx of src) {
+    if (cur) { const fields = prev ? repairOne(prev, cur, nx) : []; if (fields.length) onRepair({ t: cur.t, iso: new Date(cur.t).toISOString(), fields }); yield cur; prev = cur }
+    cur = nx
+  }
+  if (cur) yield cur
 }
