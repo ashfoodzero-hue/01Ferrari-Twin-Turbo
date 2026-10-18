@@ -155,3 +155,46 @@ These take spot XAUUSD bars, so their volume component uses the tick count above
   - GLD uses `keepBreakHour` (it trades 17:00-18:00 New York).
   - 2,226 GLD minutes (0.6 %) fall in Friday-evening extended hours or holidays when gold is closed, so there is no gold candle for them.
 - **Deletions:** Polygon REMOVED 29 EURUSD minutes (2026-10-13 00:00-00:28) after first publishing them live. `reconcile_1m.mjs` now writes `deleted` corrections for such minutes (only ≥ 6 h old, with Polygon data on both sides), and the reader skips them.
+
+## 9. Data health watcher + market hours (2026-10-18)
+
+Ashraf asked: "how we can tell if we have any issue with full system database? and can we get alert for this?" He chose the Twin Turbo Telegram group, "also stop signal trigger and make a note on the App 'Database Stale' with flash red color", and a daily "all data OK". Then: "include market working time so when market closing hrs our system understand why no feeding".
+
+**Market hours** (one place: `src/core/freshness.js`, `marketSession` / `marketOpen`):
+- XAU spot runs Sun 18:00 → Fri 17:00 **New York time**, with a daily break 17:00-18:00 New York. It follows US daylight saving: from November every edge moves one hour later in UTC (Fri close 22:00Z, Sun open 23:00Z).
+- The old rule used fixed UTC hours, which are correct in summer only.
+- Holidays, measured on our 1m store 2016-2026:
+  - **Closed:** Christmas (observed Fri/Mon), New Year (Mon if Sunday; a Saturday New Year closes nothing), Good Friday.
+  - **Early close 13:00 New York:** Independence Day (observed).
+  - **Trade to the normal close:** Thanksgiving, MLK, Memorial Day, Labor Day, Christmas Eve, New Year's Eve.
+- **Proof over 3.72 M minutes:** 0.21 % of stored minutes fall in "closed" time (old rule 1.49 %); "open" hours with no data 2.78 % (old 4.20 %). Most of the rest is the Nov-Dec 2020 data-vendor winter.
+
+**Verdict** (one place: `src/core/dataHealth.js`). It reads the results the existing checks write and runs no new check of its own:
+
+| Check | CRITICAL → STALE (signals stop) | WARN (signals continue) |
+|---|---|---|
+| market | — (states OPEN / WEEKEND / DAILY_BREAK / HOLIDAY / EARLY_CLOSE + the next open) | — |
+| app + live flows | watchdog HALT · app down · a live flow stale (market open ≥ 40 min) | — |
+| gold stream | settled minute > 4 min behind (market open ≥ 40 min) | — |
+| gap repair (`reconcile_1m`) | last run failed | no run for 30 h |
+| recording audit | our misses / duplicates / out-of-order | no run for 30 h |
+| futures recorder | failed twice · silent 45 min · GOLD_FUT > 45 min / SILVER_FUT, WTI > 60 min old (not in the 21-23Z CME break or a holiday) | — |
+| weekly full check (`verify_database`, Saturdays 06:00Z) | failed | older than 8.5 days |
+| calendar | — | a source failing · not refreshed for 75 min · history kept old rows |
+| disk | < 5 GB free | < 20 GB free |
+
+**What reads the verdict:**
+- **Watcher:** `scripts/health_tick.mjs`, run by run_twin every 2 min (first in the loop), and by the external watchdog when the app is HALTED. It writes `data/master/data_health.json`.
+- **Telegram:**
+  - 🟥 DATABASE STALE (a CRITICAL issue seen on 2 ticks; app down / halt at once);
+  - 🟧 warning (seen on 3 ticks);
+  - ✅ recovered (clear for 2 ticks);
+  - 🔁 watchdog restart;
+  - 🟩 daily check after 21:45 UTC.
+- **Signal gate** `signalsHalted()`: STALE, or a verdict missing / older than 10 min, means halted (fail closed). It stops:
+  - every Telegram send (`sendText`, except the watcher's own);
+  - the twin 15m fire;
+  - new Matrix boxes and watch markers;
+  - the inv90 forward ledger.
+- **Chart banner:** flashing red "DATABASE STALE — SIGNALS STOPPED" · amber "DATA WARNING" · calm blue "MARKET CLOSED — … no live feed expected" + the next open.
+- **Proof:** `smoke_data_health` 12/12, `smoke_freshness` 7/7.

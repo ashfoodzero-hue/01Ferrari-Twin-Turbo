@@ -1083,3 +1083,25 @@ without duplications … only use the real Win results, and ignore the rest."
       - The inv90 forward test rebuilt its dataset at 18:36 UTC with the shrunken file, but both ledgers got only 4 "scan" rows each, up to the Friday-close bar (market closed). No signal was scored or recorded, and its next run rebuilds the features from the restored file.
       - None of the re-run volume studies reads the calendar (grep).
       - The `run_chart` board names re-read the file hourly.
+- **(cj) 2026-10-18 — DATA HEALTH WATCHER + ALERTS + SIGNAL STOP + NEW YORK MARKET HOURS (Ashraf: "how we can tell if we have any issue with full system database? and can we get alert for this?" → existing Telegram group, "also stop signal trigger and make a note on the App 'Database Stale' with flash red color", daily OK; then "include market working time so when market closing hrs our system understand why no feeding"). Full rules: `docs/DATA_CONTRACT.md` §9.**
+  - **Verdict, ONE place:** `src/core/dataHealth.js` reads what the existing checks write and judges 9 things: market, app + live flows, gold stream, gap repair, recording audit, futures recorder + stored futures minutes, weekly full check, calendar, disk.
+    - CRITICAL → STALE → signals stop.
+    - WARN → message only.
+  - **Watcher:** `scripts/health_tick.mjs` (`--dry`, `--now` seams) runs every 2 min first in run_twin's loop, and from the watchdog when the app is HALTED.
+    - It writes `data_health.json`, an alert memory (once + recovered; CRITICAL after 2 ticks, WARN after 3) and a change-only history.
+    - The daily check runs after 21:45 UTC.
+  - **Signal gate `signalsHalted()`** (fail closed when the verdict is missing or older than 10 min) stops: `telegram.sendText` (the watcher bypasses it), the twin_tick fire, new matrix boxes + watch markers, the inv90 forward ledger.
+  - **Chart:** `/api/health`, with a flashing red / amber / blue market-closed banner.
+  - **Weekly full check:** `verify_database.mjs` on Saturdays at/after 06:00 UTC (retry after 2 h on failure). A network crash writes no result; only a real mismatch reports FAILED.
+  - **MARKET HOURS FIX:** `freshness.marketOpen` hard-coded summer UTC hours. From 2026-11-01 it would have expected data an hour before every Sunday open and inside the winter daily break.
+    - Now New York time + measured holidays (`marketSession`: status + next open).
+    - Easter comes from `usHolidays.js`. That file stays the NYSE calendar, a different market.
+    - Proof on 3.72 M stored minutes 2016-2026: closed-time minutes 0.21 % vs 1.49 % (old), open hours with no data 2.78 % vs 4.20 %.
+    - The 4 July early close (13:00 NY) holds 8/11 years (2022-24 traded thinly about 95 min longer).
+    - My first version ran the early close past midnight; the measurement found it and it is fixed.
+  - **Disk check added (prevention):** 373 GB free today.
+  - **Found:** a dry-run send always logs, even with `log:false`. The smoke's one stray line was removed from `data/telegram/sent.jsonl`.
+  - **Smokes:**
+    - `smoke_data_health` 12/12 (new, registered);
+    - `smoke_freshness` 7/7 (+ winter session, + measured holidays);
+    - full suite 64/64 green (incl. the silver + DXY-pair stream check added the same day).

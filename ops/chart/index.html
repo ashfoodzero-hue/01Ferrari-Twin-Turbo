@@ -78,9 +78,17 @@
   .note { color:var(--muted); font-size:12px; margin-top:14px; }
   .news a { color:var(--text); text-decoration:none; } .news a:hover { text-decoration:underline; } .news div { padding:5px 0; border-bottom:1px solid #21262d; font-size:12px; } .news span { color:var(--muted); display:block; font-size:11px; }
   @media (max-width: 900px) { body { height:auto; overflow:auto; display:block; } main { grid-template-columns:minmax(0, 1fr); height:auto; } #charts, #charts.full { grid-template-rows:none; } .pane { height:200px; } .pane.main { height:70vh; } aside { border-left:0; border-top:1px solid var(--line); } #quote { margin-left:0; width:100%; } }
+  /* DATA HEALTH banner (2026-10-18, Ashraf: "Database Stale" with flash red colour) */
+  #dbHealth { display:none; position:sticky; top:0; z-index:50; padding:8px 14px; font-weight:700; text-align:center; font-size:14px; letter-spacing:.5px; }
+  #dbHealth.stale { display:block; background:#b3161b; color:#fff; animation: dbflash 1s steps(2, start) infinite; }
+  #dbHealth.warn { display:block; background:#3d2a0f; color:var(--warn); border-bottom:1px solid var(--warn); }
+  #dbHealth.closed { display:block; background:#0f2537; color:#9ecbff; border-bottom:1px solid #1f6feb; font-weight:600; }
+  #dbHealth small { display:block; font-weight:400; font-size:12px; opacity:.95; margin-top:2px; }
+  @keyframes dbflash { 50% { background:#ff2d2d; } }
 </style>
 </head>
 <body>
+<div id="dbHealth" role="alert" aria-live="assertive"></div>
 <header>
   <h1>Ferrari <span>Twin Turbo</span></h1>
   <select id="mainSel" aria-label="Main chart"></select>
@@ -322,6 +330,15 @@ function ladderChip() { if (!LD || !LD.anchors) return ''
   return `<span class="chip" title="${esc(tip)}"><b>Ladder</b> ${['15m', '1H', '4H', '1D'].map(seg).join(' <small>│</small> ')} <small>· info only, no trade${LD.stale ? ' · STALE' : ''}</small></span>` }
 async function pollLadder() { LD = await fetch('/api/ladder').then((x) => x.json()).catch(() => null); if (LD && LD.available === false) LD = null; pollBias() }
 setInterval(pollLadder, 60000); setTimeout(pollLadder, 2500)
+// DATA HEALTH banner (2026-10-18): STALE = flashing red, signals stopped · WARN = amber note, signals continue · OK = hidden. Every 30 s.
+async function pollHealth() { const el = $('dbHealth'), h = await fetch('/api/health').then((x) => x.json()).catch(() => null)
+  if (!h) { el.className = 'stale'; el.innerHTML = '⛔ DATABASE STALE — chart server unreachable<small>Signals cannot be trusted until the app answers again.</small>'; return }
+  const lines = (h.issues ?? []).filter((x) => h.state === 'STALE' ? x.sev === 'CRITICAL' : true).map((x) => esc(x.text))
+  if (h.state === 'STALE') { el.className = 'stale'; el.innerHTML = '⛔ DATABASE STALE — SIGNALS STOPPED' + `<small>${lines.length ? lines.join('<br>') : esc(h.halt_why || '')}</small>` }
+  else if (h.state === 'WARN') { el.className = 'warn'; el.innerHTML = '⚠ DATA WARNING — signals continue' + `<small>${lines.join('<br>')}${h.market && !h.market.open ? '<br>' + esc(h.market.note) : ''}</small>` }
+  else if (h.market && !h.market.open) { el.className = 'closed'; el.innerHTML = `🌙 MARKET CLOSED — ${esc(h.market.label)} · no live feed expected` + `<small>Data OK${h.market.opens ? ' · market ' + esc(h.market.opens) : ''}</small>` }
+  else { el.className = ''; el.innerHTML = '' } }
+setInterval(pollHealth, 30000); setTimeout(pollHealth, 1000)
 // FORMING preview of the open 4H candle (provisional — can change until the close; the official score is the closed bar above)
 function fChip() { const f = MG?.forming?.gold; if (!f) return ''; const p = f.side === 'LONG' ? f.long : f.short
   return ` <small>│ forming ${esc(f.closes_at.slice(11, 16))}:</small> <span class="${f.side === 'LONG' ? 'up' : 'dn'}" style="opacity:.75">${f.side} ${p}</span> <small>provisional</small>` }

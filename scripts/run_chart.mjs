@@ -54,6 +54,7 @@ import { streamDxy1m } from '../src/data/dxy.js'
 import { formingScore } from '../src/master/macroMagnet.js'
 import { wallEvents, swingWallEvents, holdLabel } from '../src/master/wallDefense.js'
 import { confirmedPivots } from '../src/master/ferrariMatrix.js'
+import { signalsHalted } from '../src/core/dataHealth.js'
 
 export const CHART_PORT = +(process.env.TWIN_CHART_PORT || 7444)
 const PAGE = path.join(TURBO.root, 'ops', 'chart', 'index.html')
@@ -376,6 +377,8 @@ const server = http.createServer(async (req, res) => {
     // the FORMING preview of the open 4H candle (provisional; refreshed in the background at most once a minute, never blocks a request). Read-only.
     if (u.pathname === '/api/walls') { refreshWalls(); return send(res, 200, WBF.val ?? { available: false, why: 'computing — first refresh in progress' }) }
     // LADDER CONTEXT (2026-10-17, docs/LADDER_CONTEXT_SPEC.md): the swing study's flip ladder, live, INFORMATION only (ladder_tick.mjs → ladder_state.json)
+    // DATA HEALTH (2026-10-18): the watcher's verdict (data_health.json) + the SAME gate the signal paths use (a stopped watcher = halted)
+    if (u.pathname === '/api/health') { const h = J('data_health.json'), g = signalsHalted(); return send(res, 200, { ...(h ?? {}), signals_halted: g.halted, halt_why: g.why, state: g.halted ? 'STALE' : h?.state ?? null }) }
     if (u.pathname === '/api/ladder') { const m = J('ladder_state.json'); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 10 * 60000 } : { available: false, why: 'ladder_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/magnet') { const m = J('macro_magnet_state.json'); refreshForming(); return send(res, 200, m ? { ...m, stale: Date.now() - Date.parse(m.at) > 5 * 3600000, forming: MGF.val } : { available: false, why: 'macro_tick.mjs has not run yet' }) }
     if (u.pathname === '/api/matrix') { const m = J('matrix_state.json'); return send(res, 200, { open: m?.open ? { ...m.open, ctx: undefined } : null, structure: m?.structure ?? null, watch: m?.watch && Date.now() - m.watch.barT < 6 * 60000 ? m.watch : null, wallTouch: m?.wallTouch && Date.now() - m.wallTouch.barT < 6 * 60000 ? m.wallTouch : null, last_closed: m?.last_closed ?? null, verdict: m?.verdict?.verdict ?? J('ferrari_matrix_gate.json')?.verdict ?? 'UNVALIDATED', backtest: m?.verdict ?? null, at: m?.at ?? null, data_live: m?.data_live ?? null, data_why: m?.data_why ?? null }) }

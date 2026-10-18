@@ -57,13 +57,13 @@ await ok('👁 SCALP PREPARE: header + the WATCH study numbers (82.3 % / 6 min /
 })
 await ok('sendText RETRY: a network failure twice then OK → sent on attempt 3; a 4xx is final (1 attempt); all failing → never throws', async () => {
   const { sendText } = await import('../src/master/telegram.js'), real = globalThis.fetch; let calls = 0
-  try {
+  try {   // bypassHealth: this checks the RETRY mechanics only — the data health gate has its own proof (smoke_data_health)
     globalThis.fetch = async () => { calls++; if (calls < 3) throw Object.assign(new Error('fetch failed'), { cause: { code: 'ETIMEDOUT' } }); return { ok: true, status: 200, json: async () => ({ ok: true }) } }
-    const a = await sendText('retry test', { token: 't', chatId: '1', log: false }); assert(a.sent && a.attempts === 3, JSON.stringify(a))
+    const a = await sendText('retry test', { token: 't', chatId: '1', log: false, bypassHealth: true }); assert(a.sent && a.attempts === 3, JSON.stringify(a))
     calls = 0; globalThis.fetch = async () => { calls++; return { ok: false, status: 400, json: async () => ({ ok: false, description: 'chat not found' }) } }
-    const b = await sendText('4xx test', { token: 't', chatId: '1', log: false }); assert(!b.sent && calls === 1)
+    const b = await sendText('4xx test', { token: 't', chatId: '1', log: false, bypassHealth: true }); assert(!b.sent && calls === 1)
     calls = 0; globalThis.fetch = async () => { calls++; throw new Error('down') }
-    const c = await sendText('down test', { token: 't', chatId: '1', log: false }); assert(!c.sent && c.error && calls === 3)
+    const c = await sendText('down test', { token: 't', chatId: '1', log: false, bypassHealth: true }); assert(!c.sent && c.error && calls === 3)
   } finally { globalThis.fetch = real }
 })
 await ok('STATIC: both live hooks are wired (matrix_tick SCALP after the state write; forward arms SWING per new signal)', async () => {

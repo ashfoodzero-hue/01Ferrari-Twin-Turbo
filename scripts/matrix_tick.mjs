@@ -18,6 +18,7 @@ import { matrixSignals, resolveMatrixTrade, matrixStructure, matrixArmedAt, emaS
 import { atr as atrArr } from '../src/core/indicators.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
 import { alertSetup, scalpSetup, alertPrepare } from '../src/master/tradeAlert.js'
+import { signalsHalted } from '../src/core/dataHealth.js'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -38,7 +39,9 @@ const [B, D, W, M1] = await Promise.all([
 ])
 const spreadAt = makeSpreadAt({ live: loadLiveSpreads(quotesFile('XAUUSD'), { from: lastClose - 2 * 86400000 }) })
 let opened = null, structure = null; try { structure = B.length && B.at(-1).t === lastClose - MATRIX.tfMs ? matrixStructure(B, D, W) : null } catch (e) { console.error('  ⚠ matrix structure: ' + e.message) }
-const out = { structure, at: new Date(now).toISOString(), bar: new Date(lastClose - MATRIX.tfMs).toISOString(), data_live: st.live, data_why: st.why, verdict, open: state.open, last_closed: state.last_closed ?? null }
+// DATA HEALTH GATE (2026-10-18): with the database STALE no new box opens (an open box still resolves on the bars that exist)
+const health = signalsHalted()
+const out = { structure, at: new Date(now).toISOString(), bar: new Date(lastClose - MATRIX.tfMs).toISOString(), data_live: st.live && !health.halted, data_why: health.halted ? `DATABASE STALE — ${health.why}` : st.why, verdict, open: state.open, last_closed: state.last_closed ?? null }
 
 // 2) manage the open trade
 if (state.open) {
@@ -51,7 +54,7 @@ if (state.open) {
   } else { out.open = { ...state.open, progress: { tp1Hit: r.tp1Hit, events: r.events, fill: r.fill } }; console.log(`  ▣ matrix ${state.open.sig.side} open · TP1 ${r.tp1Hit ? 'hit (stop at entry)' : 'not yet'}`) }
 }
 // 3) a new setup only with no open trade, on live verified data, on the just-closed 3m candle
-if (!out.open && st.live && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
+if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
   const sigs = matrixSignals(B, D, W, { from: B.length - 1 })
   const s = sigs.find((x) => x.i === B.length - 1)
   if (s && (!state.last_closed || Date.parse(state.last_closed.closedAt) < s.decisionT)) {
@@ -61,11 +64,11 @@ if (!out.open && st.live && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) 
     console.log(`  🟩 matrix ${s.side} @ ${s.entry.toFixed(2)} · SL ${s.sl.toFixed(2)} · TP1 ${s.tp1.toFixed(2)} · TP2 ${s.tp2.toFixed(2)} (${verdict.verdict})`)
   }
 }
-if (!out.open && !st.live) console.log(`  ⛔ matrix: no new trade — data not live (${st.why})`)
+if (!out.open && (!st.live || health.halted)) console.log(`  ⛔ matrix: no new trade — ${health.halted ? "DATABASE STALE (" + health.why + ")" : "data not live (" + st.why + ")"}`)
 // 👁 WATCH (2026-10-16, Ashraf "option 2 — chart only"): BUY context aligned + the low ≥ 0.25 ATR through the buy wall, no trade, on live data.
 // ONE rule: matrixArmedAt (the study's own function). Measured 82.3 % → a BUY signal within 60 min (post-hoc). NEVER sent to Telegram.
 out.watch = null; out.wallTouch = null
-if (!out.open && st.live && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
+if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
   const dEma = emaSeries(D, MATRIX.dxyEma), arm = matrixArmedAt(B, atrArr(B, 14), B.length - 1, new Map(D.map((b) => [b.t, b])), dEma, W)
   if (arm?.buyCtx && arm.buyDist <= WATCH.k) { out.watch = { side: 'BUY', barT: B.at(-1).t, line: +arm.buyLine.toFixed(2), dist_atr: +arm.buyDist.toFixed(2), measured: WATCH }; console.log(`  👁 matrix WATCH BUY: wall touched (${arm.buyDist.toFixed(2)} ATR), waiting for the green trigger candle`) }
   // 🫴 WALL TOUCH (chart only, 2026-10-16): price through the wall but WTI / DXY not aligned yet — the earlier, weaker level

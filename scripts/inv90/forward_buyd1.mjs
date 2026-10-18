@@ -25,6 +25,11 @@ import { makeSpreadAt, loadLiveSpreads } from '../../src/master/spreadModel.js'
 import { fitBins, binAll, train, predict } from './gbdt.mjs'
 import { wilsonLB } from './gate.mjs'
 import { alertSetup, swingSetup } from '../../src/master/tradeAlert.js'
+import { signalsHalted } from '../../src/core/dataHealth.js'
+
+// DATA HEALTH GATE (2026-10-18): the ledger is APPEND-ONLY, so nothing is scored or resolved on a STALE database. The bars are not lost:
+// the next healthy run scores them (late_min records the delay; a late signal is never sent to Telegram).
+{ const h = signalsHalted(); if (h.halted) { console.log(`  ⛔ forward test skipped — DATABASE STALE (${h.why})`); process.exit(0) } }
 
 const here = path.dirname(fileURLToPath(import.meta.url)), DIR = path.join(TURBO.root, 'data', 'inv90'), FD = path.join(DIR, 'forward'); fs.mkdirSync(FD, { recursive: true })
 // ARM (2026-10-15, Ashraf: "add it"): default = the 92 % arm (unchanged). --arm=freq = the ≈ 1 trade/day arm of Part 7b: the STRONG GBDT

@@ -21,6 +21,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO } from './paths.js'
+import { easterSunday } from './usHolidays.js'
 
 /** kind: live = must stay fresh while the market is open · fallback = served on demand, age is not a fault
  *        ondemand = written only when something happens (absence is normal, age is not a fault) */
@@ -41,14 +42,52 @@ export const HEALERS = Object.freeze({
   'stream_heartbeat.json': null,  // owned by run_stream.mjs (supervised by run_twin) — stale = the stream process is down or wedged
 })
 
-/** XAU spot trades ~22:00Z Sun → 21:00Z Fri. Outside that, an old file is CORRECT, not stale. */
-export function marketOpen(now = Date.now()) {
-  const d = new Date(now), dow = d.getUTCDay(), h = d.getUTCHours()
-  if (dow === 6) return false
-  if (dow === 0) return h >= 22
-  if (dow === 5) return h < 21
-  return !(h === 21)                                   // the daily rollover hour is thin but not closed
+// ── XAU SPOT MARKET HOURS — NEW YORK TIME (2026-10-18, Ashraf: "include market working time so when market closing hrs our system understand
+// why no feeding"). The old rule was fixed UTC hours (Fri 21:00Z close, Sun 22:00Z open, 21:00Z break) = correct in US SUMMER time only; from
+// the first Sunday of November it would expect data an hour before the open. Session = Sun 18:00 NY → Fri 17:00 NY, daily break 17:00-18:00 NY.
+// HOLIDAYS MEASURED on our Polygon XAUUSD 1m store 2016-2026 (minutes on the NY date): Christmas (observed: Fri if Sat, Mon if Sun) and New Year
+// (Mon if Sun; a Saturday New Year closes NOTHING — 2021-12-31: 1,321 minutes) and Good Friday are CLOSED (≤ 65 stray minutes); Independence
+// Day (observed) closes EARLY at 13:00 NY (2025-07-04 last 17:01Z, 2020-07-03 last 16:59Z) and reopens 18:00 NY. Thanksgiving, MLK, Memorial,
+// Labor, Christmas Eve, New Year's Eve trade to the normal 17:00 NY close (measured).
+const NY_FMT = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', weekday: 'short', hourCycle: 'h23' })
+const DOW = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
+function nyParts(t) { const p = Object.fromEntries(NY_FMT.formatToParts(new Date(t)).map((x) => [x.type, x.value]))
+  return { date: `${p.year}-${p.month}-${p.day}`, y: +p.year, mo: +p.month, d: +p.day, dow: DOW[p.weekday], mins: (+p.hour % 24) * 60 + +p.minute } }
+const ymd = (y, m, d) => new Date(Date.UTC(y, m - 1, d)).toISOString().slice(0, 10)
+// Easter: the ONE implementation in usHolidays.js (that file is the NYSE calendar — a different market: spot gold trades MLK, Presidents',
+// Juneteenth, Memorial, Labor Day, Thanksgiving, measured — so only Easter is shared).
+const easter = easterSunday
+const observed = (y, m, d, satToFri = true) => { const w = new Date(Date.UTC(y, m - 1, d)).getUTCDay()
+  return w === 6 ? (satToFri ? ymd(y, m, d - 1) : null) : w === 0 ? ymd(y, m, d + 1) : ymd(y, m, d) }
+/** The NY trading dates on which XAU spot is CLOSED / closes EARLY (13:00 NY), for year y (measured rules above). */
+export function spotHolidays(y) {
+  const closed = new Map([[observed(y, 12, 25), 'Christmas'], [new Date(easter(y) - 2 * 86400000).toISOString().slice(0, 10), 'Good Friday']])
+  const ny = observed(y, 1, 1, false); if (ny) closed.set(ny, 'New Year')
+  return { closed, early: new Map([[observed(y, 7, 4), 'Independence Day']]) }
 }
+/**
+ * The XAU spot session at `now`: { open, status: OPEN | WEEKEND | DAILY_BREAK | HOLIDAY | EARLY_CLOSE, label, next_open (ms, when closed) }.
+ * ONE place — marketOpen, the freshness contract, the data health watcher, run_twin's schedules and the chart all read it.
+ */
+export function marketSession(now = Date.now()) {
+  const st = sessionAt(now); if (st.open) return { ...st, next_open: null }
+  let t = Math.ceil((now + 1) / 900000) * 900000   // every open is on the hour (18:00 NY) → a 15-min grid lands on it exactly
+  for (let i = 0; i < 4 * 24 * 10 && !sessionAt(t).open; i++) t += 900000   // ≤ 10 days ahead: weekend + holiday
+  return { ...st, next_open: sessionAt(t).open ? t : null }
+}
+function sessionAt(t) {
+  const p = nyParts(t), H = spotHolidays(p.y)
+  // the trading date a minute belongs to: from 18:00 NY on, the NEXT calendar day's session
+  const nextDay = ymd(p.y, p.mo, p.d + 1), tradeDate = p.mins >= 18 * 60 ? nextDay : p.date
+  const hol = H.closed.get(tradeDate) ?? spotHolidays(+tradeDate.slice(0, 4)).closed.get(tradeDate)
+  if (p.dow === 6 || (p.dow === 5 && p.mins >= 17 * 60) || (p.dow === 0 && p.mins < 18 * 60)) return { open: false, status: 'WEEKEND', label: 'weekend (Fri 17:00 → Sun 18:00 New York)' }
+  if (hol) return { open: false, status: 'HOLIDAY', label: `${hol} — gold spot closed` }
+  if (p.mins >= 17 * 60 && p.mins < 18 * 60) return { open: false, status: 'DAILY_BREAK', label: 'daily break (17:00-18:00 New York)' }
+  const early = H.early.get(p.date); if (early && p.mins >= 13 * 60 && p.mins < 17 * 60) return { open: false, status: 'EARLY_CLOSE', label: `${early} — early close 13:00 New York` }
+  return { open: true, status: 'OPEN', label: 'open' }
+}
+/** XAU spot open? (New York session hours + measured holidays — see marketSession). Outside it, an old file is CORRECT, not stale. */
+export function marketOpen(now = Date.now()) { return sessionAt(now).open }
 
 /**
  * The instant the market last CLOSED before `now` (now itself while open). A feed judged for freshness during a closure

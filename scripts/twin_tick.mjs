@@ -19,6 +19,7 @@ import { recordSignals, resolveOpen, loadJournal } from '../src/master/paperTrad
 import { makeSubBarIndex } from '../src/core/seqResolver.js'
 import { liveReadiness, liveDensityRelative } from '../src/master/liveReadiness.js'
 import { sendText, formatTierAlert } from '../src/master/telegram.js'
+import { signalsHalted } from '../src/core/dataHealth.js'
 
 const STATIC = process.argv.includes('--static')
 const FILE = path.join(TURBO.paper, 'trades.jsonl')
@@ -38,7 +39,8 @@ const lastMinutes = (await loadBars('XAUUSD', '1m', { from: decisionBar, to: las
 const unverified = lastMinutes.filter((b) => b.ver === 'unverified')
 const staleWhy = !stream.live ? stream.why
   : nowBar !== decisionBar ? `the closed 15m bar ${new Date(decisionBar).toISOString()} is not in the store (last ${new Date(nowBar).toISOString()})`
-  : unverified.length ? `${unverified.length} unverified minute(s) inside the decision bar` : null
+  : unverified.length ? `${unverified.length} unverified minute(s) inside the decision bar`
+  : signalsHalted().halted ? `DATABASE STALE — ${signalsHalted().why}` : null   // data health gate (2026-10-18): no fire is recorded or sent
 const roster = emitTwinRoster(b15)
 console.log(`  bars: ${source} (${b15.length} × 15m from 1m ticks, last ${new Date(nowBar).toISOString()}; decision bar ${lastMinutes.length}/15 minutes${unverified.length ? `, ${unverified.length} UNVERIFIED` : ', all verified'})`)
 roster.published_utc = new Date().toISOString()

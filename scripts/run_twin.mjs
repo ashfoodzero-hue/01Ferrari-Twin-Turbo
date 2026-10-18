@@ -91,6 +91,7 @@ let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning 
 let lastRec = null, recRunning = false   // futures + GLD recorder (record_futures.mjs, 2026-10-17)
 let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
+let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
   execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'matrix_tick.mjs')], { timeout: 120000, maxBuffer: 8 << 20, windowsHide: true }, (err, stdout, stderr) => {
@@ -105,6 +106,12 @@ for (;;) {
   const now = Date.now()
   const lastClose = Math.floor(now / 900000) * 900000, last3m = Math.floor(now / 180000) * 180000
   ensureStream(); await ensureChart(); await ensureSettings()
+  // DATA HEALTH watcher (health_tick.mjs, 2026-10-18; rules src/core/dataHealth.js): every 2 min, always, + at start (FIRST, so the signal gate
+  // reads a fresh verdict). STALE → every signal path stops + red "DATABASE STALE" on the chart + Telegram; daily "all data OK" after 21:45 UTC.
+  if ((lastHealth === null || now - lastHealth >= 120000) && !healthRunning) { healthRunning = true; lastHealth = now
+    execFile(process.execPath, ['--max-old-space-size=1024', path.join(here, 'health_tick.mjs')], { timeout: 90000, windowsHide: true }, (err, stdout, stderr) => { healthRunning = false
+      if (err || /📨/.test(String(stdout))) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'health_tick.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n')
+      if (err || /📨|STALE|WARN/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   if (marketOpen(last3m - 1) && now - last3m >= 4000 && !matrixTicking && (lastMatrixBar == null || lastMatrixBar < last3m)) matrixTick(last3m)
   if (marketOpen(lastClose - 1) && now - lastClose >= TICK_OFFSET_MS && !ticking && (lastTickBar == null || Date.parse(lastTickBar) < lastClose)) await tick(lastClose)
   // reconciliation of the 1m store vs Polygon's current bars (corrections.js) — WHEN and HOW FAR BACK: src/core/reconcilePlan.js (every app
@@ -169,6 +176,12 @@ for (;;) {
   if (mins >= 21 * 60 + 30 && lastAudit !== day && !auditRunning) { auditRunning = true; lastAudit = day
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'audit_recording.mjs'), '3'], { timeout: 15 * 60000, windowsHide: true }, (err, stdout, stderr) => { auditRunning = false
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'audit_recording.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-500), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+  // WEEKLY FULL DATABASE CHECK (verify_database.mjs, 2026-10-18): Saturdays at/after 06:00 UTC (market closed) — every series minute by minute vs
+  // Polygon + GOLD_FUT vs the CME feed → data/master/database_verification.json, which the data health watcher judges (FAILED → STALE).
+  if (wd === 6 && mins >= 6 * 60 && lastVerify !== day && !verifyRunning && now >= verifyRetryAt) { verifyRunning = true; lastVerify = day
+    execFile(process.execPath, ['--max-old-space-size=12000', path.join(here, 'verify_database.mjs')], { timeout: 45 * 60000, maxBuffer: 16 << 20, windowsHide: true }, (err, stdout, stderr) => { verifyRunning = false
+      if (err) { lastVerify = null; verifyRetryAt = Date.now() + 2 * 3600000 }   // a crash (network after 5 retries) or a mismatch → run again in 2 h the same Saturday
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'verify_database.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-500), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   if (Date.now() - lastBeat >= 15000) { beat({ market_open: marketOpen(now) }); lastBeat = Date.now() }
   await new Promise((r) => setTimeout(r, 1000))
 }

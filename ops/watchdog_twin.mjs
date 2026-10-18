@@ -23,5 +23,8 @@ try {
     const child = spawn(process.execPath, ['--max-old-space-size=2048', path.join(ROOT, 'scripts', 'run_twin.mjs')], { cwd: ROOT, detached: true, windowsHide: true, stdio: ['ignore', out, out], env: { ...process.env, TWIN_SPAWNED_BY: 'watchdog' } })
     child.unref(); ledger({ action: 'start', why: d.why, newPid: child.pid ?? null })
   }
+  // HALTED (crash loop → no run_twin, so nobody else runs the data health watcher): run it from here so the HALT reaches Telegram and the
+  // chart/gate see STALE (2026-10-18). The watcher's own memory de-duplicates; this watchdog still never kills anything.
+  if (d.action === 'halt' || fs.existsSync(HALT)) spawn(process.execPath, ['--max-old-space-size=1024', path.join(ROOT, 'scripts', 'health_tick.mjs')], { cwd: ROOT, detached: true, windowsHide: true, stdio: 'ignore' }).unref()
 } catch (e) { ledger({ action: 'watchdog-error', err: String(e?.message ?? e).slice(0, 160) }) }
 process.exit(0)

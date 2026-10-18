@@ -5,6 +5,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO } from '../core/paths.js'
+import { signalsHalted } from '../core/dataHealth.js'
 
 export const TELEGRAM_CONFIG = Object.freeze({
   token: process.env.TWIN_TELEGRAM_BOT_TOKEN || null,
@@ -93,9 +94,12 @@ function logSend(kind, text, result) {
     }) + String.fromCharCode(10))
   } catch { /* a log must never break an alert */ }
 }
-export async function sendText(text, { token = TELEGRAM_CONFIG.token, chatId = TELEGRAM_CONFIG.chatId, dryRun = false, log = true } = {}) {   // log:false = tests (never write the real send log)
+export async function sendText(text, { token = TELEGRAM_CONFIG.token, chatId = TELEGRAM_CONFIG.chatId, dryRun = false, log = true, bypassHealth = false } = {}) {   // log:false = tests (never write the real send log)
   if (!text) return { sent: false, reason: 'empty' }
   if (dryRun || !token || !chatId) { const r = { sent: false, dryRun: true, text }; logSend('group', text, r); return r }
+  // DATA HEALTH GATE (2026-10-18, Ashraf: "stop signal trigger" when the database is stale): every real send is a signal / notice and stops
+  // while src/core/dataHealth.js says STALE (or its verdict is missing / old — fail closed). Only health_tick's own messages bypass it.
+  if (!bypassHealth) { const h = signalsHalted(); if (h.halted) { const r = { sent: false, blocked: 'DATABASE_STALE', why: h.why }; if (log) logSend('blocked', text, r); return r } }
   // 15s bound (2026-09-07): Node's fetch has no default timeout — a stalled socket here would hold the paper tick
   // (and the fire it is announcing) until the child budget kills it. A late alert beats a hung recorder.
   // RETRY (2026-10-16, measured: a 10:5x UTC network blip timed out a send — ETIMEDOUT to api.telegram.org — while the next try 1 min later worked).
