@@ -6,20 +6,20 @@
 //   B  PRICE          — |our swing price − TradingView's high (HIGH) / low (LOW) of that candle| (two feeds: Polygon vs OANDA)
 //   C  SAME EXTREME   — on TradingView, the highest high (HIGH) / lowest low (LOW) between the previous and the next swing candle is on the
 //                       SAME candle (the swing would be marked at the same place on TradingView)
-// Usage: node scripts/compare_tv_swings.mjs <tv_history.json>  → data/master/xau_1y_swings_tv_check.json
+// Usage: node scripts/compare_tv_swings.mjs <tv_history.json> [XAUUSD|XAGUSD|DXY|WTI]  → data/master/<sym>_1y_swings_tv_check.json
 // ════════════════════════════════════════════════════════════════════════════════
 import '../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO, HISTORY_CONTINUOUS_FROM } from '../src/core/paths.js'
-import { loadBars } from '../src/data/backfillReader.js'
-import { TFS, cleanForTv, buildCandles } from '../src/core/nyCandles.js'
+import { clean1m, SHORT } from './lib/series_1m.mjs'
+import { TFS, buildCandles } from '../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { zigzag } from '../src/master/swings.js'
 
 const TV = JSON.parse(fs.readFileSync(process.argv[2], 'utf8')).res
 const RES = { '1m': '1', '3m': '3', '5m': '5', '15m': '15', '30m': '30', '1H': '60', '2H': '120', '3H': '180', '4H': '240', '6H': '360', '9H': '540', '1D': '1D', '2D': '2D', '3D': '3D', '1W': '1W', '1M': '1M' }
-const M = cleanForTv((await loadBars('XAUUSD', '1m', { from: HISTORY_CONTINUOUS_FROM })).bars, { reopenClamp: true }).bars, holes = findHoles(M), LAST = M.at(-1).t, FROM = LAST - 365 * 86400000
+const SYM = process.argv[3] || 'XAUUSD', M = await clean1m(SYM), holes = findHoles(M), LAST = M.at(-1).t, FROM = LAST - 365 * 86400000
 const med = (v) => (v.length ? v.slice().sort((a, b) => a - b)[v.length >> 1] : null), p95 = (v) => (v.length ? v.slice().sort((a, b) => a - b)[Math.floor(0.95 * (v.length - 1))] : null)
 const out = { at: new Date().toISOString(), window: [new Date(FROM).toISOString(), new Date(LAST).toISOString()], tf: {} }
 for (const tf of TFS) {
@@ -40,4 +40,4 @@ for (const tf of TFS) {
     same_extreme: ext, same_extreme_of: extN, same_extreme_pct: extN ? +(100 * ext / extN).toFixed(2) : null, missing_candles: misses.slice(0, 10), extreme_differs: extMiss.slice(0, 20), extreme_differs_n: extMiss.length }
   const o = out.tf[tf]; console.log(`  ${tf.padEnd(3)} TV from ${o.tv_from.slice(0, 10)} · swings ${String(n).padStart(5)} · same candle ${o.same_candle_pct}% · price diff median $${o.price_diff_median} (p95 $${o.price_diff_p95}) · same extreme ${ext}/${extN} (${o.same_extreme_pct}%)`)
 }
-fs.writeFileSync(path.join(TURBO.master, 'xau_1y_swings_tv_check.json'), JSON.stringify(out, null, 1))
+fs.writeFileSync(path.join(TURBO.master, `${SHORT[SYM]}_1y_swings_tv_check.json`), JSON.stringify(out, null, 1))

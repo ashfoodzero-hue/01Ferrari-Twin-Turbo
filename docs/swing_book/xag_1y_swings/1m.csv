@@ -1,0 +1,2 @@
+type,candle_open,price,o,h,l,c,atr,leg_from_prev,leg_atr,confirmed_by_candle,confirmed_at,confirm_lag_candles
+HIGH,2025-12-31T22:00:00Z,121.618,71.493,121.618,49.403,85.115,11.1786,89.97,7.18,2026-02-01T22:00:00Z,2026-02-27T22:00:00Z,1
