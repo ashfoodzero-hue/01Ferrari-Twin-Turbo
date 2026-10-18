@@ -12,8 +12,8 @@ import '../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO, HISTORY_CONTINUOUS_FROM } from '../src/core/paths.js'
-import { clean1m, SHORT } from './lib/series_1m.mjs'
-import { TFS, buildCandles } from '../src/core/nyCandles.js'
+import { clean1m, SHORT, kit } from './lib/series_1m.mjs'
+import { TFS } from '../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { zigzag } from '../src/master/swings.js'
 
@@ -25,7 +25,7 @@ const out = { at: new Date().toISOString(), window: [new Date(FROM).toISOString(
 for (const tf of TFS) {
   const bars = TV[RES[tf]]; if (!bars?.length) { out.tf[tf] = { tv: 'not loaded' }; continue }
   const tv = new Map(bars.map((b) => [b[0] * 1000, { h: b[2], l: b[3] }])), tvT = bars.map((b) => b[0] * 1000), tv0 = tvT[0], tv1 = tvT.at(-1)
-  const C = buildCandles(M, tf); markIncomplete(C, holes)
+  const C = kit(SYM).build(M, tf); markIncomplete(C, holes)   // the instrument's own session (series_1m.kit)
   const { swings } = zigzag(C, { k: 3, breaks: new Set(C.map((c, i) => (c.incomplete ? i : -1)).filter((i) => i >= 0)) })
   let n = 0, same = 0, ext = 0, extN = 0; const dpx = [], misses = [], extMiss = []
   for (let j = 0; j < swings.length; j++) { const s = swings[j], t = C[s.i].t; if (t < FROM || t < tv0 || t > tv1) continue

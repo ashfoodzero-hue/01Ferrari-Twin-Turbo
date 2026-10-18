@@ -1,0 +1,140 @@
+{
+ "at": "2026-10-18T16:25:49.500Z",
+ "rule": "ZigZag k = 3 × ATR(14) per timeframe, confirmed swings only",
+ "window": [
+  "2025-10-16T20:59:00Z",
+  "2026-10-16T20:59:00Z"
+ ],
+ "data": "WTI 1m (scripts/lib/series_1m.mjs), nyCandles TradingView-exact",
+ "symbol": "WTI",
+ "tf": {
+  "1m": {
+   "candles_in_year": 351176,
+   "swings": 20053,
+   "highs": 10027,
+   "lows": 10026,
+   "first": "2025-10-16T22:11:00Z",
+   "last": "2026-10-16T20:42:00Z"
+  },
+  "3m": {
+   "candles_in_year": 117877,
+   "swings": 6259,
+   "highs": 3130,
+   "lows": 3129,
+   "first": "2025-10-16T22:09:00Z",
+   "last": "2026-10-16T18:36:00Z"
+  },
+  "5m": {
+   "candles_in_year": 70744,
+   "swings": 3704,
+   "highs": 1852,
+   "lows": 1852,
+   "first": "2025-10-16T22:45:00Z",
+   "last": "2026-10-16T14:20:00Z"
+  },
+  "15m": {
+   "candles_in_year": 23585,
+   "swings": 1211,
+   "highs": 605,
+   "lows": 606,
+   "first": "2025-10-17T02:00:00Z",
+   "last": "2026-10-16T14:15:00Z"
+  },
+  "30m": {
+   "candles_in_year": 11795,
+   "swings": 631,
+   "highs": 315,
+   "lows": 316,
+   "first": "2025-10-17T09:30:00Z",
+   "last": "2026-10-16T14:00:00Z"
+  },
+  "1H": {
+   "candles_in_year": 5901,
+   "swings": 323,
+   "highs": 161,
+   "lows": 162,
+   "first": "2025-10-17T09:00:00Z",
+   "last": "2026-10-15T01:00:00Z"
+  },
+  "2H": {
+   "candles_in_year": 3079,
+   "swings": 159,
+   "highs": 79,
+   "lows": 80,
+   "first": "2025-10-20T12:00:00Z",
+   "last": "2026-10-15T00:00:00Z"
+  },
+  "3H": {
+   "candles_in_year": 2053,
+   "swings": 105,
+   "highs": 52,
+   "lows": 53,
+   "first": "2025-10-20T13:00:00Z",
+   "last": "2026-10-15T01:00:00Z"
+  },
+  "4H": {
+   "candles_in_year": 1543,
+   "swings": 75,
+   "highs": 37,
+   "lows": 38,
+   "first": "2025-10-20T10:00:00Z",
+   "last": "2026-10-06T10:00:00Z"
+  },
+  "6H": {
+   "candles_in_year": 1031,
+   "swings": 53,
+   "highs": 26,
+   "lows": 27,
+   "first": "2025-10-20T10:00:00Z",
+   "last": "2026-10-06T10:00:00Z"
+  },
+  "9H": {
+   "candles_in_year": 774,
+   "swings": 41,
+   "highs": 20,
+   "lows": 21,
+   "first": "2025-10-20T07:00:00Z",
+   "last": "2026-10-06T07:00:00Z"
+  },
+  "1D": {
+   "candles_in_year": 251,
+   "swings": 13,
+   "highs": 6,
+   "lows": 7,
+   "first": "2025-10-19T22:00:00Z",
+   "last": "2026-10-05T22:00:00Z"
+  },
+  "2D": {
+   "candles_in_year": 126,
+   "swings": 8,
+   "highs": 4,
+   "lows": 4,
+   "first": "2025-12-15T23:00:00Z",
+   "last": "2026-09-13T22:00:00Z"
+  },
+  "3D": {
+   "candles_in_year": 84,
+   "swings": 5,
+   "highs": 2,
+   "lows": 3,
+   "first": "2025-12-15T23:00:00Z",
+   "last": "2026-06-30T22:00:00Z"
+  },
+  "1W": {
+   "candles_in_year": 52,
+   "swings": 5,
+   "highs": 2,
+   "lows": 3,
+   "first": "2025-12-14T23:00:00Z",
+   "last": "2026-06-28T22:00:00Z"
+  },
+  "1M": {
+   "candles_in_year": 12,
+   "swings": 2,
+   "highs": 1,
+   "lows": 1,
+   "first": "2025-11-30T23:00:00Z",
+   "last": "2026-03-01T23:00:00Z"
+  }
+ }
+}

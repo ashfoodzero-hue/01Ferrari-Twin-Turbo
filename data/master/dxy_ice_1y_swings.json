@@ -1,0 +1,140 @@
+{
+ "at": "2026-10-18T16:36:09.630Z",
+ "rule": "ZigZag k = 3 × ATR(14) per timeframe, confirmed swings only",
+ "window": [
+  "2025-10-16T20:59:00Z",
+  "2026-10-16T20:59:00Z"
+ ],
+ "data": "DXY_ICE 1m (scripts/lib/series_1m.mjs), nyCandles TradingView-exact",
+ "symbol": "DXY_ICE",
+ "tf": {
+  "1m": {
+   "candles_in_year": 365283,
+   "swings": 25648,
+   "highs": 12824,
+   "lows": 12824,
+   "first": "2025-10-16T21:01:00Z",
+   "last": "2026-10-16T20:46:00Z"
+  },
+  "3m": {
+   "candles_in_year": 121957,
+   "swings": 7376,
+   "highs": 3688,
+   "lows": 3688,
+   "first": "2025-10-16T21:00:00Z",
+   "last": "2026-10-16T20:03:00Z"
+  },
+  "5m": {
+   "candles_in_year": 73254,
+   "swings": 4195,
+   "highs": 2098,
+   "lows": 2097,
+   "first": "2025-10-16T21:00:00Z",
+   "last": "2026-10-16T16:35:00Z"
+  },
+  "15m": {
+   "candles_in_year": 24521,
+   "swings": 1356,
+   "highs": 678,
+   "lows": 678,
+   "first": "2025-10-17T00:45:00Z",
+   "last": "2026-10-16T16:30:00Z"
+  },
+  "30m": {
+   "candles_in_year": 12289,
+   "swings": 676,
+   "highs": 338,
+   "lows": 338,
+   "first": "2025-10-17T05:30:00Z",
+   "last": "2026-10-16T16:30:00Z"
+  },
+  "1H": {
+   "candles_in_year": 6149,
+   "swings": 331,
+   "highs": 165,
+   "lows": 166,
+   "first": "2025-10-17T05:00:00Z",
+   "last": "2026-10-16T10:00:00Z"
+  },
+  "2H": {
+   "candles_in_year": 3082,
+   "swings": 160,
+   "highs": 80,
+   "lows": 80,
+   "first": "2025-10-17T05:00:00Z",
+   "last": "2026-10-14T15:00:00Z"
+  },
+  "3H": {
+   "candles_in_year": 2108,
+   "swings": 108,
+   "highs": 54,
+   "lows": 54,
+   "first": "2025-10-17T05:00:00Z",
+   "last": "2026-10-14T14:00:00Z"
+  },
+  "4H": {
+   "candles_in_year": 1595,
+   "swings": 82,
+   "highs": 41,
+   "lows": 41,
+   "first": "2025-10-17T03:00:00Z",
+   "last": "2026-10-14T15:00:00Z"
+  },
+  "6H": {
+   "candles_in_year": 1081,
+   "swings": 52,
+   "highs": 26,
+   "lows": 26,
+   "first": "2025-10-17T05:00:00Z",
+   "last": "2026-10-14T11:00:00Z"
+  },
+  "9H": {
+   "candles_in_year": 773,
+   "swings": 34,
+   "highs": 17,
+   "lows": 17,
+   "first": "2025-10-16T23:00:00Z",
+   "last": "2026-10-14T08:00:00Z"
+  },
+  "1D": {
+   "candles_in_year": 259,
+   "swings": 10,
+   "highs": 5,
+   "lows": 5,
+   "first": "2025-11-21T00:00:00Z",
+   "last": "2026-09-08T23:00:00Z"
+  },
+  "2D": {
+   "candles_in_year": 129,
+   "swings": 6,
+   "highs": 3,
+   "lows": 3,
+   "first": "2025-11-21T00:00:00Z",
+   "last": "2026-08-19T23:00:00Z"
+  },
+  "3D": {
+   "candles_in_year": 86,
+   "swings": 4,
+   "highs": 2,
+   "lows": 2,
+   "first": "2025-11-19T00:00:00Z",
+   "last": "2026-08-17T23:00:00Z"
+  },
+  "1W": {
+   "candles_in_year": 52,
+   "swings": 2,
+   "highs": 1,
+   "lows": 1,
+   "first": "2025-11-16T22:00:00Z",
+   "last": "2026-01-25T22:00:00Z"
+  },
+  "1M": {
+   "candles_in_year": 12,
+   "swings": 0,
+   "highs": 0,
+   "lows": 0,
+   "first": null,
+   "last": null
+  }
+ }
+}

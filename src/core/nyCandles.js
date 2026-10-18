@@ -38,7 +38,7 @@ export const MIN_SESSION_MINUTES = 60
 // Uses later minutes → TradingView-style STUDY candles only (opt in: reopenClamp: true). The live signal feed (loadBars) stays raw = causal.
 const NY_HM = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
 const reopenMinute = (t) => { const p = NY_HM.formatToParts(new Date(t)); const h = +p.find((x) => x.type === 'hour').value % 24, m = +p.find((x) => x.type === 'minute').value; return h === 18 && m < 5 }
-function clampReopen(bars) {
+export function clampReopen(bars) {   // exported: series_1m applies it to non-gold sessions where measured
   let n = 0
   for (let i = 0; i < bars.length; i++) { const b = bars[i]; if (!reopenMinute(b.t)) continue
     let lo = Infinity, hi = -Infinity, k = 0

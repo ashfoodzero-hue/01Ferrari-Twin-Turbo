@@ -11,8 +11,8 @@ import '../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO, HISTORY_CONTINUOUS_FROM } from '../src/core/paths.js'
-import { clean1m, SHORT } from './lib/series_1m.mjs'
-import { TFS, buildCandles } from '../src/core/nyCandles.js'
+import { clean1m, SHORT, kit } from './lib/series_1m.mjs'
+import { TFS } from '../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { zigzag } from '../src/master/swings.js'
 
@@ -22,13 +22,13 @@ const dir = path.join(TURBO.root, 'docs', 'swing_book', `${SHORT[SYM]}_1y_swings
 const iso = (t) => new Date(t).toISOString().replace('.000Z', 'Z')
 const summary = { at: new Date().toISOString(), rule: `ZigZag k = ${K} × ATR(14) per timeframe, confirmed swings only`, window: [iso(FROM), iso(LAST)], data: `${SYM} 1m (scripts/lib/series_1m.mjs), nyCandles TradingView-exact`, symbol: SYM, tf: {} }
 for (const tf of TFS) {
-  const C = buildCandles(M, tf); markIncomplete(C, holes)
+  const C = kit(SYM).build(M, tf); markIncomplete(C, holes)   // the instrument's own session (series_1m.kit)
   const breaks = new Set(C.map((c, i) => (c.incomplete ? i : -1)).filter((i) => i >= 0))
   const { swings } = zigzag(C, { k: K, breaks })
   const rows = []
   for (let n = 0; n < swings.length; n++) { const s = swings[n]; if (s.t < FROM) continue
     const prev = swings[n - 1], c = C[s.i], conf = C[s.knownI]
-    const r2 = (x) => +x.toFixed(SYM === 'DXY' ? 4 : SYM === 'XAGUSD' ? 3 : 2)
+    const r2 = (x) => +x.toFixed(SYM.startsWith('DXY') ? 4 : SYM === 'XAGUSD' ? 3 : 2)
     rows.push({ type: s.type === 'H' ? 'HIGH' : 'LOW', candle_open: iso(c.t), price: r2(s.px), o: r2(c.o), h: r2(c.h), l: r2(c.l), c: r2(c.c), atr: +s.atr.toFixed(4),
       leg_from_prev: prev && prev.type !== s.type ? +(s.px - prev.px).toFixed(2) : null, leg_atr: s.amp_atr != null ? +s.amp_atr.toFixed(2) : null,
       confirmed_by_candle: iso(conf.t), confirmed_at: iso(conf.close_t), confirm_lag_candles: s.knownI - s.i }) }

@@ -1,5 +1,8 @@
 {
- "at": "2026-10-18T14:45:25.559Z",
+ "at": "2026-10-18T16:48:39.258Z",
+ "symbol": "XAUUSD",
+ "partner": "XAGUSD",
+ "session": "gold",
  "spec": "docs/SWING_REASONS_CHECKLIST_SPEC.md",
  "window": [
   "2025-10-16T20:59:00.000Z",

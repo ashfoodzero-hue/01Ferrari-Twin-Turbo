@@ -1,6 +1,6 @@
-# Why gold made its waves — the reasons at every XAU 1D / 4H swing (last year)
+# Why gold (XAU) made its waves — the reasons at every 1D / 4H swing (last year)
 
-Generated from `data/master/xau_swing_reasons.json` (2026-10-18T14:45:25.559Z). Checklist + rules: `docs/SWING_REASONS_CHECKLIST_SPEC.md`. Every row: `docs/swing_book/xau_reasons/1D.csv`, `4H.csv`.
+Generated from `data/master/xau_swing_reasons.json` (2026-10-18T16:48:39.258Z). Checklist + rules: `docs/SWING_REASONS_CHECKLIST_SPEC.md`. Every row: `docs/swing_book/xau_reasons/1D.csv`, `4H.csv`. Candle session: gold. Partner (items 22 / 23): Silver.
 
 Window 2025-10-16 → 2026-10-16. Swings: ZigZag 3 × ATR(14), TradingView-exact candles (reopen spikes clamped). Each reason is checked at the swing candle ± 1 candle with only what was published by then.
 
@@ -10,12 +10,12 @@ Window 2025-10-16 → 2026-10-16. Swings: ZigZag 3 × ATR(14), TradingView-exact
 
 | Reason | At swings | At random candles | Swings checked | p (Holm) | Reading |
 |---|---|---|---|---|---|
-| 22 Silver confirms | 69 % | 0 % | 13 | 0.000 | **MORE frequent at swings (significant after correction)** — silver co-moves with gold: expected, not a cause |
+| 22 Silver confirms | 69 % | 0 % | 13 | 0.000 | **MORE frequent at swings (significant after correction)** — silver co-moves: expected, not a cause |
 | 28 Liquidity sweep | 62 % | 18 % | 13 | 0.077 | more frequent at swings (p < 0.05, not significant after correction) |
 | 32 Overextended | 46 % | 10 % | 13 | 0.125 | more frequent at swings (p < 0.05, not significant after correction) |
 | 37 Month end | 31 % | 5 % | 13 | 0.330 | more frequent at swings (p < 0.05, not significant after correction) |
 | 19 GLD volume ≥ 2× ◐ | 23 % | 0 % | 13 | 0.064 | more frequent at swings (p < 0.05, not significant after correction) |
-| 23 Silver diverges | 23 % | 0 % | 13 | 0.064 | more frequent at swings (p < 0.05, not significant after correction) — silver co-moves with gold: expected, not a cause |
+| 23 Silver diverges | 23 % | 0 % | 13 | 0.064 | more frequent at swings (p < 0.05, not significant after correction) — silver co-moves: expected, not a cause |
 | 33 Climax candle | 23 % | 0 % | 13 | 0.064 | more frequent at swings (p < 0.05, not significant after correction) |
 | 15 EM stress (TRY / ZAR) | 39 % | 18 % | 13 | 1.000 | tendency at swings, not significant (small sample) |
 | 11 War headline ◐ | 36 % | 16 % | 11 | 1.000 | tendency at swings, not significant (small sample) |
@@ -243,14 +243,14 @@ Window 2025-10-16 → 2026-10-16. Swings: ZigZag 3 × ATR(14), TradingView-exact
 
 | Reason | At swings | At random candles | Swings checked | p (Holm) | Reading |
 |---|---|---|---|---|---|
-| 22 Silver confirms | 44 % | 3 % | 80 | 0.000 | **MORE frequent at swings (significant after correction)** — silver co-moves with gold: expected, not a cause |
+| 22 Silver confirms | 44 % | 3 % | 80 | 0.000 | **MORE frequent at swings (significant after correction)** — silver co-moves: expected, not a cause |
 | 28 Liquidity sweep | 55 % | 29 % | 80 | 0.001 | **MORE frequent at swings (significant after correction)** |
 | 25 CME volume ≥ 2× | 21 % | 3 % | 78 | 0.000 | **MORE frequent at swings (significant after correction)** |
 | 33 Climax candle | 20 % | 5 % | 80 | 0.001 | **MORE frequent at swings (significant after correction)** |
 | 2 10y yield move ≥ 5 bp | 38 % | 23 % | 79 | 0.195 | more frequent at swings (p < 0.05, not significant after correction) |
 | 32 Overextended | 24 % | 9 % | 80 | 0.012 | **MORE frequent at swings (significant after correction)** |
 | 19 GLD volume ≥ 2× ◐ | 16 % | 5 % | 80 | 0.027 | **MORE frequent at swings (significant after correction)** |
-| 23 Silver diverges | 10 % | 0 % | 80 | 0.000 | **MORE frequent at swings (significant after correction)** — silver co-moves with gold: expected, not a cause |
+| 23 Silver diverges | 10 % | 0 % | 80 | 0.000 | **MORE frequent at swings (significant after correction)** — silver co-moves: expected, not a cause |
 | 31 RSI divergence | 15 % | 5 % | 80 | 0.142 | more frequent at swings (p < 0.05, not significant after correction) |
 | 9 Other high-impact USD | 15 % | 6 % | 80 | 0.215 | more frequent at swings (p < 0.05, not significant after correction) |
 | 17 Rupee weak ◐ | 14 % | 6 % | 78 | 0.443 | more frequent at swings (p < 0.05, not significant after correction) |

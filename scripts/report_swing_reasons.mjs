@@ -4,16 +4,19 @@ import path from 'node:path'
 import { TURBO } from '../src/core/paths.js'
 import { compareRates, holm } from '../src/core/studyStats.js'
 
-const S = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'xau_swing_reasons.json'), 'utf8')), L = []
+const SH = { XAUUSD: 'xau', XAGUSD: 'xag', WTI: 'wti', DXY: 'dxy', DXY_ICE: 'dxy_ice' }, SYM = process.argv[2] || 'XAUUSD', LABEL = { XAUUSD: 'gold (XAU)', XAGUSD: 'silver (XAG)', WTI: 'crude oil (WTI)', DXY: 'DXY (gold grid)', DXY_ICE: 'DXY (TradingView ICE session)' }
+const S = JSON.parse(fs.readFileSync(path.join(TURBO.master, `${SH[SYM]}_swing_reasons.json`), 'utf8')), L = []
+const PN = S.partner === 'XAGUSD' ? 'Silver' : 'Gold'
 const NAME = { r01_dxy_against: '1 DXY against gold', r02_yield_move: '2 10y yield move ≥ 5 bp', r04_fomc: '4 FOMC', r05_fed_speech: '5 Fed speech', r06_inflation: '6 Inflation data', r07_jobs: '7 Jobs data',
   r08_growth: '8 Growth data', r09_other_high: '9 Other high-impact USD', r10_holiday: '10 Holiday / thin', r11_war_news: '11 War headline ◐', r12_tariff_news: '12 Tariff headline ◐', r13_fiscal_news: '13 Fiscal headline ◐',
-  r14_risk_off: '14 Risk-off (yen / BTC)', r15_em_stress: '15 EM stress (TRY / ZAR)', r16_cny_weak: '16 Yuan weak ◐', r17_inr_weak: '17 Rupee weak ◐', r19_gld_volume: '19 GLD volume ≥ 2× ◐', r22_silver_confirms: '22 Silver confirms',
-  r23_silver_diverges: '23 Silver diverges', r24_oil_shock: '24 Oil shock ≥ 3 %', r25_cme_spike: '25 CME volume ≥ 2×', r26_absorption: '26 Order-flow absorption', r27_prior_swing_level: '27 Prior swing level',
+  r14_risk_off: '14 Risk-off (yen / BTC)', r15_em_stress: '15 EM stress (TRY / ZAR)', r16_cny_weak: '16 Yuan weak ◐', r17_inr_weak: '17 Rupee weak ◐', r19_gld_volume: '19 GLD volume ≥ 2× ◐', r22_silver_confirms: '22 PARTNER confirms',
+  r23_silver_diverges: '23 PARTNER diverges', r24_oil_shock: '24 Oil shock ≥ 3 %', r25_cme_spike: '25 CME volume ≥ 2×', r26_absorption: '26 Order-flow absorption', r27_prior_swing_level: '27 Prior swing level',
   r28_liquidity_sweep: '28 Liquidity sweep', r29_round_number: '29 Round number', r30_prev_day_week: '30 Prev day / week extreme', r31_rsi_divergence: '31 RSI divergence', r32_overextended: '32 Overextended',
   r33_climax_candle: '33 Climax candle', r37_week_open: '37 Week open', r37_month_end: '37 Month end', r37_quarter_end: '37 Quarter end', r38_options_expiry: '38 Options expiry ◐' }
+for (const k of Object.keys(NAME)) NAME[k] = NAME[k].replace('PARTNER', PN)
 const yes = (v) => v === true || (typeof v === 'string' && v && v !== 'no data' && !/^(with|against|daily|ASIA|LONDON|NEWYORK)$/.test(v) && !/^\d{4}-\d{2}$/.test(v))
 const pc = (x) => (x == null ? '—' : Math.round(100 * x) + ' %')
-L.push('# Why gold made its waves — the reasons at every XAU 1D / 4H swing (last year)', '', `Generated from \`data/master/xau_swing_reasons.json\` (${S.at}). Checklist + rules: \`docs/SWING_REASONS_CHECKLIST_SPEC.md\`. Every row: \`docs/swing_book/xau_reasons/1D.csv\`, \`4H.csv\`.`, '',
+L.push(`# Why ${LABEL[SYM]} made its waves — the reasons at every 1D / 4H swing (last year)`, '', `Generated from \`data/master/${SH[SYM]}_swing_reasons.json\` (${S.at}). Checklist + rules: \`docs/SWING_REASONS_CHECKLIST_SPEC.md\`. Every row: \`docs/swing_book/${SH[SYM]}_reasons/1D.csv\`, \`4H.csv\`. Candle session: ${S.session}. Partner (items 22 / 23): ${PN}.`, '',
   `Window ${S.window[0].slice(0, 10)} → ${S.window[1].slice(0, 10)}. Swings: ZigZag 3 × ATR(14), TradingView-exact candles (reopen spikes clamped). Each reason is checked at the swing candle ± 1 candle with only what was published by then.`, '',
   '**How to read this:** "at swings" vs "at random candles" (same timeframe, same hour). A reason counts as a candidate driver only if it is clearly MORE frequent at swings than at ordinary candles. Present ≠ caused it; 13 daily and 80 4H swings describe, they cannot prove.', '')
 for (const tf of ['1D', '4H']) { const T = S.tf[tf]
@@ -25,7 +28,7 @@ for (const tf of ['1D', '4H']) { const T = S.tf[tf]
     let read = r.holm && d > 0 ? '**MORE frequent at swings (significant after correction)**' : r.pv != null && r.pv < 0.05 && d > 0 ? 'more frequent at swings (p < 0.05, not significant after correction)' : r.holm && d < 0 ? '**LESS frequent at swings (significant)**' : d >= 0.1 ? 'tendency at swings, not significant (small sample)' : d <= -0.1 ? 'tendency against, not significant' : 'about the same as ordinary candles'
     if (r.k === 'r26_absorption') read = 'uninformative at this timeframe (the rule never fires on candles this big)'
     if (r.k === 'r29_round_number' && tf === '1D') read = 'uninformative on daily (a $50 level is almost always within 0.25 ATR)'
-    if (r.k === 'r22_silver_confirms' || r.k === 'r23_silver_diverges') read += ' — silver co-moves with gold: expected, not a cause'
+    if ((r.k === 'r22_silver_confirms' || r.k === 'r23_silver_diverges') && SYM !== 'WTI' && !SYM.startsWith('DXY')) read += ` — ${PN.toLowerCase()} co-moves: expected, not a cause`
     L.push(`| ${NAME[r.k]} | ${pc(p.at_swings)} | ${pc(p.at_random)} | ${p.n_swings} | ${r.pHolm == null ? '—' : r.pHolm.toFixed(3)} | ${read} |`) }
   const cat = (key) => { const c = {}; for (const r of T.rows) { const v = r[key] ?? 'n/a'; c[v] = (c[v] || 0) + 1 } return Object.entries(c).map(([v, n]) => `${v} ${n}`).join(' · ') }
   L.push('', `- **34 Higher-timeframe leg (${tf === '1D' ? '1W' : '1D'}) at the turn:** ${cat('r34_htf_leg')}`, `- **35 Lower timeframes already turned at the same price** (of 3): ${cat('r35_lower_tfs_flipped')}`)
@@ -38,5 +41,6 @@ for (const tf of ['1D', '4H']) { const T = S.tf[tf]
   else { L.push('| Swing | Candle (UTC) | Price | Leg ATR | Reasons present (numbers from the list) | 1D leg | Session |', '|---|---|---|---|---|---|---|')
     for (const r of T.rows) L.push(`| ${r.swing} | ${r.candle.slice(0, 16).replace('T', ' ')} | ${r.price} | ${r.leg_atr ?? '—'} | ${Object.keys(NAME).filter((k) => yes(r[k])).map((k) => NAME[k].split(' ')[0]).join(', ') || '—'} | ${r.r34_htf_leg ?? '—'} | ${r.r36_session} |`) }
   L.push('') }
-fs.writeFileSync(path.join(TURBO.root, 'docs', 'SWING_REASONS_ATLAS.md'), L.join('\n') + '\n')
-console.log('written docs/SWING_REASONS_ATLAS.md (' + L.length + ' lines)')
+const OUTF = SYM === 'XAUUSD' ? 'SWING_REASONS_ATLAS.md' : `SWING_REASONS_ATLAS_${SH[SYM].toUpperCase()}.md`
+fs.writeFileSync(path.join(TURBO.root, 'docs', OUTF), L.join('\n') + '\n')
+console.log(`written docs/${OUTF} (${L.length} lines)`)
