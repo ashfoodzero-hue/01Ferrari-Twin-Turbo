@@ -33,4 +33,19 @@ ok('STATIC: run_twin runs the recorder every 15 min and the audit daily; live re
   for (const f of ['../src/data/wti.js', '../src/data/futuresImport.js']) assert(fs.readFileSync(path.join(here, f), 'utf8').includes("from './futuresRule.js'"), f)
   assert(fs.readFileSync(path.join(here, 'import_futures_1m.mjs'), 'utf8').includes('futuresImport.js'))
 })
+// POLYGON REVISIONS (src/data/recordRevisions.js, 2026-10-18): same rule as verify_database, matched by minute + contract; a revised minute is
+// rewritten (only it — byte-identical otherwise), a minute Polygon no longer serves is reported never deleted, a partial match leaves the file alone.
+{ const name = 'revisions: diff = verify_database rule (o/h/l/c + volume, per contract) · only revised lines rewritten · missing reported, never deleted · partial match → file unchanged'
+  try { const { diffRevisions, applyRevisions } = await import('../src/data/recordRevisions.js'), os = await import('node:os')
+    const mine = [{ t: 1, o: 1, h: 2, l: 0.5, c: 1.5, v: 10, tk: 'GCZ6' }, { t: 2, o: 1.5, h: 2, l: 1, c: 1.8, v: 5, tk: 'GCZ6' }, { t: 3, o: 2, h: 2, l: 2, c: 2, v: 1, tk: 'GCZ6' }, { t: 2, o: 9, h: 9, l: 9, c: 9, v: 1, tk: 'GCG7' }]
+    const rest = [{ t: 1, o: 1, h: 2, l: 0.5, c: 1.5, v: 10, tk: 'GCZ6' }, { t: 2, o: 1.5, h: 2, l: 1, c: 1.81, v: 5, tk: 'GCZ6' }, { t: 2, o: 9, h: 9, l: 9, c: 9, v: 2, tk: 'GCG7' }]
+    const d = diffRevisions(mine, rest); assert.equal(d.same, 1); assert.deepEqual(d.revised.map((x) => `${x.t}${x.tk}`), ['2GCZ6', '2GCG7']); assert.deepEqual(d.missing, [3])
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'rev-')), F = path.join(dir, '1m.jsonl'), body = mine.map((b) => JSON.stringify(b)).join('\n') + '\n'; fs.writeFileSync(F, body)
+    assert.equal(await applyRevisions(F, d.revised), 2); const after = fs.readFileSync(F, 'utf8').trim().split('\n').map((l) => JSON.parse(l))
+    assert.equal(after.length, 4); assert.equal(after[1].c, 1.81); assert.equal(after[3].v, 2); assert.deepEqual(after[0], mine[0]); assert.deepEqual(after[2], mine[2])
+    fs.writeFileSync(F, body); let threw = false; try { await applyRevisions(F, [...d.revised, { t: 99, tk: 'GCZ6', new: { t: 99 } }]) } catch { threw = true }
+    assert(threw, 'a revision that matches no line must throw'); assert.equal(fs.readFileSync(F, 'utf8'), body, 'file untouched on a partial match'); assert(!fs.existsSync(F + '.rev.tmp'))
+    fs.rmSync(dir, { recursive: true, force: true })
+    const rf = fs.readFileSync(path.join(here, 'record_futures.mjs'), 'utf8'); assert(/diffRevisions\(mine, rest\)/.test(rf) && /6 \* 3600000/.test(rf) && /recorder_revisions\.jsonl/.test(rf))
+    n++; console.log('  ✓ ' + name) } catch (e) { failed++; console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
 console.log(failed ? `✗ RECORDER SMOKE: ${n} passed, ${failed} failed` : `✅ RECORDER SMOKE: ${n} passed, 0 failed`)

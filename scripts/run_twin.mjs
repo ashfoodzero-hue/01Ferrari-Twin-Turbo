@@ -11,7 +11,8 @@ import path from 'node:path'
 import { execFile, spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { TURBO } from '../src/core/paths.js'
-import { marketOpen } from '../src/core/freshness.js'
+import { marketOpen, marketSession } from '../src/core/freshness.js'
+import { preopenSlot } from '../src/core/dataHealth.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { streamStatus } from '../src/data/tickStream.js'
 import { reconcilePlan } from '../src/core/reconcilePlan.js'
@@ -92,6 +93,7 @@ let lastRec = null, recRunning = false   // futures + GLD recorder (record_futur
 let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
 let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
+let lastPre = null, preRunning = false, sesAt = 0, ses = null   // pre-open readiness check (preopen_check.mjs, 2026-10-18)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
   execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'matrix_tick.mjs')], { timeout: 120000, maxBuffer: 8 << 20, windowsHide: true }, (err, stdout, stderr) => {
@@ -176,6 +178,14 @@ for (;;) {
   if (mins >= 21 * 60 + 30 && lastAudit !== day && !auditRunning) { auditRunning = true; lastAudit = day
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'audit_recording.mjs'), '3'], { timeout: 15 * 60000, windowsHide: true }, (err, stdout, stderr) => { auditRunning = false
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'audit_recording.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-500), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+  // PRE-OPEN READINESS (preopen_check.mjs, 2026-10-18; Ashraf approved "Pre-open readiness check"): 60 and 15 min before every open
+  // (marketSession.next_open — New York hours + measured holidays). The 1-hour daily break gets only the T-15 run, which reports NOT READY only.
+  if (now - sesAt >= 30000) { ses = marketOpen(now) ? null : marketSession(now); sesAt = now }
+  if (ses?.next_open && !preRunning) { const slot = preopenSlot(ses, now), key = slot && `${ses.next_open}:${slot}`
+    if (key && lastPre !== key) { preRunning = true; lastPre = key
+      execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'preopen_check.mjs'), `--slot=${slot}`, ...(ses.status === 'DAILY_BREAK' ? ['--quiet-if-ready'] : [])], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { preRunning = false
+        fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'preopen_check.mjs', slot, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-600), tail: String(stderr || '').slice(-300) }) + '\n')
+        process.stdout.write(String(stdout || '').split('\n').filter((l) => /READY|📨/.test(l)).join('\n') + '\n') }) } }
   // WEEKLY FULL DATABASE CHECK (verify_database.mjs, 2026-10-18): Saturdays at/after 06:00 UTC (market closed) — every series minute by minute vs
   // Polygon + GOLD_FUT vs the CME feed → data/master/database_verification.json, which the data health watcher judges (FAILED → STALE).
   if (wd === 6 && mins >= 6 * 60 && lastVerify !== day && !verifyRunning && now >= verifyRetryAt) { verifyRunning = true; lastVerify = day

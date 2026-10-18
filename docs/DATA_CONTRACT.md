@@ -198,3 +198,23 @@ Ashraf asked: "how we can tell if we have any issue with full system database? a
   - the inv90 forward ledger.
 - **Chart banner:** flashing red "DATABASE STALE — SIGNALS STOPPED" · amber "DATA WARNING" · calm blue "MARKET CLOSED — … no live feed expected" + the next open.
 - **Proof:** `smoke_data_health` 12/12, `smoke_freshness` 7/7.
+
+### 9a. Pre-open readiness + Polygon revisions (2026-10-18, same day)
+- **Pre-open check** (`scripts/preopen_check.mjs`; Ashraf approved "Pre-open readiness check"): run_twin runs it 60 and 15 min before every open (`dataHealth.preopenSlot`). The daily-break reopen gets only T-15, and it reports NOT READY only.
+  - **15 checks:**
+    - Polygon reachable + plan accepted (failures classified);
+    - PC clock vs Polygon ±10 s;
+    - the last 60 stored minutes = Polygon for XAU, XAG and the 6 DXY pairs (o/h/l/c) and for GOLD_FUT, SILVER_FUT, WTI (+ volume, per contract);
+    - tick stream up, connected, 8/8 subscribed;
+    - data health not STALE.
+  - **Telegram:** ✅ READY / 🟥 NOT READY + what failed. A NOT READY stays a WARN in the health verdict until the open + 2 h.
+  - **First run 2026-10-18 09:0x UTC:** 15/15 READY. With a deliberately wrong key: NOT READY, "DATA PLAN … HTTP 401" (path proven).
+- **Polygon revises past minutes** (MEASURED 2026-10-18):
+  - **Forex:** between the 23:02 UTC full check (identical) and 08:51 UTC, Polygon re-published 2026-10-15 for all 8 forex symbols (XAU 873 minutes; mean $0.12, max $1.22). reconcile_1m corrected them (7,575 in total).
+  - **GLD:** 7 minutes re-rounded to 4 dp, two 1-cent closes.
+  - **What failed and what fixed it:** the recorder was append-only and never re-checked, so `verify_database` FAILED. New `src/data/recordRevisions.js`: record_futures re-checks the last 5 days of GOLD_FUT / SILVER_FUT / WTI / GLD every 6 h with the verify_database rule, rewrites revised minutes atomically, and logs old → new to `data/master/recorder_revisions.jsonl`. A minute Polygon no longer serves is reported, never deleted.
+  - **Live end to end:** 09:03 Telegram 🟥 DATABASE STALE (full check failed: GLD) → 09:02 the 7 revisions applied → 09:07 full check ✅ → 09:11 Telegram ✅ DATA OK AGAIN — signals resumed.
+- **`verify_database` window is now ROLLING** (the 4 days up to the last market close). It was hard-coded to 2026-10-12 → 10-16, so the weekly run would have re-checked that week forever.
+- **Feed delay (facts, unchanged):**
+  - spot = real-time ticks (Polygon forex WebSocket, measured);
+  - futures = **Futures Starter: 1m bars, 10 min delayed, no ticks / bid-ask**. They are delayed CONTEXT only: whale gauge, WTI, footprint BLOCKED live.

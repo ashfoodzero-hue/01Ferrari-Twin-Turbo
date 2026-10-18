@@ -49,6 +49,7 @@ export function readHealthInputs(now = Date.now()) {
     halted: fs.existsSync(path.join(TURBO.root, 'data', 'self_heal', 'WATCHDOG_HALT.marker')),
     calendar: readJ(path.join(TURBO.root, 'data', 'calendar', 'upcoming.json')),
     history: readJ(path.join(TURBO.root, 'data', 'calendar', 'history.json')),
+    preopen: readJ(path.join(TURBO.master, 'preopen_check.json')),
     diskFreeGB: (() => { try { const s = fs.statfsSync(TURBO.root); return +(s.bavail * s.bsize / 1e9).toFixed(1) } catch { return null } })(),
   }
 }
@@ -123,6 +124,10 @@ export function assessHealth(I, R = HEALTH_RULE) {
   if ((I.history?.kept_from_previous ?? []).length) add('CALENDAR_KEPT', 'WARN', `Calendar history kept old rows for: ${I.history.kept_from_previous.join(', ')} (source down at the last refresh).`)
   const nSrc = Object.keys(cal?.sources ?? {}).length
   checks.calendar = cal ? `${nSrc - srcBad.length}/${nSrc} sources ok · ${I.history?.events?.length ?? 0} history events · ${iso(calT)}` : 'never'
+  // 7b. the PRE-OPEN readiness check (preopen_check.mjs, 60 + 15 min before each open) — a failure stays visible until the open + 2 h
+  const po = I.preopen, poOpen = po?.next_open ? Date.parse(po.next_open) : null
+  if (po && po.ready === false && poOpen && now <= poOpen + 2 * H) add('PREOPEN_NOT_READY', 'WARN', `Pre-open check NOT READY (${po.slot} min before ${iso(poOpen)}): ${(po.checks ?? []).filter((c) => !c.ok).map((c) => `${c.name} — ${c.detail}`).join(' · ').slice(0, 300)}`)
+  checks.preopen = po ? `${po.ready ? 'READY' : 'NOT READY'} ${iso(Date.parse(po.at))} (${(po.checks ?? []).filter((c) => c.ok).length}/${(po.checks ?? []).length} checks, for the ${iso(poOpen)} open)` : 'not run yet'
   // 8. disk space on the data drive (prevention: caught days before a full disk stops the stores)
   if (I.diskFreeGB != null && I.diskFreeGB < R.diskCritGB) add('DISK_FULL', 'CRITICAL', `Data drive almost full: ${I.diskFreeGB} GB free — new minutes cannot be saved safely.`)
   else if (I.diskFreeGB != null && I.diskFreeGB < R.diskWarnGB) add('DISK_LOW', 'WARN', `Data drive low: ${I.diskFreeGB} GB free (alarm at ${R.diskCritGB} GB).`)
@@ -143,6 +148,16 @@ export function signalsHalted({ now = Date.now(), file = HEALTH_FILE() } = {}) {
   if (!(age <= HEALTH_RULE.healthMaxAgeMs)) return { halted: true, why: `data health check is ${ago(age)} old — the watcher stopped`, state: h.state ?? null }
   if (h.state === 'STALE') return { halted: true, why: (h.issues ?? []).filter((x) => x.sev === 'CRITICAL').map((x) => x.text).join(' · ').slice(0, 400), state: 'STALE' }
   return { halted: false, why: null, state: h.state ?? null }
+}
+
+/**
+ * PRE-OPEN SLOT (pure; run_twin schedules scripts/preopen_check.mjs with it). '60' = 45-60 min before the open, '15' = 5-15 min before, else
+ * null. The 1-hour DAILY_BREAK has no '60' slot (that instant is the break's own start). @param ses = freshness.marketSession(now)
+ */
+export function preopenSlot(ses, now) {
+  if (!ses || ses.open || !ses.next_open) return null
+  const toMin = (ses.next_open - now) / 60000
+  return toMin <= 60 && toMin > 45 && ses.status !== 'DAILY_BREAK' ? '60' : toMin <= 15 && toMin > 5 ? '15' : null
 }
 
 /**

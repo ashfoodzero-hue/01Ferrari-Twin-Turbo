@@ -6,7 +6,8 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { assessHealth, readHealthInputs, signalsHalted, alertTransitions, HEALTH_RULE } from '../src/core/dataHealth.js'
+import { assessHealth, readHealthInputs, signalsHalted, alertTransitions, HEALTH_RULE, preopenSlot } from '../src/core/dataHealth.js'
+import { marketSession } from '../src/core/freshness.js'
 
 let n = 0
 const ok = async (name, fn) => { try { await fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
@@ -22,7 +23,7 @@ const healthy = (now, over = {}) => ({ now, fresh: { app: { alive: true }, flows
   calendar: { at: new Date(now - 10 * MIN).toISOString(), sources: { a: { ok: true }, b: { ok: true } }, holidays: [] }, history: { events: [1, 2], kept_from_previous: [] }, diskFreeGB: 300, ...over })
 const codes = (a) => a.issues.map((x) => x.code).sort()
 
-await ok('healthy inputs on an open Tuesday → OK, no issues, 10 check lines (incl. the market + silver/DXY stream), market OPEN', () => { const a = assessHealth(healthy(TUE)); assert.equal(a.state, 'OK'); assert.deepEqual(a.issues, []); assert.equal(Object.keys(a.checks).length, 10); assert.equal(a.market.status, 'OPEN'); assert(/live feed expected/.test(a.checks.market)) })
+await ok('healthy inputs on an open Tuesday → OK, no issues, 11 check lines (incl. the market, silver/DXY stream, pre-open), market OPEN', () => { const a = assessHealth(healthy(TUE)); assert.equal(a.state, 'OK'); assert.deepEqual(a.issues, []); assert.equal(Object.keys(a.checks).length, 11); assert.equal(a.market.status, 'OPEN'); assert(/live feed expected/.test(a.checks.market)) })
 await ok('every CRITICAL rule → STALE (gold stream, reconcile, audit, full check, recorder ×2 failed, recorder silent, futures, halt, app down, live flow)', () => {
   const C = [
     ['XAU_STREAM', { stream: { symbols: { XAUUSD: { settled_through: new Date(TUE - 5 * MIN).toISOString() } } } }],
@@ -108,7 +109,23 @@ await ok('WIRING: run_twin runs health_tick every 2 min (first in the loop) + ve
   const pg = src('ops', 'chart', 'index.html'); assert(/id="dbHealth"/.test(pg) && /@keyframes dbflash/.test(pg) && /DATABASE STALE — SIGNALS STOPPED/.test(pg) && /fetch\('\/api\/health'\)/.test(pg))
   assert(/'\/api\/health'/.test(src('scripts', 'run_chart.mjs'))); assert(/health_tick\.mjs/.test(src('ops', 'watchdog_twin.mjs')))
 })
-await ok('REAL files: the live inputs produce a verdict with all 10 checks (whatever its state today)', () => {
-  const a = assessHealth(readHealthInputs()); assert(['OK', 'WARN', 'STALE'].includes(a.state)); assert.deepEqual(Object.keys(a.checks).sort(), ['app', 'calendar', 'disk', 'full_check', 'futures', 'gold_stream', 'market', 'reconcile', 'recording_audit', 'stream_symbols'])
+await ok('PRE-OPEN schedule (preopenSlot on marketSession): T-60 + T-15 before the Sunday open (summer 22:00Z, winter 23:00Z) · the daily break gets only T-15 · open market → none', () => {
+  const at = (t) => preopenSlot(marketSession(Date.parse(t)), Date.parse(t))
+  assert.equal(at('2026-10-18T21:00:00Z'), '60'); assert.equal(at('2026-10-18T21:10:00Z'), '60'); assert.equal(at('2026-10-18T21:16:00Z'), null)
+  assert.equal(at('2026-10-18T21:46:00Z'), '15'); assert.equal(at('2026-10-18T21:56:00Z'), null); assert.equal(at('2026-10-18T12:00:00Z'), null)
+  assert.equal(at('2026-11-08T22:00:00Z'), '60'); assert.equal(at('2026-11-08T22:50:00Z'), '15')   // winter: opens 23:00Z
+  assert.equal(at('2026-10-20T21:00:00Z'), null); assert.equal(at('2026-10-20T21:47:00Z'), '15')   // daily break 21-22Z: no T-60
+  assert.equal(at('2026-10-20T10:00:00Z'), null)
+  const rt = src('scripts', 'run_twin.mjs'); assert(/preopenSlot\(ses, now\)/.test(rt) && /preopen_check\.mjs/.test(rt) && /DAILY_BREAK' \? \['--quiet-if-ready'\]/.test(rt))
+  const pc = src('scripts', 'preopen_check.mjs'); assert(/bypassHealth: true/.test(pc) && /classifyFailure/.test(pc) && /const same = \(a, b\) => \['o', 'h', 'l', 'c'\]/.test(pc), 'pre-open uses the verify_database equality rule')
+})
+await ok('PRE-OPEN result in the verdict: NOT READY → WARN until the open + 2 h (then it expires) · READY → no issue, stated in the checks', () => {
+  const po = (ready, openAt) => ({ preopen: { at: new Date(TUE - 10 * MIN).toISOString(), slot: '15', ready, next_open: new Date(openAt).toISOString(), checks: [{ name: 'PC clock vs Polygon', ok: ready, detail: '+42 s' }, { name: 'x', ok: true }] } })
+  const a = assessHealth(healthy(TUE, po(false, TUE + 5 * MIN))); assert.equal(a.state, 'WARN'); assert.deepEqual(codes(a), ['PREOPEN_NOT_READY']); assert(/PC clock vs Polygon — \+42 s/.test(a.issues[0].text))
+  assert.deepEqual(codes(assessHealth(healthy(TUE, po(false, TUE - 3 * H)))), [])
+  const b = assessHealth(healthy(TUE, po(true, TUE + 5 * MIN))); assert.deepEqual(codes(b), []); assert(/^READY .* \(2\/2 checks/.test(b.checks.preopen), b.checks.preopen)
+})
+await ok('REAL files: the live inputs produce a verdict with all 11 checks (whatever its state today)', () => {
+  const a = assessHealth(readHealthInputs()); assert(['OK', 'WARN', 'STALE'].includes(a.state)); assert.deepEqual(Object.keys(a.checks).sort(), ['app', 'calendar', 'disk', 'full_check', 'futures', 'gold_stream', 'market', 'preopen', 'reconcile', 'recording_audit', 'stream_symbols'])
 })
 console.log(process.exitCode ? '✗ DATA HEALTH SMOKE FAILED' : `✅ DATA HEALTH SMOKE: ${n} passed, 0 failed`)

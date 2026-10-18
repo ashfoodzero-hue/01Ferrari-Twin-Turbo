@@ -14,9 +14,13 @@ import { SYMBOLS } from '../src/data/symbols.js'
 import { loadBars } from '../src/data/backfillReader.js'
 import { cleanForTv } from '../src/core/nyCandles.js'
 import { findHoles } from '../src/core/dataHoles.js'
+import { lastMarketClose } from '../src/core/freshness.js'
 
 const KEY = process.env.POLYGON_API_KEY, now = Date.now()
-const WIN_FROM = Date.parse(process.env.VERIFY_FROM || '2026-10-12T21:00:00Z'), WIN_TO = Date.parse(process.env.VERIFY_TO || '2026-10-16T21:00:00Z')
+// ROLLING window (2026-10-18): the 4 days up to the LAST MARKET CLOSE (New York session rule). It was hard-coded to 2026-10-12 → 10-16, so the
+// weekly Saturday run would have re-checked that same week forever. VERIFY_FROM / VERIFY_TO still override.
+const AUTO_TO = Math.floor(lastMarketClose(now) / 60000) * 60000
+const WIN_TO = process.env.VERIFY_TO ? Date.parse(process.env.VERIFY_TO) : AUTO_TO, WIN_FROM = process.env.VERIFY_FROM ? Date.parse(process.env.VERIFY_FROM) : WIN_TO - 4 * 86400000
 const res = { at: new Date(now).toISOString(), window: [new Date(WIN_FROM).toISOString(), new Date(WIN_TO).toISOString()], series: {}, failures: [] }
 const fail = (s, why) => { res.failures.push(`${s}: ${why}`); console.log(`    ✗ ${why}`) }
 const same = (a, b) => ['o', 'h', 'l', 'c'].every((k) => Math.abs(a[k] - b[k]) < 1e-9)

@@ -38,7 +38,7 @@ const day = new Date(now).toISOString().slice(0, 10), mins = new Date(now).getUT
 let dailyDay = prev.dailyDay ?? null
 if (mins >= 21 * 60 + 45 && dailyDay !== day) { dailyDay = day
   const C = A.checks, mark = A.state === 'OK' ? '🟩 <b>Daily data check: ALL OK</b>' : A.state === 'WARN' ? '🟧 <b>Daily data check: OK with warnings</b>' : '🟥 <b>Daily data check: DATABASE STALE — signals stopped</b>'
-  msgs.push(`${HEAD}\n${mark}\n• market: ${esc(C.market)}\n• app: ${esc(C.app)} · gold stream: ${esc(C.gold_stream)}\n• gap repair: ${esc(C.reconcile)}\n• recording audit: ${esc(C.recording_audit)}\n• futures: ${esc(C.futures)}\n• weekly full check: ${esc(C.full_check)}\n• calendar: ${esc(C.calendar)}\n• disk: ${esc(C.disk)}${A.issues.length ? '\n' + A.issues.map((x) => `${x.sev === 'CRITICAL' ? '🟥' : '🟧'} ${esc(x.text)}`).join('\n') : ''}`) }
+  msgs.push(`${HEAD}\n${mark}\n• market: ${esc(C.market)}\n• app: ${esc(C.app)} · gold stream: ${esc(C.gold_stream)}\n• silver + DXY stream: ${esc(C.stream_symbols)}\n• pre-open check: ${esc(C.preopen)}\n• gap repair: ${esc(C.reconcile)}\n• recording audit: ${esc(C.recording_audit)}\n• futures: ${esc(C.futures)}\n• weekly full check: ${esc(C.full_check)}\n• calendar: ${esc(C.calendar)}\n• disk: ${esc(C.disk)}${A.issues.length ? '\n' + A.issues.map((x) => `${x.sev === 'CRITICAL' ? '🟥' : '🟧'} ${esc(x.text)}`).join('\n') : ''}`) }
 
 const out = { ...A, signals_halted: A.state === 'STALE', announced: Object.entries(mem).filter(([, m]) => m.announced).map(([k]) => k) }
 console.log(`  🩺 data health: ${A.state} · market ${A.market.status}${A.issues.length ? ' — ' + A.issues.map((x) => `${x.sev === 'CRITICAL' ? '🟥' : '🟧'}${x.code}`).join(' ') : ''}${msgs.length ? ` · 📨 ${msgs.length} message(s)` : ''}`)

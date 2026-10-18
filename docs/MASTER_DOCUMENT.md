@@ -1105,3 +1105,14 @@ without duplications … only use the real Win results, and ignore the rest."
     - `smoke_data_health` 12/12 (new, registered);
     - `smoke_freshness` 7/7 (+ winter session, + measured holidays);
     - full suite 64/64 green (incl. the silver + DXY-pair stream check added the same day).
+- **(ck) 2026-10-18 — PRE-OPEN READINESS + POLYGON REVISIONS (Ashraf: "make an early preventive action to avoid 100% stale data flow … before time"; approved "Pre-open readiness check"). Details: `docs/DATA_CONTRACT.md` §9a.**
+  - **`scripts/preopen_check.mjs`** runs at T-60 and T-15 before every open (`dataHealth.preopenSlot`; daily break T-15 only, NOT READY only). Its 15 checks: Polygon + plan, PC clock, store = Polygon on 11 series, stream, health.
+    - First run READY 15/15; the bad-key run gives NOT READY with the plan classification.
+  - **MEASURED: Polygon revises past minutes.**
+    - 2026-10-15 was re-published overnight: forex corrected by reconcile_1m (7,575); 7 GLD minutes.
+    - The recorder never re-checked, so `verify_database` FAILED.
+    - Fix: `src/data/recordRevisions.js` + a 6-hourly 5-day re-check in record_futures (atomic rewrite + old → new ledger).
+  - **Live loop proven:** Telegram 🟥 09:03 → fix → full check ✅ → Telegram ✅ "DATA OK AGAIN — signals resumed" 09:11.
+  - **Bug fixed:** `verify_database` window was hard-coded (12-16 Oct); it is now rolling to the last market close.
+  - **Feed facts:** spot real-time ticks; futures 10-min-delayed 1m bars (plan), context only.
+  - **Smokes:** data_health 14/14 (+ pre-open schedule + verdict), recorder 5/5 (+ revisions).
