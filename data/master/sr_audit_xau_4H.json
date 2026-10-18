@@ -1,0 +1,19 @@
+{
+ "at": "2026-10-18T20:11:51.394Z",
+ "symbol": "XAUUSD",
+ "tf": "4H",
+ "independent_evaluator": {
+  "evaluations": 2500,
+  "differences": 0
+ },
+ "positive_control": {
+  "real": [
+   825,
+   828
+  ],
+  "placebo": [
+   1670,
+   2880
+  ]
+ }
+}
