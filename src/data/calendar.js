@@ -35,9 +35,19 @@ export function etToUtc(y, mo, d, hh, mm) {
   return guess + (Date.UTC(y, mo - 1, d, hh, mm) - shown)
 }
 
-async function getText(url) {
-  const c = new AbortController(), t = setTimeout(() => c.abort(), 25000)
-  try { const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'text/html' }, signal: c.signal }); return { status: r.status, text: r.ok ? await r.text() : '' } } finally { clearTimeout(t) }
+// RESILIENT (2026-10-19, Ashraf: "we need to solve issues of stales never happen again"): the Fed site failed ONE attempt now and then (fetch failed /
+// HTTP 406 on 10-17, 10-18, 10-19 08:09 + 11:59) and each blip raised a 30-min DATA WARNING. Now: up to `attempts` tries (backoff 2 s, 6 s), the right
+// Accept header per resource (the speeches JSON was asked for as text/html → 406), then curl (another network stack) as the last try.
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+async function getText(url, { accept = 'text/html', attempts = 3, timeoutMs = 20000 } = {}) {
+  let last = { status: 0, text: '' }
+  for (let k = 0; k < attempts; k++) {
+    if (k) await sleep(k === 1 ? 2000 : 6000)
+    const c = new AbortController(), t = setTimeout(() => c.abort(), timeoutMs)
+    try { const r = await fetch(url, { headers: { 'User-Agent': UA, Accept: accept }, signal: c.signal }); last = { status: r.status, text: r.ok ? await r.text() : '' }; if (r.ok) return last }
+    catch { last = { status: 0, text: '' } } finally { clearTimeout(t) }
+  }
+  const viaCurl = await curlText(url); return viaCurl.status === 200 ? viaCurl : last
 }
 
 // Forex Factory answers Node's built-in fetch with 403 (bot protection on its TLS fingerprint) but serves curl — measured 2026-10-09.
@@ -70,7 +80,7 @@ export async function fetchFomc({ historyFrom = 2013 } = {}) {
       if (!(mo > 0 && lastDay > 0) || /notation|unscheduled/i.test(dates)) continue
       out.push({ src: 'FED', type: 'FOMC', name: 'FOMC rate decision' + (dates.includes('*') ? ' + projections & press conference' : ''), t: etToUtc(y, mo, lastDay, 14, 0), impact: 'high' }) } }
   for (let y = historyFrom; y <= 2020; y++) {
-    const h = await getText(`https://www.federalreserve.gov/monetarypolicy/fomchistorical${y}.htm`); if (h.status !== 200) continue
+    const h = await getText(`https://www.federalreserve.gov/monetarypolicy/fomchistorical${y}.htm`, { attempts: 2 }); if (h.status !== 200) continue
     for (const m of h.text.matchAll(/([A-Z][a-z]{2,8})(?:\/([A-Z][a-z]{2,8}))? (\d+)(?:-(\d+))? Meeting - (\d{4})/g)) {
       const mo = monthNo(m[2] || m[1]), d = +(m[4] || m[3]); if (!(mo > 0)) continue; out.push({ src: 'FED', type: 'FOMC', name: 'FOMC rate decision', t: etToUtc(+m[5], mo, d, 14, 0), impact: 'high' }) } }
   const seen = new Set(); return out.filter((e) => !seen.has(e.t) && seen.add(e.t)).sort((a, b) => a.t - b.t)
@@ -116,7 +126,7 @@ export function mergeHistory(prev, { fomc = [], bls = [], retail = [], speeches 
 /** Fed Board speeches (Chair / Vice Chairs / Governors) with their start time — federalreserve.gov/json/ne-speeches.json (times are ET:
  *  measured 2026-10-09 against Forex Factory UTC, 2/2 agree). Entries without a time are dropped (never guessed). */
 export async function fetchFedSpeeches() {
-  const { status, text } = await getText('https://www.federalreserve.gov/json/ne-speeches.json'); if (status !== 200) throw new Error('Fed speeches HTTP ' + status)
+  const { status, text } = await getText('https://www.federalreserve.gov/json/ne-speeches.json', { accept: 'application/json, */*' }); if (status !== 200) throw new Error('Fed speeches HTTP ' + status)
   const out = []
   for (const x of JSON.parse(text.replace(/^\uFEFF/, ''))) {
     const m = String(x.d).match(/^(\d+)\/(\d+)\/(\d{4}) (\d+):(\d+):\d+ (AM|PM)$/); if (!m) continue

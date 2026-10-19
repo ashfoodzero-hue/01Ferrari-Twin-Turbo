@@ -155,13 +155,17 @@ export function assessHealth(I, R = HEALTH_RULE) {
   // 9. ANALYSIS FEEDS (S/R levels hourly, trendline lines per 4H close, trendline minute check) — judged once the market has been open 40 min and is
   //    still open long enough for a refresh cycle; plus two failed refreshes in a row of the same asset (exit 2 = the refresh saw stale minutes).
   if (I.feeds && checks.app === 'running') {
-    const age = (t) => (t ? now - Date.parse(t) : Infinity), srOld = [], tlOld = [], failed = []
+    const age = (t) => (t ? now - Date.parse(t) : Infinity), srOld = [], tlOld = [], failed = [], slow = []
     const srJudged = settledOpen && marketOpen(now - R.srMaxAgeMs), tlJudged = settledOpen && marketOpen(now - R.tlLinesMaxAgeMs)
     for (const sh of ANALYSIS_ASSETS) { const f = I.feeds[sh] ?? {}
       if (srJudged && age(f.sr) > R.srMaxAgeMs) srOld.push(`${SYM_OF[sh]} (${f.sr ? ago(age(f.sr)) + ' old' : 'never'})`)
       if (TL_ASSETS.includes(sh) && tlJudged && age(f.tl) > R.tlLinesMaxAgeMs) tlOld.push(`${SYM_OF[sh]} (${f.tl ? ago(age(f.tl)) + ' old' : 'never'})`)
       for (const kind of TL_ASSETS.includes(sh) ? ['sr_refresh', 'trendline_lines'] : ['sr_refresh']) { const rs = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}`).slice(-2)
-        if (rs.length === 2 && rs.every((r) => r.exit !== 0)) failed.push(`${kind} ${SYM_OF[sh]} (exit ${rs.at(-1).exit}${rs.at(-1).exit === 2 ? ' = stale minutes' : ''})`) } }
+        if (rs.length === 2 && rs.every((r) => r.exit !== 0)) failed.push(`${kind} ${SYM_OF[sh]} (exit ${rs.at(-1).exit}${rs.at(-1).exit === 2 ? ' = stale minutes' : ''})`)
+        // FEED_SLOW (2026-10-19, "stales never happen again"): 2 of the last 3 timed runs used ≥ 80 % of their kill limit → warn BEFORE a kill
+        const timed = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}` && r.ms > 0 && r.limit_ms > 0).slice(-3)
+        if (timed.filter((r) => r.ms >= 0.8 * r.limit_ms).length >= 2) slow.push(`${kind} ${SYM_OF[sh]} (${Math.round(timed.at(-1).ms / 1000)} s of ${Math.round(timed.at(-1).limit_ms / 1000)} s)`) } }
+    if (slow.length) add('FEED_SLOW', 'WARN', `Analysis refresh close to its time limit: ${slow.join(', ')} — will be killed if it grows.`)
     if (srOld.length) add('SR_FEED_STALE', 'WARN', `S/R levels not refreshed: ${srOld.join(', ')} (every hour) — the S/R tab shows STALE.`)
     if (tlOld.length) add('TL_FEED_STALE', 'WARN', `Trendline lines not refreshed: ${tlOld.join(', ')} (after each 4H close) — trendline alerts wait.`)
     if (settledOpen && age(I.tlTick) > R.tlTickMaxAgeMs) add('TL_TICK_STALE', 'WARN', `Trendline alert check has not run for ${I.tlTick ? ago(age(I.tlTick)) : 'ever'} (every minute).`)

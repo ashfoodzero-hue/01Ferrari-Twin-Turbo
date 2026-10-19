@@ -133,6 +133,10 @@ await ok('ANALYSIS FEEDS (S/R + trendlines, 2026-10-18): fresh → no issue; an 
   const f2 = fresh(TUE); f2.feeds.dxy_ice.tl = null; a = assessHealth(healthy(TUE, f2)); assert.deepEqual(codes(a), ['TL_FEED_STALE']); assert.equal(a.issues[0].sev, 'WARN')
   const f3 = fresh(TUE); f3.tlTick = new Date(TUE - 6 * MIN).toISOString(); a = assessHealth(healthy(TUE, f3)); assert.deepEqual(codes(a), ['TL_TICK_STALE'])
   const f4 = fresh(TUE); f4.feedRuns = [{ script: 'sr_refresh.mjs WTI', exit: 2 }, { script: 'sr_refresh.mjs WTI', exit: 2 }]; a = assessHealth(healthy(TUE, f4)); assert.deepEqual(codes(a), ['FEED_REFRESH_FAILED']); assert(/stale minutes/.test(a.issues[0].text))
+  // FEED_SLOW: 2 of the last 3 timed runs ≥ 80 % of the limit → WARN; one slow run alone → nothing (2026-10-19)
+  const L10 = 600000, f6 = fresh(TUE); f6.feedRuns = [{ script: 'sr_refresh.mjs DXY_ICE', exit: 0, ms: 300000, limit_ms: L10 }, { script: 'sr_refresh.mjs DXY_ICE', exit: 0, ms: 490000, limit_ms: L10 }, { script: 'sr_refresh.mjs DXY_ICE', exit: 0, ms: 500000, limit_ms: L10 }]
+  a = assessHealth(healthy(TUE, f6)); assert.deepEqual(codes(a), ['FEED_SLOW']); assert(/500 s of 600 s/.test(a.issues[0].text))
+  const f7 = fresh(TUE); f7.feedRuns = [{ script: 'sr_refresh.mjs DXY_ICE', exit: 0, ms: 300000, limit_ms: L10 }, { script: 'sr_refresh.mjs DXY_ICE', exit: 0, ms: 500000, limit_ms: L10 }]; assert.deepEqual(codes(assessHealth(healthy(TUE, f7))), [])
   const SUN = Date.parse('2026-10-18T12:00:00Z'), f5 = fresh(SUN); f5.feeds.xau.sr = null; f5.tlTick = null; assert.deepEqual(codes(assessHealth(healthy(SUN, f5))).filter((c) => /FEED|TL_/.test(c)), [])
 })
 await ok('REAL files: the live inputs produce a verdict with all 13 checks (whatever its state today)', () => {

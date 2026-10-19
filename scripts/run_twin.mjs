@@ -88,7 +88,7 @@ const tick = (barT) => new Promise((resolve) => {
 })
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
 let lastMacro = null, macroRunning = false, lastLevel = null, levelRunning = false
-let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, lastFwd = null, fwdRunning = false
+let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, calRetry = false, lastFwd = null, fwdRunning = false
 let lastRec = null, recRunning = false   // futures + GLD recorder (record_futures.mjs, 2026-10-17)
 let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
@@ -127,11 +127,13 @@ for (;;) {
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'reconcile_1m.mjs'), String(rp.days)], { timeout: 30 * 60000, windowsHide: true }, (err, stdout, stderr) => { reconciling = false
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'reconcile_1m.mjs', why: rp.why, days: rp.days, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-600), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // USD economic calendar (fetch_calendar.mjs): every 30 min, plus 2 and 6 min after each HIGH-impact release (to capture the actual value)
-  if (!calRunning) { let due = Date.now() - lastCal >= 30 * 60000
+  // + 5 min after a run with a FAILED source or a failed exit (2026-10-19, "stales never happen again"): a blip heals in 5 min, not 30.
+  if (!calRunning) { let due = Date.now() - lastCal >= (calRetry ? 5 : 30) * 60000
     if (!due) try { const up = JSON.parse(fs.readFileSync(path.join(here, '..', 'data', 'calendar', 'upcoming.json'), 'utf8'))
       for (const e of up.events) if (e.impact === 'high') for (const d of [2, 6]) { const k = e.t + d * 60000; if (now >= k && now < k + 60000 && !calDone.has(k)) { calDone.add(k); due = true } } } catch {}
     if (due) { calRunning = true; lastCal = Date.now()
-      execFile(process.execPath, [path.join(here, 'fetch_calendar.mjs')], { timeout: 3 * 60000, windowsHide: true }, (err, stdout, stderr) => { calRunning = false
+      execFile(process.execPath, [path.join(here, 'fetch_calendar.mjs')], { timeout: 6 * 60000, windowsHide: true }, (err, stdout, stderr) => { calRunning = false
+        calRetry = !!err || /sources FAILED/.test(String(stdout || ''))
         fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'fetch_calendar.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) } }
   // GLD gamma levels: once per US weekday at/after 14:30 UTC (gamma_snapshot.mjs skips a day already recorded), then the forward test
   const day = new Date(now).toISOString().slice(0, 10)   // UTC day key (restored 2026-10-14: the reconcile rewrite had dropped it → crash loop from 14:30 UTC)
@@ -176,9 +178,11 @@ for (;;) {
       if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || ''))
       try { const st = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'trendline_tick_state.json'), 'utf8'))
         for (const [s, a] of Object.entries(st.assets ?? {})) if ((a.status?.startsWith('no lines file') || Object.values(a.tf ?? {}).some((x) => x.status?.startsWith('a newer candle closed'))) && tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) } catch { /* no state yet */ } }) }
-  if (!tlRefreshing && !srRefreshing && tlQueue.length) { const s = tlQueue.shift(); tlRefreshing = s
+  // ms + limit_ms on every refresh row (2026-10-19): a job creeping toward its kill limit is visible in child_runs BEFORE it fails (DXY took 190-306 s
+  // of a 300 s limit and was killed 3× in 7 days); health FEED_SLOW warns at ≥ 80 % of the limit.
+  if (!tlRefreshing && !srRefreshing && tlQueue.length) { const s = tlQueue.shift(); tlRefreshing = s; const t0 = Date.now()
     execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'trendline_lines.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { tlRefreshing = null
-      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `trendline_lines.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `trendline_lines.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, ms: Date.now() - t0, limit_ms: 10 * 60000, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
       if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   // S/R LEVELS (sr_refresh.mjs, 2026-10-18, Ashraf: "real strong S/R levels at 1H, 4H, 1D, 1W, 1Month … keep updating the strength … no stales"):
   // 4 min after every hour (every 1H close; higher timeframes close on hours too) while the market is open, all four assets queued, one at a time,
@@ -188,9 +192,9 @@ for (;;) {
   // it is queued 2 min after EVERY hour too (the 4H-close trigger above stays for the alerts; a refresh already queued is not doubled).
   if (marketOpen(hKey - 1) && now - hKey >= 2 * 60000 && lastTlHour !== hKey) { lastTlHour = hKey; for (const s of TL_SYMS) if (tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) }
   if (marketOpen(hKey - 1) && now - hKey >= 4 * 60000 && lastSr !== hKey) { lastSr = hKey; for (const s of SR_SYMS) if (srRefreshing !== s && !srQueue.includes(s)) srQueue.push(s) }
-  if (!srRefreshing && !tlRefreshing && srQueue.length) { const s = srQueue.shift(); srRefreshing = s
-    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'sr_refresh.mjs'), s], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { srRefreshing = null
-      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `sr_refresh.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+  if (!srRefreshing && !tlRefreshing && srQueue.length) { const s = srQueue.shift(); srRefreshing = s; const t0 = Date.now()
+    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'sr_refresh.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { srRefreshing = null
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `sr_refresh.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, ms: Date.now() - t0, limit_ms: 10 * 60000, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // FUTURES + GLD RECORDER (record_futures.mjs, 2026-10-17, Ashraf: "the App … saves our database … so we build our own history for Future and
   // Spot for XAU, DXY, Silver"): every 15 min at 8 min past each 15m close, always (futures trade Sunday-Friday). Append-only, final minutes only,
   // catch-up by design (a missed run loses nothing). Spot is recorded by the stream itself.
