@@ -1,0 +1,61 @@
+{
+ "built_at": "2026-10-19T01:13:48.049Z",
+ "independent": {
+  "trades": 300,
+  "with_differences": 0,
+  "diffs": []
+ },
+ "prefix": {
+  "cuts": 200,
+  "events_compared": 517304,
+  "event_diffs": 0,
+  "t2_compared": 9040,
+  "t2_diffs": 0,
+  "samples": []
+ },
+ "positive_control": [
+  {
+   "key": "1H|ORACLE|T1|E1",
+   "oracle_wr": 0.645,
+   "oracle_usd": 2.375,
+   "sweep_wr": 0.4336,
+   "sweep_usd": -0.991
+  },
+  {
+   "key": "1H|ORACLE|T1|E2",
+   "oracle_wr": 0.7809,
+   "oracle_usd": 1.835,
+   "sweep_wr": 0.5995,
+   "sweep_usd": -0.665
+  },
+  {
+   "key": "1H|ORACLE|T1|E3",
+   "oracle_wr": 0.8406,
+   "oracle_usd": 0.755,
+   "sweep_wr": 0.7323,
+   "sweep_usd": -0.579
+  },
+  {
+   "key": "4H|ORACLE|T1|E1",
+   "oracle_wr": 0.6584,
+   "oracle_usd": 5.822,
+   "sweep_wr": 0.4268,
+   "sweep_usd": -1.288
+  },
+  {
+   "key": "4H|ORACLE|T1|E2",
+   "oracle_wr": 0.7633,
+   "oracle_usd": 3.251,
+   "sweep_wr": 0.6012,
+   "sweep_usd": -0.59
+  },
+  {
+   "key": "4H|ORACLE|T1|E3",
+   "oracle_wr": 0.8256,
+   "oracle_usd": 1.134,
+   "sweep_wr": 0.7182,
+   "sweep_usd": -0.86
+  }
+ ],
+ "clean": true
+}
