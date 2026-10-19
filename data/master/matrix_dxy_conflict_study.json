@@ -1,0 +1,244 @@
+{
+ "spec": "docs/MATRIX_DXY_CONFLICT_SPEC.md",
+ "built_at": "2026-10-19T13:57:48.235Z",
+ "to": "2026-10-16T21:00:00.000Z",
+ "windows": {
+  "PRIMARY": {
+   "dxy_buy_signals": 13176,
+   "split": "2025-12-26T03:00:00.000Z",
+   "baseline": {
+    "TRAIN": {
+     "n": 1991,
+     "usd": -0.197,
+     "wr": 0.17,
+     "total": -392.4
+    },
+    "OOS": {
+     "n": 1443,
+     "usd": -0.936,
+     "wr": 0.184,
+     "total": -1350.8
+    }
+   },
+   "cells": {
+    "V0": {
+     "TRAIN": {
+      "vetoed": {
+       "n": 198,
+       "usd": -0.527,
+       "wr": 0.157,
+       "total": -104.3
+      },
+      "kept": {
+       "n": 1793,
+       "usd": -0.161,
+       "wr": 0.172,
+       "total": -288.1
+      },
+      "filtered_book": {
+       "n": 1892,
+       "usd": -0.158,
+       "wr": 0.172,
+       "total": -299.7
+      }
+     },
+     "OOS": {
+      "vetoed": {
+       "n": 100,
+       "usd": -1.478,
+       "wr": 0.14,
+       "total": -147.8
+      },
+      "kept": {
+       "n": 1343,
+       "usd": -0.896,
+       "wr": 0.187,
+       "total": -1203
+      },
+      "filtered_book": {
+       "n": 1384,
+       "usd": -0.918,
+       "wr": 0.189,
+       "total": -1270.8
+      }
+     },
+     "checks": {
+      "vetoed_n30_oos": true,
+      "vetoed_worse_train": true,
+      "vetoed_worse_oos": true,
+      "book_better_train": true,
+      "book_better_oos": true
+     },
+     "pass": false
+    },
+    "V15": {
+     "TRAIN": {
+      "vetoed": {
+       "n": 497,
+       "usd": -0.367,
+       "wr": 0.165,
+       "total": -182.3
+      },
+      "kept": {
+       "n": 1494,
+       "usd": -0.141,
+       "wr": 0.172,
+       "total": -210.1
+      },
+      "filtered_book": {
+       "n": 1613,
+       "usd": -0.146,
+       "wr": 0.172,
+       "total": -234.7
+      }
+     },
+     "OOS": {
+      "vetoed": {
+       "n": 292,
+       "usd": -0.445,
+       "wr": 0.192,
+       "total": -130
+      },
+      "kept": {
+       "n": 1151,
+       "usd": -1.061,
+       "wr": 0.182,
+       "total": -1220.7
+      },
+      "filtered_book": {
+       "n": 1190,
+       "usd": -1.018,
+       "wr": 0.182,
+       "total": -1210.9
+      }
+     },
+     "checks": {
+      "vetoed_n30_oos": true,
+      "vetoed_worse_train": true,
+      "vetoed_worse_oos": false,
+      "book_better_train": true,
+      "book_better_oos": false
+     },
+     "pass": false
+    }
+   }
+  },
+  "ROBUST_13Y": {
+   "dxy_buy_signals": 166373,
+   "split": "2021-06-30T12:36:00.000Z",
+   "baseline": {
+    "TRAIN": {
+     "n": 7949,
+     "usd": -0.711,
+     "wr": 0.122,
+     "total": -5653.8
+    },
+    "OOS": {
+     "n": 9213,
+     "usd": -0.613,
+     "wr": 0.149,
+     "total": -5645.5
+    }
+   },
+   "cells": {
+    "V0": {
+     "TRAIN": {
+      "vetoed": {
+       "n": 445,
+       "usd": -0.553,
+       "wr": 0.112,
+       "total": -246.1
+      },
+      "kept": {
+       "n": 7504,
+       "usd": -0.721,
+       "wr": 0.122,
+       "total": -5407.7
+      },
+      "filtered_book": {
+       "n": 7826,
+       "usd": -0.71,
+       "wr": 0.123,
+       "total": -5558.9
+      }
+     },
+     "OOS": {
+      "vetoed": {
+       "n": 588,
+       "usd": -0.639,
+       "wr": 0.131,
+       "total": -375.6
+      },
+      "kept": {
+       "n": 8625,
+       "usd": -0.611,
+       "wr": 0.15,
+       "total": -5269.9
+      },
+      "filtered_book": {
+       "n": 8980,
+       "usd": -0.599,
+       "wr": 0.15,
+       "total": -5375.8
+      }
+     },
+     "checks": {
+      "vetoed_worse_train": false,
+      "vetoed_worse_oos": true,
+      "book_better_train": true,
+      "book_better_oos": true
+     }
+    },
+    "V15": {
+     "TRAIN": {
+      "vetoed": {
+       "n": 1505,
+       "usd": -0.534,
+       "wr": 0.121,
+       "total": -804.2
+      },
+      "kept": {
+       "n": 6444,
+       "usd": -0.753,
+       "wr": 0.122,
+       "total": -4849.6
+      },
+      "filtered_book": {
+       "n": 7425,
+       "usd": -0.727,
+       "wr": 0.119,
+       "total": -5398.5
+      }
+     },
+     "OOS": {
+      "vetoed": {
+       "n": 2033,
+       "usd": -0.477,
+       "wr": 0.149,
+       "total": -970
+      },
+      "kept": {
+       "n": 7180,
+       "usd": -0.651,
+       "wr": 0.148,
+       "total": -4675.5
+      },
+      "filtered_book": {
+       "n": 8029,
+       "usd": -0.622,
+       "wr": 0.148,
+       "total": -4995.1
+      }
+     },
+     "checks": {
+      "vetoed_worse_train": false,
+      "vetoed_worse_oos": false,
+      "book_better_train": false,
+      "book_better_oos": false
+     }
+    }
+   }
+  }
+ },
+ "passes": []
+}
