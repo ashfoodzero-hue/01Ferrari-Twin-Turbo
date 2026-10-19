@@ -74,6 +74,16 @@ if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClo
   // 🫴 WALL TOUCH (chart only, 2026-10-16): price through the wall but WTI / DXY not aligned yet — the earlier, weaker level
   else if (arm && arm.buyDist <= WALL_TOUCH.k) out.wallTouch = { side: 'BUY', barT: B.at(-1).t, line: +arm.buyLine.toFixed(2), dist_atr: +arm.buyDist.toFixed(2), wti_ok: arm.buyCtx, measured: WALL_TOUCH }
 }
+// 💵 DXY's OWN MATRIX (2026-10-19, Ashraf: "show DXY's own Matrix BUY/SELL as an info chip on the chart"): the same script run ON DXY
+// (matrixSignals(dxy3m, dxy3m, wti) — on DX1! the script's "DXY" series is DXY itself), gold-grid DXY rebuilt from the 6 Polygon pairs (wickless
+// minutes — TradingView DX1! is ICE futures with wicks, so its signals can differ). INFORMATION ONLY: vetoing a gold BUY on it was measured,
+// no pass (§7 (dc), matrix_dxy_conflict_study.json). Last signal of the past 60 min + whether it is on the just-closed candle (same as gold's).
+out.dxyMatrix = null
+if (st.live && !health.halted && D.length && D.at(-1).t === lastClose - MATRIX.tfMs) {
+  try { const ds = matrixSignals(D, D, W, { from: Math.max(0, D.length - 20) }), last = ds.at(-1)
+    out.dxyMatrix = { barT: D.at(-1).t, last: last ? { side: last.side, decisionT: last.decisionT, close: +last.entry.toFixed(4) } : null, now: !!last && last.i === D.length - 1,
+      gold_same_candle: !!last && last.i === D.length - 1 && !!opened && opened.decisionT === last.decisionT, measured: 'veto measured: no pass (§7 dc)' }
+    if (out.dxyMatrix.now) console.log(`  💵 DXY Matrix ${last.side} on this candle${out.dxyMatrix.gold_same_candle ? ' — SAME candle as the gold box (conflict)' : ''}`) } catch (e) { console.error('  ⚠ dxy matrix: ' + e.message) } }
 if (STATIC) { console.log(JSON.stringify({ ...out, open: out.open && { ...out.open, ctx: undefined } }, null, 1)); process.exit(0) }
 fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)

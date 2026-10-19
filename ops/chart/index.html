@@ -308,7 +308,7 @@ async function pollBias() {
   const w = b.whale, ws = b.whale_study
   const wd = !w || w.error ? `<span class="dim">unavailable${w?.error ? ' — ' + w.error : ''}</span>` : w.stale ? '<span class="dim">market closed</span>' : w.dir === 'QUIET' ? `<span class="dim">QUIET — no whale-size volume (max ${w.maxMult}× normal)</span>` : w.dir === 'MIXED' ? `<span class="dim">MIXED</span> <small>pressure ${w.pressure}</small>` : `${arrow(w.dir)} <small>pressure ${w.pressure >= 0 ? '+' : ''}${w.pressure} · ${w.big} big bar(s), up to ${w.maxMult}×</small>`
   const wtitle = 'Where heavy CME gold-futures volume (≥ 2× normal) closed inside its 15m bar, last hour, 10 min delayed. NOT true buyer/seller data (Polygon does not give us futures trades).' + (ws ? ` Measured ${ws.window}: heavy-volume direction → gold +$10 first ${(100 * ws.oos_win).toFixed(1)}% vs ${(100 * ws.oos_base).toFixed(1)}% base (n ${ws.oos_n}) — ${ws.verdict.replace(/_/g, ' ').toLowerCase()}.` : '')
-  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + gammaChip() + magnetChip() + ladderChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
+  $('bias').innerHTML = calChip() + chips.join('') + `<span class="chip" title="${esc(wtitle)}"><b>Whales 15m</b>${wd}${ws ? ` <small>· ${ws.verdict === 'DIRECTION_EDGE' ? 'measured edge' : 'measured: no direction edge'}</small>` : ''}</span>` + dxyMatrixChip() + gammaChip() + magnetChip() + ladderChip() + `<button id="fullBtn">${st.full ? 'Hide driver charts' : 'Show driver charts'}</button>`
   const gb = $('gmBtn'); if (gb) gb.onclick = () => { st.gamma = st.gamma === false; save(); gmKey = '?'; gmDraw(); pollBias() }
   $('fullBtn').onclick = () => { st.full = !st.full; save(); applyLayout(); pollBias() }
 }
@@ -598,6 +598,15 @@ async function pollMacroMagnet() {
     + (m.forming?.gold ? (() => { const f = m.forming.gold, fp = f.side === 'LONG' ? f.long : f.short; return `<span class="dim">forming 4H (closes ${esc(f.closes_at.slice(11, 16))} UTC, ${f.minutes} min so far): </span><b class="${f.side === 'LONG' ? 'green' : 'red'}" style="opacity:.75">${f.side} ${fp}%</b> <span class="dim">— PROVISIONAL, can change until the close · EMA ${f.A ? '▲' : '▼'} liq ${f.B ? '▲' : '▼'} RSI ${f.rsi} candle ${f.D ? '▲' : '▼'}${m.forming.dxy ? ' · DXY ' + m.forming.dxy.side + ' (' + m.forming.dxy_relation + ')' : ''}</span><br>` })() : '')
     + `<span class="dim">live record: ${live.n ? live.hits + '/' + live.n + ' right (' + pc(live.rate) + ')' : 'starts with the next 4H close'}</span>`
 }
+// 💵 DXY's OWN MATRIX chip (2026-10-19, Ashraf): the same Matrix script run on DXY (matrix_tick → /api/matrix dxyMatrix). Information only:
+// "veto a gold BUY on a DXY BUY" was measured, no pass (§7 (dc)). Gold-grid DXY from 6 Polygon pairs — TradingView DX1! (ICE, wicks) can differ.
+function dxyMatrixChip() {
+  let x = null; try { x = MX?.dxyMatrix ?? null } catch { /* MX not set yet on the first paint */ }
+  const t = 'The Ferrari Matrix script run ON DXY (DXY at its own wall + green/red trigger candle + WTI). DXY here is rebuilt each minute from 6 Polygon currency pairs (no wicks); TradingView DX1! is ICE futures and can show different signals. Measured 2 y + 13 y: skipping a gold BUY when DXY gives its own BUY did not help (§7 dc). Information only.'
+  if (!x) return `<span class="chip" title="${esc(t)}"><b>DXY Matrix</b><span class="dim">—</span></span>`
+  const ago = x.last ? Math.round((Date.now() - x.last.decisionT) / 60000) : null
+  const s = !x.last ? '<span class="dim">no setup (last 60 min)</span>' : `<span class="${x.last.side === 'BUY' ? 'up' : 'dn'}">${x.last.side}</span> <small>${x.now ? 'this candle' : ago + ' min ago'}${x.gold_same_candle ? ' · ⚠ same candle as the gold box' : ''}</small>`
+  return `<span class="chip" title="${esc(t)}"><b>DXY Matrix</b>${s} <small>· info only, veto measured: no edge</small></span>` }
 async function pollMatrix() {
   const m = await fetch('/api/matrix').then((x) => x.json()).catch(() => null); if (!m) return
   MX = m; const g = m.verdict === 'SHIP', o = m.open

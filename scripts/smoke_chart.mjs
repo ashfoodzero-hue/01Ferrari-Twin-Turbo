@@ -29,7 +29,7 @@ try {
     const r = (await get('/api/live?sym=XAUUSD')).body
     if (r.quote?.forming) assert.equal(r.quote.forming.forming, true)
     const g = r.geometry; assert(g && g.sellTrigger < g.rangeLow && g.rangeLow <= g.rangeHigh && g.rangeHigh < g.buyTrigger)
-    assert(['PREMIUM', 'DISCOUNT', 'EQUILIBRIUM', 'BREAKOUT_UP', 'BREAKOUT_DOWN'].includes(g.state))
+    assert(['PREMIUM', 'DISCOUNT', 'EQUILIBRIUM', 'BREAKOUT_UP', 'BREAKOUT_DOWN', 'TREND_UP', 'TREND_DOWN'].includes(g.state), 'unknown state ' + g.state)   // TREND_* (marketState.js) were missing: failed only on trending days (2026-10-19)
   })
   await ok('refuses unknown symbols and timeframes (400) and unknown paths (404)', async () => {
     assert.equal((await get('/api/bars?sym=BTCUSD&tf=15m')).status, 400); assert.equal((await get('/api/bars?sym=XAUUSD&tf=7m')).status, 400); assert.equal((await get('/nope')).status, 404)
