@@ -18,7 +18,10 @@ import { closedCandles, srLevelsAt } from './lib/sr_live.mjs'
 
 const SYM = process.argv[2] || 'XAUUSD', DRY = process.argv.includes('--dry'), SH = SHORT[SYM], now = Date.now(), DELAYED = SYM === 'WTI'
 const readJ = (f) => { try { return JSON.parse(fs.readFileSync(path.join(TURBO.master, f), 'utf8')) } catch { return null } }
-const M = (await clean1m(SYM, { live: true })).filter((b) => b.t + 60000 <= now), lag = now - M.at(-1).t, lagMax = (DELAYED ? 20 : 5) * 60000
+// WTI lagMax 35 min (2026-10-19, Ashraf: "pls fix all"): its newest stored minute is NORMALLY 13-28 min old (10 min Polygon delay + 12-min finality,
+// recorded every 15 min at :08/:23/:38/:53). 20 min refused every refresh that ran after ~:16 (from 08:47 on, once the hourly trendline refresh went
+// first) → SR_FEED_STALE + FEED_REFRESH_FAILED. 35 min = the normal maximum + one missed minute's margin; a stopped recorder still fails closed.
+const M = (await clean1m(SYM, { live: true })).filter((b) => b.t + 60000 <= now), lag = now - M.at(-1).t, lagMax = (DELAYED ? 35 : 5) * 60000
 if (marketOpen(now) && marketOpen(now - 40 * 60000) && lag > lagMax) { console.log(`  🧱 sr_refresh ${SYM}: newest minute ${Math.round(lag / 60000)} min old while the market is open — STALE, nothing written`); process.exit(2) }
 const study = readJ(`sr_levels_${SH}.json`), S = readJ('sr_levels_study.json')
 const CC = closedCandles(SYM, M, now), R = srLevelsAt(SYM, CC, { study, S })
