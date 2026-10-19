@@ -25,6 +25,8 @@
   .pos { color:var(--up); } .neg { color:var(--down); } .mut { color:var(--muted); }
   .verdict { border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin:0 0 10px; background:#0d1117; }
   .legend span { display:inline-block; margin-right:10px; } .sw { display:inline-block; width:18px; height:0; border-top:2px solid; vertical-align:middle; margin-right:4px; }
+  #banner { display:none; padding:8px 16px; background:#5a1d1d; color:#fff; font-weight:600; animation:blink 1.2s step-start infinite; }
+  @keyframes blink { 50% { background:#8b1e1e; } }
   #msg { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted); pointer-events:none; }
   @media (max-width: 900px) { main { grid-template-columns:1fr; grid-template-rows:60% 40%; } aside { border-left:0; border-top:1px solid var(--line); } }
 </style>
@@ -39,6 +41,7 @@
   <div class="group"><small>show</small><select id="range"><option value="150">150 candles</option><option value="300" selected>300 candles</option><option value="800">800 candles</option><option value="all">all 6 years</option></select></div>
   <a href="/" style="margin-left:auto">← live chart</a>
 </header>
+<div id="banner"></div>
 <main>
   <div id="chart"><div id="msg">loading…</div></div>
   <aside id="side"></aside>
@@ -64,14 +67,15 @@ $('assets').onclick = (e) => { const a = e.target.dataset.a; if (a) { st.asset =
 $('tfs').onclick = (e) => { const t = e.target.dataset.t; if (t) { st.tf = t; save(); load() } }
 for (const id of ['scale', 'hist', 'range']) $(id).onchange = () => { save(); draw(true) }
 
-async function load() {
-  $('msg').textContent = 'loading…'; $('msg').style.display = 'flex'
+async function load(refit = true) {
+  if (refit) { $('msg').textContent = 'loading…'; $('msg').style.display = 'flex' }
   const d = await fetch(`/api/trendlines?asset=${st.asset}&tf=${st.tf}`).then((r) => r.json()).catch((e) => ({ available: false, why: e.message }))
+  $('banner').style.display = d.stale ? 'block' : 'none'; $('banner').textContent = d.stale ? `⚠ TRENDLINES STALE — ${d.stale}. Lines below are the last good refresh; do not rely on them until this clears.` : ''
   buttons(d.assets || { xau: 'XAU', xag: 'Silver', dxy_ice: 'DXY', wti: 'WTI' }, d.tfs || ['1W', '1D', '4H', '1H'])
   if (!d.available) { st.data = null; candles.setData([]); clearLines(); $('msg').textContent = d.why || 'not available'; $('side').innerHTML = ''; return }
   st.data = d; $('msg').style.display = 'none'
   candles.setData(d.candles.map(([t, o, h, l, c]) => ({ time: t / 1000, open: o, high: h, low: l, close: c })))
-  draw(true); side()
+  draw(refit); side()
 }
 function clearLines() { for (const s of st.series) chart.removeSeries(s); st.series = [] }
 function draw(fit) {
@@ -119,7 +123,7 @@ function side() {
     <p class="mut">Lines are drawn by a fixed rule: two confirmed pivots of the same type, no candle closing through the line between them; a line exists only from the candle that confirmed its second pivot. A touch is <b>respected</b> when price bounces 1 ATR before a candle closes 0.25 ATR through. Each real line is copied 4× shifted ±0.75 / ±1.5 ATR (placebo) and tested by the same rules. Study: <code>docs/TRENDLINE_STUDY_ATLAS.md</code>. Study run ${esc((d.at || '').slice(0, 16).replace('T', ' '))} UTC · report ${esc((d.measured_at || '').slice(0, 16).replace('T', ' '))} UTC.${wti ? ' WTI: Polygon keeps ≈ 2 years of futures, so WTI is described only (no first / last 3-year split).' : ''} Information only, not a signal.</p>`
   draw(false)
 }
-load()
+load(); setInterval(() => { if (document.visibilityState === 'visible') load(false) }, 5 * 60000)   // 2026-10-19: an open tab follows the live refresh
 </script>
 </body>
 </html>

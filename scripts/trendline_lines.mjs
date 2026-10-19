@@ -18,10 +18,14 @@ import { sendAlerts } from './lib/trendline_alerts.mjs'
 const SYM = process.argv[2] || 'XAUUSD', DRY = process.argv.includes('--dry'), SH = SHORT[SYM], now = Date.now()
 const M = (await clean1m(SYM, { live: true })).filter((b) => b.t + 60000 <= now)   // live: keep the forming session's first hour
 const yearsBack = (t, y) => { const d = new Date(t); d.setUTCFullYear(d.getUTCFullYear() - y); return d.getTime() }, FROM = SYM === 'WTI' ? M[0].t : yearsBack(M.at(-1).t, 6)
-const { live, events, display } = liveLines(SYM, M, now, { display: true, displayFrom: FROM, dp: SYM.startsWith('DXY') ? 4 : SYM === 'XAGUSD' ? 3 : 2 })
-for (const [tf, T] of Object.entries(live.tf)) {
-  console.log(`  📐 ${SYM} ${tf}: last closed ${new Date(T.last_closed).toISOString().slice(0, 16)} · open major lines within 10 ATR ${T.lines.length} (armed ${T.lines.filter((x) => x.armed).length}, pending ${T.lines.filter((x) => x.pending).length})`)
-  if (!DRY) fs.writeFileSync(path.join(TURBO.master, `trendlines_display_${SH}_${tf}.json`), JSON.stringify({ at: live.at, symbol: SYM, tf, session: kit(SYM).session, window: [new Date(FROM).toISOString(), new Date(M.at(-1).t).toISOString()], refreshed_live: true, ...display[tf] })) }
+// 1H + 1W (2026-10-19): page data only (DISPLAY_TFS), so every page tab is live — no study snapshot left on the app.
+const DISPLAY_TFS = ['1H', '1W']
+const { live, events, display } = liveLines(SYM, M, now, { display: true, displayFrom: FROM, displayTfs: DISPLAY_TFS, dp: SYM.startsWith('DXY') ? 4 : SYM === 'XAGUSD' ? 3 : 2 })
+for (const [tf, T] of Object.entries(live.tf)) console.log(`  📐 ${SYM} ${tf}: last closed ${new Date(T.last_closed).toISOString().slice(0, 16)} · open major lines within 10 ATR ${T.lines.length} (armed ${T.lines.filter((x) => x.armed).length}, pending ${T.lines.filter((x) => x.pending).length})`)
+for (const [tf, D] of Object.entries(display)) {
+  if (DISPLAY_TFS.includes(tf)) console.log(`  📐 ${SYM} ${tf} (page only): last closed ${D.candles.length ? new Date(D.candles.at(-1)[0]).toISOString().slice(0, 16) : '—'} · lines ${D.lines.length}`)
+  if (!DRY) { const F = path.join(TURBO.master, `trendlines_display_${SH}_${tf}.json`)
+    fs.writeFileSync(F + '.tmp', JSON.stringify({ at: live.at, symbol: SYM, tf, session: kit(SYM).session, window: [new Date(FROM).toISOString(), new Date(M.at(-1).t).toISOString()], refreshed_live: true, ...D })); fs.renameSync(F + '.tmp', F) } }
 if (!DRY) { const F = path.join(TURBO.master, `trendline_live_lines_${SH}.json`); fs.writeFileSync(F + '.tmp', JSON.stringify(live)); fs.renameSync(F + '.tmp', F) }
 await sendAlerts(events, { dry: DRY, now })
 console.log(`  📐 trendline_lines ${SYM}: ${events.length} close event(s)${DRY ? ' (dry)' : ' · written trendline_live_lines_' + SH + '.json'}`)

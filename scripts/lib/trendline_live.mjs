@@ -16,10 +16,14 @@ export const nyMinute = (t) => { const p = NY_HM.formatToParts(new Date(t)); ret
 
 const lbT = (C, t) => { let a = 0, b = C.length; while (a < b) { const m = (a + b) >> 1; if (C[m].t < t) a = m + 1; else b = m } return a }
 /** Lines on CLOSED candles at `now` (M = cleaned 1m, only minutes closed by now). → { live, events, display: { tf: { candles, lines } } } */
-export function liveLines(sym, M, now, { holes = null, display = false, displayFrom = -Infinity, dp = 2, candles = null } = {}) {
+// displayTfs (2026-10-19, Ashraf: "i think we have a stale issues in the App" — the 1H / 1W pages were still the 10-18 study snapshot): extra timeframes
+// built for the app page ONLY (same rules, same format); they never produce alerts and never enter live.tf.
+export function liveLines(sym, M, now, { holes = null, display = false, displayFrom = -Infinity, dp = 2, candles = null, displayTfs = [] } = {}) {
   const K = kit(sym), r = (x) => +x.toFixed(dp), live = { at: new Date(now).toISOString(), symbol: sym, last_minute: M.length ? new Date(M.at(-1).t).toISOString() : null, rules: TL, tf: {} }, events = [], disp = {}
-  for (const tf of TL_ALERT_TFS) {
-    const fo = openOf(sym, now, tf), C = candles ? candles[tf].slice(0, lbT(candles[tf], fo)) : K.build(M, tf).filter((c) => c.t < fo); if (!candles) markIncomplete(C, holes ?? findHoles(M))   // candles: prebuilt + marked (replay; closed candles never change)
+  const HL = candles ? null : holes ?? findHoles(M)
+  for (const tf of display ? [...TL_ALERT_TFS, ...displayTfs] : TL_ALERT_TFS) {
+    const fo = openOf(sym, now, tf), C = candles ? candles[tf].slice(0, lbT(candles[tf], fo)) : K.build(M, tf).filter((c) => c.t < fo); if (!candles) markIncomplete(C, HL)   // candles: prebuilt + marked (replay; closed candles never change)
+    const alertTf = TL_ALERT_TFS.includes(tf)
     const breaks = new Set(C.map((x, i) => (x.incomplete ? i : -1)).filter((i) => i >= 0)), A = atrArr(C, 14), L = C.length - 1
     const lines = []
     for (const sc of display ? ['major', 'minor'] : ['major']) for (const ln of buildLines(C, sc === 'major' ? majorPivots(C, breaks) : fractalPivots(C), A)) { ln.scale = sc; lines.push(ln) }
@@ -30,14 +34,14 @@ export function liveLines(sym, M, now, { holes = null, display = false, displayF
       const id = `${sym}|${tf}|${ln.side}|${C[ln.i1].t}|${C[ln.i2].t}`, base = { sym, tf, side: ln.side, cls: ln.cls, t1: C[ln.i1].t, t2: C[ln.i2].t, atr: A[L] }
       if (display && C[e.endI].t >= displayFrom) D.push({ s: ln.scale[0], sd: ln.side[0], c: ln.cls[0], t1: C[ln.i1].t, p1: r(ln.p1), t2: C[ln.i2].t, p2: r(ln.p2), tb: C[ln.birth].t, te: C[e.endI].t, pe: r(lineAt(ln, e.endI)), end: e.end,
         st: terc(ln.slope_atr), tch: e.touches.map((t) => [C[t.i].t, r(lineAt(ln, t.i)), t.outcome[0], t.test]) })
-      if (ln.scale !== 'major') return
+      if (ln.scale !== 'major' || !alertTf) return
       if ((e.end === 'break' || e.end === 'break_unarmed') && e.endI === L) { const s = ln.side === 'support' ? 1 : -1, v = lineAt(ln, L)
         events.push({ key: `B:${id}`, type: 'BROKEN', ...base, candle: C[L].t, value: v, price: C[L].c, close: C[L].c, beyond: (s * (v - C[L].c)) / (A[L - 1] || A[L]), test: e.touches.length }) }
       const lt = e.touches.at(-1)
       if (lt && lt.outcome === 'respect' && lt.resolvedI === L) events.push({ key: `R:${id}:${C[lt.i].t}`, type: 'BOUNCED', ...base, candle: C[L].t, value: lineAt(ln, L), price: C[L].c, atr: A[L - 1] || A[L], test: lt.test })
       if (e.end !== 'open' || Math.abs(lineAt(ln, L + 1) - C[L].c) > 10 * A[L]) return
       T.lines.push({ id, ...base, i1: ln.i1, p1: ln.p1, slope: ln.slope, last_i: L, value_next: lineAt(ln, L + 1), armed: e.armed, pending: e.pending ? { t: C[e.pending.i].t, test: e.pending.test } : null, tests: e.touches.length }) })
-    live.tf[tf] = T; if (display) disp[tf] = { candles: C.filter((c) => c.t >= displayFrom).map((c) => [c.t, r(c.o), r(c.h), r(c.l), r(c.c)]), lines: D }
+    if (alertTf) live.tf[tf] = T; if (display) disp[tf] = { candles: C.filter((c) => c.t >= displayFrom).map((c) => [c.t, r(c.o), r(c.h), r(c.l), r(c.c)]), lines: D }
   }
   return { live, events, display: disp }
 }

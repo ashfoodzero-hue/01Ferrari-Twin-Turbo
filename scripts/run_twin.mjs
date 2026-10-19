@@ -94,7 +94,7 @@ let lastAudit = null, auditRunning = false   // daily recording audit (audit_rec
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
 let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
 const TL_SYMS = ['XAUUSD', 'XAGUSD', 'DXY_ICE', 'WTI']   // major-trendline alerts (2026-10-18): minute tick + per-asset line refresh queue
-let lastTl = null, tlRunning = false, tlRefreshing = null, tlQueue = [...TL_SYMS]   // every asset is refreshed once at start
+let lastTlHour = null, lastTl = null, tlRunning = false, tlRefreshing = null, tlQueue = [...TL_SYMS]   // every asset is refreshed once at start
 const SR_SYMS = [...TL_SYMS, 'DXY']   // + gold-grid DXY (2026-10-19): the S/R tab's DXY warning compares XAU and DXY on identical candle times
 let lastSr = null, srRefreshing = null, srQueue = [...SR_SYMS]   // S/R levels (sr_refresh.mjs, 2026-10-18): every asset at start + after each 1H close
 let lastPre = null, preRunning = false, sesAt = 0, ses = null   // pre-open readiness check (preopen_check.mjs, 2026-10-18)
@@ -177,13 +177,16 @@ for (;;) {
       try { const st = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'trendline_tick_state.json'), 'utf8'))
         for (const [s, a] of Object.entries(st.assets ?? {})) if ((a.status?.startsWith('no lines file') || Object.values(a.tf ?? {}).some((x) => x.status?.startsWith('a newer candle closed'))) && tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) } catch { /* no state yet */ } }) }
   if (!tlRefreshing && !srRefreshing && tlQueue.length) { const s = tlQueue.shift(); tlRefreshing = s
-    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'trendline_lines.mjs'), s], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { tlRefreshing = null
+    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'trendline_lines.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { tlRefreshing = null
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `trendline_lines.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
       if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   // S/R LEVELS (sr_refresh.mjs, 2026-10-18, Ashraf: "real strong S/R levels at 1H, 4H, 1D, 1W, 1Month … keep updating the strength … no stales"):
   // 4 min after every hour (every 1H close; higher timeframes close on hours too) while the market is open, all four assets queued, one at a time,
   // after the trendline refresh queue (never two full-history children together). Fail-closed inside (stale newest minute → exit 2, nothing written).
   const hKey = now - (now % 3600000)
+  // TRENDLINE PAGE 1H (2026-10-19, Ashraf: "i think we have a stale issues in the App"): the trendline refresh also writes the 1H + 1W page data, so
+  // it is queued 2 min after EVERY hour too (the 4H-close trigger above stays for the alerts; a refresh already queued is not doubled).
+  if (marketOpen(hKey - 1) && now - hKey >= 2 * 60000 && lastTlHour !== hKey) { lastTlHour = hKey; for (const s of TL_SYMS) if (tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) }
   if (marketOpen(hKey - 1) && now - hKey >= 4 * 60000 && lastSr !== hKey) { lastSr = hKey; for (const s of SR_SYMS) if (srRefreshing !== s && !srQueue.includes(s)) srQueue.push(s) }
   if (!srRefreshing && !tlRefreshing && srQueue.length) { const s = srQueue.shift(); srRefreshing = s
     execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'sr_refresh.mjs'), s], { timeout: 5 * 60000, windowsHide: true }, (err, stdout, stderr) => { srRefreshing = null

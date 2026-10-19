@@ -116,7 +116,11 @@ function trendlines(asset, tf) {
   if (!d) { d = JSON.parse(fs.readFileSync(f, 'utf8')); TLC.set(f, { m, d }) }
   const st = J('trendlines_study.json'), key = `${d.symbol}|${tf}`, lt = J('trendline_tick_state.json'), la = lt?.assets?.[d.symbol]
   const liveAlerts = lt ? { at: lt.at, stale: Date.now() - Date.parse(lt.at) > 5 * 60000, status: la?.status ?? 'not checked', blocked: la?.blocked ?? null, price: la?.price ?? null, tf: la?.tf ?? {}, recent: (lt.recent ?? []).filter((x) => x.sym === d.symbol) } : null
-  return { available: true, assets: TL_ASSETS, tfs: TL_TFS, ...d, live_alerts: liveAlerts, measured: st?.by_kind?.[key] ?? null, measured_at: st?.at ?? null, study_summary: st ? { ...(st.walk_forward ?? {}), holm_more: (st.cells ?? []).filter((x) => x.holm_pass && x.all?.lift > 0).length } : null, walk_forward_pass: (st?.cells ?? []).filter((x) => x.walk_forward_pass && x.sym === d.symbol && x.tf === tf).map((x) => x.cell) }
+  // STALE (2026-10-19, Ashraf: "i think we have a stale issues in the App"): decided here, never hidden — page data must be a live refresh, refreshed
+  // within 75 min (1H, hourly) / 4.5 h (4H / 1D / 1W, after each 4H close) while the market is open; DATA STALE halts it too.
+  const h = J('data_health.json'), g = signalsHalted(), dAge = d.at ? Date.now() - Date.parse(d.at) : Infinity, maxAge = tf === '1H' ? 75 * 60000 : 270 * 60000
+  const stale = !d.refreshed_live ? 'study snapshot — not refreshed live yet' : g.halted ? `DATA STALE — ${g.why}` : h?.market_open && dAge > maxAge ? `lines not refreshed for ${Math.round(dAge / 60000)} min` : null
+  return { available: true, assets: TL_ASSETS, tfs: TL_TFS, ...d, stale, live_alerts: liveAlerts, measured: st?.by_kind?.[key] ?? null, measured_at: st?.at ?? null, study_summary: st ? { ...(st.walk_forward ?? {}), holm_more: (st.cells ?? []).filter((x) => x.holm_pass && x.all?.lift > 0).length } : null, walk_forward_pass: (st?.cells ?? []).filter((x) => x.walk_forward_pass && x.sym === d.symbol && x.tf === tf).map((x) => x.cell) }
 }
 // S/R LEVELS page (2026-10-18; Ashraf: "build the real strong S/R levels at 1H, 4H, 1D, 1W, 1Month for all XAU, DXY, Silver, WTI … no stales").
 // Read-only: candles + levels (sr_display_<asset>_<tf>.json), the live near-price levels with their own records (sr_live_<asset>.json, sr_refresh.mjs
@@ -299,8 +303,10 @@ async function bias() {
       rows.push(r)
     }
     let whale = null
-    try { const now = Date.now(), g = (await futBars('GC', '1m', now - 3 * 86400000)), m1 = g.bars.filter((b) => b.t + 60000 <= now - WHALE.delayMs)
-      const w = whaleAt(bucket15(m1), now); whale = w && { ...w, ticker: g.ticker, stale: now - (w.lastDeliveredT + WHALE.tfMs) > 3 * 3600000 } } catch (e) { whale = { error: String(e.message).slice(0, 120) } }
+    // 7 calendar days (2026-10-19; Ashraf: "whales is not working 15m"): the gauge needs 100 closed 15m bars (window + baseline); 3 days held only
+    // 91 on a Monday morning (the weekend is inside) → null → "unavailable" until ~10:00 UTC every Monday. 7 days covers any weekend + holiday.
+    try { const now = Date.now(), g = (await futBars('GC', '1m', now - 7 * 86400000)), m1 = g.bars.filter((b) => b.t + 60000 <= now - WHALE.delayMs), b15 = bucket15(m1)
+      const w = whaleAt(b15, now); whale = w ? { ...w, ticker: g.ticker, stale: now - (w.lastDeliveredT + WHALE.tfMs) > 3 * 3600000 } : { error: `not enough 15m history (${b15.length} of ${WHALE.window + WHALE.baseBars} bars)` } } catch (e) { whale = { error: String(e.message).slice(0, 120) } }
     return { at: Date.now(), rule: 'last closed candle vs EMA10 of closes (3m and 15m)', rows, whale,
       whale_study: wstudy ? { verdict: wstudy.verdict, reading: wstudy.reading, oos_win: wstudy.oos.win_share, oos_base: wstudy.oos.baseline, oos_n: wstudy.oos.resolved, window: wstudy.window } : null }
   })
