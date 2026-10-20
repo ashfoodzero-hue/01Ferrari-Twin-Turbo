@@ -52,6 +52,14 @@
   .nbox.violet { border-color:#c77dff; background:#c77dff1a; color:#c77dff; box-shadow:0 0 10px #c77dff88, inset 0 0 8px #c77dff44; border-style:dashed; }
   .nbox.done { opacity:.45; box-shadow:none; }
   .mxbox.fwdone { opacity:.35; box-shadow:none; }
+  /* trade-type NEON frame + name badge (2026-10-20, Ashraf: "Neon Box with clear Name 'Swing Trade' … 'Scalp Trade'") — green = SCALP, gold = SWING */
+  .nframe { position:absolute; border:2px solid; border-radius:4px; pointer-events:none; }
+  .nframe.scalp { border-color:#00ff9c; box-shadow:0 0 14px #00ff9caa, inset 0 0 10px #00ff9c55; }
+  .nframe.swing { border-color:#ffd23f; box-shadow:0 0 14px #ffd23faa, inset 0 0 10px #ffd23f55; }
+  .nname { position:absolute; font:900 13px/1 system-ui; letter-spacing:1.5px; padding:4px 9px; border:2px solid; border-radius:4px; background:#0d1117e6; white-space:nowrap; pointer-events:none; z-index:3; }
+  .nname.scalp { color:#00ff9c; border-color:#00ff9c; box-shadow:0 0 12px #00ff9c; text-shadow:0 0 8px #00ff9c; }
+  .nname.swing { color:#ffd23f; border-color:#ffd23f; box-shadow:0 0 12px #ffd23f; text-shadow:0 0 8px #ffd23f; }
+  .nframe.done, .nname.done { opacity:.4; box-shadow:none; text-shadow:none; }
   .ntag { position:absolute; font:800 10px system-ui; color:#0d1117; padding:1px 6px; border-radius:3px; white-space:nowrap; box-shadow:0 0 8px #0008; }
   .fwbox { position:absolute; border:1.5px solid #e3b341; background:#e3b3411a; border-radius:3px; font:600 10px/1.2 system-ui; color:#e3b341; padding:1px 4px; white-space:nowrap; overflow:visible; }
   .fwbox.win { border-color:#3fb950; background:#3fb9501f; color:#56d364; } .fwbox.loss { border-color:#f85149; background:#f851491f; color:#ff7b72; }
@@ -437,6 +445,20 @@ function lvList() {
 }
 setInterval(pollLv, 30000); pollLv(); setInterval(lvDraw, 1000)
 
+// ── TRADE-TYPE NAME (2026-10-20, Ashraf: "for the Swing, I need a NEON Box with clear Name 'Swing Trade' … and for Scalp Neon Box with 'Scalp Trade'"):
+// ONE helper — a neon frame round the whole trade (entry, target and stop zones) + a big name badge above it. kind 'scalp' (green) | 'swing' (gold).
+// prices = every level of the trade; off-screen levels are clipped to the pane. lift = px to leave free above the frame for the detail tag.
+function nameBox(ov, kind, x0, x1, prices, { done = false, side = '', note = '', lift = 0, badge = true } = {}) {
+  const p = panes[0], H = $('c0').clientHeight, ys = prices.map((v) => p.c.priceToCoordinate(v)).filter((v) => v != null); if (!ys.length) return
+  const top = Math.max(0, Math.min(...ys)), bot = Math.min(H, Math.max(...ys)); if (bot <= 0 || top >= H) return
+  const f = document.createElement('div'); f.className = `nframe ${kind}${done ? ' done' : ''}`
+  f.style.left = (x0 - 3) + 'px'; f.style.width = (x1 - x0 + 6) + 'px'; f.style.top = (top - 3) + 'px'; f.style.height = Math.max(6, bot - top + 6) + 'px'; ov.appendChild(f)
+  if (!badge) return
+  const b = document.createElement('div'); b.className = `nname ${kind}${done ? ' done' : ''}`
+  b.textContent = `${kind === 'swing' ? 'SWING TRADE' : 'SCALP TRADE'}${side ? ' · ' + side : ''}${note ? ' · ' + note : ''}`
+  b.style.left = (x0 - 3) + 'px'; b.style.top = Math.max(0, top - 3 - lift - 25) + 'px'; ov.appendChild(b)
+}
+
 // ── PAPER FORWARD TEST of BUY_D1-x (/api/forward — the forward hook's ledger; nothing recomputed in the page) ──
 // box = entry → target from the signal bar to the exit (or now); the far stop (2×ATR1d) is a dashed line + its price in the label
 // two arms (2026-10-15): '92' = the 92 % arm (yellow tags "FWD"), 'freq' = the ≈ 1 trade/day arm (cyan tags "FWD1")
@@ -473,6 +495,10 @@ function fwDraw() {
     tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (fr ? 30 : 15)) + 'px'
     tag.textContent = `${fr ? 'SWING · 1/day (record only)' : t.bracket === 'E3' ? 'SWING TRADE · E3' : 'SWING TRADE · 92% (old bracket)'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)} · ${fr ? 'bt 90.4%' : 'bt 92.0%'} · ${live} · paper`
     ov.appendChild(tag)
+    // name badge on an OPEN trade and on the latest finished one of each arm only (5 same-day boxes stacked their badges); every trade keeps its frame
+    // (latest DRAWABLE one: a signal in the 21:00 UTC daily break has no candle on this timeframe and is skipped)
+    const named = t.status === 'OPEN' || t === FW.trades.filter((x) => x.status !== 'OPEN' && xOf(x.t) != null).at(-1)
+    nameBox(ov, 'swing', x0, x1, [t.entry, t.target, t.stop], { done: t.status !== 'OPEN', side: named ? 'BUY' : '', note: named && fr ? 'record only' : '', lift: fr ? 30 : 15, badge: named })
     const ys = y(t.stop); if (ys != null && ys > 0 && ys < H) { const l = document.createElement('div'); l.className = 'fwstop'; l.style.left = x0 + 'px'; l.style.width = (x1 - x0) + 'px'; l.style.top = ys + 'px'; l.textContent = 'SWING SL ' + fmt(t.stop); ov.appendChild(l) }
   }
 }
@@ -513,7 +539,8 @@ function s85Draw() {
     tag.style.left = x0 + 'px'; tag.style.top = (ya - 26) + 'px'
     const full = b.status === 'OPEN' || b === S85.boxes[S85.boxes.length - 1]   // only the open / latest trade carries the full label (no clutter)
     tag.textContent = full ? `SCALP 85% (paper) ${b.side} ENTRY ${fmt(b.entry)} · SL ${fmt(b.sl)} · TP ${fmt(b.tp)} · ${b.status}${b.net != null ? ' ' + (b.net >= 0 ? '+' : '') + b.net : ''} · ${rec}`
-      : `S85 ${b.status === 'WIN' ? 'W' : b.status === 'LOSS' ? 'L' : b.status} ${b.net != null ? (b.net >= 0 ? '+' : '') + b.net : ''}`; ov.appendChild(tag) }
+      : `S85 ${b.status === 'WIN' ? 'W' : b.status === 'LOSS' ? 'L' : b.status} ${b.net != null ? (b.net >= 0 ? '+' : '') + b.net : ''}`; ov.appendChild(tag)
+    if (full) nameBox(ov, 'scalp', x0, x1, [b.entry, b.tp, b.sl], { done: b.status !== 'OPEN', side: b.side, note: '85% exit' }) }
 }
 setInterval(pollS85, 30000); pollS85(); setInterval(s85Draw, 1000)
 
@@ -560,6 +587,7 @@ function mxDraw() {
   box('risk', s.entry, s.sl, `RISK PROTECTION ZONE (SL) ${fmt(s.sl)} (−${pips(s.risk)}p)`)
   const ye = y(s.entry); if (ye != null) { const t = document.createElement('div'); t.className = 'mxtag'; t.style.background = up ? '#00ff9c' : '#ff2e63'; t.style.left = x0 + 'px'; t.style.top = (ye - 8) + 'px'
     t.textContent = `SCALP ${s.side} ENTRY ${fmt(s.entry)} · SL ${fmt(s.sl)} · TP1 ${fmt(s.tp1)} · TP2 ${fmt(s.tp2)}${MON?.open && !MON.done && MON.p_tp1 != null ? ' · TP1 ' + Math.round(100 * MON.p_tp1) + '% · TP2 ' + Math.round(100 * MON.p_tp2) + '%' : ''} · ${MX.verdict}${MX.backtest?.oos_net != null ? ' — backtest ' + MX.backtest.oos_net + '/trade' : ''} (paper)`; ov.appendChild(t) }
+  nameBox(ov, 'scalp', x0, x1, [s.entry, s.tp2, s.sl], { side: s.side })
 }
 // ── WALL-PRESSURE BUBBLES (/api/walls): 🔵 resistance / 🟡 support at the wall price; size = class; number = measured OOS hold % ──
 let WB = null

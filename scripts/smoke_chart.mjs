@@ -79,6 +79,11 @@ try {
     for (const e of c.events.filter((x) => /\bCPI\b|Non-Farm|\bPPI\b|Federal Funds/.test(x.name))) assert(e.measured && e.measured.n > 40, 'unmeasured ' + e.name)
     const page = (await get('/')).body; assert(page.includes('USD calendar') && page.includes('function calChip'))
   })
+  await ok('trade-type neon names (2026-10-20): SCALP TRADE (green) on the Matrix + SCALP 85 boxes, SWING TRADE (gold) on the forward-arm boxes — one helper', async () => {
+    const page = (await get('/')).body
+    assert(page.includes('function nameBox(') && page.includes("'SWING TRADE'") && page.includes("'SCALP TRADE'") && page.includes('.nframe.swing') && page.includes('.nframe.scalp'))
+    assert(page.includes("nameBox(ov, 'scalp', x0, x1, [s.entry, s.tp2, s.sl]") && page.includes("nameBox(ov, 'scalp', x0, x1, [b.entry, b.tp, b.sl]") && page.includes("nameBox(ov, 'swing', x0, x1, [t.entry, t.target, t.stop]"))
+  })
   await ok('/api/monitor: {open:false} with no trade, else the position formula with its measured calibration + model / close-advice status; panel on the page', async () => {
     const m = (await get('/api/monitor')).body; assert(typeof m.open === 'boolean')
     if (m.open && !m.done && !m.error) { assert(m.p_tp1 >= 0 && m.p_tp1 <= 1 && m.p_tp2 >= 0 && m.p_tp2 <= 1 && [1, 2].includes(m.phase)); assert(m.model && m.close_advice) }
