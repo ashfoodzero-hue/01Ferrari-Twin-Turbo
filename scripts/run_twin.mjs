@@ -65,7 +65,20 @@ async function ensureSettings() {
   fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'run_settings.mjs', event: 'spawn', pid: setChild.pid }) + '\n')
   setChild.on('exit', (code) => { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'run_settings.mjs', event: 'exit', exit: code }) + '\n'); setChild = null })
 }
-const shutdown = () => { try { streamChild?.kill() } catch { /* */ } try { chartChild?.kill() } catch { /* */ } try { setChild?.kill() } catch { /* */ } try { fs.unlinkSync(LOCK) } catch { /* */ } process.exit(0) }
+// ── 1d. KEEP-AWAKE (scripts/keep_awake.ps1, 2026-10-20, Ashraf: "Yes, add a keep-awake request to the app"): the PC slept twice in 24 h (§7 (dp)) and
+// took the app down. A hidden PowerShell child holds SetThreadExecutionState(ES_CONTINUOUS|ES_SYSTEM_REQUIRED) — no setting is changed, the request
+// ends with the child, and the child ends by itself when this process is gone. It blocks IDLE sleep/hibernate only, never a sleep someone asks for.
+// State → data/master/keep_awake.json every 60 s (the health watcher's KEEP_AWAKE_OFF). Respawned within a minute if it dies.
+let awakeChild = null, awakeNextCheck = 0
+function ensureAwake() {
+  if (process.platform !== 'win32' || (awakeChild && awakeChild.exitCode === null) || Date.now() < awakeNextCheck) return
+  awakeNextCheck = Date.now() + 60000
+  const out = fs.openSync(path.join(TURBO.master, 'keep_awake.log'), 'a')
+  awakeChild = spawn('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', path.join(here, 'keep_awake.ps1'), '-ParentPid', String(process.pid), '-StateFile', path.join(TURBO.master, 'keep_awake.json')], { stdio: ['ignore', out, out], windowsHide: true })
+  fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'keep_awake.ps1', event: 'spawn', pid: awakeChild.pid }) + '\n')
+  awakeChild.on('exit', (code) => { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'keep_awake.ps1', event: 'exit', exit: code }) + '\n'); awakeChild = null })
+}
+const shutdown = () => { try { streamChild?.kill() } catch { /* */ } try { chartChild?.kill() } catch { /* */ } try { setChild?.kill() } catch { /* */ } try { awakeChild?.kill() } catch { /* */ } try { fs.unlinkSync(LOCK) } catch { /* */ } process.exit(0) }
 process.on('SIGINT', shutdown); process.on('SIGTERM', shutdown)
 
 // ── 2. the bar-aligned paper tick ───────────────────────────────────────────────────────────────────────────────
@@ -111,7 +124,7 @@ for (;;) {
   cycle++
   const now = Date.now()
   const lastClose = Math.floor(now / 900000) * 900000, last3m = Math.floor(now / 180000) * 180000
-  ensureStream(); await ensureChart(); await ensureSettings()
+  ensureStream(); await ensureChart(); await ensureSettings(); ensureAwake()
   // DATA HEALTH watcher (health_tick.mjs, 2026-10-18; rules src/core/dataHealth.js): every 2 min, always, + at start (FIRST, so the signal gate
   // reads a fresh verdict). STALE → every signal path stops + red "DATABASE STALE" on the chart + Telegram; daily "all data OK" after 21:45 UTC.
   if ((lastHealth === null || now - lastHealth >= 120000) && !healthRunning) { healthRunning = true; lastHealth = now

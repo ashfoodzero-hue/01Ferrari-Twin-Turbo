@@ -34,6 +34,7 @@ export const HEALTH_RULE = Object.freeze({
   srMaxAgeMs: 75 * MIN,                  // S/R refresh: every hour at :04, 4 assets one at a time (≈ 6 min) → 75 min tolerates one slow cycle
   tlLinesMaxAgeMs: 4.5 * H,              // trendline line refresh: after each asset's 4H close
   tlTickMaxAgeMs: 5 * MIN,               // trendline minute check: every minute
+  awakeMaxAgeMs: 3 * MIN,                // keep-awake request (scripts/keep_awake.ps1): re-asserted every 60 s
 })
 const FUT = ['GOLD_FUT', 'SILVER_FUT', 'WTI']
 const SR_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti', 'dxy'], TL_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti'], ANALYSIS_ASSETS = SR_ASSETS   // dxy = gold-grid DXY (S/R only: the DXY warning)
@@ -58,6 +59,7 @@ export function readHealthInputs(now = Date.now()) {
     calendar: readJ(path.join(TURBO.root, 'data', 'calendar', 'upcoming.json')),
     history: readJ(path.join(TURBO.root, 'data', 'calendar', 'history.json')),
     preopen: readJ(path.join(TURBO.master, 'preopen_check.json')),
+    keepAwake: readJ(path.join(TURBO.master, 'keep_awake.json')),
     diskFreeGB: (() => { try { const s = fs.statfsSync(TURBO.root); return +(s.bavail * s.bsize / 1e9).toFixed(1) } catch { return null } })(),
     // analysis feeds (2026-10-18): S/R levels + major-trendline alerts, per asset — when each was last written, and the refresh children's exits
     feeds: Object.fromEntries(ANALYSIS_ASSETS.map((sh) => [sh, { sr: readJ(path.join(TURBO.master, `sr_live_${sh}.json`))?.at ?? null, tl: readJ(path.join(TURBO.master, `trendline_live_lines_${sh}.json`))?.at ?? null }])),
@@ -152,6 +154,13 @@ export function assessHealth(I, R = HEALTH_RULE) {
   if (I.diskFreeGB != null && I.diskFreeGB < R.diskCritGB) add('DISK_FULL', 'CRITICAL', `Data drive almost full: ${I.diskFreeGB} GB free — new minutes cannot be saved safely.`)
   else if (I.diskFreeGB != null && I.diskFreeGB < R.diskWarnGB) add('DISK_LOW', 'WARN', `Data drive low: ${I.diskFreeGB} GB free (alarm at ${R.diskCritGB} GB).`)
   checks.disk = I.diskFreeGB != null ? `${I.diskFreeGB} GB free` : 'unknown'
+  // 8b. KEEP-AWAKE (2026-10-20, §7 (dq)): the PC slept twice in 24 h and took the app down. While the app runs, run_twin's keep_awake.ps1 holds the
+  // Windows "system required" request and stamps keep_awake.json every 60 s. Stale / refused → WARN (the PC may sleep; signals unaffected).
+  // No file yet = the app has not been restarted since the feature landed → reported, not an issue.
+  const ka = I.keepAwake, kaAt = ka?.at ? Date.parse(ka.at) : null
+  if (ka && I.fresh?.app?.alive !== false && (!(now - kaAt <= R.awakeMaxAgeMs) || ka.ok === false))
+    add('KEEP_AWAKE_OFF', 'WARN', `Keep-awake request not held (${ka.ok === false ? 'Windows refused it' : `last stamp ${iso(kaAt)}`}) — the PC may go to sleep and stop the app.`)
+  checks.keep_awake = !ka ? 'not started yet (starts with the next app restart)' : `${ka.ok === false ? 'REFUSED' : now - kaAt <= R.awakeMaxAgeMs ? 'held' : 'STALE'} · ${iso(kaAt)} · blocks idle sleep / hibernate only`
   // 9. ANALYSIS FEEDS (S/R levels hourly, trendline lines per 4H close, trendline minute check) — judged once the market has been open 40 min and is
   //    still open long enough for a refresh cycle; plus two failed refreshes in a row of the same asset (exit 2 = the refresh saw stale minutes).
   if (I.feeds && checks.app === 'running') {
