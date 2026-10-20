@@ -51,6 +51,14 @@ export function vetoSummary(vetoes, scored, keptClosed, nowT) {
     note: 'vetoed signals of one move are correlated — count independent moves before judging; the measured pass is 2 y + 13 y (§7 (df))' }
 }
 
+/** IO: the vetoed BUYs of the last `hours` for the chart's grey "SCALP BLOCKED" boxes (2026-10-20) — each with its scored outcome once settled. */
+export function recentVetoes(nowT, hours = 24) {
+  const by = new Map(rows(SCORED).map((s) => [s.id, s]))
+  return rows(VETOED).filter((v) => v.sig.decisionT >= nowT - hours * 3600000).map((v) => { const s = by.get(v.id), r = (x) => +(+x).toFixed(2)
+    return { id: v.id, t: v.sig.t, decisionT: v.sig.decisionT, side: v.sig.side, entry: r(v.sig.entry), sl: r(v.sig.sl), tp1: r(v.sig.tp1), tp2: r(v.sig.tp2), gate: v.gate ?? null,
+      status: s ? s.outcome : 'OPEN', pnl: s?.pnl ?? null, exitT: s?.exitT ?? null } })
+}
+
 /** IO: score what is due, append it, rewrite the summary. Called by matrix_tick every tick (dataLive = stream live and health not halted). */
 export async function updateVetoScores({ nowT, dataLive = true, write = true } = {}) {
   const vetoes = rows(VETOED), scored = rows(SCORED), ids = new Set(scored.map((x) => x.id)), due = vetoes.filter((v) => !ids.has(v.id))

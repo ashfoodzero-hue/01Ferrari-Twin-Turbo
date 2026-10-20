@@ -53,7 +53,22 @@ await ok('👁 SCALP PREPARE: header + the WATCH study numbers (82.3 % / 6 min /
   const a = await alertPrepare(w, 4149.2, { now: T, send: fk, ledger: pl }), b = await alertPrepare(w, 4149.2, { now: T + 20 * 60000, send: fk, ledger: pl }), c = await alertPrepare(w, 4149.2, { now: T + 50 * 60000, send: fk, ledger: pl })
   assert(a.sent && b.skipped && c.sent && seen.length === 2)
   const e = await alertPrepare(w, 1, { now: T + 200 * 60000, send: async () => { throw new Error('down') }, ledger: pl }); assert(e.error === 'down')
-  assert(fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8').includes('if (out.watch && !out.open) { const r = await alertPrepare('))
+  // 2026-10-20: never while the V1H gate blocks BUYs (the 17:18 PREPARE announced a BUY the gate then vetoed)
+  assert(fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8').includes('if (out.watch && !out.open && !out.structureGate.blocksBuy) { const r = await alertPrepare('))
+})
+await ok('🧭 SCALP BLOCKED (2026-10-20): ONE notice per blocked episode (blockedSince), later vetoes of the stretch silent, a new stretch notifies again; no episode → nothing; card names the reason + entry; never throws', async () => {
+  const { formatBlockedAlert, alertBlocked } = await import('../src/master/tradeAlert.js')
+  const g = { state: 'DOWN', blockedSince: T - 30 * 60000 }, txt = formatBlockedAlert(buy, g)
+  assert(txt.startsWith('🏎🏎 <b>FERRARI TWIN TURBO</b>') && txt.includes('SCALP BLOCKED — BUY not opened') && txt.includes('ENTRY <b>4150.00</b>') && txt.includes('1H structure DOWN') && txt.includes('NOT messaged') && txt.includes('not an order'))
+  const bl = path.join(tmp, 'blk.json'), seen = []; const fk = async (t) => { seen.push(t); return { sent: true } }
+  const a = await alertBlocked(buy, g, { now: T, send: fk, ledger: bl }), b = await alertBlocked({ ...buy, decisionT: T + 180000 }, g, { now: T + 180000, send: fk, ledger: bl })
+  const c = await alertBlocked({ ...buy, decisionT: T + 3600000 }, { ...g, blockedSince: T + 3000000 }, { now: T + 3600000, send: fk, ledger: bl })
+  assert(a.sent && b.skipped === 'episode already notified' && c.sent && seen.length === 2)
+  assert((await alertBlocked(buy, { state: 'DOWN', blockedSince: null }, { send: fk, ledger: bl })).skipped === 'no blocked episode' && seen.length === 2)
+  assert((await alertBlocked(buy, { ...g, blockedSince: T + 9e6 }, { send: async () => { throw new Error('down') }, ledger: bl })).error === 'down')
+  const m = fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8')
+  assert(m.includes('if (blocked) { const r = await alertBlocked(blocked, out.structureGate)') && m.indexOf('alertBlocked(blocked') > m.indexOf("fs.renameSync(STATE + '.tmp', STATE)"), 'sent after the state write')
+  assert(m.includes('state.structureGate?.blocksBuy && state.structureGate.blockedSince ? state.structureGate.blockedSince : lastClose'), 'the episode carries over tick to tick')
 })
 await ok('sendText RETRY: a network failure twice then OK → sent on attempt 3; a 4xx is final (1 attempt); all failing → never throws', async () => {
   const { sendText } = await import('../src/master/telegram.js'), real = globalThis.fetch; let calls = 0

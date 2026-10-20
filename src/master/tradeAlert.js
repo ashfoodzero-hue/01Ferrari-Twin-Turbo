@@ -78,3 +78,23 @@ export async function alertSetup(a, { now = Date.now(), dryRun = false, send = s
     return { sent: !!r?.sent, dryRun: !!r?.dryRun, status: r?.status }
   } catch (e) { return { sent: false, error: e.message } }
 }
+/** 🧭 SCALP BLOCKED (2026-10-20, Ashraf: "send one Telegram notice per blocked episode (not every signal)"): the FIRST BUY signal the V1H gate vetoes in
+ *  a blocked stretch (episode = blockedSince, the 3m close at which BUYs became blocked) → one notice; later vetoes of the same stretch are silent. */
+export function formatBlockedAlert(s, g) {
+  return ['🏎🏎 <b>FERRARI TWIN TURBO</b> 🏎🏎', '🧭 <b>SCALP BLOCKED — BUY not opened</b> · XAUUSD',
+    `🟢 BUY signal ENTRY <b>${f2(s.entry)}</b> · SL ${f2(s.sl)} · TP1 ${f2(s.tp1)} · TP2 ${f2(s.tp2)}`,
+    `reason: <b>1H structure ${g.state}</b>${g.state === 'DOWN' ? ' (lower highs + lower lows)' : g.state === 'UNKNOWN' ? ' (could not be read — fail-closed)' : ''} — the V1H gate blocks SCALP BUYs`,
+    '<i>more BUYs while it stays blocked are NOT messaged · each one is drawn grey on the chart and priced as if opened (review ≈ 2026-10-27)</i>',
+    '<i>V1H measured 2 y + 13 y: the BUYs it skips lost more · Matrix SCALP = SHADOW (paper) · a notice, not an order</i>',
+    `<code>${new Date(s.decisionT).toISOString().replace('.000Z', 'Z')}</code>`].join('\n')
+}
+export async function alertBlocked(s, g, { now = Date.now(), dryRun = false, send = sendText, ledger = LEDGER } = {}) {
+  try {
+    if (!alertSettings().scalp) return { skipped: 'TWIN_ALERT_SCALP off' }
+    if (!g?.blockedSince) return { skipped: 'no blocked episode' }
+    const key = `BLOCKED:${g.blockedSince}`, led = readLedger(ledger); if (led[key]) return { skipped: 'episode already notified' }
+    const r = await send(formatBlockedAlert(s, g), { dryRun })
+    if (r?.sent || r?.dryRun) { led[key] = { at: new Date(now).toISOString(), sent: !!r.sent, first: `MATRIX@${s.decisionT}` }; fs.mkdirSync(path.dirname(ledger), { recursive: true }); fs.writeFileSync(ledger + '.tmp', JSON.stringify(led, null, 1)); fs.renameSync(ledger + '.tmp', ledger) }
+    return { sent: !!r?.sent, dryRun: !!r?.dryRun, status: r?.status }
+  } catch (e) { return { sent: false, error: e.message } }
+}

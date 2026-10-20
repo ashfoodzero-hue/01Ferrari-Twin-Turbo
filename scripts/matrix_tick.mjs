@@ -17,12 +17,12 @@ import { pidAlive } from '../src/core/pidAlive.js'
 import { matrixSignals, resolveMatrixTrade, matrixStructure, matrixArmedAt, emaSeries, WATCH, WALL_TOUCH, MATRIX } from '../src/master/ferrariMatrix.js'
 import { atr as atrArr } from '../src/core/indicators.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
-import { alertSetup, scalpSetup, alertPrepare } from '../src/master/tradeAlert.js'
+import { alertSetup, scalpSetup, alertPrepare, alertBlocked } from '../src/master/tradeAlert.js'
 import { signalsHalted } from '../src/core/dataHealth.js'
 import { clean1m, kit } from './lib/series_1m.mjs'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { V1H, structureStateAt } from './lib/choch4h.mjs'
-import { updateVetoScores } from './lib/veto_score.mjs'
+import { updateVetoScores, recentVetoes } from './lib/veto_score.mjs'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -42,7 +42,7 @@ const [B, D, W, M1] = await Promise.all([
   loadBars('XAUUSD', '1m', { from: (state.open?.sig?.decisionT ?? lastClose) - 60000 }).then((r) => r.bars.filter((b) => b.t + 60000 <= lastClose)),
 ])
 const spreadAt = makeSpreadAt({ live: loadLiveSpreads(quotesFile('XAUUSD'), { from: lastClose - 2 * 86400000 }) })
-let opened = null, structure = null; try { structure = B.length && B.at(-1).t === lastClose - MATRIX.tfMs ? matrixStructure(B, D, W) : null } catch (e) { console.error('  ⚠ matrix structure: ' + e.message) }
+let opened = null, blocked = null, structure = null; try { structure = B.length && B.at(-1).t === lastClose - MATRIX.tfMs ? matrixStructure(B, D, W) : null } catch (e) { console.error('  ⚠ matrix structure: ' + e.message) }
 // DATA HEALTH GATE (2026-10-18): with the database STALE no new box opens (an open box still resolves on the bars that exist)
 const health = signalsHalted()
 const out = { structure, at: new Date(now).toISOString(), bar: new Date(lastClose - MATRIX.tfMs).toISOString(), data_live: st.live && !health.halted, data_why: health.halted ? `DATABASE STALE — ${health.why}` : st.why, verdict, open: state.open, last_closed: state.last_closed ?? null }
@@ -63,6 +63,8 @@ let SG = null
 try { const M45 = await clean1m('XAUUSD', { from: lastClose - V1H.lookbackDays * 86400000, reopenClamp: false, live: true }), Mx = M45.filter((b) => b.t + 60000 <= lastClose)
   const C1 = kit('XAUUSD', { reopenClamp: false, live: true }).build(Mx, V1H.tf); markIncomplete(C1, findHoles(Mx)); SG = structureStateAt(C1, Mx, lastClose) } catch (e) { console.error('  ⚠ structure gate: ' + e.message) }
 out.structureGate = { state: SG ? (SG.state === -1 ? 'DOWN' : SG.state === 1 ? 'UP' : 'MIXED') : 'UNKNOWN', barT: SG?.barT ?? null, blocksBuy: !SG || SG.state === -1, vetoed: null, spec: V1H.spec }
+// blocked EPISODE (2026-10-20, Ashraf: "one Telegram notice per blocked episode"): the 3m close at which BUYs became blocked, carried tick to tick
+out.structureGate.blockedSince = out.structureGate.blocksBuy ? (state.structureGate?.blocksBuy && state.structureGate.blockedSince ? state.structureGate.blockedSince : lastClose) : null
 // 3) a new setup only with no open trade, on live verified data, on the just-closed 3m candle
 if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
   const sigs = matrixSignals(B, D, W, { from: B.length - 1 })
@@ -71,6 +73,7 @@ if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClo
     out.structureGate.vetoed = { decisionT: s.decisionT, entry: +s.entry.toFixed(2) }
     if (!STATIC) fs.appendFileSync(path.join(TURBO.paper, 'matrix_vetoed.jsonl'), JSON.stringify({ id: `MATRIX@${s.decisionT}`, status: 'VETOED_V1H', sig: { ...s, ctx: undefined }, gate: out.structureGate.state, at: new Date(now).toISOString() }) + '\n')
     console.log(`  🧭 matrix BUY @ ${s.entry.toFixed(2)} NOT opened — 1H structure ${out.structureGate.state} (V1H gate)`)
+    blocked = s
   } else if (s && (!state.last_closed || Date.parse(state.last_closed.closedAt) < s.decisionT)) {
     out.open = { id: `MATRIX@${s.decisionT}`, sig: { ...s, ctx: undefined }, ctx: s.ctx, opened: new Date(now).toISOString(), status: 'OPEN', verdict: verdict.verdict }
     if (!STATIC) fs.appendFileSync(JOURNAL, JSON.stringify({ ...out.open, status: 'OPENED' }) + '\n')
@@ -83,6 +86,8 @@ if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClo
 // Never breaks the tick; settles nothing on stale data.
 if (!STATIC) try { const vr = await updateVetoScores({ nowT: lastClose, dataLive: st.live && !health.halted })
   for (const a of vr.added) console.log(`  🧮 vetoed BUY ${new Date(a.decisionT).toISOString().slice(11, 16)} scored: ${a.outcome} ${a.pnl >= 0 ? '+' : ''}${a.pnl}/oz`) } catch (e) { console.error('  ⚠ veto scoring: ' + e.message) }
+// grey "SCALP BLOCKED" boxes (2026-10-20): the last 24 h of vetoed BUYs with their scored outcome ride on structureGate (/api/matrix passes it whole)
+try { out.structureGate.recent = recentVetoes(lastClose) } catch (e) { console.error('  ⚠ recent vetoes: ' + e.message) }
 if (!out.open && (!st.live || health.halted)) console.log(`  ⛔ matrix: no new trade — ${health.halted ? "DATABASE STALE (" + health.why + ")" : "data not live (" + st.why + ")"}`)
 // 👁 WATCH (2026-10-16, Ashraf "option 2 — chart only"): BUY context aligned + the low ≥ 0.25 ATR through the buy wall, no trade, on live data.
 // ONE rule: matrixArmedAt (the study's own function). Measured 82.3 % → a BUY signal within 60 min (post-hoc). NEVER sent to Telegram.
@@ -107,6 +112,10 @@ if (STATIC) { console.log(JSON.stringify({ ...out, open: out.open && { ...out.op
 fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
 // 📨 Telegram "TRADE SETUP READY" (2026-10-16) — after the box is written, once per trade; never blocks or breaks the tick
-if (out.watch && !out.open) { const r = await alertPrepare(out.watch, B.at(-1)?.c); console.log(`  📨 telegram PREPARE: ${r.sent ? 'sent' : r.dryRun ? 'dry run' : r.skipped || r.error}`) }   // 👁 → Telegram (2026-10-16)
+// PREPARE is a BUY watch: never sent while the V1H gate blocks BUYs (2026-10-20, Ashraf: "Stop sending PREPARE while V1H blocks BUYs") — the 17:18 notice
+// announced a BUY the gate then vetoed. The chart keeps drawing the WATCH line (information).
+if (out.watch && !out.open && out.structureGate.blocksBuy) console.log('  📨 telegram PREPARE: not sent — SCALP BUYs blocked (V1H, 1H ' + out.structureGate.state + ')')
+if (blocked) { const r = await alertBlocked(blocked, out.structureGate); console.log(`  📨 telegram BLOCKED: ${r.sent ? 'sent' : r.dryRun ? 'dry run' : r.skipped || r.error || 'not sent ' + r.status}`) }
+if (out.watch && !out.open && !out.structureGate.blocksBuy) { const r = await alertPrepare(out.watch, B.at(-1)?.c); console.log(`  📨 telegram PREPARE: ${r.sent ? 'sent' : r.dryRun ? 'dry run' : r.skipped || r.error}`) }   // 👁 → Telegram (2026-10-16)
 if (opened) { let silverUp = null; try { const S3 = (await loadBars('XAGUSD', '3m', { from: lastClose - 2 * 86400000 })).bars.filter((b) => b.t + MATRIX.tfMs <= lastClose); if (S3.length > 20) { const e = emaSeries(S3, 10); silverUp = S3.at(-1).c > e.get(S3.at(-1).t) } } catch { /* info only */ }
   const r = await alertSetup(scalpSetup(opened, { verdict: verdict.verdict, gate: verdict, silverUp })); console.log(`  📨 telegram SCALP: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }

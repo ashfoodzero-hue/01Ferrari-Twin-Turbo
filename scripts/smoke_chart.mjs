@@ -84,6 +84,11 @@ try {
     assert(page.includes('function nameBox(') && page.includes("'SWING TRADE'") && page.includes("'SCALP TRADE'") && page.includes('.nframe.swing') && page.includes('.nframe.scalp'))
     assert(page.includes("nameBox(ov, 'scalp', x0, x1, [s.entry, s.tp2, s.sl]") && page.includes("nameBox(ov, 'scalp', x0, x1, [b.entry, b.tp, b.sl]") && page.includes("nameBox(ov, 'swing', x0, x1, [t.entry, t.target, t.stop]"))
   })
+  await ok('grey SCALP BLOCKED boxes (2026-10-20): every vetoed BUY of 24 h rides on /api/matrix structureGate.recent; the page draws them on its own layer, named, never as a trade', async () => {
+    const page = (await get('/')).body, m = (await get('/api/matrix')).body
+    assert(page.includes('id="blkOverlay"') && page.includes('function blkDraw()') && page.includes('SCALP BLOCKED · BUY') && page.includes('.nframe.blocked') && page.includes('MX?.structureGate?.recent'))
+    if (m.structureGate) assert(Array.isArray(m.structureGate.recent) && m.structureGate.recent.every((v) => v.side === 'BUY' && v.entry > 0 && v.sl > 0 && v.tp2 > 0 && v.status))
+  })
   await ok('/api/monitor: {open:false} with no trade, else the position formula with its measured calibration + model / close-advice status; panel on the page', async () => {
     const m = (await get('/api/monitor')).body; assert(typeof m.open === 'boolean')
     if (m.open && !m.done && !m.error) { assert(m.p_tp1 >= 0 && m.p_tp1 <= 1 && m.p_tp2 >= 0 && m.p_tp2 <= 1 && [1, 2].includes(m.phase)); assert(m.model && m.close_advice) }
