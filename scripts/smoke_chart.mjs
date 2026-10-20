@@ -86,7 +86,9 @@ try {
   })
   await ok('grey SCALP BLOCKED boxes (2026-10-20): every vetoed BUY of 24 h rides on /api/matrix structureGate.recent; the page draws them on its own layer, named, never as a trade', async () => {
     const page = (await get('/')).body, m = (await get('/api/matrix')).body
-    assert(page.includes('id="blkOverlay"') && page.includes('function blkDraw()') && page.includes('SCALP BLOCKED · BUY') && page.includes('.nframe.blocked') && page.includes('MX?.structureGate?.recent'))
+    assert(page.includes('id="blkOverlay"') && page.includes('function blkDraw()') && page.includes('<b>BLOCKED BUY</b>') && page.includes('.nframe.blocked') && page.includes('MX?.structureGate?.recent'))
+    // v2 (Ashraf: "i can not understand anything from these gray boxes"): ONE box at a time (later BUYs = a count), plain-words outcome, labels never overlap
+    assert(page.includes('if (b.decisionT < freeAt) { boxes.at(-1).more++; continue }') && page.includes('more BUY signal') && page.includes('would have WON') && page.includes('would have LOST') && page.includes('placed.find('))
     if (m.structureGate) assert(Array.isArray(m.structureGate.recent) && m.structureGate.recent.every((v) => v.side === 'BUY' && v.entry > 0 && v.sl > 0 && v.tp2 > 0 && v.status))
   })
   await ok('/api/monitor: {open:false} with no trade, else the position formula with its measured calibration + model / close-advice status; panel on the page', async () => {
