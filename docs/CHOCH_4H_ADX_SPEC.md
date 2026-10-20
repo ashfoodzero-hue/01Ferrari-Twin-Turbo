@@ -84,6 +84,13 @@ K = 3 gates × 3 targets × 2 sides = **18**; pass rule = §6 with α = 0.05 / 1
 
 ADDENDUM B's funnel on XAU 13 y: 504 CHoCH → 33 broke a 4H/1D S/R level (ZigZag 3×ATR swings, i.e. big swings only) → 17 retested → 15 no OB cross → **8 confirmed** (XAG: 6). Unpowered by construction (n far below 30), so B can never pass or fail. In a CHoCH the broken level IS a structure S/R (the last lower high / higher low), so ADDENDUM C runs B's rules 3-7 unchanged with **v = the CHoCH's own broken level** (`e.level`) instead of a 4H/1D srLevels flip. Same K = 18 cells, same pass rule (α = 0.05 / 18), XAU primary + XAG replication. One variant only, declared for power, not chosen from results. Output `choch_retest_struct_study[_xag].json`.
 
+## ADDENDUM D (2026-10-20, Ashraf after ADDENDUM C's numbers: "this setup should be tested only for long swing trades only, not scalp") — BEFORE its numbers
+
+The B / C setups unchanged (C = the broken structure level; B is reported too but stays unpowered). Entry and stop unchanged (market after the confirmation candle; OB extreme ∓ 0.1 ATR). **Long-swing exits only:**
+- **X1:** target 3R · **X2:** target 5R (time cap 120 4H candles ≈ 20 trading days for both);
+- **X3:** no target — hold until the OPPOSITE 4H CHoCH (the trend changes back; exit at the close of its decision minute) or the stop, time cap 120 candles.
+K = 3 exits × 3 gates (G0/G1/G2) × 2 sides = **18**, pass rule §6 with α = 0.05 / 18; XAU primary, XAG replication. Output `choch_retest_struct_long_study[_xag].json`.
+
 ## 8. Output
 
 `scripts/study_choch_4h_adx.mjs` → `data/master/choch_4h_adx_study.json`, atlas `docs/CHOCH_4H_ADX_ATLAS.md`, MASTER §7 entry, memory.
