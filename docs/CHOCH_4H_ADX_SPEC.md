@@ -102,6 +102,10 @@ BUY described, SELL the mirror.
 6. **Exits = ADDENDUM D's long-swing exits** X1 3R · X2 5R · X3 hold to the opposite 4H CHoCH; cap 120 4H candles.
 K = 3 × 3 × 2 = **18**, α = 0.05 / 18, §6 pass rule; funnel reported (CHoCH → OB retest → no OB break → 15m CHoCH). XAU primary, XAG replication. Code `choch4h.obChochSetups`, `study_choch_retest.mjs --ob` → `choch_retest_ob_long_study[_xag].json`.
 
+## ADDENDUM F (2026-10-20, after E's numbers, BEFORE this one's) — is the gold-BUY profit the setup or gold's drift?
+
+C, D and E share one pattern: gold BUY cells are positive in TRAIN and OOS, SELL cells negative, silver negative. Gold rose ≈ 1,285 → 4,100+ over the window (drift). Control: for every E BUY trade (G0, X1/X2/X3), 5 random 4H candles of the same year (any trend state), entry at the next candle's first minute, stop = entry − the SAME stop distance in ATR(4H) as that trade, the same exit (X1 3R / X2 5R / X3 the next bearish 4H CHoCH after entry, cap 120 candles). Same for SELL. Reported: setup $/trade vs random $/trade, TRAIN and OOS, with the difference's week-block bootstrap 95 % interval. Only a setup − random difference with a positive lower bound in both windows counts as "the setup adds something beyond buying gold".
+
 ## 8. Output
 
 `scripts/study_choch_4h_adx.mjs` → `data/master/choch_4h_adx_study.json`, atlas `docs/CHOCH_4H_ADX_ATLAS.md`, MASTER §7 entry, memory.
