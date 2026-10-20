@@ -17,4 +17,11 @@ K = 2. Money path = `scripts/lib/matrix_trades.mjs` (the gate's ONE sequence), v
 
 A pass = the gate is wired into the SCALP (it stays SHADOW until its own money is positive). A fail = nothing wired.
 
+## ADDENDUM A (2026-10-20, after V1H / V4H's numbers, BEFORE this one's)
+
+V1H passed, but on the last 2 days it vetoes NONE of the 13 BUYs: the LH+LL state needs a confirmed lower high AND lower low, so after the 10-19 11:00 bearish CHoCH it stayed MIXED until 10-20 07:00 (the confirmed highs were 4187.49 → 4190.17, rising). Ashraf's frame is "the market confirmed the reversal to bearish" = the CHoCH itself. Added:
+- **C1H:** skip a SCALP BUY when the most recent 1H CHoCH (choch4h.findChochs events, decision time ≤ the signal) is BEARISH (a later bullish CHoCH lifts it).
+- **C4H:** the same on 4H.
+Same money path, windows and pass rule. K for the family becomes 4.
+
 Study: `scripts/study_matrix_structure_gate.mjs` → `data/master/matrix_structure_gate_study.json`.
