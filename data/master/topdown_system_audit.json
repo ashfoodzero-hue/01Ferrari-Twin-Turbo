@@ -1,0 +1,37 @@
+{
+ "built_at": "2026-10-20T10:06:56.269Z",
+ "independent": {
+  "trades": 200,
+  "with_differences": 0,
+  "diffs": []
+ },
+ "prefix": {
+  "cuts": 60,
+  "events": 327434,
+  "diffs": 0,
+  "samples": []
+ },
+ "positive_control": {
+  "S-CONT": {
+   "all": {
+    "n": 638,
+    "usd": -0.487
+   },
+   "oracle": {
+    "n": 287,
+    "usd": 7.871
+   }
+  },
+  "SC": {
+   "all": {
+    "n": 387,
+    "usd": 1.223
+   },
+   "oracle": {
+    "n": 204,
+    "usd": 6.814
+   }
+  }
+ },
+ "clean": true
+}

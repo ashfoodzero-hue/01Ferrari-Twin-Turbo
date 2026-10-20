@@ -143,7 +143,7 @@ export function trade(M1, ev, kind, target, spreadAt, endT, limitEndT) {
       if (s > 0 ? askLo(b) <= L : b.h >= L) { entry = s > 0 ? Math.min(L, b.o + spreadAt(b.t)) : Math.max(L, b.o); entryT = b.t; break } }
     if (entry == null) return k >= M1.length ? { open: true } : { skipped: 'no fill' } }
   const R = s * (entry - stop); if (!(R > 0)) return { skipped: 'entry beyond stop' }
-  const tp = entry + s * (target[1] === 'R' ? target[2] * R : target[2] * ev.atr)
+  const tp = target[1] === 'P' ? target[2] : entry + s * (target[1] === 'R' ? target[2] * R : target[2] * ev.atr)   // 'P' = an absolute price (TOPDOWN SC, 2026-10-20)
   for (let j = k; j < M1.length && M1[j].t < endT; j++) { const b = M1[j], sp = spreadAt(b.t)
     const xo = s > 0 ? b.o : b.o + sp, xl = s > 0 ? b.l : b.l + sp, xh = s > 0 ? b.h : b.h + sp   // the side we exit on
     if (j > k && (s > 0 ? xo <= stop : xo >= stop)) return done(b.t, xo, 'stop_gap')
