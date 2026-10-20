@@ -1,0 +1,27 @@
+{
+ "built_at": "2026-10-20T08:34:53.992Z",
+ "independent": {
+  "trades": 200,
+  "with_differences": 0,
+  "diffs": []
+ },
+ "prefix": {
+  "cuts": 100,
+  "events": 27388,
+  "event_diffs": 0,
+  "setups": 7530,
+  "setup_diffs": 0,
+  "samples": []
+ },
+ "positive_control": {
+  "all_buys": {
+   "n": 221,
+   "usd": 10.118
+  },
+  "oracle": {
+   "n": 135,
+   "usd": 20.669
+  }
+ },
+ "clean": true
+}

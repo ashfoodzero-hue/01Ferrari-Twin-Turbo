@@ -1,0 +1,1492 @@
+{
+ "spec": "docs/CHOCH_4H_ADX_SPEC.md ADDENDUM C + D (long-swing exits)",
+ "symbol": "XAUUSD",
+ "built_at": "2026-10-20T08:06:43.333Z",
+ "split": "2021-07-01T00:00:00.000Z",
+ "funnel": {
+  "choch": 504,
+  "broken_sr": 504,
+  "retest": 326,
+  "no_ob_cross": 250,
+  "confirmed": 154
+ },
+ "K": 18,
+ "alpha_per_cell": 0.002777777777777778,
+ "passes": [],
+ "cells": [
+  {
+   "key": "BUY|G0|X1",
+   "side": "BUY",
+   "gate": "G0",
+   "target": "X1",
+   "setups": 75,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 38,
+    "wr": 0.4474,
+    "wr_lo": 0.3015,
+    "usd": 9.468,
+    "usd_lo": -6.099,
+    "R": 0.5875,
+    "years": [
+     {
+      "y": 2014,
+      "n": 7,
+      "usd": 12.462
+     },
+     {
+      "y": 2015,
+      "n": 7,
+      "usd": 8.731
+     },
+     {
+      "y": 2017,
+      "n": 5,
+      "usd": 21.483
+     },
+     {
+      "y": 2019,
+      "n": 5,
+      "usd": 6.013
+     },
+     {
+      "y": 2020,
+      "n": 6,
+      "usd": 3.839
+     }
+    ],
+    "years_pos": 1
+   },
+   "OOS": {
+    "n": 30,
+    "wr": 0.3,
+    "wr_lo": 0.1666,
+    "usd": 4.922,
+    "usd_lo": -41.45,
+    "R": 0.1283,
+    "years": [
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": 15.317
+     },
+     {
+      "y": 2024,
+      "n": 8,
+      "usd": 2.564
+     },
+     {
+      "y": 2026,
+      "n": 5,
+      "usd": -45.553
+     }
+    ],
+    "years_pos": 0.667
+   },
+   "ALL": {
+    "n": 68,
+    "wr": 0.3824,
+    "wr_lo": 0.2761,
+    "usd": 7.463,
+    "usd_lo": -15.102,
+    "R": 0.3849,
+    "years": [
+     {
+      "y": 2014,
+      "n": 7,
+      "usd": 12.462
+     },
+     {
+      "y": 2015,
+      "n": 7,
+      "usd": 8.731
+     },
+     {
+      "y": 2017,
+      "n": 5,
+      "usd": 21.483
+     },
+     {
+      "y": 2019,
+      "n": 5,
+      "usd": 6.013
+     },
+     {
+      "y": 2020,
+      "n": 6,
+      "usd": 3.839
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": 15.317
+     },
+     {
+      "y": 2024,
+      "n": 8,
+      "usd": 2.564
+     },
+     {
+      "y": 2026,
+      "n": 5,
+      "usd": -45.553
+     }
+    ],
+    "years_pos": 0.875
+   },
+   "checks": {
+    "n30": true,
+    "money_oos": false,
+    "money_train": true,
+    "years60": true
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G0|X2",
+   "side": "BUY",
+   "gate": "G0",
+   "target": "X2",
+   "setups": 75,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 37,
+    "wr": 0.3514,
+    "wr_lo": 0.2183,
+    "usd": 3.563,
+    "usd_lo": -11.179,
+    "R": 0.3209,
+    "years": [
+     {
+      "y": 2014,
+      "n": 7,
+      "usd": -4.629
+     },
+     {
+      "y": 2015,
+      "n": 7,
+      "usd": 2.802
+     },
+     {
+      "y": 2017,
+      "n": 5,
+      "usd": 25.164
+     },
+     {
+      "y": 2020,
+      "n": 6,
+      "usd": -9.703
+     }
+    ],
+    "years_pos": 0.5
+   },
+   "OOS": {
+    "n": 29,
+    "wr": 0.3103,
+    "wr_lo": 0.1728,
+    "usd": 21.381,
+    "usd_lo": -30.68,
+    "R": 0.3955,
+    "years": [
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": 26.029
+     },
+     {
+      "y": 2024,
+      "n": 8,
+      "usd": -2.12
+     }
+    ],
+    "years_pos": 0.5
+   },
+   "ALL": {
+    "n": 66,
+    "wr": 0.3333,
+    "wr_lo": 0.2316,
+    "usd": 11.392,
+    "usd_lo": -13.57,
+    "R": 0.3537,
+    "years": [
+     {
+      "y": 2014,
+      "n": 7,
+      "usd": -4.629
+     },
+     {
+      "y": 2015,
+      "n": 7,
+      "usd": 2.802
+     },
+     {
+      "y": 2017,
+      "n": 5,
+      "usd": 25.164
+     },
+     {
+      "y": 2020,
+      "n": 6,
+      "usd": -9.703
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": 26.029
+     },
+     {
+      "y": 2024,
+      "n": 8,
+      "usd": -2.12
+     }
+    ],
+    "years_pos": 0.5
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G0|X3",
+   "side": "BUY",
+   "gate": "G0",
+   "target": "X3",
+   "setups": 75,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 41,
+    "wr": 0.4634,
+    "wr_lo": 0.3206,
+    "usd": 7.306,
+    "usd_lo": -7.012,
+    "R": 0.5651,
+    "years": [
+     {
+      "y": 2014,
+      "n": 8,
+      "usd": -4.452
+     },
+     {
+      "y": 2015,
+      "n": 8,
+      "usd": 8.997
+     },
+     {
+      "y": 2017,
+      "n": 5,
+      "usd": 8.86
+     },
+     {
+      "y": 2019,
+      "n": 5,
+      "usd": -10.3
+     },
+     {
+      "y": 2020,
+      "n": 6,
+      "usd": 17.025
+     }
+    ],
+    "years_pos": 0.6
+   },
+   "OOS": {
+    "n": 32,
+    "wr": 0.375,
+    "wr_lo": 0.2293,
+    "usd": 22.494,
+    "usd_lo": -22.758,
+    "R": 0.2489,
+    "years": [
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": 10.189
+     },
+     {
+      "y": 2024,
+      "n": 9,
+      "usd": -2.592
+     },
+     {
+      "y": 2026,
+      "n": 6,
+      "usd": 86.603
+     }
+    ],
+    "years_pos": 0.667
+   },
+   "ALL": {
+    "n": 73,
+    "wr": 0.4247,
+    "wr_lo": 0.3178,
+    "usd": 13.964,
+    "usd_lo": -9.102,
+    "R": 0.4265,
+    "years": [
+     {
+      "y": 2014,
+      "n": 8,
+      "usd": -4.452
+     },
+     {
+      "y": 2015,
+      "n": 8,
+      "usd": 8.997
+     },
+     {
+      "y": 2017,
+      "n": 5,
+      "usd": 8.86
+     },
+     {
+      "y": 2019,
+      "n": 5,
+      "usd": -10.3
+     },
+     {
+      "y": 2020,
+      "n": 6,
+      "usd": 17.025
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": 10.189
+     },
+     {
+      "y": 2024,
+      "n": 9,
+      "usd": -2.592
+     },
+     {
+      "y": 2026,
+      "n": 6,
+      "usd": 86.603
+     }
+    ],
+    "years_pos": 0.625
+   },
+   "checks": {
+    "n30": true,
+    "money_oos": false,
+    "money_train": true,
+    "years60": true
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G1|X1",
+   "side": "BUY",
+   "gate": "G1",
+   "target": "X1",
+   "setups": 32,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 19,
+    "wr": 0.5263,
+    "wr_lo": 0.3171,
+    "usd": 16.977,
+    "usd_lo": -2.559,
+    "R": 0.8879,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 12,
+    "wr": 0.1667,
+    "wr_lo": 0.047,
+    "usd": -5.492,
+    "usd_lo": -73.52,
+    "R": -0.5364,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 31,
+    "wr": 0.3871,
+    "wr_lo": 0.2373,
+    "usd": 8.279,
+    "usd_lo": -22.638,
+    "R": 0.3366,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G1|X2",
+   "side": "BUY",
+   "gate": "G1",
+   "target": "X2",
+   "setups": 32,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 18,
+    "wr": 0.4444,
+    "wr_lo": 0.2456,
+    "usd": 14.273,
+    "usd_lo": -8.137,
+    "R": 0.8027,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 12,
+    "wr": 0.1667,
+    "wr_lo": 0.047,
+    "usd": -2.358,
+    "usd_lo": -73.52,
+    "R": -0.5051,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 30,
+    "wr": 0.3333,
+    "wr_lo": 0.1923,
+    "usd": 7.621,
+    "usd_lo": -26.398,
+    "R": 0.2796,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G1|X3",
+   "side": "BUY",
+   "gate": "G1",
+   "target": "X3",
+   "setups": 32,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 19,
+    "wr": 0.5789,
+    "wr_lo": 0.3628,
+    "usd": 19.304,
+    "usd_lo": -4.618,
+    "R": 1.3063,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 12,
+    "wr": 0.1667,
+    "wr_lo": 0.047,
+    "usd": -15.631,
+    "usd_lo": -71.54,
+    "R": -0.4529,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 31,
+    "wr": 0.4194,
+    "wr_lo": 0.2642,
+    "usd": 5.781,
+    "usd_lo": -22.81,
+    "R": 0.6253,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G2|X1",
+   "side": "BUY",
+   "gate": "G2",
+   "target": "X1",
+   "setups": 36,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 21,
+    "wr": 0.3333,
+    "wr_lo": 0.1719,
+    "usd": 0.67,
+    "usd_lo": -18.161,
+    "R": 0.0805,
+    "years": [
+     {
+      "y": 2015,
+      "n": 5,
+      "usd": -17.051
+     }
+    ],
+    "years_pos": 0
+   },
+   "OOS": {
+    "n": 15,
+    "wr": 0.2667,
+    "wr_lo": 0.109,
+    "usd": 7.054,
+    "usd_lo": -75.34,
+    "R": 0.1145,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 36,
+    "wr": 0.3056,
+    "wr_lo": 0.18,
+    "usd": 3.33,
+    "usd_lo": -31.621,
+    "R": 0.0947,
+    "years": [
+     {
+      "y": 2015,
+      "n": 5,
+      "usd": -17.051
+     }
+    ],
+    "years_pos": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G2|X2",
+   "side": "BUY",
+   "gate": "G2",
+   "target": "X2",
+   "setups": 36,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 21,
+    "wr": 0.3333,
+    "wr_lo": 0.1719,
+    "usd": 1.021,
+    "usd_lo": -18.733,
+    "R": 0.1008,
+    "years": [
+     {
+      "y": 2015,
+      "n": 5,
+      "usd": -17.051
+     }
+    ],
+    "years_pos": 0
+   },
+   "OOS": {
+    "n": 14,
+    "wr": 0.2857,
+    "wr_lo": 0.1172,
+    "usd": 42.19,
+    "usd_lo": -52.343,
+    "R": 0.6496,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 35,
+    "wr": 0.3143,
+    "wr_lo": 0.1855,
+    "usd": 17.489,
+    "usd_lo": -22.669,
+    "R": 0.3203,
+    "years": [
+     {
+      "y": 2015,
+      "n": 5,
+      "usd": -17.051
+     }
+    ],
+    "years_pos": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G2|X3",
+   "side": "BUY",
+   "gate": "G2",
+   "target": "X3",
+   "setups": 36,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 21,
+    "wr": 0.4286,
+    "wr_lo": 0.2447,
+    "usd": -4.294,
+    "usd_lo": -16.942,
+    "R": -0.0727,
+    "years": [
+     {
+      "y": 2015,
+      "n": 5,
+      "usd": -2.217
+     }
+    ],
+    "years_pos": 0
+   },
+   "OOS": {
+    "n": 14,
+    "wr": 0.4286,
+    "wr_lo": 0.2138,
+    "usd": 5.106,
+    "usd_lo": -54,
+    "R": 0.121,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 35,
+    "wr": 0.4286,
+    "wr_lo": 0.2798,
+    "usd": -0.534,
+    "usd_lo": -23.693,
+    "R": 0.0048,
+    "years": [
+     {
+      "y": 2015,
+      "n": 5,
+      "usd": -2.217
+     }
+    ],
+    "years_pos": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G0|X1",
+   "side": "SELL",
+   "gate": "G0",
+   "target": "X1",
+   "setups": 79,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 41,
+    "wr": 0.3659,
+    "wr_lo": 0.2359,
+    "usd": 4.952,
+    "usd_lo": -7.638,
+    "R": 0.2489,
+    "years": [
+     {
+      "y": 2014,
+      "n": 6,
+      "usd": 5.591
+     },
+     {
+      "y": 2015,
+      "n": 6,
+      "usd": -1.072
+     },
+     {
+      "y": 2017,
+      "n": 6,
+      "usd": -7.592
+     },
+     {
+      "y": 2018,
+      "n": 7,
+      "usd": 7.404
+     },
+     {
+      "y": 2019,
+      "n": 6,
+      "usd": -2.959
+     },
+     {
+      "y": 2020,
+      "n": 5,
+      "usd": -19.995
+     }
+    ],
+    "years_pos": 0.333
+   },
+   "OOS": {
+    "n": 30,
+    "wr": 0.2333,
+    "wr_lo": 0.1179,
+    "usd": -17.349,
+    "usd_lo": -73.863,
+    "R": -0.1727,
+    "years": [
+     {
+      "y": 2022,
+      "n": 5,
+      "usd": -4.228
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": -10.543
+     },
+     {
+      "y": 2025,
+      "n": 8,
+      "usd": -39.344
+     }
+    ],
+    "years_pos": 0
+   },
+   "ALL": {
+    "n": 71,
+    "wr": 0.3099,
+    "wr_lo": 0.2144,
+    "usd": -4.471,
+    "usd_lo": -29.249,
+    "R": 0.0707,
+    "years": [
+     {
+      "y": 2014,
+      "n": 6,
+      "usd": 5.591
+     },
+     {
+      "y": 2015,
+      "n": 6,
+      "usd": -1.072
+     },
+     {
+      "y": 2017,
+      "n": 6,
+      "usd": -7.592
+     },
+     {
+      "y": 2018,
+      "n": 7,
+      "usd": 7.404
+     },
+     {
+      "y": 2019,
+      "n": 6,
+      "usd": -2.959
+     },
+     {
+      "y": 2020,
+      "n": 5,
+      "usd": -19.995
+     },
+     {
+      "y": 2021,
+      "n": 6,
+      "usd": 33.762
+     },
+     {
+      "y": 2022,
+      "n": 5,
+      "usd": -4.228
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": -10.543
+     },
+     {
+      "y": 2025,
+      "n": 8,
+      "usd": -39.344
+     }
+    ],
+    "years_pos": 0.3
+   },
+   "checks": {
+    "n30": true,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G0|X2",
+   "side": "SELL",
+   "gate": "G0",
+   "target": "X2",
+   "setups": 79,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 41,
+    "wr": 0.3415,
+    "wr_lo": 0.2156,
+    "usd": 5.114,
+    "usd_lo": -8.33,
+    "R": 0.2746,
+    "years": [
+     {
+      "y": 2014,
+      "n": 6,
+      "usd": 8.944
+     },
+     {
+      "y": 2015,
+      "n": 6,
+      "usd": -3.105
+     },
+     {
+      "y": 2017,
+      "n": 6,
+      "usd": -7.592
+     },
+     {
+      "y": 2018,
+      "n": 7,
+      "usd": 6.714
+     },
+     {
+      "y": 2019,
+      "n": 6,
+      "usd": -3.668
+     },
+     {
+      "y": 2020,
+      "n": 5,
+      "usd": -19.995
+     }
+    ],
+    "years_pos": 0.333
+   },
+   "OOS": {
+    "n": 29,
+    "wr": 0.1724,
+    "wr_lo": 0.076,
+    "usd": -15.088,
+    "usd_lo": -79.616,
+    "R": -0.3955,
+    "years": [
+     {
+      "y": 2022,
+      "n": 5,
+      "usd": -8.948
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": -16.97
+     },
+     {
+      "y": 2025,
+      "n": 8,
+      "usd": -51.561
+     }
+    ],
+    "years_pos": 0
+   },
+   "ALL": {
+    "n": 70,
+    "wr": 0.2714,
+    "wr_lo": 0.1812,
+    "usd": -3.255,
+    "usd_lo": -31.678,
+    "R": -0.003,
+    "years": [
+     {
+      "y": 2014,
+      "n": 6,
+      "usd": 8.944
+     },
+     {
+      "y": 2015,
+      "n": 6,
+      "usd": -3.105
+     },
+     {
+      "y": 2017,
+      "n": 6,
+      "usd": -7.592
+     },
+     {
+      "y": 2018,
+      "n": 7,
+      "usd": 6.714
+     },
+     {
+      "y": 2019,
+      "n": 6,
+      "usd": -3.668
+     },
+     {
+      "y": 2020,
+      "n": 5,
+      "usd": -19.995
+     },
+     {
+      "y": 2021,
+      "n": 5,
+      "usd": 36.666
+     },
+     {
+      "y": 2022,
+      "n": 5,
+      "usd": -8.948
+     },
+     {
+      "y": 2023,
+      "n": 8,
+      "usd": -16.97
+     },
+     {
+      "y": 2025,
+      "n": 8,
+      "usd": -51.561
+     }
+    ],
+    "years_pos": 0.3
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G0|X3",
+   "side": "SELL",
+   "gate": "G0",
+   "target": "X3",
+   "setups": 79,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 43,
+    "wr": 0.3256,
+    "wr_lo": 0.2049,
+    "usd": 1.517,
+    "usd_lo": -8.068,
+    "R": 0.2113,
+    "years": [
+     {
+      "y": 2014,
+      "n": 6,
+      "usd": 2.9
+     },
+     {
+      "y": 2015,
+      "n": 7,
+      "usd": 3.392
+     },
+     {
+      "y": 2017,
+      "n": 6,
+      "usd": 0.824
+     },
+     {
+      "y": 2018,
+      "n": 8,
+      "usd": 2.691
+     },
+     {
+      "y": 2019,
+      "n": 6,
+      "usd": 0.504
+     },
+     {
+      "y": 2020,
+      "n": 5,
+      "usd": -17.243
+     }
+    ],
+    "years_pos": 0.833
+   },
+   "OOS": {
+    "n": 31,
+    "wr": 0.3226,
+    "wr_lo": 0.1857,
+    "usd": -1.971,
+    "usd_lo": -43.406,
+    "R": -0.0253,
+    "years": [
+     {
+      "y": 2022,
+      "n": 5,
+      "usd": -8.668
+     },
+     {
+      "y": 2023,
+      "n": 9,
+      "usd": -14.068
+     },
+     {
+      "y": 2025,
+      "n": 8,
+      "usd": -21.157
+     }
+    ],
+    "years_pos": 0
+   },
+   "ALL": {
+    "n": 74,
+    "wr": 0.3243,
+    "wr_lo": 0.2286,
+    "usd": 0.056,
+    "usd_lo": -18.903,
+    "R": 0.1122,
+    "years": [
+     {
+      "y": 2014,
+      "n": 6,
+      "usd": 2.9
+     },
+     {
+      "y": 2015,
+      "n": 7,
+      "usd": 3.392
+     },
+     {
+      "y": 2017,
+      "n": 6,
+      "usd": 0.824
+     },
+     {
+      "y": 2018,
+      "n": 8,
+      "usd": 2.691
+     },
+     {
+      "y": 2019,
+      "n": 6,
+      "usd": 0.504
+     },
+     {
+      "y": 2020,
+      "n": 5,
+      "usd": -17.243
+     },
+     {
+      "y": 2021,
+      "n": 6,
+      "usd": 8.873
+     },
+     {
+      "y": 2022,
+      "n": 5,
+      "usd": -8.668
+     },
+     {
+      "y": 2023,
+      "n": 9,
+      "usd": -14.068
+     },
+     {
+      "y": 2025,
+      "n": 8,
+      "usd": -21.157
+     }
+    ],
+    "years_pos": 0.6
+   },
+   "checks": {
+    "n30": true,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G1|X1",
+   "side": "SELL",
+   "gate": "G1",
+   "target": "X1",
+   "setups": 32,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 20,
+    "wr": 0.45,
+    "wr_lo": 0.2582,
+    "usd": 8.679,
+    "usd_lo": -11.633,
+    "R": 0.5562,
+    "years": [
+     {
+      "y": 2018,
+      "n": 5,
+      "usd": 4.985
+     }
+    ],
+    "years_pos": 1
+   },
+   "OOS": {
+    "n": 10,
+    "wr": 0.3,
+    "wr_lo": 0.1078,
+    "usd": -9.234,
+    "usd_lo": -166.404,
+    "R": 0.2198,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 30,
+    "wr": 0.4,
+    "wr_lo": 0.2459,
+    "usd": 2.708,
+    "usd_lo": -53.834,
+    "R": 0.4441,
+    "years": [
+     {
+      "y": 2018,
+      "n": 5,
+      "usd": 4.985
+     }
+    ],
+    "years_pos": 1
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G1|X2",
+   "side": "SELL",
+   "gate": "G1",
+   "target": "X2",
+   "setups": 32,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 20,
+    "wr": 0.45,
+    "wr_lo": 0.2582,
+    "usd": 8.664,
+    "usd_lo": -11.703,
+    "R": 0.7075,
+    "years": [
+     {
+      "y": 2018,
+      "n": 5,
+      "usd": 4.018
+     }
+    ],
+    "years_pos": 1
+   },
+   "OOS": {
+    "n": 10,
+    "wr": 0.2,
+    "wr_lo": 0.0567,
+    "usd": 7.936,
+    "usd_lo": -170.343,
+    "R": -0.0746,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 30,
+    "wr": 0.3667,
+    "wr_lo": 0.2187,
+    "usd": 8.421,
+    "usd_lo": -55.557,
+    "R": 0.4468,
+    "years": [
+     {
+      "y": 2018,
+      "n": 5,
+      "usd": 4.018
+     }
+    ],
+    "years_pos": 1
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G1|X3",
+   "side": "SELL",
+   "gate": "G1",
+   "target": "X3",
+   "setups": 32,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 20,
+    "wr": 0.35,
+    "wr_lo": 0.1812,
+    "usd": 2.837,
+    "usd_lo": -11.452,
+    "R": 0.4442,
+    "years": [
+     {
+      "y": 2018,
+      "n": 5,
+      "usd": -0.332
+     }
+    ],
+    "years_pos": 0
+   },
+   "OOS": {
+    "n": 10,
+    "wr": 0.3,
+    "wr_lo": 0.1078,
+    "usd": 22.475,
+    "usd_lo": -97.029,
+    "R": 0.2682,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 30,
+    "wr": 0.3333,
+    "wr_lo": 0.1923,
+    "usd": 9.383,
+    "usd_lo": -31.855,
+    "R": 0.3855,
+    "years": [
+     {
+      "y": 2018,
+      "n": 5,
+      "usd": -0.332
+     }
+    ],
+    "years_pos": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G2|X1",
+   "side": "SELL",
+   "gate": "G2",
+   "target": "X1",
+   "setups": 40,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 21,
+    "wr": 0.381,
+    "wr_lo": 0.2075,
+    "usd": 7.574,
+    "usd_lo": -9.738,
+    "R": 0.4029,
+    "years": [
+     {
+      "y": 2014,
+      "n": 5,
+      "usd": 9.933
+     }
+    ],
+    "years_pos": 1
+   },
+   "OOS": {
+    "n": 17,
+    "wr": 0.1765,
+    "wr_lo": 0.0619,
+    "usd": -26.453,
+    "usd_lo": -51.446,
+    "R": -0.4927,
+    "years": [
+     {
+      "y": 2025,
+      "n": 6,
+      "usd": -35.752
+     }
+    ],
+    "years_pos": 0
+   },
+   "ALL": {
+    "n": 38,
+    "wr": 0.2895,
+    "wr_lo": 0.17,
+    "usd": -7.649,
+    "usd_lo": -24.579,
+    "R": 0.0023,
+    "years": [
+     {
+      "y": 2014,
+      "n": 5,
+      "usd": 9.933
+     },
+     {
+      "y": 2025,
+      "n": 6,
+      "usd": -35.752
+     }
+    ],
+    "years_pos": 0.5
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G2|X2",
+   "side": "SELL",
+   "gate": "G2",
+   "target": "X2",
+   "setups": 40,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 21,
+    "wr": 0.3333,
+    "wr_lo": 0.1719,
+    "usd": 5.645,
+    "usd_lo": -10.846,
+    "R": 0.3214,
+    "years": [
+     {
+      "y": 2014,
+      "n": 5,
+      "usd": 13.956
+     }
+    ],
+    "years_pos": 1
+   },
+   "OOS": {
+    "n": 17,
+    "wr": 0.1176,
+    "wr_lo": 0.0329,
+    "usd": -32.202,
+    "usd_lo": -52.435,
+    "R": -0.7286,
+    "years": [
+     {
+      "y": 2025,
+      "n": 6,
+      "usd": -52.041
+     }
+    ],
+    "years_pos": 0
+   },
+   "ALL": {
+    "n": 38,
+    "wr": 0.2368,
+    "wr_lo": 0.1299,
+    "usd": -11.287,
+    "usd_lo": -26.546,
+    "R": -0.1484,
+    "years": [
+     {
+      "y": 2014,
+      "n": 5,
+      "usd": 13.956
+     },
+     {
+      "y": 2025,
+      "n": 6,
+      "usd": -52.041
+     }
+    ],
+    "years_pos": 0.5
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G2|X3",
+   "side": "SELL",
+   "gate": "G2",
+   "target": "X3",
+   "setups": 40,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 21,
+    "wr": 0.4286,
+    "wr_lo": 0.2447,
+    "usd": 6.289,
+    "usd_lo": -6.451,
+    "R": 0.3465,
+    "years": [
+     {
+      "y": 2014,
+      "n": 5,
+      "usd": 6.703
+     }
+    ],
+    "years_pos": 1
+   },
+   "OOS": {
+    "n": 17,
+    "wr": 0.2353,
+    "wr_lo": 0.0955,
+    "usd": -20.548,
+    "usd_lo": -41.505,
+    "R": -0.4893,
+    "years": [
+     {
+      "y": 2025,
+      "n": 6,
+      "usd": -22.224
+     }
+    ],
+    "years_pos": 0
+   },
+   "ALL": {
+    "n": 38,
+    "wr": 0.3421,
+    "wr_lo": 0.2121,
+    "usd": -5.717,
+    "usd_lo": -19.487,
+    "R": -0.0274,
+    "years": [
+     {
+      "y": 2014,
+      "n": 5,
+      "usd": 6.703
+     },
+     {
+      "y": 2025,
+      "n": 6,
+      "usd": -22.224
+     }
+    ],
+    "years_pos": 0.5
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  }
+ ]
+}

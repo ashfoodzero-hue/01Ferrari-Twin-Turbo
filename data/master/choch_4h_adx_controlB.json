@@ -1,0 +1,65 @@
+{
+ "addendum": "CHOCH_4H_ADX_SPEC ADDENDUM A",
+ "built_at": "2026-10-20T07:58:00.369Z",
+ "symbol": "XAUUSD",
+ "BUY": {
+  "tip_dist_atr_median": {
+   "choch": 2.67,
+   "controlA": 1.4
+  },
+  "all": {
+   "choch": 0.637,
+   "n": 226,
+   "controlB": 0.666,
+   "nB": 665,
+   "diff": -0.029,
+   "p": 0.427
+  },
+  "train": {
+   "choch": 0.636,
+   "n": 129,
+   "controlB": 0.677,
+   "nB": 400,
+   "diff": -0.042,
+   "p": 0.38
+  },
+  "oos": {
+   "choch": 0.639,
+   "n": 97,
+   "controlB": 0.649,
+   "nB": 265,
+   "diff": -0.01,
+   "p": 0.862
+  }
+ },
+ "SELL": {
+  "tip_dist_atr_median": {
+   "choch": 2.54,
+   "controlA": 1.26
+  },
+  "all": {
+   "choch": 0.65,
+   "n": 220,
+   "controlB": 0.562,
+   "nB": 676,
+   "diff": 0.088,
+   "p": 0.0216
+  },
+  "train": {
+   "choch": 0.662,
+   "n": 130,
+   "controlB": 0.578,
+   "nB": 379,
+   "diff": 0.084,
+   "p": 0.0929
+  },
+  "oos": {
+   "choch": 0.633,
+   "n": 90,
+   "controlB": 0.542,
+   "nB": 297,
+   "diff": 0.091,
+   "p": 0.126
+  }
+ }
+}

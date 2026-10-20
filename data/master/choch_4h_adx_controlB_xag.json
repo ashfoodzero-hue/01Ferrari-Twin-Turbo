@@ -1,0 +1,65 @@
+{
+ "addendum": "CHOCH_4H_ADX_SPEC ADDENDUM A",
+ "built_at": "2026-10-20T07:58:49.382Z",
+ "symbol": "XAGUSD",
+ "BUY": {
+  "tip_dist_atr_median": {
+   "choch": 2.54,
+   "controlA": 1.41
+  },
+  "all": {
+   "choch": 0.576,
+   "n": 198,
+   "controlB": 0.647,
+   "nB": 578,
+   "diff": -0.071,
+   "p": 0.0731
+  },
+  "train": {
+   "choch": 0.564,
+   "n": 110,
+   "controlB": 0.656,
+   "nB": 323,
+   "diff": -0.093,
+   "p": 0.0815
+  },
+  "oos": {
+   "choch": 0.591,
+   "n": 88,
+   "controlB": 0.635,
+   "nB": 255,
+   "diff": -0.044,
+   "p": 0.459
+  }
+ },
+ "SELL": {
+  "tip_dist_atr_median": {
+   "choch": 2.6,
+   "controlA": 1.34
+  },
+  "all": {
+   "choch": 0.574,
+   "n": 197,
+   "controlB": 0.626,
+   "nB": 593,
+   "diff": -0.052,
+   "p": 0.194
+  },
+  "train": {
+   "choch": 0.55,
+   "n": 109,
+   "controlB": 0.661,
+   "nB": 336,
+   "diff": -0.11,
+   "p": 0.0379
+  },
+  "oos": {
+   "choch": 0.602,
+   "n": 88,
+   "controlB": 0.58,
+   "nB": 257,
+   "diff": 0.023,
+   "p": 0.711
+  }
+ }
+}

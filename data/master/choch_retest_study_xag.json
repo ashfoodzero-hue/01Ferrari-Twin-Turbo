@@ -1,0 +1,702 @@
+{
+ "spec": "docs/CHOCH_4H_ADX_SPEC.md ADDENDUM B",
+ "symbol": "XAGUSD",
+ "built_at": "2026-10-20T08:01:54.622Z",
+ "split": "2021-07-01T00:00:00.000Z",
+ "funnel": {
+  "choch": 460,
+  "broken_sr": 31,
+  "retest": 14,
+  "no_ob_cross": 14,
+  "confirmed": 6
+ },
+ "K": 18,
+ "alpha_per_cell": 0.002777777777777778,
+ "passes": [],
+ "cells": [
+  {
+   "key": "BUY|G0|T1",
+   "side": "BUY",
+   "gate": "G0",
+   "target": "T1",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 1,
+    "wr_lo": 0.2065,
+    "usd": 0.53,
+    "usd_lo": 0.53,
+    "R": 1,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.144,
+    "usd_lo": -0.988,
+    "R": -0.0116,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.6667,
+    "wr_lo": 0.2077,
+    "usd": 0.081,
+    "usd_lo": -0.988,
+    "R": 0.3256,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G0|T2",
+   "side": "BUY",
+   "gate": "G0",
+   "target": "T2",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 1,
+    "wr_lo": 0.2065,
+    "usd": 0.661,
+    "usd_lo": 0.661,
+    "R": 1.2477,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.364,
+    "usd_lo": -0.988,
+    "R": -0.3266,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.6667,
+    "wr_lo": 0.2077,
+    "usd": -0.023,
+    "usd_lo": -0.988,
+    "R": 0.1982,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G0|T3",
+   "side": "BUY",
+   "gate": "G0",
+   "target": "T3",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 1,
+    "wr_lo": 0.2065,
+    "usd": 0.235,
+    "usd_lo": 0.235,
+    "R": 0.4444,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.287,
+    "usd_lo": -0.988,
+    "R": -0.2167,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.6667,
+    "wr_lo": 0.2077,
+    "usd": -0.113,
+    "usd_lo": -0.988,
+    "R": 0.0037,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G1|T1",
+   "side": "BUY",
+   "gate": "G1",
+   "target": "T1",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 1,
+    "wr_lo": 0.2065,
+    "usd": 0.53,
+    "usd_lo": 0.53,
+    "R": 1,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.144,
+    "usd_lo": -0.988,
+    "R": -0.0116,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.6667,
+    "wr_lo": 0.2077,
+    "usd": 0.081,
+    "usd_lo": -0.988,
+    "R": 0.3256,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G1|T2",
+   "side": "BUY",
+   "gate": "G1",
+   "target": "T2",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 1,
+    "wr_lo": 0.2065,
+    "usd": 0.661,
+    "usd_lo": 0.661,
+    "R": 1.2477,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.364,
+    "usd_lo": -0.988,
+    "R": -0.3266,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.6667,
+    "wr_lo": 0.2077,
+    "usd": -0.023,
+    "usd_lo": -0.988,
+    "R": 0.1982,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G1|T3",
+   "side": "BUY",
+   "gate": "G1",
+   "target": "T3",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 1,
+    "wr_lo": 0.2065,
+    "usd": 0.235,
+    "usd_lo": 0.235,
+    "R": 0.4444,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.287,
+    "usd_lo": -0.988,
+    "R": -0.2167,
+    "years": [],
+    "years_pos": null
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.6667,
+    "wr_lo": 0.2077,
+    "usd": -0.113,
+    "usd_lo": -0.988,
+    "R": 0.0037,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": true,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G2|T1",
+   "side": "BUY",
+   "gate": "G2",
+   "target": "T1",
+   "setups": 0,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 0
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G2|T2",
+   "side": "BUY",
+   "gate": "G2",
+   "target": "T2",
+   "setups": 0,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 0
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "BUY|G2|T3",
+   "side": "BUY",
+   "gate": "G2",
+   "target": "T3",
+   "setups": 0,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 0
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 0
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G0|T1",
+   "side": "SELL",
+   "gate": "G0",
+   "target": "T1",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 3,
+    "wr": 0.3333,
+    "wr_lo": 0.0615,
+    "usd": -0.365,
+    "usd_lo": -0.699,
+    "R": -0.6249,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.3333,
+    "wr_lo": 0.0615,
+    "usd": -0.365,
+    "usd_lo": -0.699,
+    "R": -0.6249,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G0|T2",
+   "side": "SELL",
+   "gate": "G0",
+   "target": "T2",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 3,
+    "wr": 0.3333,
+    "wr_lo": 0.0615,
+    "usd": -0.365,
+    "usd_lo": -0.699,
+    "R": -0.6249,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.3333,
+    "wr_lo": 0.0615,
+    "usd": -0.365,
+    "usd_lo": -0.699,
+    "R": -0.6249,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G0|T3",
+   "side": "SELL",
+   "gate": "G0",
+   "target": "T3",
+   "setups": 3,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 3,
+    "wr": 0.3333,
+    "wr_lo": 0.0615,
+    "usd": -0.365,
+    "usd_lo": -0.699,
+    "R": -0.6249,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 3,
+    "wr": 0.3333,
+    "wr_lo": 0.0615,
+    "usd": -0.365,
+    "usd_lo": -0.699,
+    "R": -0.6249,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G1|T1",
+   "side": "SELL",
+   "gate": "G1",
+   "target": "T1",
+   "setups": 1,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 0,
+    "wr_lo": 0,
+    "usd": -0.699,
+    "usd_lo": -0.699,
+    "R": -1,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 1,
+    "wr": 0,
+    "wr_lo": 0,
+    "usd": -0.699,
+    "usd_lo": -0.699,
+    "R": -1,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G1|T2",
+   "side": "SELL",
+   "gate": "G1",
+   "target": "T2",
+   "setups": 1,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 0,
+    "wr_lo": 0,
+    "usd": -0.699,
+    "usd_lo": -0.699,
+    "R": -1,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 1,
+    "wr": 0,
+    "wr_lo": 0,
+    "usd": -0.699,
+    "usd_lo": -0.699,
+    "R": -1,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G1|T3",
+   "side": "SELL",
+   "gate": "G1",
+   "target": "T3",
+   "setups": 1,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 1,
+    "wr": 0,
+    "wr_lo": 0,
+    "usd": -0.699,
+    "usd_lo": -0.699,
+    "R": -1,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 1,
+    "wr": 0,
+    "wr_lo": 0,
+    "usd": -0.699,
+    "usd_lo": -0.699,
+    "R": -1,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G2|T1",
+   "side": "SELL",
+   "gate": "G2",
+   "target": "T1",
+   "setups": 2,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.305,
+    "usd_lo": -0.699,
+    "R": -0.4374,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.305,
+    "usd_lo": -0.699,
+    "R": -0.4374,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G2|T2",
+   "side": "SELL",
+   "gate": "G2",
+   "target": "T2",
+   "setups": 2,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.305,
+    "usd_lo": -0.699,
+    "R": -0.4374,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.305,
+    "usd_lo": -0.699,
+    "R": -0.4374,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  },
+  {
+   "key": "SELL|G2|T3",
+   "side": "SELL",
+   "gate": "G2",
+   "target": "T3",
+   "setups": 2,
+   "skipped": 0,
+   "TRAIN": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.305,
+    "usd_lo": -0.699,
+    "R": -0.4374,
+    "years": [],
+    "years_pos": null
+   },
+   "OOS": {
+    "n": 0
+   },
+   "ALL": {
+    "n": 2,
+    "wr": 0.5,
+    "wr_lo": 0.0945,
+    "usd": -0.305,
+    "usd_lo": -0.699,
+    "R": -0.4374,
+    "years": [],
+    "years_pos": null
+   },
+   "checks": {
+    "n30": false,
+    "money_oos": false,
+    "money_train": false,
+    "years60": false
+   },
+   "pass": false
+  }
+ ]
+}
