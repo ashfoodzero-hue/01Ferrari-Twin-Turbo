@@ -91,6 +91,17 @@ The B / C setups unchanged (C = the broken structure level; B is reported too bu
 - **X3:** no target — hold until the OPPOSITE 4H CHoCH (the trend changes back; exit at the close of its decision minute) or the stop, time cap 120 candles.
 K = 3 exits × 3 gates (G0/G1/G2) × 2 sides = **18**, pass rule §6 with α = 0.05 / 18; XAU primary, XAG replication. Output `choch_retest_struct_long_study[_xag].json`.
 
+## ADDENDUM E (2026-10-20, Ashraf after ADDENDUM D's numbers: "the trigger … works only when the price return (Retest) the broken structure at the OB and has to stop inside the OB and confirm the reversal inside the OB, on the first CHoCH inside the OB after the retest we should enter") — BEFORE its numbers
+
+BUY described, SELL the mirror.
+1. **4H CHoCH** (§2) at candle i; broken level v = the CHoCH's own level (ADDENDUM C); **OB** = the last red 4H candle between the leg tip and i (none → the tip candle); OB zone = [OB low, OB high].
+2. **Retest into the OB:** within the 6 4H candles after i, price trades into the OB zone (low ≤ OB high). From i+1 on, any trade below the OB low cancels the setup ("has to stop inside the OB").
+3. **The first CHoCH inside the OB (15m):** after the first touch of the OB zone, the first 15m CLOSE above the last confirmed 15m pivot high (fractal 3 / 3, known at pivot + 3) that formed after candle i's close, while the OB low is still unbroken, within the same 6-candle window. That close = the trigger.
+4. **Entry:** market, the first minute after the trigger 15m candle. **Stop:** OB low − 0.1 × ATR(4H, candle i).
+5. **ADX gates** on 4H (before = candle i−1, after = the last closed 4H candle at the trigger): G0 none · G1 ADX after > before AND DI agree after · G2 DI cross (against before, agree after).
+6. **Exits = ADDENDUM D's long-swing exits** X1 3R · X2 5R · X3 hold to the opposite 4H CHoCH; cap 120 4H candles.
+K = 3 × 3 × 2 = **18**, α = 0.05 / 18, §6 pass rule; funnel reported (CHoCH → OB retest → no OB break → 15m CHoCH). XAU primary, XAG replication. Code `choch4h.obChochSetups`, `study_choch_retest.mjs --ob` → `choch_retest_ob_long_study[_xag].json`.
+
 ## 8. Output
 
 `scripts/study_choch_4h_adx.mjs` → `data/master/choch_4h_adx_study.json`, atlas `docs/CHOCH_4H_ADX_ATLAS.md`, MASTER §7 entry, memory.
