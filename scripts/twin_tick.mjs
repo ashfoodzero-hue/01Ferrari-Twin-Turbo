@@ -20,6 +20,7 @@ import { makeSubBarIndex } from '../src/core/seqResolver.js'
 import { liveReadiness, liveDensityRelative } from '../src/master/liveReadiness.js'
 import { sendText, formatTierAlert } from '../src/master/telegram.js'
 import { signalsHalted } from '../src/core/dataHealth.js'
+import { updateRefusalScores } from './lib/refusal_score.mjs'
 
 const STATIC = process.argv.includes('--static')
 const FILE = path.join(TURBO.paper, 'trades.jsonl')
@@ -80,6 +81,11 @@ try {
 const res = resolveOpen(FILE, b15, undefined, { subBarsOf, spreadAt })
 if (spreadAt) console.log(`  ⏱ bid/ask: spread lookups ${JSON.stringify(spreadAt.stats)} (live = the stream's measured minute spread)`)
 T('open rows resolved')
+// 🚧 REFUSAL SCORING (2026-10-20, Ashraf: "add automatic outcome scoring of every REFUSED IMPULSE_CONT signal (same resolver as the live book)"): each
+// refusal's wouldBe plan is settled by resolveOpen in its OWN journal (impulse_refused_wouldbe.jsonl) on this tick's bars → impulse_refusal_review.json.
+// trades.jsonl is never written here; a failure never breaks the tick.
+try { const rf = await updateRefusalScores({ b15, nowT: lastClose })
+  if (rf.added) console.log(`  🚧 refusal scoring: +${rf.added} refused plan(s) now priced by the live resolver`) } catch (e) { console.log('  ⚠ refusal scoring: ' + e.message.slice(0, 80)) }
 
 // alerts for NEW fires only (rec.ids is exactly the set of rows this tick added); refusals are logged, not sent
 const rows = loadJournal(FILE)
