@@ -13,10 +13,10 @@ const lbT = (C, t) => { let a = 0, b = C.length; while (a < b) { const m = (a + 
 
 /** Closed candles per timeframe at `now` (prebuilt `candles` = replay: closed candles never change). */
 export function closedCandles(sym, M, now, { candles = null, holes = null } = {}) {
-  const K = kit(sym), out = {}
+  const K = kit(sym), out = {}, H = candles ? null : (holes ?? findHoles(M))   // once, not per timeframe (2026-10-20: 3.5 s × 5 on the full history)
   for (const tf of SR_TFS) { const fo = openOf(sym, now, tf)
     if (candles) out[tf] = candles[tf].slice(0, lbT(candles[tf], fo))
-    else { const C = K.build(M, tf).filter((c) => c.t < fo); markIncomplete(C, holes ?? findHoles(M)); out[tf] = C } }
+    else { const C = K.build(M, tf).filter((c) => c.t < fo); markIncomplete(C, H); out[tf] = C } }
   return out
 }
 

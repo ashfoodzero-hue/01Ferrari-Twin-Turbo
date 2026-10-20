@@ -8,3 +8,5 @@ data/inv90/*.bin
 data/inv90/forward/*.bin
 .env.*
 INSTALL_PACKAGE/FerrariTwinTurbo/
+data/cache/dxy_1m.bin
+data/cache/dxy_1m.bin.*.tmp
