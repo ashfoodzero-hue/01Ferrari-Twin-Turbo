@@ -19,6 +19,9 @@ import { atr as atrArr } from '../src/core/indicators.js'
 import { makeSpreadAt, loadLiveSpreads } from '../src/master/spreadModel.js'
 import { alertSetup, scalpSetup, alertPrepare } from '../src/master/tradeAlert.js'
 import { signalsHalted } from '../src/core/dataHealth.js'
+import { clean1m, kit } from './lib/series_1m.mjs'
+import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
+import { V1H, structureStateAt } from './lib/choch4h.mjs'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -53,11 +56,21 @@ if (state.open) {
     console.log(`  ⬛ matrix ${row.sig.side} closed: ${r.outcome} ${r.pnl >= 0 ? '+' : ''}${r.pnl}/oz — box removed`)
   } else { out.open = { ...state.open, progress: { tp1Hit: r.tp1Hit, events: r.events, fill: r.fill } }; console.log(`  ▣ matrix ${state.open.sig.side} open · TP1 ${r.tp1Hit ? 'hit (stop at entry)' : 'not yet'}`) }
 }
+// 🧭 V1H STRUCTURE GATE (2026-10-20, Ashraf "Yes, wire the V1H structure gate into the live SCALP"; PASSED 2 y + 13 y, §7 (df)): no BUY box while the
+// 1H pivot structure is DOWN (LH + LL), read on the last 1H candle closed by the decision. ONE rule: choch4h.structureStateAt. FAIL-CLOSED: unknown → no BUY.
+let SG = null
+try { const M45 = await clean1m('XAUUSD', { from: lastClose - V1H.lookbackDays * 86400000, reopenClamp: false, live: true }), Mx = M45.filter((b) => b.t + 60000 <= lastClose)
+  const C1 = kit('XAUUSD', { reopenClamp: false, live: true }).build(Mx, V1H.tf); markIncomplete(C1, findHoles(Mx)); SG = structureStateAt(C1, Mx, lastClose) } catch (e) { console.error('  ⚠ structure gate: ' + e.message) }
+out.structureGate = { state: SG ? (SG.state === -1 ? 'DOWN' : SG.state === 1 ? 'UP' : 'MIXED') : 'UNKNOWN', barT: SG?.barT ?? null, blocksBuy: !SG || SG.state === -1, vetoed: null, spec: V1H.spec }
 // 3) a new setup only with no open trade, on live verified data, on the just-closed 3m candle
 if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClose - MATRIX.tfMs) {
   const sigs = matrixSignals(B, D, W, { from: B.length - 1 })
   const s = sigs.find((x) => x.i === B.length - 1)
-  if (s && (!state.last_closed || Date.parse(state.last_closed.closedAt) < s.decisionT)) {
+  if (s && s.side === 'BUY' && out.structureGate.blocksBuy) {
+    out.structureGate.vetoed = { decisionT: s.decisionT, entry: +s.entry.toFixed(2) }
+    if (!STATIC) fs.appendFileSync(path.join(TURBO.paper, 'matrix_vetoed.jsonl'), JSON.stringify({ id: `MATRIX@${s.decisionT}`, status: 'VETOED_V1H', sig: { ...s, ctx: undefined }, gate: out.structureGate.state, at: new Date(now).toISOString() }) + '\n')
+    console.log(`  🧭 matrix BUY @ ${s.entry.toFixed(2)} NOT opened — 1H structure ${out.structureGate.state} (V1H gate)`)
+  } else if (s && (!state.last_closed || Date.parse(state.last_closed.closedAt) < s.decisionT)) {
     out.open = { id: `MATRIX@${s.decisionT}`, sig: { ...s, ctx: undefined }, ctx: s.ctx, opened: new Date(now).toISOString(), status: 'OPEN', verdict: verdict.verdict }
     if (!STATIC) fs.appendFileSync(JOURNAL, JSON.stringify({ ...out.open, status: 'OPENED' }) + '\n')
     opened = s

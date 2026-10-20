@@ -45,6 +45,17 @@ export function findChochs(C, M1, { from = -Infinity } = {}) {
   return { events: ev, state, A, X }
 }
 
+// V1H STRUCTURE GATE (2026-10-20, docs/MATRIX_STRUCTURE_GATE_SPEC.md, PASSED 2 y + 13 y; Ashraf "Yes, wire the V1H structure gate into the live SCALP"):
+// no Matrix SCALP BUY while the 1H pivot structure is DOWN (last two confirmed pivot highs AND lows descending), read on the last 1H candle CLOSED at
+// the decision time. ONE rule for the study and the live tick. Live window 45 days (smoke_structure_gate: = the full-history state).
+export const V1H = Object.freeze({ tf: '1H', lookbackDays: 45, spec: 'docs/MATRIX_STRUCTURE_GATE_SPEC.md' })
+/** C = gold-session candles (incomplete marked), M1 = the same 1m → state (−1 DOWN / +1 UP / 0 MIXED) of the last candle closed by t, + that candle. */
+// closed = its whole hour has passed (a live forming candle's close_t is only its last minute + 1 — measured 2026-10-20 08:57: the 08:00 candle passed as closed)
+export function structureStateAt(C, M1, t, tfMs = 3600000) {
+  const Cc = C.filter((c) => c.close_t <= t && c.t + tfMs <= t); if (Cc.length < 20) return null
+  const { state } = findChochs(Cc, M1, {}); return { state: state.at(-1), barT: Cc.at(-1).t, closeT: Cc.at(-1).close_t }
+}
+
 /** REAL / FAILED / OPEN on the 4H candles after i (high/low reached intrabar happens before that candle's close). */
 export function outcome(C, i, side, close, tip, atr) {
   const buy = side === 'BUY', tgt = buy ? close + CH.REAL_ATR * atr : close - CH.REAL_ATR * atr

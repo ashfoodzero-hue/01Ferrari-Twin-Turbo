@@ -18,7 +18,9 @@ const TL = {}
 // --choch (ADDENDUM A): C1H / C4H = the most recent CHoCH (decision ≤ the signal) is bearish → state −1 (a later bullish CHoCH → +1)
 const CHO = process.argv.includes('--choch')
 for (const tf of ['1H', '4H']) { const C = K.build(M, tf); markIncomplete(C, holes); const { state, events } = findChochs(C, M, {})
-  TL[tf] = CHO ? { T: events.map((e) => e.decisionT), S: events.map((e) => (e.side === 'SELL' ? -1 : 1)) } : { T: C.map((c) => c.close_t), S: state } }
+  // closed = close_t AND the whole candle period passed (the live rule, choch4h.structureStateAt, 2026-10-20)
+  const tfMs = tf === '1H' ? 3600000 : 4 * 3600000
+  TL[tf] = CHO ? { T: events.map((e) => e.decisionT), S: events.map((e) => (e.side === 'SELL' ? -1 : 1)) } : { T: C.map((c) => Math.max(c.close_t, c.t + tfMs)), S: state } }
 const stateAt = (tf, t) => { const { T, S } = TL[tf]; let a = 0, b = T.length; while (a < b) { const m = (a + b) >> 1; if (T[m] <= t) a = m + 1; else b = m } return a ? S[a - 1] : 0 }
 const CELLS = CHO ? { C1H: '1H', C4H: '4H' } : { V1H: '1H', V4H: '4H' }
 const stat = (F) => { const n = F.length, s = F.reduce((a, f) => a + f.net, 0); return { n, usd: n ? +(s / n).toFixed(3) : null, wr: n ? +(F.filter((f) => f.outcome === 'WIN').length / n).toFixed(3) : null, total: +s.toFixed(1) } }

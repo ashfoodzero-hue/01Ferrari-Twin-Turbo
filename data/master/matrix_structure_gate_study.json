@@ -1,6 +1,6 @@
 {
  "spec": "docs/MATRIX_STRUCTURE_GATE_SPEC.md",
- "built_at": "2026-10-20T08:27:58.401Z",
+ "built_at": "2026-10-20T09:00:40.135Z",
  "windows": {
   "PRIMARY": {
    "split": "2025-12-26T03:00:00.000Z",
@@ -104,10 +104,10 @@
        "total": -662.9
       },
       "filtered_book": {
-       "n": 906,
-       "usd": -0.725,
+       "n": 905,
+       "usd": -0.724,
        "wr": 0.199,
-       "total": -657.2
+       "total": -655
       }
      },
      "checks": {
@@ -221,10 +221,10 @@
        "total": -4055.3
       },
       "filtered_book": {
-       "n": 6863,
+       "n": 6862,
        "usd": -0.61,
        "wr": 0.147,
-       "total": -4188.9
+       "total": -4186.6
       }
      },
      "checks": {

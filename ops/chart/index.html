@@ -608,7 +608,15 @@ function dxyMatrixChip() {
   if (!x) return `<span class="chip" title="${esc(t)}"><b>DXY Matrix</b><span class="dim">—</span></span>`
   const ago = x.last ? Math.round((Date.now() - x.last.decisionT) / 60000) : null
   const s = !x.last ? '<span class="dim">no setup (last 60 min)</span>' : `<span class="${x.last.side === 'BUY' ? 'up' : 'dn'}">${x.last.side}</span> <small>${x.now ? 'this candle' : ago + ' min ago'}${x.gold_same_candle ? ' · ⚠ same candle as the gold box' : ''}</small>`
-  return `<span class="chip" title="${esc(t)}"><b>DXY Matrix</b>${s} <small>· info only, veto measured: no edge</small></span>` }
+  return `<span class="chip" title="${esc(t)}"><b>DXY Matrix</b>${s} <small>· info only, veto measured: no edge</small></span>` + structureGateChip() }
+// 🧭 V1H STRUCTURE GATE chip (2026-10-20, Ashraf "Yes, wire the V1H structure gate into the live SCALP"): the 1H pivot structure the SCALP reads before a
+// BUY; DOWN (lower highs + lower lows) blocks BUY boxes. Measured 2 y + 13 y (§7 (df)); the SCALP still loses with it → paper only.
+function structureGateChip() {
+  let g = null; try { g = MX?.structureGate ?? null } catch { /* first paint */ }
+  const t = 'The 1H pivot structure (3/3 fractal pivots, closed candles). DOWN = the last two pivot highs AND lows descend. While DOWN, the SCALP opens no BUY box (V1H gate, measured on 2 y + 13 y: the BUYs it skips lost more). The SCALP still loses money overall, so it stays paper only.'
+  if (!g) return `<span class="chip" title="${esc(t)}"><b>1H structure</b><span class="dim">—</span></span>`
+  const v = g.vetoed ? ` <small>· BUY @ ${g.vetoed.entry} skipped</small>` : ''
+  return `<span class="chip" title="${esc(t)}"><b>1H structure</b><span class="${g.state === 'DOWN' ? 'dn' : g.state === 'UP' ? 'up' : 'dim'}">${g.state}</span> <small>${g.blocksBuy ? '· SCALP BUYs blocked' : '· SCALP BUYs allowed'}</small>${v}</span>` }
 async function pollMatrix() {
   const m = await fetch('/api/matrix').then((x) => x.json()).catch(() => null); if (!m) return
   MX = m; const g = m.verdict === 'SHIP', o = m.open
