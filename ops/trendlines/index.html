@@ -42,6 +42,7 @@
   <a href="/" style="margin-left:auto">← live chart</a>
 </header>
 <div id="banner"></div>
+<div id="liveNote" style="padding:4px 16px;font-size:12px;color:#d4a72c;background:#161b22;border-bottom:1px solid #30363d"></div>
 <main>
   <div id="chart"><div id="msg">loading…</div></div>
   <aside id="side"></aside>
@@ -75,8 +76,21 @@ async function load(refit = true) {
   if (!d.available) { st.data = null; candles.setData([]); clearLines(); $('msg').textContent = d.why || 'not available'; $('side').innerHTML = ''; return }
   st.data = d; $('msg').style.display = 'none'
   candles.setData(d.candles.map(([t, o, h, l, c]) => ({ time: t / 1000, open: o, high: h, low: l, close: c })))
-  draw(refit); side()
+  draw(refit); side(); livePrice()
 }
+// LIVE PRICE line (2026-10-20, Ashraf: "on the trend we have stale on the daily and weekly reading"): the candles are CLOSED candles only, so on 1W / 1D the
+// last candle is last week / yesterday and the axis label showed its close (looked stale). This line shows the price NOW from the live stream (bid);
+// WTI has no live price (10 min delayed feed) → said so, never guessed.
+const LIVE_SYM = { xau: 'XAUUSD', xag: 'XAGUSD', dxy_ice: 'DXY', wti: 'WTI' }; let livePL = null
+async function livePrice() {
+  const q = await fetch(`/api/live?sym=${LIVE_SYM[st.asset]}`).then((r) => r.json()).catch(() => null), bid = q?.quote?.bid
+  if (livePL) { candles.removePriceLine(livePL); livePL = null }
+  const last = st.data?.candles?.at(-1), note = $('liveNote')
+  if (bid == null || !q?.stream?.live) { if (note) note.textContent = `No live price for ${st.asset.toUpperCase()} (${st.asset === 'wti' ? '10 min delayed feed' : 'stream not live'}). Candles end at the last CLOSED ${st.tf} candle.`; return }
+  livePL = candles.createPriceLine({ price: bid, color: '#d4a72c', lineWidth: 2, lineStyle: 0, axisLabelVisible: true, title: 'LIVE' })
+  if (note) note.textContent = `LIVE ${bid} (${(q.quote.last_tick_at || '').slice(11, 16)} UTC). Candles = CLOSED ${st.tf} candles only — the last one is ${last ? new Date(last[0]).toISOString().slice(0, 16).replace('T', ' ') : '—'} UTC (close ${last?.[4]}); the forming ${st.tf} candle is not drawn.`
+}
+setInterval(() => { if (document.visibilityState === 'visible' && st.data) livePrice() }, 30000)
 function clearLines() { for (const s of st.series) chart.removeSeries(s); st.series = [] }
 function draw(fit) {
   const d = st.data; if (!d) return; clearLines()
