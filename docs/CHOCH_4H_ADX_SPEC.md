@@ -59,6 +59,27 @@ A pass = a SHADOW candidate (paper forward test), never a live trade from the ba
 
 Prefix check (signals identical when the data is cut at 200 random times); independent second evaluator on 300 random trades; positive control (an oracle that knows the next 6 candles) must show a clear edge; "REAL" is not true by construction for any reported row.
 
+## ADDENDUM A (2026-10-20, after the first run, BEFORE this number) — distance-matched control
+
+The §3 control placed its "tip" at the extreme of the last 10 candles. If that tip sits closer to price than a CHoCH's tip, the control breaks its tip more often by geometry alone, and "CHoCH is more often REAL" would be built in by definition (gold-measured-study §0b). Added: **control B** — for each CHoCH, 3 random closes of the same side's trend state and year, with the tip placed at the SAME distance in ATR as that CHoCH's own tip (close − tip)/ATR. Reported: the tip distance of CHoCHs vs control A, and REAL rate CHoCH vs control B (two-proportion test). Only the control-B difference counts as "a CHoCH changes the trend more often than chance".
+
+## ADDENDUM B (2026-10-20, Ashraf mid-run: "this must be only at the broken S/R, and must retest first to confirm entry and a clear Green confirmation when ADX changes before and after the first break, and retest never cross the OB and return back to continue the trend change") — BEFORE any of its numbers
+
+Results of §3-§4 and ADDENDUM A were already computed when this arrived (they are reported as they are). This addendum is a NEW, stricter setup, pre-registered here. BUY described; SELL is the exact mirror (red candle, resistance, OB high).
+
+1. **CHoCH:** the §2 bullish CHoCH at 4H candle i.
+2. **Broken S/R:** an S/R level of 4H or 1D (`srLevels.swingLevels` + `evaluateLevel`, the app's measured levels), born before candle i, a RESISTANCE whose FIRST flip (a close 0.5 ATR above it) happened on candle i or within the 2 candles before it (close time in (close of i−3, close of i]). Several → the highest. v = its price. No such level → no setup.
+3. **Order block (OB):** the last red 4H candle (close < open) between the leg tip and candle i (inclusive); none → the tip candle. OB low = its low.
+4. **Retest:** within the 6 candles after i, a candle whose low comes to ≤ v + 0.1 × ATR. From i+1 to the confirmation, NO candle may trade below the OB low (a wick through the OB cancels the setup — "retest never cross the OB").
+5. **Clear green confirmation:** the retest candle or a later one within the same 6-candle window that closes green (close > open), with the close above v and body ≥ 50 % of its range. The first such candle = confirmation.
+6. **ADX change** ("before and after the first break"): before = candle i−1 (just before the break); after = the confirmation candle. Gates:
+   - **G0:** no ADX condition (the setup alone).
+   - **G1:** ADX(after) > ADX(before) AND +DI > −DI at the confirmation.
+   - **G2:** the DI cross: −DI > +DI before AND +DI > −DI after.
+7. **Entry:** market, the first minute after the confirmation candle closes. **Stop:** OB low − 0.1 × ATR (the retest must not cross the OB). Targets T1 1R · T2 2R · T3 2 × ATR. Time exit 30 candles. Measured spread, 1m path, stop first.
+
+K = 3 gates × 3 targets × 2 sides = **18**; pass rule = §6 with α = 0.05 / 18. Reported: the funnel (CHoCH → broken S/R → retest → no OB cross → green confirmation → each gate), WR with Wilson LB, $/trade, R, by year. XAU primary, XAG replication. Code: `scripts/lib/choch4h.mjs` `retestSetups`, `scripts/study_choch_retest.mjs` → `data/master/choch_retest_study[_xag].json`.
+
 ## 8. Output
 
 `scripts/study_choch_4h_adx.mjs` → `data/master/choch_4h_adx_study.json`, atlas `docs/CHOCH_4H_ADX_ATLAS.md`, MASTER §7 entry, memory.
