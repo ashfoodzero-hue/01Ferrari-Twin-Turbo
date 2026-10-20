@@ -80,6 +80,10 @@ Results of §3-§4 and ADDENDUM A were already computed when this arrived (they 
 
 K = 3 gates × 3 targets × 2 sides = **18**; pass rule = §6 with α = 0.05 / 18. Reported: the funnel (CHoCH → broken S/R → retest → no OB cross → green confirmation → each gate), WR with Wilson LB, $/trade, R, by year. XAU primary, XAG replication. Code: `scripts/lib/choch4h.mjs` `retestSetups`, `scripts/study_choch_retest.mjs` → `data/master/choch_retest_study[_xag].json`.
 
+## ADDENDUM C (2026-10-20, after ADDENDUM B's numbers, BEFORE this one's) — the broken structure level itself
+
+ADDENDUM B's funnel on XAU 13 y: 504 CHoCH → 33 broke a 4H/1D S/R level (ZigZag 3×ATR swings, i.e. big swings only) → 17 retested → 15 no OB cross → **8 confirmed** (XAG: 6). Unpowered by construction (n far below 30), so B can never pass or fail. In a CHoCH the broken level IS a structure S/R (the last lower high / higher low), so ADDENDUM C runs B's rules 3-7 unchanged with **v = the CHoCH's own broken level** (`e.level`) instead of a 4H/1D srLevels flip. Same K = 18 cells, same pass rule (α = 0.05 / 18), XAU primary + XAG replication. One variant only, declared for power, not chosen from results. Output `choch_retest_struct_study[_xag].json`.
+
 ## 8. Output
 
 `scripts/study_choch_4h_adx.mjs` → `data/master/choch_4h_adx_study.json`, atlas `docs/CHOCH_4H_ADX_ATLAS.md`, MASTER §7 entry, memory.
