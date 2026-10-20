@@ -22,6 +22,7 @@ import { signalsHalted } from '../src/core/dataHealth.js'
 import { clean1m, kit } from './lib/series_1m.mjs'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { V1H, structureStateAt } from './lib/choch4h.mjs'
+import { updateVetoScores } from './lib/veto_score.mjs'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -77,6 +78,11 @@ if (!out.open && st.live && !health.halted && B.length && B.at(-1).t === lastClo
     console.log(`  🟩 matrix ${s.side} @ ${s.entry.toFixed(2)} · SL ${s.sl.toFixed(2)} · TP1 ${s.tp1.toFixed(2)} · TP2 ${s.tp2.toFixed(2)} (${verdict.verdict})`)
   }
 }
+// 🧮 VETO SCORING (2026-10-20, Ashraf: "Keep the V1H gate live as measured. Add automatic outcome scoring of every vetoed signal"): each vetoed BUY
+// is priced as the box it would have been (resolveMatrixTrade, live spreads) once its trade is done → matrix_vetoed_scored.jsonl + matrix_veto_review.json.
+// Never breaks the tick; settles nothing on stale data.
+if (!STATIC) try { const vr = await updateVetoScores({ nowT: lastClose, dataLive: st.live && !health.halted })
+  for (const a of vr.added) console.log(`  🧮 vetoed BUY ${new Date(a.decisionT).toISOString().slice(11, 16)} scored: ${a.outcome} ${a.pnl >= 0 ? '+' : ''}${a.pnl}/oz`) } catch (e) { console.error('  ⚠ veto scoring: ' + e.message) }
 if (!out.open && (!st.live || health.halted)) console.log(`  ⛔ matrix: no new trade — ${health.halted ? "DATABASE STALE (" + health.why + ")" : "data not live (" + st.why + ")"}`)
 // 👁 WATCH (2026-10-16, Ashraf "option 2 — chart only"): BUY context aligned + the low ≥ 0.25 ATR through the buy wall, no trade, on live data.
 // ONE rule: matrixArmedAt (the study's own function). Measured 82.3 % → a BUY signal within 60 min (post-hoc). NEVER sent to Telegram.
