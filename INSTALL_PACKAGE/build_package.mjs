@@ -13,7 +13,9 @@ import { spawnSync, execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url)), APP = path.resolve(HERE, '..'), OUT = path.join(HERE, 'FerrariTwinTurbo'), LITE = process.argv.includes('--lite'), CODE = process.argv.includes('--code')
-const XF = ['.env', '.env.*', '*.lock', '*.tmp', 'stream_heartbeat.json', 'live_heartbeat.json', 'WATCHDOG_HALT.marker', 'alerted.json']
+// dxy_1m.bin (2026-10-20): the DXY 1m cache is fingerprinted to THIS PC's stores (file identity) — the other PC builds its own on first use.
+// keep_awake.json: the keep-awake helper's runtime stamp (rewritten every 60 s by the running app).
+const XF = ['.env', '.env.*', '*.lock', '*.tmp', 'stream_heartbeat.json', 'live_heartbeat.json', 'WATCHDOG_HALT.marker', 'alerted.json', 'dxy_1m.bin', 'keep_awake.json']
 const XD = ['self_heal', ...(LITE ? ['history', 'orderflow', 'release_ticks'] : [])]
 const robo = (from, to, extra = []) => { const r = spawnSync('robocopy', [from, to, '/MIR', '/R:1', '/W:1', '/NFL', '/NDL', '/NP', '/NJH', '/MT:8', '/XF', ...XF, '/XD', ...XD, ...extra], { encoding: 'utf8', windowsHide: true })
   if (r.status >= 8) throw new Error(`robocopy ${from} failed (${r.status}): ${r.stdout?.slice(-600)}`); return r.stdout }
