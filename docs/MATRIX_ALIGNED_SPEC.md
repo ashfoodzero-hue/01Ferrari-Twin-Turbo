@@ -44,3 +44,11 @@ Independent second evaluation of 200 random trades (0 diff), 50 prefix cuts of t
 - B3 / B4 are disjoint: FLOOR = the signal bar's low ≤ floor + cushion; INTERNAL = low ≤ intWall + cushion AND NOT FLOOR.
 - Structure state at a decision = the full-history `findChochs` state of the last candle whose whole period has passed (proven = the live 45-day `structureStateAt` by smoke_structure_gate; re-proven here on 50 cuts per TF).
 - The SELL book is sequenced on its own (one SELL at a time), priced by `resolveMatrixTrade` through `matrix_trades.mjs` (new `signals` option; default path unchanged). SELL geometry = `matrixSignals`' SELL geometry; parity check: the study's "red + DXY bullish, no structure" set must equal `matrixSignals(useWti:false, sellRule:'red')` SELLs.
+
+## ADDENDUM B (2026-10-22, before any of its numbers) — 92 % WR target on BUY and SELL (Ashraf: "checking the scalp until you reach 92% WR in both buy and sell")
+Ashraf's bar: **WR ≥ 92 % on BUY and on SELL, with money**. WR is set mostly by the exit (target vs stop), so the same entries are re-priced with
+single-target exits (one target, one stop, 24 h; `resolveMatrixTrade` with tp1 = tp2 = target — the live resolver, no new pricing code):
+- **Exit grid:** target ∈ {0.10, 0.15, 0.20, 0.25} × risk; stop ∈ {2, 3, 4} × risk (risk = the signal's own 5-bar stop distance). 12 exits.
+- **Entries:** BUY = V1H book, B1, B2, B3, B4; SELL = S1, S2, S3 aligned. 8 entry sets × 12 exits = **K = 96 cells**.
+- **Pass (each side separately):** PRIMARY TRAIN and OOS WR ≥ 92 % with Wilson LB ≥ 88 %; $/t > 0 in TRAIN and OOS with week-block bootstrap LB > 0 at α/96 (Bonferroni); OOS n ≥ 30; ROBUST 13 y WR ≥ 92 % and $/t > 0. WR = trades with $ > 0 after the spread / all trades.
+- Reported for every cell (pass or fail): n, WR, Wilson LB, $/t, LB. If nothing passes, the closest cells are named with what they miss — no cell is promoted on WR alone.
