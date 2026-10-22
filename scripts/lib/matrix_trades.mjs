@@ -16,10 +16,11 @@ export const wti1m = (to) => (W ??= fs.readFileSync(path.join(TURBO.historyAsset
 // keep (2026-10-19, MATRIX_DXY_CONFLICT_SPEC): optional signal filter applied BEFORE sequencing — keep(sig, { B, D, W }) → false drops it. Default: none.
 // signals (2026-10-22, MATRIX_ALIGNED_SPEC): optional (B, D, startI) → signal list in matrixSignals' shape, used INSTEAD of matrixSignals (the study's own
 // SELL rules); sequenced and priced exactly the same way. Default: none (unchanged).
-export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss = 0, keep = null, signals = null }) {
-  const B = (await loadBars('XAUUSD', '3m', { from: from - 3 * 86400000, to })).bars
-  const D = (await loadDxyBars('3m', { from: from - 3 * 86400000, to })).bars
-  const m1 = (await loadBars('XAUUSD', '1m', { from, to })).bars
+// data (2026-10-22): optional preloaded { B, D, m1 } (the same three loads below) so a grid of cells loads the tape once. Default: load (unchanged).
+export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss = 0, keep = null, signals = null, data = null }) {
+  const B = data?.B ?? (await loadBars('XAUUSD', '3m', { from: from - 3 * 86400000, to })).bars
+  const D = data?.D ?? (await loadDxyBars('3m', { from: from - 3 * 86400000, to })).bars
+  const m1 = data?.m1 ?? (await loadBars('XAUUSD', '1m', { from, to })).bars
   const T1 = m1.map((b) => b.t)
   const lb = (t) => { let lo = 0, hi = T1.length; while (lo < hi) { const m = (lo + hi) >> 1; if (T1[m] < t) lo = m + 1; else hi = m } return lo }
   const startI = B.findIndex((b) => b.t >= from), { folds } = buildRegimeSpannedFolds(B.slice(startI), { folds: 8 })
@@ -33,5 +34,5 @@ export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss 
     const outcome = r.outcome === 'TP1+TP2' ? 'WIN' : r.outcome === 'TP1+BE' ? 'SCRATCH' : r.outcome === 'SL' ? 'LOSS' : r.pnl > 0 ? 'WIN' : 'LOSS'
     fires.push({ t: s.decisionT, fold: assignFold(folds, s.i - startI), side: s.side, outcome, raw: r.outcome, net: r.pnl, R: r.pnl / s.risk, risk: s.risk, reward: s.reward, seq: 'seq', sig: s })
   }
-  return { fires, signals: sigs.length, B, m1, folds, startI }
+  return { fires, signals: sigs.length, B, D, m1, folds, startI }
 }
