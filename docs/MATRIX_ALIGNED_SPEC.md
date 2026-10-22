@@ -38,3 +38,9 @@
 
 ## Audit before reporting
 Independent second evaluation of 200 random trades (0 diff), 50 prefix cuts of the structure state (0 diff), positive control (an oracle SELL that knows the next hour must show a large positive $/t).
+
+## ADDENDUM A (2026-10-22, before any number) — definitions made exact
+- Tape end fixed: 2026-10-21 21:00 UTC (last closed session). Splits fixed: PRIMARY 2025-12-26 03:00 UTC, ROBUST 2021-06-30 12:36 UTC (the V1H study's).
+- B3 / B4 are disjoint: FLOOR = the signal bar's low ≤ floor + cushion; INTERNAL = low ≤ intWall + cushion AND NOT FLOOR.
+- Structure state at a decision = the full-history `findChochs` state of the last candle whose whole period has passed (proven = the live 45-day `structureStateAt` by smoke_structure_gate; re-proven here on 50 cuts per TF).
+- The SELL book is sequenced on its own (one SELL at a time), priced by `resolveMatrixTrade` through `matrix_trades.mjs` (new `signals` option; default path unchanged). SELL geometry = `matrixSignals`' SELL geometry; parity check: the study's "red + DXY bullish, no structure" set must equal `matrixSignals(useWti:false, sellRule:'red')` SELLs.

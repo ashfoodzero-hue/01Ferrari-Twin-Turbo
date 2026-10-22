@@ -14,14 +14,16 @@ export const wti1m = (to) => (W ??= fs.readFileSync(path.join(TURBO.historyAsset
 
 /** @returns {{ fires, signals, B, m1, folds, startI }} fires: [{ t, fold, side, outcome, raw, net, R, risk, reward, sig }] */
 // keep (2026-10-19, MATRIX_DXY_CONFLICT_SPEC): optional signal filter applied BEFORE sequencing — keep(sig, { B, D, W }) → false drops it. Default: none.
-export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss = 0, keep = null }) {
+// signals (2026-10-22, MATRIX_ALIGNED_SPEC): optional (B, D, startI) → signal list in matrixSignals' shape, used INSTEAD of matrixSignals (the study's own
+// SELL rules); sequenced and priced exactly the same way. Default: none (unchanged).
+export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss = 0, keep = null, signals = null }) {
   const B = (await loadBars('XAUUSD', '3m', { from: from - 3 * 86400000, to })).bars
   const D = (await loadDxyBars('3m', { from: from - 3 * 86400000, to })).bars
   const m1 = (await loadBars('XAUUSD', '1m', { from, to })).bars
   const T1 = m1.map((b) => b.t)
   const lb = (t) => { let lo = 0, hi = T1.length; while (lo < hi) { const m = (lo + hi) >> 1; if (T1[m] < t) lo = m + 1; else hi = m } return lo }
   const startI = B.findIndex((b) => b.t >= from), { folds } = buildRegimeSpannedFolds(B.slice(startI), { folds: 8 })
-  const Wt = useWti ? wti1m(to) : [], all = matrixSignals(B, D, Wt, { from: startI, useWti, maxMiss }), sigs = keep ? all.filter((s) => keep(s, { B, D, W: Wt })) : all
+  const Wt = useWti ? wti1m(to) : [], all = signals ? signals(B, D, startI) : matrixSignals(B, D, Wt, { from: startI, useWti, maxMiss }), sigs = keep ? all.filter((s) => keep(s, { B, D, W: Wt })) : all
   const fires = []; let busyUntil = -Infinity
   for (const s of sigs) {
     if (s.decisionT <= busyUntil) continue
