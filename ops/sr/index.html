@@ -40,6 +40,7 @@
   <a href="/" style="margin-left:auto">← live chart</a>
 </header>
 <div id="banner"></div>
+<div id="liveNote" style="padding:4px 16px;font-size:12px;color:#d4a72c;background:#161b22;border-bottom:1px solid #30363d"></div>
 <main>
   <div id="chart"><div id="msg">loading…</div></div>
   <aside id="side"></aside>
@@ -67,8 +68,21 @@ async function load() {
   st.data = d; $('msg').style.display = 'none'
   $('banner').style.display = d.stale ? 'block' : 'none'; $('banner').textContent = d.stale ? `⚠ S/R STALE — ${d.stale}. Levels below are the last good refresh; do not rely on them until this clears.` : ''
   candles.setData(d.candles.map(([t, o, h, l, c]) => ({ time: t / 1000, open: o, high: h, low: l, close: c })))
-  draw(true); side()
+  draw(true); side(); livePrice()
 }
+// LIVE PRICE line (2026-10-22, Ashraf on the S/R tab: "pls check is this stale"): NOT stale — the candles are CLOSED candles only, refreshed after each
+// 1H close (~:04-:10), so the last candle and its axis label can be up to ~70 min behind the price (his screenshot: last 1H = 17:00 close 4045.99 while
+// gold traded ~4030). Same fix as the trendline pages (§7 (dh)): the price NOW from the live stream (bid) + a note; WTI = 10 min delayed → said so.
+const LIVE_SYM = { xau: 'XAUUSD', xag: 'XAGUSD', dxy_ice: 'DXY', wti: 'WTI' }; let livePL = null
+async function livePrice() {
+  const q = await fetch(`/api/live?sym=${LIVE_SYM[st.asset]}`).then((r) => r.json()).catch(() => null), bid = q?.quote?.bid
+  if (livePL) { candles.removePriceLine(livePL); livePL = null }
+  const last = st.data?.candles?.at(-1), note = $('liveNote')
+  if (bid == null || !q?.stream?.live) { note.textContent = `No live price for ${st.asset.toUpperCase()} (${st.asset === 'wti' ? '10 min delayed feed' : 'stream not live'}). Candles end at the last CLOSED ${st.tf} candle.`; return }
+  livePL = candles.createPriceLine({ price: bid, color: '#d4a72c', lineWidth: 2, lineStyle: 0, axisLabelVisible: true, title: 'LIVE' })
+  note.textContent = `LIVE ${bid} (${(q.quote.last_tick_at || '').slice(11, 16)} UTC). Candles = CLOSED ${st.tf} candles only — the last one is ${last ? new Date(last[0]).toISOString().slice(0, 16).replace('T', ' ') : '—'} UTC (close ${last?.[4]}); the forming ${st.tf} candle is not drawn. Levels refresh after each 1H close.`
+}
+setInterval(() => { if (document.visibilityState === 'visible' && st.data) livePrice() }, 30000)
 function clear() { for (const s of st.series) chart.removeSeries(s); st.series = [] }
 function draw(fit) {
   const d = st.data; if (!d) return; clear()
