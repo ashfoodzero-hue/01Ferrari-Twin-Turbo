@@ -17,7 +17,8 @@ export const wti1m = (to) => (W ??= fs.readFileSync(path.join(TURBO.historyAsset
 // signals (2026-10-22, MATRIX_ALIGNED_SPEC): optional (B, D, startI) → signal list in matrixSignals' shape, used INSTEAD of matrixSignals (the study's own
 // SELL rules); sequenced and priced exactly the same way. Default: none (unchanged).
 // data (2026-10-22): optional preloaded { B, D, m1 } (the same three loads below) so a grid of cells loads the tape once. Default: load (unchanged).
-export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss = 0, keep = null, signals = null, data = null }) {
+// horizonMin (2026-10-24, SCALP_SELL_V4_SPEC): the time stop passed to resolveMatrixTrade. Default MATRIX.horizonMin (24 h, unchanged).
+export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss = 0, keep = null, signals = null, data = null, horizonMin = MATRIX.horizonMin }) {
   const B = data?.B ?? (await loadBars('XAUUSD', '3m', { from: from - 3 * 86400000, to })).bars
   const D = data?.D ?? (await loadDxyBars('3m', { from: from - 3 * 86400000, to })).bars
   const m1 = data?.m1 ?? (await loadBars('XAUUSD', '1m', { from, to })).bars
@@ -29,7 +30,7 @@ export async function matrixTrades({ from, to, useWti = true, spreadAt, maxMiss 
   for (const s of sigs) {
     if (s.decisionT <= busyUntil) continue
     const k = lb(s.decisionT), path1m = m1.slice(k, k + MATRIX.horizonMin + 5)
-    const r = resolveMatrixTrade(s, path1m, spreadAt); if (!r.done) continue
+    const r = resolveMatrixTrade(s, path1m, spreadAt, { horizonMin }); if (!r.done) continue
     busyUntil = r.exitT + 60000
     const outcome = r.outcome === 'TP1+TP2' ? 'WIN' : r.outcome === 'TP1+BE' ? 'SCRATCH' : r.outcome === 'SL' ? 'LOSS' : r.pnl > 0 ? 'WIN' : 'LOSS'
     fires.push({ t: s.decisionT, fold: assignFold(folds, s.i - startI), side: s.side, outcome, raw: r.outcome, net: r.pnl, R: r.pnl / s.risk, risk: s.risk, reward: s.reward, seq: 'seq', sig: s })

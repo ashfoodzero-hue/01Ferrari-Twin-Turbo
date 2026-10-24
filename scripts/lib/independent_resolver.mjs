@@ -4,8 +4,8 @@
 // audit_scalp_v2.mjs: 0 differences against the live resolver = the money path is priced right.
 import { MATRIX } from '../../src/master/ferrariMatrix.js'
 
-export function resolveIndependent(s, m1, spreadAt) {
-  const buy = s.side === 'BUY', fill = buy ? s.entry + spreadAt(s.decisionT - 60000) : s.entry, slip = Math.min(0.30, 0.05 * (s.atr || 0)), end = s.decisionT + MATRIX.horizonMin * 60000
+export function resolveIndependent(s, m1, spreadAt, horizonMin = MATRIX.horizonMin) {   // horizonMin = the time stop (2026-10-24; default 24 h)
+  const buy = s.side === 'BUY', fill = buy ? s.entry + spreadAt(s.decisionT - 60000) : s.entry, slip = Math.min(0.30, 0.05 * (s.atr || 0)), end = s.decisionT + horizonMin * 60000
   const gain = (px) => (buy ? px - fill : fill - px); let stop = s.sl, half1 = null, half2 = null, tp1 = false, lastBar = null
   for (const m of m1) { if (m.t < s.decisionT) continue; if (m.t >= end) break; lastBar = m
     const sp = buy ? 0 : spreadAt(m.t), hi = m.h + sp, lo = m.l + sp
