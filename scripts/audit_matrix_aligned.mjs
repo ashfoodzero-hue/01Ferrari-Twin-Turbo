@@ -11,22 +11,13 @@ import { findChochs, structureStateAt } from './lib/choch4h.mjs'
 import { MATRIX, matrixSignals, matrixLevelsAt } from '../src/master/ferrariMatrix.js'
 import { atr as atrArr } from '../src/core/indicators.js'
 import { rng } from '../src/core/studyStats.js'
+import { resolveIndependent } from './lib/independent_resolver.mjs'
 
 const TO = Date.parse('2026-10-21T21:00:00Z'), FROM = Date.parse('2024-10-10T00:00:00Z'), spreadAt = makeSpreadAt(), R = rng(22)
 let fail = 0; const ok = (c, m) => { console.log(`  ${c ? '✓' : '✗'} ${m}`); if (!c) fail++ }
 
-// 1. independent resolver
-function resolve2(s, m1) {
-  const buy = s.side === 'BUY', fill = buy ? s.entry + spreadAt(s.decisionT - 60000) : s.entry, slip = Math.min(0.30, 0.05 * (s.atr || 0)), end = s.decisionT + MATRIX.horizonMin * 60000
-  const gain = (px) => (buy ? px - fill : fill - px); let stop = s.sl, half1 = null, half2 = null, tp1 = false, lastBar = null
-  for (const m of m1) { if (m.t < s.decisionT) continue; if (m.t >= end) break; lastBar = m
-    const sp = buy ? 0 : spreadAt(m.t), hi = m.h + sp, lo = m.l + sp
-    if (buy ? lo <= stop : hi >= stop) { const px = buy ? stop - slip : stop + slip; if (half1 == null) half1 = gain(px); half2 = gain(px); break }
-    if (!tp1 && (buy ? hi >= s.tp1 : lo <= s.tp1)) { tp1 = true; half1 = gain(s.tp1); stop = fill }
-    if (tp1 && (buy ? hi >= s.tp2 : lo <= s.tp2)) { half2 = gain(s.tp2); break } }
-  if (half2 == null && lastBar && lastBar.t + 60000 >= end) { const px = buy ? lastBar.c : lastBar.c + spreadAt(lastBar.t); if (half1 == null) half1 = gain(px) - slip; half2 = gain(px) - slip }
-  return half1 == null || half2 == null ? null : +(0.5 * half1 + 0.5 * half2).toFixed(4)
-}
+// 1. independent resolver (ONE copy: scripts/lib/independent_resolver.mjs, moved 2026-10-23 — same text)
+const resolve2 = (s, m1) => resolveIndependent(s, m1, spreadAt)
 const buyBook = await matrixTrades({ from: FROM, to: TO, useWti: true, spreadAt })
 const sellBook = await matrixTrades({ from: FROM, to: TO, useWti: false, spreadAt, signals: (B, D, s0) => matrixSignals(B, D, [], { from: s0, useWti: false, sellRule: 'red' }).filter((x) => x.side === 'SELL') })
 const pool = [...buyBook.fires, ...sellBook.fires], m1 = buyBook.m1, T1 = m1.map((b) => b.t)
