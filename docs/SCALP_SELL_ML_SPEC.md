@@ -36,3 +36,11 @@ periods, same audit." · "what about DXY when it is bullish" → DXY state (vs E
 3. No label leakage: every training / calibration row's 24 h label window ends before the next stage's first row (asserted per year).
 4. Shuffle control: the same pipeline with shuffled training labels → no edge over the random control.
 5. Oracle control: the same pipeline with the true label added as a feature → WR ≥ 98 % (the pipeline can find an edge when one exists).
+
+## ADDENDUM A (2026-10-25, after the main result — X3 PASSED — and BEFORE these numbers): robustness before anyone may call it proven
+Perfection-Gate checks on the passing model (X3), same walk-forward, same selected rows:
+- **Year by year:** sequenced $/t and WR per calendar year 2016-2026 → required: ≥ 9 of the 11 years $/t > 0, and no year below −$1.00/t.
+- **Spread stress:** the same trades re-priced with every spread × 1.5 → required: P1 and P2 $/t > 0.
+- **Frequency:** trades per trading day in P1 / P2 (reported, no bar).
+- **Selection across studies (stated, not tested):** this is one of many SELL searches since 10-16 (~150 SELL cells). Even a clean pass therefore goes to a
+  forward PAPER record first; nothing trades live without Ashraf's OK.
