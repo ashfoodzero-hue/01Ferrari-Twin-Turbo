@@ -96,6 +96,12 @@ try {
     if (m.open && !m.done && !m.error) { assert(m.p_tp1 >= 0 && m.p_tp1 <= 1 && m.p_tp2 >= 0 && m.p_tp2 <= 1 && [1, 2].includes(m.phase)); assert(m.model && m.close_advice) }
     assert((await get('/')).body.includes('id="monMsg"'))
   })
+  await ok('TRADING-day windows (2026-10-25): intraday chart windows add back the weekend days they cross — Sunday evening 1m = 2 TRADING days, not 20 minutes', async () => {
+    // the server module is NOT imported (it would start a second server): the function is taken from the source text and evaluated alone
+    const src = fs.readFileSync(path.join(here, 'run_chart.mjs'), 'utf8'); assert(/from = Math\.floor\(tradingFrom\(now, days\) \/ ms\) \* ms/.test(src) && /export function tradingFrom\(now, days\)/.test(src))
+    const body = src.slice(src.indexOf('export function tradingFrom'), src.indexOf('return from', src.indexOf('export function tradingFrom')) + 14), f = new Function(`${body.replace('export ', '')}; return tradingFrom`)()
+    assert.equal(new Date(f(Date.parse('2026-10-25T20:40:00Z'), 2)).toISOString(), '2026-10-21T20:40:00.000Z'); assert.equal(new Date(f(Date.parse('2026-10-28T12:00:00Z'), 2)).toISOString(), '2026-10-26T12:00:00.000Z')
+  })
   await ok('STATIC: binds 127.0.0.1 only and never writes a file', async () => {
     const src = fs.readFileSync(path.join(here, 'run_chart.mjs'), 'utf8')
     assert(/listen\(CHART_PORT, '127\.0\.0\.1'/.test(src)); assert(!/writeFileSync|appendFileSync|createWriteStream/.test(src))

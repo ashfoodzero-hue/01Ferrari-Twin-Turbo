@@ -60,7 +60,14 @@ import { signalsHalted } from '../src/core/dataHealth.js'
 
 export const CHART_PORT = +(process.env.TWIN_CHART_PORT || 7444)
 const PAGE = path.join(TURBO.root, 'ops', 'chart', 'index.html')
-const TF = { '1m': [60000, 2], '3m': [180000, 4], '5m': [300000, 7], '15m': [900000, 30], '1h': [3600000, 120], '4h': [14400000, 365], '1d': [86400000, 1100] }   // tf → [ms, days shown]
+const TF = { '1m': [60000, 2], '3m': [180000, 4], '5m': [300000, 7], '15m': [900000, 30], '1h': [3600000, 120], '4h': [14400000, 365], '1d': [86400000, 1100] }   // tf → [ms, TRADING days shown]
+// TRADING days, not calendar days (2026-10-25, measured: on Sunday 20:40 UTC the 1m chart's "2 days" reached back only to Friday's last ~20 minutes —
+// 25 closed DXY bars, smoke_chart failed; same lesson as the whales lookback §7 (cz)): every Saturday / Sunday the window crosses is added back.
+export function tradingFrom(now, days) {
+  let from = now - days * 86400000
+  for (let k = 0; k < 4; k++) { let wk = 0; for (let t = Math.floor(from / 86400000) * 86400000; t < now; t += 86400000) { const d = new Date(t).getUTCDay(); if (d === 0 || d === 6) wk++ } from = now - (days + wk) * 86400000 }
+  return from
+}
 const DERIVED = { DXY: { label: 'DXY (rebuilt from 6 pairs)', source: 'ICE formula on live Polygon EUR/JPY/GBP/CAD/SEK/CHF', delayed: false }, WTI: { label: 'WTI crude (CL front month)', source: 'Polygon CL futures', delayed: true, delay_min: 10 } }
 const isSeries = (s) => !!BY_SYM[s] || !!DERIVED[s]
 const cache = new Map()
@@ -174,7 +181,7 @@ async function seriesBars(sym, tf, from) {
 async function bars(sym, tf) {
   const [ms, days] = TF[tf]
   return cached(`b|${sym}|${tf}`, sym === 'WTI' ? 60000 : tf === '1m' ? 3000 : ms >= 14400000 ? 60000 : 10000, async () => {
-    const now = Date.now(), from = Math.floor((now - days * 86400000) / ms) * ms
+    const now = Date.now(), from = Math.floor(tradingFrom(now, days) / ms) * ms
     const got = await seriesBars(sym, tf, from)
     const lagMs = DERIVED[sym]?.delayed ? DERIVED[sym].delay_min * 60000 : 0
     const closed = got.bars.filter((b) => b.t + ms <= now - lagMs)
