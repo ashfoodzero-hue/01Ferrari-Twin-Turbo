@@ -699,7 +699,7 @@ function mlDraw() {
   const ov = $('mlOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!ML || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
   const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
   const rv = ML.review, line = document.createElement('div'); line.className = 'fwhead'; line.style.bottom = '52px'; line.style.color = '#00ff9c'; line.style.borderColor = '#00ff9c66'
-  line.textContent = `ML SELL (paper): ${rv?.closed ?? 0} closed${rv?.closed ? ` · WR ${Math.round(100 * rv.wr)}% · ${rv.per_trade >= 0 ? '+' : ''}${rv.per_trade} $/t` : ''} · backtest 2021-26 95.8% +1.18 $/t${ML.stale ? ' · ⚠ not updating' : ''}${ML.state?.decision?.score != null ? ` · last score ${ML.state.decision.score} / ${ML.state.decision.threshold}` : ''}`
+  line.textContent = `ML SELL (paper): ${rv?.closed ?? 0} closed${rv?.closed ? ` · WR ${Math.round(100 * rv.wr)}% · ${rv.per_trade >= 0 ? '+' : ''}${rv.per_trade} $/t` : ''} · backtest 2021-26 95.8% +1.18 $/t${!ML.review && ML.stale ? ' · starts with the next market tick' : ML.stale ? ' · ⚠ not updating' : ''}${ML.state?.decision?.score != null ? ` · last score ${ML.state.decision.score} / ${ML.state.decision.threshold}` : ''}`
   ov.appendChild(line)
   const box = (t, exitT, entry, tp, sl, done, label) => { const x0 = xOf(t); if (x0 == null) return; let x1 = exitT ? xOf(exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 40)
     const zone = (cls, a, b, txt) => { const za = y(a), zb = y(b); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (done ? ' fwdone' : '')
