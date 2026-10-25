@@ -45,7 +45,12 @@ ok('STATIC: run_twin runs the recorder every 15 min and the audit daily; live re
     assert.equal(after.length, 4); assert.equal(after[1].c, 1.81); assert.equal(after[3].v, 2); assert.deepEqual(after[0], mine[0]); assert.deepEqual(after[2], mine[2])
     fs.writeFileSync(F, body); let threw = false; try { await applyRevisions(F, [...d.revised, { t: 99, tk: 'GCZ6', new: { t: 99 } }]) } catch { threw = true }
     assert(threw, 'a revision that matches no line must throw'); assert.equal(fs.readFileSync(F, 'utf8'), body, 'file untouched on a partial match'); assert(!fs.existsSync(F + '.rev.tmp'))
+    // LATE MINUTES (2026-10-25): Polygon minutes absent from the store are found and INSERTED in time order (GLD); the file stays ascending
+    const g = [{ t: 10, o: 1, h: 1, l: 1, c: 1, v: 1 }, { t: 30, o: 3, h: 3, l: 3, c: 3, v: 3 }, { t: 50, o: 5, h: 5, l: 5, c: 5, v: 5 }], gr = [...g, { t: 20, o: 2, h: 2, l: 2, c: 2, v: 2 }, { t: 40, o: 4, h: 4, l: 4, c: 4, v: 4 }]
+    const dg = diffRevisions(g, gr); assert.deepEqual(dg.absent.map((x) => x.t), [20, 40]); fs.writeFileSync(F, g.map((b) => JSON.stringify(b)).join('\n') + '\n')
+    assert.equal(await applyRevisions(F, dg.revised, dg.absent), 2); assert.deepEqual(fs.readFileSync(F, 'utf8').trim().split('\n').map((l) => JSON.parse(l).t), [10, 20, 30, 40, 50])
     fs.rmSync(dir, { recursive: true, force: true })
     const rf = fs.readFileSync(path.join(here, 'record_futures.mjs'), 'utf8'); assert(/diffRevisions\(mine, rest\)/.test(rf) && /6 \* 3600000/.test(rf) && /recorder_revisions\.jsonl/.test(rf))
+    assert(/asset === 'GLD' \? d\.absent\.filter\(\(x\) => x\.t \+ 60000 <= now - FINAL_MS\)/.test(rf) && /late_minute_inserted/.test(rf), 'late GLD minutes inserted (final only) and logged')
     n++; console.log('  ✓ ' + name) } catch (e) { failed++; console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
 console.log(failed ? `✗ RECORDER SMOKE: ${n} passed, ${failed} failed` : `✅ RECORDER SMOKE: ${n} passed, 0 failed`)

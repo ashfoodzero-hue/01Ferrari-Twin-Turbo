@@ -433,6 +433,12 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/forward') return send(res, 200, forward(u.searchParams.get('arm')))
     if (u.pathname === '/api/retest') return send(res, 200, await retestBoxes())
     if (u.pathname === '/api/scalp85') return send(res, 200, await scalp85())
+    // ML SELL X3 PAPER forward test (2026-10-25, scripts/lib/ml_sell_live.mjs written by matrix_tick): the open paper SELL, the last decision, the paper
+    // trades of the last 48 h and the review vs the measured backtest. Display only — files are the source, nothing recomputed here.
+    if (u.pathname === '/api/mlsell') { const st = J('ml_sell_state.json'), rv = J('ml_sell_review.json'); let L = []
+      try { L = fs.readFileSync(path.join(TURBO.paper, 'ml_sell_trades.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.status === 'CLOSED' && Date.now() - Date.parse(r.closedAt) < 48 * 3600000) } catch {}
+      return send(res, 200, { paper: true, state: st && Date.now() - Date.parse(st.at) < 9 * 60000 ? st : null, stale: !st || Date.now() - Date.parse(st.at) >= 9 * 60000,
+        closed: L.map((r) => ({ id: r.id, t: r.sig.t, decisionT: r.sig.decisionT, entry: r.sig.entry, tp: r.sig.tp1, sl: r.sig.sl, outcome: r.outcome, pnl: r.pnl, closedAt: r.closedAt })), review: rv }) }
     if (u.pathname === '/api/levels') return send(res, 200, await levelMarks())
     if (u.pathname === '/api/bias') return send(res, 200, await bias())
     // 4H MACRO MAGNET tile (2026-10-16): the state macro_tick.mjs writes — Ashraf's Pine score + its MEASURED 13 y result + the live record — plus

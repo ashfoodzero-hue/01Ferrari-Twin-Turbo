@@ -23,6 +23,7 @@ import { clean1m, kit } from './lib/series_1m.mjs'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { V1H, structureStateAt } from './lib/choch4h.mjs'
 import { updateVetoScores, recentVetoes } from './lib/veto_score.mjs'
+import { mlSellTick } from './lib/ml_sell_live.mjs'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -88,6 +89,12 @@ if (!STATIC) try { const vr = await updateVetoScores({ nowT: lastClose, dataLive
   for (const a of vr.added) console.log(`  🧮 vetoed BUY ${new Date(a.decisionT).toISOString().slice(11, 16)} scored: ${a.outcome} ${a.pnl >= 0 ? '+' : ''}${a.pnl}/oz`) } catch (e) { console.error('  ⚠ veto scoring: ' + e.message) }
 // grey "SCALP BLOCKED" boxes (2026-10-20): the last 24 h of vetoed BUYs with their scored outcome ride on structureGate (/api/matrix passes it whole)
 try { out.structureGate.recent = recentVetoes(lastClose) } catch (e) { console.error('  ⚠ recent vetoes: ' + e.message) }
+// 🤖 ML SELL X3 — PAPER forward test (2026-10-25, Ashraf: "build the live PAPER forward test of the ML SELL X3 model (same feature code, scored like the other
+// paper books, chart box SELL only, no Telegram trade alerts yet)"): the frozen walk-forward model scores this closed 3m bar; one paper SELL at a time, priced
+// with the live spreads. Data live + health OK only; never Telegram; never breaks the tick. scripts/lib/ml_sell_live.mjs (SCALP_SELL_ML_SPEC, §7 (ea)).
+if (!STATIC) try { const ml = await mlSellTick({ lastClose, dataLive: st.live && !health.halted, why: health.halted ? health.why : st.why, spreadAt })
+  if (ml.open && ml.open.id && !ml.decision?.skipped && ml.decision?.fires) console.log(`  🤖 ML SELL paper @ ${ml.open.sig.entry.toFixed(2)} · score ${ml.decision.score} ≥ ${ml.decision.threshold}`)
+  else if (ml.last_closed && ml.last_closed.closedAt > new Date(lastClose - 180000).toISOString()) console.log(`  🤖 ML SELL paper closed: ${ml.last_closed.outcome} ${ml.last_closed.pnl}/oz`) } catch (e) { console.error('  ⚠ ml sell: ' + e.message) }
 if (!out.open && (!st.live || health.halted)) console.log(`  ⛔ matrix: no new trade — ${health.halted ? "DATABASE STALE (" + health.why + ")" : "data not live (" + st.why + ")"}`)
 // 👁 WATCH (2026-10-16, Ashraf "option 2 — chart only"): BUY context aligned + the low ≥ 0.25 ATR through the buy wall, no trade, on live data.
 // ONE rule: matrixArmedAt (the study's own function). Measured 82.3 % → a BUY signal within 60 min (post-hoc). NEVER sent to Telegram.

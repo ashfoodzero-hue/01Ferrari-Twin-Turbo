@@ -15,25 +15,33 @@ import readline from 'node:readline'
 const same = (a, b) => ['o', 'h', 'l', 'c'].every((k) => Math.abs(a[k] - b[k]) < 1e-9) && a.v === b.v
 const key = (b) => `${b.t}|${b.tk ?? ''}`
 
-/** Pure. mine = stored bars, rest = Polygon bars in the SAME shape ({t, tk?, o, h, l, c, v, …}). → { revised:[{t, tk, old, new}], missing:[t], same:n } */
+/** Pure. mine = stored bars, rest = Polygon bars in the SAME shape ({t, tk?, o, h, l, c, v, …}).
+ *  → { revised:[{t, tk, old, new}], missing:[t] (ours, no longer at Polygon), absent:[bar] (Polygon's, NOT in our store), same:n }
+ *  absent (2026-10-25, measured): Polygon published GLD pre-market minutes late (10-20 08:00/08:02/08:05, 10-21 08:06 UTC) — after a later minute was
+ *  already appended, so the append-only recorder never added them and verify_database failed every Saturday retry. */
 export function diffRevisions(mine, rest) {
-  const m = new Map(rest.map((r) => [key(r), r])), revised = [], missing = []; let n = 0
+  const m = new Map(rest.map((r) => [key(r), r])), have = new Set(mine.map(key)), revised = [], missing = []; let n = 0
   for (const b of mine) { const r = m.get(key(b)); if (!r) missing.push(b.t); else if (same(b, r)) n++; else revised.push({ t: b.t, tk: b.tk ?? null, old: b, new: { ...b, ...r } }) }
-  return { revised, missing, same: n }
+  const absent = rest.filter((r) => !have.has(key(r)))
+  return { revised, missing, absent, same: n }
 }
 
-/** Rewrite the revised minutes of a 1m.jsonl store in place (temp file + rename). @returns number of lines replaced */
-export async function applyRevisions(file, revised) {
-  if (!revised.length) return 0
+/** Rewrite a 1m.jsonl store in place (temp file + rename): the revised minutes replaced, and `inserts` (late-published minutes) placed in time order.
+ *  Every revised minute must match a stored line and every insert must land, or the file is left unchanged. @returns lines replaced + inserted */
+export async function applyRevisions(file, revised, inserts = []) {
+  if (!revised.length && !inserts.length) return 0
   const byKey = new Map(revised.map((x) => [`${x.t}|${x.tk ?? ''}`, x.new])), tmp = file + '.rev.tmp', out = fs.createWriteStream(tmp)
-  let replaced = 0
+  const ins = [...inserts].sort((a, b) => a.t - b.t); let replaced = 0, inserted = 0, k = 0
+  const put = async (s) => { if (!out.write(s + '\n')) await new Promise((r) => out.once('drain', r)) }
   const rl = readline.createInterface({ input: fs.createReadStream(file), crlfDelay: Infinity })
   for await (const line of rl) { if (!line) continue
-    let nl = line
-    if (line.includes('"t":')) { try { const b = JSON.parse(line), nb = byKey.get(key(b)); if (nb) { nl = JSON.stringify(nb); replaced++ } } catch { /* keep the line as it is */ } }
-    if (!out.write(nl + '\n')) await new Promise((r) => out.once('drain', r)) }
+    let nl = line, t = null
+    if (line.includes('"t":')) { try { const b = JSON.parse(line), nb = byKey.get(key(b)); t = b.t; if (nb) { nl = JSON.stringify(nb); replaced++ } } catch { /* keep the line as it is */ } }
+    while (t != null && k < ins.length && ins[k].t < t) { await put(JSON.stringify(ins[k++])); inserted++ }
+    await put(nl) }
+  while (k < ins.length) { await put(JSON.stringify(ins[k++])); inserted++ }
   await new Promise((r, j) => out.end((e) => (e ? j(e) : r())))
-  if (replaced !== revised.length) { fs.rmSync(tmp, { force: true }); throw new Error(`recordRevisions: matched ${replaced} of ${revised.length} revised minutes — file left unchanged`) }
+  if (replaced !== revised.length || inserted !== ins.length) { fs.rmSync(tmp, { force: true }); throw new Error(`recordRevisions: matched ${replaced}/${revised.length} revised, inserted ${inserted}/${ins.length} — file left unchanged`) }
   fs.renameSync(tmp, file)
-  return replaced
+  return replaced + inserted
 }

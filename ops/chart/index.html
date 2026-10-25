@@ -117,7 +117,7 @@
 <main>
   <div id="charts">
     <div id="bias"><span class="dim">loading drivers…</span></div>
-    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div><div id="fwOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="rtOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="blkOverlay" style="position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden"></div><div id="wbOverlay" style="position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden"></div></div>
+    <div class="pane main"><div class="ptitle" id="t0"></div><div class="cbox" id="c0"></div><div id="fvgOverlay" style="position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden"></div><div id="mxOverlay"></div><div id="fwOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="rtOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="blkOverlay" style="position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden"></div><div id="mlOverlay" style="position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden"></div><div id="wbOverlay" style="position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden"></div></div>
     <div class="pane sub"><div class="ptitle" id="t1"></div><div class="cbox" id="c1"></div></div>
     <div class="pane sub"><div class="ptitle" id="t2"></div><div class="cbox" id="c2"></div></div>
     <div class="pane sub"><div class="ptitle" id="t3"></div><div class="cbox" id="c3"></div></div>
@@ -690,6 +690,26 @@ function blkDraw() {
     placed.push(lab.getBoundingClientRect()) }
 }
 setInterval(blkDraw, 1000)
+// ── ML SELL X3 — PAPER forward test (2026-10-25, Ashraf: "chart box SELL only, no Telegram trade alerts yet"): the open paper SELL as a neon SCALP TRADE box
+// (target zone below, risk zone above, named "SCALP TRADE · SELL · ML paper"), the last 48 h's closed paper SELLs faded with their result, and a line with the
+// paper tally vs the measured backtest. Data = /api/mlsell (files written by matrix_tick → scripts/lib/ml_sell_live.mjs). Never an order.
+let ML = null
+async function pollMl() { ML = await fetch('/api/mlsell').then((x) => x.json()).catch(() => null); mlDraw() }
+function mlDraw() {
+  const ov = $('mlOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!ML || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
+  const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
+  const rv = ML.review, line = document.createElement('div'); line.className = 'fwhead'; line.style.bottom = '52px'; line.style.color = '#00ff9c'; line.style.borderColor = '#00ff9c66'
+  line.textContent = `ML SELL (paper): ${rv?.closed ?? 0} closed${rv?.closed ? ` · WR ${Math.round(100 * rv.wr)}% · ${rv.per_trade >= 0 ? '+' : ''}${rv.per_trade} $/t` : ''} · backtest 2021-26 95.8% +1.18 $/t${ML.stale ? ' · ⚠ not updating' : ''}${ML.state?.decision?.score != null ? ` · last score ${ML.state.decision.score} / ${ML.state.decision.threshold}` : ''}`
+  ov.appendChild(line)
+  const box = (t, exitT, entry, tp, sl, done, label) => { const x0 = xOf(t); if (x0 == null) return; let x1 = exitT ? xOf(exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 40)
+    const zone = (cls, a, b, txt) => { const za = y(a), zb = y(b); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (done ? ' fwdone' : '')
+      d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(za, zb) + 'px'; d.style.height = Math.max(2, Math.abs(za - zb)) + 'px'; d.textContent = txt; ov.appendChild(d) }
+    zone('tgt', entry, tp, `TP ${fmt(tp)} (−${(entry - tp).toFixed(2)})`); zone('risk', entry, sl, `SL ${fmt(sl)} (+${(sl - entry).toFixed(2)})`)
+    nameBox(ov, 'scalp', x0, x1, [entry, tp, sl], { done, side: 'SELL', note: label }) }
+  const o = ML.state?.open; if (o) box(o.sig.t, null, o.sig.entry, o.sig.tp1, o.sig.sl, false, `ML paper · ENTRY ${fmt(o.sig.entry)}`)
+  for (const c of ML.closed || []) box(c.t, Date.parse(c.closedAt), c.entry, c.tp, c.sl, true, `ML paper · ${c.outcome} ${c.pnl >= 0 ? '+' : ''}${(+c.pnl).toFixed(2)}`)
+}
+setInterval(pollMl, 15000); pollMl(); setInterval(mlDraw, 1000)
 setInterval(pollMacroMagnet, 30000); pollMacroMagnet()
 pollMacro(); pollNews(); setInterval(pollMacro, 10 * 60000); setInterval(pollNews, 2 * 60000)
 controls(); panes.forEach((p) => loadPane(p, true)); setInterval(poll, 1000); poll(); setInterval(pollDrivers, 15000); pollDrivers()

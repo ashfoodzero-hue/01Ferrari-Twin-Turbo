@@ -60,7 +60,9 @@ export function labelRows({ B, m1, fe, exit, spreadAt, horizonMin = 1440 }) {
 
 /** Walk-forward (spec): for each Y, fit on rows ending ≥ 1 day before Y−1, threshold on Y−1, select in Y. Returns { selected rows, per-year log }.
  *  yOverride: labels used for TRAINING only (the shuffle control); extraX: an extra feature column (the oracle control). */
-export function walkForward({ fe, net, years, maxTrain = 200000, seed = 7, yOverride = null, extraX = null }) {
+// capture (2026-10-25, the live paper test): years whose model + bin edges + threshold + selected rows (decision time, score) are returned in the log,
+// so the LIVE model is exactly the walk-forward model measured for that year. Default none (results unchanged).
+export function walkForward({ fe, net, years, maxTrain = 200000, seed = 7, yOverride = null, extraX = null, capture = [] }) {
   let { X, F, n, T } = fe
   if (extraX) { const X2 = new Float32Array(n * (F + 1)); for (let r = 0; r < n; r++) { for (let f = 0; f < F; f++) X2[r * (F + 1) + f] = X[r * F + f]; X2[r * (F + 1) + F] = extraX[r] } X = X2; F = F + 1 }
   const y = new Uint8Array(n); for (let r = 0; r < n; r++) y[r] = net[r] > 0 ? 1 : 0
@@ -77,6 +79,7 @@ export function walkForward({ fe, net, years, maxTrain = 200000, seed = 7, yOver
       const pick = cal.filter((r, k) => cs[k] >= thr), w = pick.filter((r) => net[r] > 0).length, m = pick.reduce((a, r) => a + net[r], 0) / (pick.length || 1)
       if (pick.length >= 30 && w / pick.length >= 0.93 && m > 0 && (!best || pick.length > best.n)) { best = { q, thr, n: pick.length, wr: w / pick.length, usd: m }; cut = thr } }
     const picked = cut == null ? [] : test.filter((r) => predict(model, Xb, n, r) >= cut); sel.push(...picked)
-    log.push({ year: Y, train_rows: rows.length, leak, cal_rows: cal.length, threshold: best, test_rows: test.length, selected: picked.length }) }
+    log.push({ year: Y, train_rows: rows.length, leak, cal_rows: cal.length, threshold: best, test_rows: test.length, selected: picked.length,
+      ...(capture.includes(Y) ? { frozen: { model, edges: edges.map((e) => Array.from(e)), cut, fit_end: new Date(fitEnd).toISOString(), picked: picked.map((r) => [T[r], predict(model, Xb, n, r)]) } } : {}) }) }
   return { selected: sel.sort((a, b) => a - b), log }
 }

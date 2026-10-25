@@ -41,7 +41,9 @@ try { const F = path.join(TURBO.historyAsset('GLD'), '1m.jsonl'), lastT = lastSt
 const REV_STATE = path.join(TURBO.master, 'recorder_revisions_state.json'), REV_LEDGER = path.join(TURBO.master, 'recorder_revisions.jsonl')
 const revDue = process.argv.includes('--revisions-now') || !(now - (Date.parse(JSON.parse((() => { try { return fs.readFileSync(REV_STATE, 'utf8') } catch { return '{}' } })()).at ?? 0) || 0) < 6 * 3600000)
 if (revDue) {
-  const KEY = process.env.POLYGON_API_KEY, from = now - 5 * 86400000, summary = {}
+  // --revisions-days=N (2026-10-25): a one-off catch-up over a wider window (verify_database checks the previous Mon-Fri); the scheduled run keeps 5 days
+  const REV_DAYS = Math.max(1, Math.min(14, +(process.argv.find((a) => a.startsWith('--revisions-days='))?.slice(17) || 5)))
+  const KEY = process.env.POLYGON_API_KEY, from = now - REV_DAYS * 86400000, summary = {}
   const all = async (u) => { const out = []; while (u) { const r = await fetch(u + (u.includes('apiKey=') ? '' : '&apiKey=' + KEY)), j = await r.json(); if (!r.ok) throw new Error(`HTTP ${r.status} ${j.message ?? ''}`); out.push(...(j.results ?? [])); u = j.next_url ?? null } return out }
   const recentOf = async (F) => { const out = []; const rl = (await import('node:readline')).createInterface({ input: fs.createReadStream(F), crlfDelay: Infinity }); for await (const l of rl) { if (!l) continue; const t = +(/"t":(\d+)/.exec(l)?.[1] ?? 0); if (t >= from && t + 60000 <= now - FINAL_MS) out.push(JSON.parse(l)) } return out }
   for (const asset of ['GOLD_FUT', 'SILVER_FUT', 'WTI', 'GLD']) {
@@ -49,10 +51,14 @@ if (revDue) {
       if (asset === 'GLD') { if (mine.length) rest = (await all(`https://api.polygon.io/v2/aggs/ticker/GLD/range/1/minute/${mine[0].t}/${mine.at(-1).t}?adjusted=true&sort=asc&limit=50000`)).map((x) => ({ t: x.t, o: x.o, h: x.h, l: x.l, c: x.c, v: x.v, vw: x.vw ?? null, n: x.n ?? null })) }
       else for (const tk of [...new Set(mine.map((b) => b.tk))]) { const my = mine.filter((b) => b.tk === tk)
         rest.push(...(await all(`https://api.polygon.io/futures/v1/aggs/${tk}?resolution=1min&window_start.gte=${my[0].t * 1e6}&window_start.lte=${my.at(-1).t * 1e6}&limit=50000&sort=window_start.asc`)).map((x) => ({ t: Math.round(x.window_start / 1e6), o: x.open, h: x.high, l: x.low, c: x.close, v: x.volume ?? 0, tk }))) }
-      const d = diffRevisions(mine, rest), n = DRY ? 0 : await applyRevisions(F, d.revised)
+      // LATE MINUTES (2026-10-25, measured: GLD pre-market minutes published by Polygon after a later minute was stored never entered the append-only
+      // store → verify_database FAILED all Saturday). GLD: Polygon's final minutes inside the window we hold that our store lacks are INSERTED in time
+      // order and logged. Futures: reported only (one contract per minute — a late minute of another contract is not ours to insert).
+      const d = diffRevisions(mine, rest), ins = asset === 'GLD' ? d.absent.filter((x) => x.t + 60000 <= now - FINAL_MS) : [], n = DRY ? 0 : await applyRevisions(F, d.revised, ins)
       if (!DRY) for (const x of d.revised) fs.appendFileSync(REV_LEDGER, JSON.stringify({ at: new Date(now).toISOString(), asset, t: x.t, tk: x.tk, old: x.old, new: x.new }) + '\n')
-      summary[asset] = { checked: mine.length, same: d.same, revised: d.revised.length, rewritten: n, not_at_polygon: d.missing.length }
-      console.log(`  ${asset} revisions: ${d.same}/${mine.length} identical · ${d.revised.length} revised by Polygon${DRY ? ' (dry — not written)' : ` → ${n} rewritten`}${d.missing.length ? ` · ${d.missing.length} no longer at Polygon (kept, reported)` : ''}`)
+      if (!DRY) for (const x of ins) fs.appendFileSync(REV_LEDGER, JSON.stringify({ at: new Date(now).toISOString(), asset, t: x.t, tk: null, old: null, new: x, kind: 'late_minute_inserted' }) + '\n')
+      summary[asset] = { checked: mine.length, same: d.same, revised: d.revised.length, rewritten: n, inserted_late: ins.length, absent_at_store: d.absent.length, not_at_polygon: d.missing.length }
+      console.log(`  ${asset} revisions: ${d.same}/${mine.length} identical · ${d.revised.length} revised by Polygon${ins.length ? ` · ${ins.length} late minute(s) inserted` : ''}${DRY ? ' (dry — not written)' : ` → ${n} lines written`}${d.missing.length ? ` · ${d.missing.length} no longer at Polygon (kept, reported)` : ''}${asset !== 'GLD' && d.absent.length ? ` · ${d.absent.length} Polygon minutes not in the store (reported)` : ''}`)
     } catch (e) { summary[asset] = { error: e.message }; console.log(`  ${asset} revisions: ⚠ ${e.message}`) } }
   if (!DRY) fs.writeFileSync(REV_STATE, JSON.stringify({ at: new Date(now).toISOString(), window_from: new Date(from).toISOString(), summary }, null, 1))
 }
