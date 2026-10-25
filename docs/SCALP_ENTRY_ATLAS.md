@@ -21,3 +21,18 @@ ratio of the small 2013-19 market, not the entry. This explanation is POST-HOC: 
 **Other cells:** v2 F1 spike fade BUY X3 OOS 95.6 % +$0.165 (LB −0.33), TRAIN −$0.315; F2 1H sweep & reclaim loses on both sides; v3 P1 (cost floor) and P2
 (1-bar confirmation) post-hoc — fail; N1 two-bar exhaustion loses both sides. **SELL:** nothing makes money — best N2 SELL X3 OOS 92.0 % −$0.122,
 v2 F1k3 SELL X2 93.6 % −$0.103. Gold's up-drift keeps every fade-the-up-spike SELL slightly negative.
+
+# ML SELL (2026-10-25) — FIRST PASS on either side: walk-forward GBDT SELL, exit X3
+Spec `docs/SCALP_SELL_ML_SPEC.md` (+ ADDENDUM A robustness, each before its numbers); lib `scripts/lib/scalp_ml.mjs`; `study_scalp_sell_ml.mjs` →
+`scalp_sell_ml_study.json`; `robust_scalp_sell_ml.mjs` → `scalp_sell_ml_robust.json`. Rows = every closed 3m bar 2013-26 (1,535,000), 31 causal features
+(gold, 1m spikes, silver, DXY incl. the bullish flag, time, cost); model fit < Y−1, threshold on Y−1 (unsequenced cal WR ≥ 93 %, $ > 0), traded in Y.
+
+| ML SELL | P1 2016 → 2021-06-30 | P2 → 2026-10-22 | last 2 y | random SELL control P1 / P2 | verdict |
+|---|---|---|---|---|---|
+| **X3** (0.25 A / 3 A) | n 2,157 · **94.1 %** (LB 93.0) · **+$0.456** (LB +0.263) | n 2,595 · **95.8 %** (LB 95.0) · **+$1.181** (LB +0.475) | +$1.739 | −$0.217 / −$0.199 | **PASS** |
+| X1 (0.25 A / 2 A) | n 580 · 87.8 % · −$0.035 | n 2,599 · 92.2 % · +$0.765 (LB +0.311) | +$1.166 | −$0.303 / −$0.208 | fail (P1) |
+
+**Audit CLEAN (both exits):** independent resolver 0 diff; label-leak years 0; feature prefix cuts 50 / 0 diff; shuffled-label control X3 n 45, −$0.006
+(no edge), X1 n 0; oracle control WR 100 %. Run 2 reproduced run 1's X1 exactly (deterministic).
+**Robustness (ADDENDUM A) PASS:** X3 positive in all 11 years 2016-2026 (WR 93.4-97.6 %, +$0.15 … +$2.31/t); spread × 1.5: P1 +$0.35 (93.2 %), P2 +$0.95
+(95.3 %); 1.31 / 1.57 trades per trading day. **Caveat:** one pass among many SELL searches since 10-16 → forward PAPER record before anything live.
