@@ -158,11 +158,12 @@ export function resolveMatrixTrade(sig, m1, spreadAt, { horizonMin = MATRIX.hori
   const up = sig.side === 'BUY', s0 = spreadAt(sig.decisionT - 60000), fill = up ? sig.entry + s0 : sig.entry
   const slip = Math.min(0.30, 0.05 * (sig.atr || 0)), end = sig.decisionT + horizonMin * 60000
   const legs = [{ q: 0.5, open: true, pnl: null }, { q: 0.5, open: true, pnl: null }]
-  let stop = sig.sl, tp1Hit = false, last = null; const events = []
+  let stop = sig.sl, tp1Hit = false, last = null, after = null; const events = []
   const pnlAt = (px) => (up ? px - fill : fill - px)
   for (const b of m1) {
     if (b.t < sig.decisionT) continue
-    if (b.t >= end || b.t + 60000 > nowT) break
+    if (b.t + 60000 > nowT) break
+    if (b.t >= end) { after = b; break }   // the first bar at / after the horizon (see the weekend rule below)
     last = b; const s = up ? 0 : spreadAt(b.t), hi = b.h + s, lo = b.l + s
     // 1) stop (or break-even stop) first
     if (up ? lo <= stop : hi >= stop) {
@@ -179,6 +180,14 @@ export function resolveMatrixTrade(sig, m1, spreadAt, { horizonMin = MATRIX.hori
     const px = up ? last.c : last.c + spreadAt(last.t)
     for (const L of legs) if (L.open) { L.open = false; L.pnl = pnlAt(px) - slip }
     events.push({ t: last.t, kind: 'TIME', px })
+  } else if (open && after) {
+    // 🚨 WEEKEND RULE (2026-10-26, measured live: the SCALP BUY of Fri 20:51 UTC stayed OPEN all of Monday and blocked every new box): when the horizon
+    // falls while the market is CLOSED (weekend / holiday), no bar exists at the horizon, the loop stopped at the first bar after it, and the trade never
+    // closed — live it blocked the book; in backtests `done:false` trades were silently DROPPED. Now: close at the FIRST price after the horizon (that bar's
+    // open; SELL buys back at open + spread), less slip — the earliest price a trader could get.
+    const px = up ? after.o : after.o + spreadAt(after.t)
+    for (const L of legs) if (L.open) { L.open = false; L.pnl = pnlAt(px) - slip }
+    events.push({ t: after.t, kind: 'TIME', px })
   }
   const done = !legs.some((L) => L.open)
   const kinds = events.map((e) => e.kind)
