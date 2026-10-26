@@ -20,7 +20,7 @@ const DAY = 86400000, BAR = 180000
 const FEATURE_SPREAD = makeSpreadAt()
 // windowDays 20: the slowest-settling input (Wilder ATR14 of hourly bars) carries (13/14)^480 ≈ 4e-16 of the window start — exact at float precision
 export const ML_SELL = Object.freeze({ windowDays: 20, journal: path.join(TURBO.paper, 'ml_sell_trades.jsonl'), state: path.join(TURBO.master, 'ml_sell_state.json'),
-  review: path.join(TURBO.master, 'ml_sell_review.json'), modelFile: (y) => path.join(TURBO.root, 'data', 'scalp_ml', `ml_sell_x3_${y}.json`) })
+  review: path.join(TURBO.master, 'ml_sell_review.json'), scores: path.join(TURBO.paper, 'ml_sell_scores.jsonl'), modelFile: (y) => path.join(TURBO.root, 'data', 'scalp_ml', `ml_sell_x3_${y}.json`) })
 const cache = new Map()
 export function loadModel(year) {
   if (cache.has(year)) return cache.get(year)
@@ -57,7 +57,10 @@ export async function mlSellTick({ lastClose, dataLive, why = null, spreadAt, wr
           const { i: _row, ...sig } = sellSig(s.B, s.i, s.A, 'X3', s.decisionT)
           out.open = { id: `MLSELL@${s.decisionT}`, sig, score: out.decision.score, threshold: out.decision.threshold, model_year: s.model_year, opened: new Date().toISOString(), status: 'OPEN', paper: true }
           if (write) fs.appendFileSync(ML_SELL.journal, JSON.stringify({ ...out.open, status: 'OPENED' }) + '\n') } } } }
-  if (write) { fs.writeFileSync(ML_SELL.state + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(ML_SELL.state + '.tmp', ML_SELL.state); writeReview() }
+  if (write) { fs.writeFileSync(ML_SELL.state + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(ML_SELL.state + '.tmp', ML_SELL.state); writeReview()
+    // every decision's score, one short line per 3m bar (2026-10-26, Ashraf "we are not getting any sell trades": only the LAST score was kept, so "how
+    // close did it get today?" needed a 15-minute replay) — a skipped tick logs its reason
+    if (out.decision) fs.appendFileSync(ML_SELL.scores, JSON.stringify({ bar: out.bar, ...(out.decision.skipped ? { skipped: out.decision.skipped } : { s: out.decision.score, thr: out.decision.threshold, fires: out.decision.fires }) }) + '\n') }
   return out
 }
 /** Paper review vs the measured backtest (scored like the other paper books: n, WR = $ > 0, $/t). */
