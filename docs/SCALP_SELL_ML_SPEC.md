@@ -44,3 +44,8 @@ Perfection-Gate checks on the passing model (X3), same walk-forward, same select
 - **Frequency:** trades per trading day in P1 / P2 (reported, no bar).
 - **Selection across studies (stated, not tested):** this is one of many SELL searches since 10-16 (~150 SELL cells). Even a clean pass therefore goes to a
   forward PAPER record first; nothing trades live without Ashraf's OK.
+
+## ADDENDUM B (2026-10-26, before these numbers) — does the profit depend on Fridays? (Ashraf: "break the ML SELL X3 backtest trades down by weekday and hour (WR and $ per trade), to see if the profit depends on Fridays")
+Same X3 walk-forward trades (same seed; asserted = the study's P1 / P2 counts). Reported per UTC weekday and per UTC hour, P1 and P2: n, WR, $/t.
+**Question fixed now:** the profit "depends on Fridays" if, with every Friday trade removed, P1 or P2 $/t is ≤ 0 or its week-block LB (α/2) is ≤ 0.
+Descriptive only — no rule is chosen from these numbers; the trades are saved to `data/master/scalp_sell_ml_trades.json` for later checks.
