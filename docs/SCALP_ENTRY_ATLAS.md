@@ -36,3 +36,8 @@ Spec `docs/SCALP_SELL_ML_SPEC.md` (+ ADDENDUM A robustness, each before its numb
 (no edge), X1 n 0; oracle control WR 100 %. Run 2 reproduced run 1's X1 exactly (deterministic).
 **Robustness (ADDENDUM A) PASS:** X3 positive in all 11 years 2016-2026 (WR 93.4-97.6 %, +$0.15 … +$2.31/t); spread × 1.5: P1 +$0.35 (93.2 %), P2 +$0.95
 (95.3 %); 1.31 / 1.57 trades per trading day. **Caveat:** one pass among many SELL searches since 10-16 → forward PAPER record before anything live.
+
+# ⚠ 2026-10-26 — the ML SELL PASS ABOVE IS WITHDRAWN (MASTER §7 (ee))
+The resolver never closed a trade whose 24 h horizon fell on a weekend; `matrix_trades.mjs` silently skipped such trades and their label rows were unpriced.
+Re-measured with the fix: **X3 P1 89.0 % −$0.257/t, P2 90.0 % −$0.392/t, last 2 y −$0.694 → FAIL**; X1 fail. The v2/v3 rows above (incl. N2 BUY) were priced
+the same way and must be re-measured before they are quoted.
