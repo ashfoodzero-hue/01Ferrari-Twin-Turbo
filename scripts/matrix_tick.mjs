@@ -24,6 +24,7 @@ import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { V1H, structureStateAt } from './lib/choch4h.mjs'
 import { updateVetoScores, recentVetoes } from './lib/veto_score.mjs'
 import { mlSellTick } from './lib/ml_sell_live.mjs'
+import { runParity } from './lib/matrix_parity.mjs'
 
 const STATIC = process.argv.includes('--static')
 const STATE = path.join(TURBO.master, 'matrix_state.json'), JOURNAL = path.join(TURBO.paper, 'matrix_trades.jsonl')
@@ -127,6 +128,10 @@ try { const s = structure, gb = B.at(-1)
     gold: gb ? { t: gb.t, o: gb.o, h: gb.h, l: gb.l, c: gb.c } : null, buyLine: s ? +s.levels.buyLine.toFixed(2) : null, sellLine: s ? +s.levels.sellLine.toFixed(2) : null,
     buy: s?.buy ?? null, sell: s?.sell ?? null, dxy: s?.dxy ?? null, dxyBarT: D.at(-1)?.t ?? null, wti: s?.wti ?? null, wtiN: W.length, wtiLastT: W.at(-1)?.t ?? null,
     opened: opened ? opened.side : null, vetoed: blocked ? blocked.side : null }) + '\n') } catch (e) { console.error('  ⚠ decision log: ' + e.message) }
+// 🔁 LIVE PARITY WATCHER (2026-10-27, Ashraf: "so please fix permanent"): every recent signal recomputed and accounted for — a MISSED / TICK_FAILED
+// signal goes to matrix_missed.jsonl and data health (MATRIX_PARITY WARN → Telegram). Watch only. scripts/lib/matrix_parity.mjs
+try { const p = runParity({ nowT: lastClose, B, D, W })
+  for (const r of p.fresh) console.log(`  🔁 PARITY ${r.status}: ${r.side} ${new Date(r.t).toISOString().slice(11, 16)} @ ${r.entry} — ${r.reason}`) } catch (e) { console.error('  ⚠ parity watcher: ' + e.message) }
 // 📨 Telegram "TRADE SETUP READY" (2026-10-16) — after the box is written, once per trade; never blocks or breaks the tick
 // PREPARE is a BUY watch: never sent while the V1H gate blocks BUYs (2026-10-20, Ashraf: "Stop sending PREPARE while V1H blocks BUYs") — the 17:18 notice
 // announced a BUY the gate then vetoed. The chart keeps drawing the WATCH line (information).

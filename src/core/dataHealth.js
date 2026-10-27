@@ -35,6 +35,8 @@ export const HEALTH_RULE = Object.freeze({
   tlLinesMaxAgeMs: 4.5 * H,              // trendline line refresh: after each asset's 4H close
   tlTickMaxAgeMs: 5 * MIN,               // trendline minute check: every minute
   awakeMaxAgeMs: 3 * MIN,                // keep-awake request (scripts/keep_awake.ps1): re-asserted every 60 s
+  parityRecentMs: 3 * H,                 // SCALP parity: a MISSED / TICK_FAILED signal found in the last 3 h is an issue (then it stays in the ledger)
+  parityMaxAgeMs: 15 * MIN,              // the parity verdict is written every 3m tick → older = the watcher (or the tick) stopped
 })
 const FUT = ['GOLD_FUT', 'SILVER_FUT', 'WTI']
 const SR_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti', 'dxy'], TL_ASSETS = ['xau', 'xag', 'dxy_ice', 'wti'], ANALYSIS_ASSETS = SR_ASSETS   // dxy = gold-grid DXY (S/R only: the DXY warning)
@@ -65,6 +67,9 @@ export function readHealthInputs(now = Date.now()) {
     feeds: Object.fromEntries(ANALYSIS_ASSETS.map((sh) => [sh, { sr: readJ(path.join(TURBO.master, `sr_live_${sh}.json`))?.at ?? null, tl: readJ(path.join(TURBO.master, `trendline_live_lines_${sh}.json`))?.at ?? null }])),
     tlTick: readJ(path.join(TURBO.master, 'trendline_tick_state.json'))?.at ?? null,
     feedRuns: runs.filter((r) => /^(sr_refresh|trendline_lines)\.mjs /.test(r.script ?? '')).slice(-40),
+    // SCALP parity watcher (2026-10-27): its verdict file + the last matrix_tick runs
+    parity: readJ(path.join(TURBO.master, 'matrix_parity.json')),
+    matrixRuns: runs.filter((r) => r.script === 'matrix_tick.mjs').slice(-5),
   }
 }
 
@@ -180,6 +185,17 @@ export function assessHealth(I, R = HEALTH_RULE) {
     if (settledOpen && age(I.tlTick) > R.tlTickMaxAgeMs) add('TL_TICK_STALE', 'WARN', `Trendline alert check has not run for ${I.tlTick ? ago(age(I.tlTick)) : 'ever'} (every minute).`)
     if (failed.length) add('FEED_REFRESH_FAILED', 'WARN', `Analysis refresh failed twice in a row: ${failed.join(', ')}.`)
     checks.analysis_feeds = ANALYSIS_ASSETS.map((sh) => `${SYM_OF[sh]} S/R ${I.feeds[sh]?.sr ? iso(Date.parse(I.feeds[sh].sr)).slice(11, 16) : '—'} · TL ${I.feeds[sh]?.tl ? iso(Date.parse(I.feeds[sh].tl)).slice(11, 16) : '—'}`).join(' | ') + ` · TL check ${I.tlTick ? iso(Date.parse(I.tlTick)).slice(11, 16) : '—'}` + (srOld.length || tlOld.length || failed.length ? ' · ⚠' : ' · ok')
+  }
+  // 10. SCALP LIVE PARITY (2026-10-27, Ashraf: "we need to prevent this from happening again … so please fix permanent"): the tick re-computes the
+  //     recent window each run (scripts/lib/matrix_parity.mjs). A signal the live tick neither opened, vetoed nor skipped for a known reason (trade open,
+  //     data not live) → WARN with the measured reason; two killed / failed ticks in a row → WARN (bars not evaluated); the watcher silent → WARN.
+  if (checks.app === 'running' && settledOpen) {
+    const pt = I.parity?.at ? Date.parse(I.parity.at) : null, recent = (I.parity?.problems ?? []).filter((p) => now - Date.parse(p.found) <= R.parityRecentMs)
+    if (recent.length) add('MATRIX_PARITY', 'WARN', `SCALP signal(s) NOT taken live: ${recent.slice(-3).map((p) => `${p.side} ${new Date(p.t).toISOString().slice(11, 16)} @ ${p.entry} — ${p.status}: ${p.reason}`).join(' · ').slice(0, 500)} (data/paper/matrix_missed.jsonl).`)
+    if (I.parity && !(pt && now - pt <= R.parityMaxAgeMs)) add('MATRIX_PARITY_STALE', 'WARN', `SCALP parity watcher has not run for ${pt ? ago(now - pt) : 'ever'} (every 3m tick) — missed signals would not be noticed.`)
+    const mr = I.matrixRuns ?? []
+    if (mr.length >= 2 && mr.slice(-2).every((r) => r.exit !== 0)) add('MATRIX_TICK_FAILED', 'WARN', `SCALP tick failed twice in a row (last ${String(mr.at(-1).at).slice(11, 16)} UTC: ${mr.at(-1).killed ? 'killed at its 120 s limit' : 'exit ' + mr.at(-1).exit}) — those 3m bars were never evaluated.`)
+    checks.scalp_parity = I.parity ? `${I.parity.signals} signal(s) in the last 150 min: ${Object.entries(I.parity.counts ?? {}).filter(([, n]) => n).map(([k, n]) => `${k} ${n}`).join(', ') || 'none'} · ${recent.length} not taken (3 h) · ${iso(pt)}` : 'not run yet'
   }
   const state = issues.some((x) => x.sev === 'CRITICAL') ? 'STALE' : issues.length ? 'WARN' : 'OK'
   return { at: new Date(now).toISOString(), state, market_open: open, market, issues, checks }

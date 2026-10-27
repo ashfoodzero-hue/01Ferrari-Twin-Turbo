@@ -23,7 +23,7 @@ const healthy = (now, over = {}) => ({ now, fresh: { app: { alive: true }, flows
   calendar: { at: new Date(now - 10 * MIN).toISOString(), sources: { a: { ok: true }, b: { ok: true } }, holidays: [] }, history: { events: [1, 2], kept_from_previous: [] }, diskFreeGB: 300, ...over })
 const codes = (a) => a.issues.map((x) => x.code).sort()
 
-await ok('healthy inputs on an open Tuesday → OK, no issues, 13 check lines (incl. the market, silver/DXY stream, live ticks, pre-open, keep-awake), market OPEN', () => { const a = assessHealth(healthy(TUE)); assert.equal(a.state, 'OK'); assert.deepEqual(a.issues, []); assert.equal(Object.keys(a.checks).length, 13); assert.equal(a.market.status, 'OPEN'); assert(/live feed expected/.test(a.checks.market)) })
+await ok('healthy inputs on an open Tuesday → OK, no issues, 14 check lines (incl. the market, silver/DXY stream, live ticks, pre-open, keep-awake, SCALP parity), market OPEN', () => { const a = assessHealth(healthy(TUE)); assert.equal(a.state, 'OK'); assert.deepEqual(a.issues, []); assert.equal(Object.keys(a.checks).length, 14); assert.equal(a.market.status, 'OPEN'); assert(/live feed expected/.test(a.checks.market)) })
 await ok('every CRITICAL rule → STALE (gold stream, reconcile, audit, full check, recorder ×2 failed, recorder silent, futures, halt, app down, live flow)', () => {
   const C = [
     ['XAU_STREAM', { stream: { symbols: { XAUUSD: { settled_through: new Date(TUE - 5 * MIN).toISOString() } } } }],
@@ -150,7 +150,7 @@ await ok('KEEP-AWAKE (2026-10-20): fresh stamp → no issue; no file yet (before
   assert(tw.includes('await ensureSettings(); ensureAwake()') && tw.includes('awakeChild?.kill()') && tw.includes("'-ParentPid', String(process.pid)"))
   assert(ps.includes('SetThreadExecutionState($ES_CONTINUOUS -bor $ES_SYSTEM_REQUIRED)') && ps.includes('Get-Process -Id $ParentPid') && !/DISPLAY_REQUIRED\s*=/.test(ps))
 })
-await ok('REAL files: the live inputs produce a verdict with all 14 checks (whatever its state today)', () => {
-  const a = assessHealth(readHealthInputs()); assert(['OK', 'WARN', 'STALE'].includes(a.state)); assert.deepEqual(Object.keys(a.checks).sort(), ['analysis_feeds', 'app', 'calendar', 'disk', 'full_check', 'futures', 'gold_stream', 'keep_awake', 'live_ticks', 'market', 'preopen', 'reconcile', 'recording_audit', 'stream_symbols'])
+await ok('REAL files: the live inputs produce a verdict with all 14 checks (+ scalp_parity while the market is open; whatever its state today)', () => {
+  const a = assessHealth(readHealthInputs()); assert(['OK', 'WARN', 'STALE'].includes(a.state)); assert.deepEqual(Object.keys(a.checks).filter((k) => k !== 'scalp_parity').sort(), ['analysis_feeds', 'app', 'calendar', 'disk', 'full_check', 'futures', 'gold_stream', 'keep_awake', 'live_ticks', 'market', 'preopen', 'reconcile', 'recording_audit', 'stream_symbols'])
 })
 console.log(process.exitCode ? '✗ DATA HEALTH SMOKE FAILED' : `✅ DATA HEALTH SMOKE: ${n} passed, 0 failed`)
