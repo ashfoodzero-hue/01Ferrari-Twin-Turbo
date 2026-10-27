@@ -118,6 +118,15 @@ if (st.live && !health.halted && D.length && D.at(-1).t === lastClose - MATRIX.t
 if (STATIC) { console.log(JSON.stringify({ ...out, open: out.open && { ...out.open, ctx: undefined } }, null, 1)); process.exit(0) }
 fs.mkdirSync(TURBO.paper, { recursive: true })
 fs.writeFileSync(STATE + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(STATE + '.tmp', STATE)
+// 🔎 DECISION LOG (2026-10-27, Ashraf: "double check everything"): a 7-day parity check found 11 BUY signals in today's recompute that the live tick
+// neither opened nor vetoed, and the tick kept no record of why a bar gave no signal (inference ≠ measurement). One line per tick = exactly what the
+// tick SAW (gold bar, DXY, WTI as delivered, every BUY / SELL condition). LOGGING ONLY — no decision reads it. Never breaks the tick.
+try { const s = structure, gb = B.at(-1)
+  fs.appendFileSync(path.join(TURBO.paper, 'matrix_decisions.jsonl'), JSON.stringify({ bar: new Date(lastClose - MATRIX.tfMs).toISOString(), at: out.at, live: st.live, why: st.why ?? null,
+    halted: health.halted, open: !!state.open, gate: out.structureGate.state, barPresent: !!gb && gb.t === lastClose - MATRIX.tfMs,
+    gold: gb ? { t: gb.t, o: gb.o, h: gb.h, l: gb.l, c: gb.c } : null, buyLine: s ? +s.levels.buyLine.toFixed(2) : null, sellLine: s ? +s.levels.sellLine.toFixed(2) : null,
+    buy: s?.buy ?? null, sell: s?.sell ?? null, dxy: s?.dxy ?? null, dxyBarT: D.at(-1)?.t ?? null, wti: s?.wti ?? null, wtiN: W.length, wtiLastT: W.at(-1)?.t ?? null,
+    opened: opened ? opened.side : null, vetoed: blocked ? blocked.side : null }) + '\n') } catch (e) { console.error('  ⚠ decision log: ' + e.message) }
 // 📨 Telegram "TRADE SETUP READY" (2026-10-16) — after the box is written, once per trade; never blocks or breaks the tick
 // PREPARE is a BUY watch: never sent while the V1H gate blocks BUYs (2026-10-20, Ashraf: "Stop sending PREPARE while V1H blocks BUYs") — the 17:18 notice
 // announced a BUY the gate then vetoed. The chart keeps drawing the WATCH line (information).
