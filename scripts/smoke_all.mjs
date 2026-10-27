@@ -15,12 +15,14 @@ const FAST = [
 ]
 const HEAVY = [['smoke_impulse_frozen.mjs', '--max-old-space-size=8192']]
 const list = FULL ? [...FAST, ...HEAVY] : FAST
+// per-suite time limit (default 20 min). 2026-10-28: twin_roster measured 1607 s alone on 10-27 → killed at 1200 s inside smoke:all.
+const LIMIT_MS = { 'smoke_twin_roster.mjs': 2400000 }
 let green = 0
 const t0 = Date.now()
 for (const [script, heap, ...args] of list) {   // extra entries = script arguments (2026-10-17: smoke_ny_candles XAGUSD)
   const t = Date.now()
   try {
-    execFileSync(process.execPath, [...(heap ? [heap] : []), path.join(here, script), ...args], { stdio: 'inherit', timeout: 1200000, cwd: path.join(here, '..') })
+    execFileSync(process.execPath, [...(heap ? [heap] : []), path.join(here, script), ...args], { stdio: 'inherit', timeout: LIMIT_MS[script] ?? 1200000, cwd: path.join(here, '..') })
     green++; console.log(`── ${script} GREEN (${((Date.now() - t) / 1000).toFixed(0)}s)\n`)
   } catch (e) { console.error(`\n🚨 ${script} RED (exit ${e.status}) after ${((Date.now() - t) / 1000).toFixed(0)}s — stopping`); process.exit(1) }
 }
