@@ -394,7 +394,9 @@ async function scalp85() {
     try { L = fs.readFileSync(path.join(TURBO.root, 'data', 'paper', 'matrix_trades.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
     const seen = new Map(); for (const x of L) if (x.sig && !seen.has(x.id)) seen.set(x.id, x.sig)
     const sigs = [...seen.values()].sort((a, b) => a.decisionT - b.decisionT); if (!sigs.length) return { boxes: [], live: { n: 0, w: 0, net: 0 } }
-    const M = (await loadBars('XAUUSD', '1m', { from: sigs[0].decisionT - 60000 })).bars.filter((b) => b.t + 60000 <= now), sp = makeSpreadAt()
+    const M = (await loadBars('XAUUSD', '1m', { from: sigs[0].decisionT - 60000 })).bars.filter((b) => b.t + 60000 <= now)
+    // the streamer's measured spread per minute, like matrix_tick (2026-10-28: the year×hour table alone put 23 UTC at $1.25 from n=9 vs ~$0.61 measured live)
+    const sp = makeSpreadAt({ live: loadLiveSpreads(quotesFile('XAUUSD'), { from: sigs[0].decisionT - 60000 }) })
     const all = sigs.map((s) => { const up = s.side === 'BUY', fill = up ? s.entry + sp(s.decisionT) : s.entry, r = s.risk, sl = up ? fill - 3 * r : fill + 3 * r, tp = up ? fill + 0.25 * r : fill - 0.25 * r
       let status = 'OPEN', exitT = null, net = null
       for (const b of M) { if (b.t < s.decisionT) continue; const spr = sp(b.t)
