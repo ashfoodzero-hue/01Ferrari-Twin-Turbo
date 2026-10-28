@@ -47,7 +47,12 @@ const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.joi
 // a BUY LIMIT at the low of the last 4 h before the signal, valid 24 h, filled when the ask reaches it (bid low ≤ level − measured spread);
 // stop level − $10, target level + $20, 7-day time stop from the fill; not filled in 24 h → EXPIRED (no trade, not in the WR). NO Telegram.
 // Measured 2022-26: arm 1 39.8 % WR +$1.77/t, arm 2 40.6 % WR +$2.01/t (beat random buys in both periods; up to 17 / 32 losses in a row).
-const BR = { name: 'L4H', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tgtUsd: 20 }, TELEGRAM = false
+// L4H3 (same day, ~10:xx UTC, Ashraf: "Yes, switch both swing paper tests to 3 lots at the 4h-low limit: TP1 $10, then the other 2 lots to
+// break-even, running to +$50 or 7 days. Record only."; study (em) swing_scalp_entry_lots3.json): same limit / fill / expiry as L4H; 3 lots,
+// stop level − $10 each; lot 1 exits at TP1 = level + $10; then lots 2-3 move to break-even from the next minute and exit at BE, at the cap
+// level + $50 (`target`), or at the 7-day time stop. net = $ for the whole setup (risk $30). No L4H (single-lot) signal was ever recorded.
+// Measured (L4H entry, TP1 $10): setups in profit 52-56 %, $/setup 13 y +5.23 / +6.02, 2 y live-rule +7.97 / +7.35 (arm 1 / arm 2).
+const BR = { name: 'L4H3', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tp1Usd: 10, capUsd: 50, lots: 3 }, TELEGRAM = false
 const readMeta = (d) => JSON.parse(fs.readFileSync(path.join(d, 'dataset_meta.json'), 'utf8'))
 const f32 = (f) => { const b = fs.readFileSync(f); return new Float32Array(b.buffer, b.byteOffset, b.length / 4) }
 
@@ -106,8 +111,21 @@ const fillOf = (s) => { for (let k = lb(s.t); k < M.length && M[k].t < s.valid_u
   return M.length && M[M.length - 1].t + 60000 >= s.valid_until ? false : null }
 // resolution of a signal on the 1m store as far as it exists (null = still open). Buy at the ask; exits at the bid; stop first in a minute
 // (an L4H trade: from its fill minute — the fill minute itself is checked for the stop first, conservative).
+const isLim = (s) => s.bracket === 'L4H' || s.bracket === 'L4H3'
+// L4H3 phase 1 (all 3 lots on): index where TP1 is first reached, or where the time stop / stop ended the setup first (stop first in a minute)
+const phase1 = (s, k0, t0) => { for (let k = k0; k < M.length; k++) { const b = M[k]
+  if (b.t >= t0 + 7 * DAY) return { end: k, why: 'TIME' }; if (b.l <= s.stop) return { end: k, why: 'STOP' }; if (b.h >= s.tp1) return { tp1: k } } return null }
 const resolve = (s) => { let k0 = lb(s.t), t0 = s.t
-  if (s.bracket === 'L4H') { const f = fillOf(s); if (f === null) return null; if (f === false) return { exit_t: s.valid_until, exit: null, why: 'EXPIRED', net: null }; k0 = f; t0 = M[f].t }
+  if (isLim(s)) { const f = fillOf(s); if (f === null) return null; if (f === false) return { exit_t: s.valid_until, exit: null, why: 'EXPIRED', net: null }; k0 = f; t0 = M[f].t }
+  if (s.bracket === 'L4H3') { const e = s.entry_ask, p = phase1(s, k0, t0); if (!p) return null   // net = $ for the whole 3-lot setup
+    if (p.why === 'TIME') { const j = M[p.end - 1]; return { exit_t: j.t + 60000, exit: j.c, why: 'TIME', net: +(3 * (j.c - e)).toFixed(3) } }
+    if (p.why === 'STOP') return { exit_t: M[p.end].t + 60000, exit: s.stop, why: 'STOP', net: +(3 * (s.stop - e - Math.min(0.3, 0.05 * s.atr_1d))).toFixed(3) }
+    const tp1_t = M[p.tp1].t, g = s.tp1 - e   // lot 1 banked; lots 2-3 at break-even from the NEXT minute
+    for (let j = p.tp1 + 1; j < M.length; j++) { const b = M[j]
+      if (b.t >= t0 + 7 * DAY) { const z = M[j - 1]; return { exit_t: z.t + 60000, exit: z.c, why: 'TP1+TIME', tp1_t, net: +(g + 2 * (z.c - e)).toFixed(3) } }
+      if (b.l <= e) return { exit_t: b.t + 60000, exit: e, why: 'TP1+BE', tp1_t, net: +g.toFixed(3) }
+      if (b.h >= s.target) return { exit_t: b.t + 60000, exit: s.target, why: 'TP1+RUN', tp1_t, net: +(g + 2 * (s.target - e)).toFixed(3) } }
+    return null }
   for (let k = k0; k < M.length; k++) { const b = M[k]
     if (b.t >= t0 + 7 * DAY) { const j = M[k - 1]; return { exit_t: j.t + 60000, exit: j.c, why: 'TIME', net: +(j.c - s.entry_ask).toFixed(3) } }
     if (b.l <= s.stop) return { exit_t: b.t + 60000, exit: s.stop, why: 'STOP', net: +(s.stop - s.entry_ask - Math.min(0.3, 0.05 * s.atr_1d)).toFixed(3) }
@@ -116,8 +134,12 @@ const exitOf = (s) => resolved.get(s.id)?.exit_t ?? res.find((x) => x.id === s.i
 for (const s of signals) if (!resolved.has(s.id)) { const o = resolve(s); if (o) res.push({ type: 'resolve', id: s.id, ...o, resolved_at: new Date(now).toISOString() }) }
 // L4H fills are recorded once as their own ledger line (the chart shows PENDING limit → OPEN trade)
 const filled = new Set(L.filter((e) => e.type === 'fill').map((e) => e.id)), fills = []
-const noteFill = (s) => { if (s.bracket !== 'L4H' || filled.has(s.id)) return; const f = fillOf(s); if (typeof f === 'number') { filled.add(s.id); fills.push({ type: 'fill', id: s.id, fill_t: M[f].t, fill: s.entry_limit, recorded_at: new Date(now).toISOString() }) } }
-for (const s of signals) noteFill(s)
+const noteFill = (s) => { if (!isLim(s) || filled.has(s.id)) return; const f = fillOf(s); if (typeof f === 'number') { filled.add(s.id); fills.push({ type: 'fill', id: s.id, fill_t: M[f].t, fill: s.entry_limit, recorded_at: new Date(now).toISOString() }) } }
+// L4H3: the TP1 moment is recorded once (chart: "TP1 hit · runners at BE") while the 2 runners are still open
+const tp1Done = new Set(L.filter((e) => e.type === 'tp1').map((e) => e.id))
+const noteTp1 = (s) => { if (s.bracket !== 'L4H3' || tp1Done.has(s.id) || resolved.has(s.id) || res.some((x) => x.id === s.id)) return; const f = fillOf(s); if (typeof f !== 'number') return
+  const p = phase1(s, f, M[f].t); if (p?.tp1 != null) { tp1Done.add(s.id); fills.push({ type: 'tp1', id: s.id, tp1_t: M[p.tp1].t, tp1: s.tp1, recorded_at: new Date(now).toISOString() }) } }
+for (const s of signals) { noteFill(s); noteTp1(s) }
 let maxT = lastDone
 for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) continue; maxT = Math.max(maxT, t)
   const p = predict(FM.model, Xb, n, r); if (p < FM.thr) continue
@@ -128,23 +150,24 @@ for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) cont
   const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) continue
   let lvl = Infinity; for (let j = lb(t - BR.lookMs); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) continue
   const sig = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3),
-    entry_limit: +lvl.toFixed(2), entry_ask: +lvl.toFixed(2), valid_until: t + BR.validMs, atr_1d: +Dv.toFixed(2), target: +(lvl + BR.tgtUsd).toFixed(2), stop: +(lvl - BR.stopUsd).toFixed(2),
+    entry_limit: +lvl.toFixed(2), entry_ask: +lvl.toFixed(2), valid_until: t + BR.validMs, atr_1d: +Dv.toFixed(2), lots: BR.lots, tp1: +(lvl + BR.tp1Usd).toFixed(2), target: +(lvl + BR.capUsd).toFixed(2), stop: +(lvl - BR.stopUsd).toFixed(2),
     recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
-  add.push(sig); noteFill(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
+  add.push(sig); noteFill(sig); noteTp1(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
 }
 const lines = [...add, ...fills, ...res, { type: 'scan', from: lastDone, to: maxT, at: new Date(now).toISOString(), rows_scored: T.filter((t) => t > lastDone && t >= CUT).length }]
 fs.appendFileSync(LEDGER, lines.map((x) => JSON.stringify(x)).join('\n') + '\n')
 // ── 4. summary ───────────────────────────────────────────────────────────────────────────────────────────────────
 // the summary / verdict count ONLY the arm's current bracket (arm 1: E3 from 2026-10-16; the earlier E0 signals stay in the ledger, not in this verdict)
 const inBr = (s) => (s.bracket ?? 'E0') === BR.name, all = [...signals, ...add].filter(inBr), ids = new Set(all.map((s) => s.id))
-// EXPIRED limits (never filled) are no trade: counted apart, never in the WR. L4H forward verdict (pre-registered 2026-10-28): none before 100
-// filled + resolved; then PASS = mean $ > 0 AND WR ≥ 33.3 % (the 1:2 break-even) — the study measured ≈ 40 %, a high WR is NOT expected here.
+// EXPIRED limits (never filled) are no trade: counted apart, never in the WR. L4H3 forward verdict (pre-registered 2026-10-28 before any
+// L4H3 signal): none before 100 filled + resolved setups; then PASS = mean $/setup > 0 AND setups in profit ≥ 45 % (study: 52-56 %).
+// wr = share of SETUPS that ended in profit (TP1 reached = profit, since the runners exit at BE or better).
 const rAll = [...resolved.values(), ...res].filter((x) => ids.has(x.id)), expired = rAll.filter((x) => x.why === 'EXPIRED').length
 const rs = rAll.filter((x) => x.net != null), nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
 const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, bracket: BR, telegram: TELEGRAM, cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, expired,
   open: all.filter((s) => filled.has(s.id)).length - rs.length, pending: all.length - rAll.length - (all.filter((s) => filled.has(s.id)).length - rs.length),
   wr: rs.length ? +(w / rs.length).toFixed(4) : null, wilson_lb: rs.length ? +wilsonLB(w, rs.length, 1.96).toFixed(4) : null, net_mean: rs.length ? +(nets.reduce((a, b) => a + b, 0) / rs.length).toFixed(3) : null,
-  verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 1 / 3 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS' : 'FORWARD FAIL') }
+  verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 0.45 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS' : 'FORWARD FAIL') }
 fs.writeFileSync(path.join(AD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
 console.log(`forward ${ARMC.name}: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)
 // 📨 Telegram (2026-10-16): each NEW signal, once; tradeAlert skips anything recorded > TWIN_ALERT_MAX_LATE_MIN after its bar (backfill / catch-up)

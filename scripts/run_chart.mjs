@@ -416,12 +416,14 @@ function forward(arm) {   // arm 'freq' (2026-10-15) = the ≈ 1 trade/day arm i
   try { lines = fs.readFileSync(path.join(dir, 'ledger.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
   try { summary = JSON.parse(fs.readFileSync(path.join(dir, 'forward_summary.json'), 'utf8')) } catch {}
   const res = new Map(lines.filter((e) => e.type === 'resolve').map((e) => [e.id, e])), fill = new Map(lines.filter((e) => e.type === 'fill').map((e) => [e.id, e]))
-  // L4H (2026-10-28): a buy LIMIT — PENDING until filled, EXPIRED if never filled in 24 h (no trade), then OPEN / WIN / LOSS like the others
-  const trades = lines.filter((e) => e.type === 'signal').map((s) => { const r = res.get(s.id), f = fill.get(s.id), lim = s.bracket === 'L4H'
+  const tp1 = new Map(lines.filter((e) => e.type === 'tp1').map((e) => [e.id, e]))
+  // L4H / L4H3 (2026-10-28): a buy LIMIT — PENDING until filled, EXPIRED if never filled in 24 h (no trade), then OPEN / WIN / LOSS like the
+  // others; L4H3 = 3 lots: tp1 = lot 1's target, target = the runners' cap, tp1_t once lot 1 is banked (runners then at break-even)
+  const trades = lines.filter((e) => e.type === 'signal').map((s) => { const r = res.get(s.id), f = fill.get(s.id), lim = s.bracket === 'L4H' || s.bracket === 'L4H3'
     const status = r ? (r.why === 'EXPIRED' ? 'EXPIRED' : r.net > 0 ? 'WIN' : 'LOSS') : lim && !f ? 'PENDING' : 'OPEN'
-    return { id: s.id, t: s.t, side: 'BUY', entry: s.entry_ask, target: s.target, stop: s.stop, score: s.score, thr: s.thr, late_min: s.late_min ?? 0, bracket: s.bracket ?? 'E0',
-      limit: lim, valid_until: s.valid_until ?? null, fill_t: f?.fill_t ?? null, status, why: r?.why ?? null, exit_t: r?.exit_t ?? null, exit: r?.exit ?? null, net: r?.net ?? null } })
-  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: 'paper forward test, RECORD ONLY (no Telegram) — from 2026-10-28 bracket L4H: BUY LIMIT at the 4 h low (valid 24 h), stop −$10, target +$20, 7-day horizon (measured ≈ 40 % WR, +$1.77/+$2.01 per trade 2022-26); earlier signals keep their own bracket (E3 / E0)' }
+    return { id: s.id, t: s.t, side: 'BUY', entry: s.entry_ask, target: s.target, stop: s.stop, tp1: s.tp1 ?? null, lots: s.lots ?? 1, score: s.score, thr: s.thr, late_min: s.late_min ?? 0, bracket: s.bracket ?? 'E0',
+      limit: lim, valid_until: s.valid_until ?? null, fill_t: f?.fill_t ?? null, tp1_t: r?.tp1_t ?? tp1.get(s.id)?.tp1_t ?? null, status, why: r?.why ?? null, exit_t: r?.exit_t ?? null, exit: r?.exit ?? null, net: r?.net ?? null } })
+  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: 'paper forward test, RECORD ONLY (no Telegram) — from 2026-10-28 bracket L4H3: BUY LIMIT at the 4 h low (valid 24 h), 3 lots, stop −$10 each, lot 1 at TP1 +$10, then lots 2-3 at break-even running to +$50 or 7 days; result in $ per 3-lot setup (measured 52-56 % of setups in profit, +$5-8 per setup); earlier signals keep their own bracket (E3 / E0)' }
 }
 
 const server = http.createServer(async (req, res) => {
