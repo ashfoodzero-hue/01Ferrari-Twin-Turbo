@@ -481,9 +481,13 @@ function fwDraw() {
   const ts = p.ch.timeScale(), W = ts.width(), H = $('c0').clientHeight, ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v)
   const xOf = (t) => { const x = ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000)); return x }
   const head = document.createElement('div'); head.className = 'fwhead'
-  head.textContent = FWS.map((FW) => { const done = FW.trades.filter((t) => t.status !== 'OPEN'), w = done.filter((t) => t.status === 'WIN').length
-    return `${FW.k === 'freq' ? 'SWING 1/day (record only)' : 'SWING TRADE arm 1 (E3)'}: ${FW.trades.length} sig · ${done.length} res${done.length ? ` · WR ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · paper, no verdict before 100 resolved'
+  // L4H (2026-10-28): BUY LIMIT at the 4 h low, $10 stop / $20 target — the header counts the L4H trades only (old E3 / E0 trades still drawn)
+  const L4 = (FW) => FW.trades.filter((t) => t.bracket === 'L4H')
+  head.textContent = FWS.map((FW) => { const done = L4(FW).filter((t) => t.status === 'WIN' || t.status === 'LOSS'), w = done.filter((t) => t.status === 'WIN').length
+    return `${FW.k === 'freq' ? 'SWING 1/day' : 'SWING arm 1'} (limit 4h low · SL $10 · TP $20): ${L4(FW).length} sig · ${done.length} res${done.length ? ` · WR ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · record only, no verdict before 100 resolved'
   ov.appendChild(head)
+  const stTxt = (t) => t.status === 'OPEN' ? 'OPEN' : t.status === 'PENDING' ? 'LIMIT waiting' : t.status === 'EXPIRED' ? 'EXPIRED (not filled)' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)
+  const live = (t) => t.status === 'OPEN' || t.status === 'PENDING'
   // ONE full box per arm (2026-10-28, Ashraf: "i can not see a thing" — 9 open paper swings stacked full-height boxes over the candles):
   // the newest drawable trade of each arm keeps the full neon box; every other trade is a small tag at its entry (like the S85 tags)
   for (const FW of FWS) { const main = FW.trades.filter((x) => xOf(x.t) != null).at(-1)
@@ -493,23 +497,26 @@ function fwDraw() {
     const ya = y(t.entry), yb = y(t.target); if (ya == null || yb == null) continue
     if (t !== main) { const g = document.createElement('div'); g.className = 'ntag'; g.style.left = x0 + 'px'; g.style.top = (ya - 9) + 'px'
       g.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : FW.k === 'freq' ? '#3ff0ff' : '#ffd23f'
-      g.textContent = `${FW.k === 'freq' ? 'S1d' : 'S1'} ${t.status === 'OPEN' ? 'OPEN ' + fmt(t.entry) : (t.status === 'WIN' ? 'W ' : t.status === 'LOSS' ? 'L ' : t.status + ' ') + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)}`
-      g.title = `${FW.k === 'freq' ? 'SWING · 1/day (record only)' : 'SWING TRADE · E3'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${t.status} · paper`; ov.appendChild(g); continue }
+      g.textContent = `${FW.k === 'freq' ? 'S1d' : 'S1'} ${t.status === 'OPEN' ? 'OPEN ' + fmt(t.entry) : t.status === 'PENDING' ? 'LIMIT ' + fmt(t.entry) : t.status === 'EXPIRED' ? 'EXP' : (t.status === 'WIN' ? 'W ' : 'L ') + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)}`
+      if (t.status === 'EXPIRED') g.style.background = '#8b949e'
+      g.title = `${FW.k === 'freq' ? 'SWING · 1/day' : 'SWING arm 1'} (${t.bracket}) BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${t.status} · paper, record only`; ov.appendChild(g); continue }
     // NEON box (2026-10-15, Ashraf: "build the neon boxes … name the box type"): gold = FWD 92 % (swing), cyan = FWD1 1/day (swing);
     // each label carries its type, its backtest record and the live tally; a finished trade stays faintly with its result
-    const fr = FW.k === 'freq', S = FW.summary, live = S?.resolved ? `live ${Math.round(S.wr * S.resolved)}/${S.resolved}` : 'live 0/0'
+    const fr = FW.k === 'freq', S = FW.summary, liveTxt = S?.resolved ? `live ${Math.round(S.wr * S.resolved)}/${S.resolved}` : 'live 0/0'
     // the SAME two-zone neon style as the scalp box (Ashraf 2026-10-15, his Pine look): green SNIPER TARGET ZONE entry → TP, pink RISK
     // PROTECTION ZONE entry → SL (clipped by the pane when the wide swing stop is off-screen); a finished trade stays faint with its result
-    const zone = (cls, a, b, label) => { const za = y(a), zb = y(b); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (t.status !== 'OPEN' ? ' fwdone' : '')
+    const zone = (cls, a, b, label) => { const za = y(a), zb = y(b); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (!live(t) ? ' fwdone' : '')
       d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(za, zb) + 'px'; d.style.height = Math.max(2, Math.abs(za - zb)) + 'px'; d.textContent = label; ov.appendChild(d) }
     zone('tgt', t.entry, t.target, `SNIPER TARGET ZONE · TP ${fmt(t.target)} (+${(t.target - t.entry).toFixed(2)})`)
     zone('risk', t.entry, t.stop, `RISK PROTECTION ZONE (SL) ${fmt(t.stop)} (−${(t.entry - t.stop).toFixed(2)})`)
     const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : fr ? '#3ff0ff' : '#ffd23f'
     tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (fr ? 30 : 15)) + 'px'
-    tag.textContent = `${fr ? 'SWING · 1/day (record only)' : t.bracket === 'E3' ? 'SWING TRADE · E3' : 'SWING TRADE · 92% (old bracket)'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${t.status === 'OPEN' ? 'OPEN' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)} · ${fr ? 'bt 90.4%' : 'bt 92.0%'} · ${live} · paper`
+    const l4 = t.bracket === 'L4H', bt = l4 ? (fr ? 'bt 40.6% +$2.01/t' : 'bt 39.8% +$1.77/t') : fr ? 'bt 90.4% (old 0.2/2 bracket)' : t.bracket === 'E3' ? 'bt 73.0%' : 'bt 92.0%'
+    if (t.status === 'EXPIRED') tag.style.background = '#8b949e'
+    tag.textContent = `${fr ? 'SWING · 1/day' : 'SWING arm 1'}${l4 ? ' · LIMIT 4h low' : ' · ' + t.bracket + ' (old)'} BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP ${fmt(t.target)} · ${stTxt(t)} · ${bt} · ${liveTxt} · record only`
     ov.appendChild(tag)
     // name badge on the arm's main box only (the latest DRAWABLE trade: a signal in the 21:00 UTC daily break has no candle on this timeframe)
-    nameBox(ov, 'swing', x0, x1, [t.entry, t.target, t.stop], { done: t.status !== 'OPEN', side: 'BUY', note: fr ? 'record only' : '', lift: fr ? 30 : 15, badge: true })
+    nameBox(ov, 'swing', x0, x1, [t.entry, t.target, t.stop], { done: !live(t), side: 'BUY', note: t.status === 'PENDING' ? 'limit waiting' : 'record only', lift: fr ? 30 : 15, badge: true })
     const ys = y(t.stop); if (ys != null && ys > 0 && ys < H) { const l = document.createElement('div'); l.className = 'fwstop'; l.style.left = x0 + 'px'; l.style.width = (x1 - x0) + 'px'; l.style.top = ys + 'px'; l.textContent = 'SWING SL ' + fmt(t.stop); ov.appendChild(l) }
   } }
 }

@@ -42,7 +42,12 @@ const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.joi
 // BRACKET (2026-10-16, Ashraf: "the SL must be reasonable" → chose E3; study (bo) swing_bracket_study*.json): arm 1 → E3 = target 0.5·ATR1d /
 // stop 1·ATR1d (73.0 % WR, +$3.76/t 2022-26, beats random buys by +$3.78/t); arm 2 FAILED every reasonable bracket (E3 −$0.73/t, worse than
 // random) → keeps E0 0.2/2 and records SILENTLY (no Telegram). Each signal stores its own bracket; old E0 signals resolve on their own levels.
-const BR = ARM === 'freq' ? { name: 'E0', tm: 0.2, sm: 2 } : { name: 'E3', tm: 0.5, sm: 1 }, TM = BR.tm, SM = BR.sm
+// BRACKET L4H (2026-10-28, Ashraf: "swing trade must have … SL not more than 10$" + "must trigger at the correct level" → "Yes, switch both swing
+// paper tests to the level entry (4h low limit), $10 stop, $20 target, record only"; study (ek) swing_bracket_study*_level4h.json): BOTH arms —
+// a BUY LIMIT at the low of the last 4 h before the signal, valid 24 h, filled when the ask reaches it (bid low ≤ level − measured spread);
+// stop level − $10, target level + $20, 7-day time stop from the fill; not filled in 24 h → EXPIRED (no trade, not in the WR). NO Telegram.
+// Measured 2022-26: arm 1 39.8 % WR +$1.77/t, arm 2 40.6 % WR +$2.01/t (beat random buys in both periods; up to 17 / 32 losses in a row).
+const BR = { name: 'L4H', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tgtUsd: 20 }, TELEGRAM = false
 const readMeta = (d) => JSON.parse(fs.readFileSync(path.join(d, 'dataset_meta.json'), 'utf8'))
 const f32 = (f) => { const b = fs.readFileSync(f); return new Float32Array(b.buffer, b.byteOffset, b.length / 4) }
 
@@ -96,13 +101,23 @@ const live = loadLiveSpreads(path.join(TURBO.root, 'data', 'history', 'XAUUSD', 
 const D1 = (await loadBars('XAUUSD', '1d', { from: CUT - 60 * DAY, to: Date.now() })).bars, A1 = atr(D1, 14), D1c = D1.map((b) => b.t + DAY)
 const atrD = (t) => { let i = -1; for (let k = 0; k < D1c.length; k++) if (D1c[k] <= t) i = k; return i >= 0 ? A1[i] : null }
 const now = Date.now(), add = [], res = []
-// resolution of a signal on the 1m store as far as it exists (null = still open). Buy at the ask; exits at the bid; stop first in a minute.
-const resolve = (s) => { for (let k = lb(s.t); k < M.length; k++) { const b = M[k]
-    if (b.t >= s.t + 7 * DAY) { const j = M[k - 1]; return { exit_t: j.t + 60000, exit: j.c, why: 'TIME', net: +(j.c - s.entry_ask).toFixed(3) } }
+// L4H fill: index of the first minute (within the 24 h validity) whose bid low lets the ask reach the limit; null = not yet, false = expired
+const fillOf = (s) => { for (let k = lb(s.t); k < M.length && M[k].t < s.valid_until; k++) if (M[k].l <= s.entry_limit - spread(M[k].t)) return k
+  return M.length && M[M.length - 1].t + 60000 >= s.valid_until ? false : null }
+// resolution of a signal on the 1m store as far as it exists (null = still open). Buy at the ask; exits at the bid; stop first in a minute
+// (an L4H trade: from its fill minute — the fill minute itself is checked for the stop first, conservative).
+const resolve = (s) => { let k0 = lb(s.t), t0 = s.t
+  if (s.bracket === 'L4H') { const f = fillOf(s); if (f === null) return null; if (f === false) return { exit_t: s.valid_until, exit: null, why: 'EXPIRED', net: null }; k0 = f; t0 = M[f].t }
+  for (let k = k0; k < M.length; k++) { const b = M[k]
+    if (b.t >= t0 + 7 * DAY) { const j = M[k - 1]; return { exit_t: j.t + 60000, exit: j.c, why: 'TIME', net: +(j.c - s.entry_ask).toFixed(3) } }
     if (b.l <= s.stop) return { exit_t: b.t + 60000, exit: s.stop, why: 'STOP', net: +(s.stop - s.entry_ask - Math.min(0.3, 0.05 * s.atr_1d)).toFixed(3) }
     if (b.h >= s.target) return { exit_t: b.t + 60000, exit: s.target, why: 'TARGET', net: +(s.target - s.entry_ask).toFixed(3) } } return null }
 const exitOf = (s) => resolved.get(s.id)?.exit_t ?? res.find((x) => x.id === s.id)?.exit_t ?? Infinity
 for (const s of signals) if (!resolved.has(s.id)) { const o = resolve(s); if (o) res.push({ type: 'resolve', id: s.id, ...o, resolved_at: new Date(now).toISOString() }) }
+// L4H fills are recorded once as their own ledger line (the chart shows PENDING limit → OPEN trade)
+const filled = new Set(L.filter((e) => e.type === 'fill').map((e) => e.id)), fills = []
+const noteFill = (s) => { if (s.bracket !== 'L4H' || filled.has(s.id)) return; const f = fillOf(s); if (typeof f === 'number') { filled.add(s.id); fills.push({ type: 'fill', id: s.id, fill_t: M[f].t, fill: s.entry_limit, recorded_at: new Date(now).toISOString() }) } }
+for (const s of signals) noteFill(s)
 let maxT = lastDone
 for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) continue; maxT = Math.max(maxT, t)
   const p = predict(FM.model, Xb, n, r); if (p < FM.thr) continue
@@ -111,21 +126,26 @@ for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) cont
   const open = prior.filter((s) => s.t <= t && exitOf(s) > t).length   // a position closed before t is known closed at t (causal)
   if (today >= 5 || open >= 5 || t - lastSig < 3600000) continue
   const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) continue
-  const entry = c + spread(t)
-  const sig = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3), entry_ask: +entry.toFixed(2),
-    atr_1d: +Dv.toFixed(2), target: +(entry + TM * Dv).toFixed(2), stop: +(entry - SM * Dv).toFixed(2), recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
-  add.push(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
+  let lvl = Infinity; for (let j = lb(t - BR.lookMs); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) continue
+  const sig = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3),
+    entry_limit: +lvl.toFixed(2), entry_ask: +lvl.toFixed(2), valid_until: t + BR.validMs, atr_1d: +Dv.toFixed(2), target: +(lvl + BR.tgtUsd).toFixed(2), stop: +(lvl - BR.stopUsd).toFixed(2),
+    recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
+  add.push(sig); noteFill(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
 }
-const lines = [...add, ...res, { type: 'scan', from: lastDone, to: maxT, at: new Date(now).toISOString(), rows_scored: T.filter((t) => t > lastDone && t >= CUT).length }]
+const lines = [...add, ...fills, ...res, { type: 'scan', from: lastDone, to: maxT, at: new Date(now).toISOString(), rows_scored: T.filter((t) => t > lastDone && t >= CUT).length }]
 fs.appendFileSync(LEDGER, lines.map((x) => JSON.stringify(x)).join('\n') + '\n')
 // ── 4. summary ───────────────────────────────────────────────────────────────────────────────────────────────────
 // the summary / verdict count ONLY the arm's current bracket (arm 1: E3 from 2026-10-16; the earlier E0 signals stay in the ledger, not in this verdict)
 const inBr = (s) => (s.bracket ?? 'E0') === BR.name, all = [...signals, ...add].filter(inBr), ids = new Set(all.map((s) => s.id))
-const rs = [...resolved.values(), ...res].filter((x) => ids.has(x.id)), nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
-const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, bracket: BR, telegram: ARM !== 'freq', cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, open: all.length - rs.length,
+// EXPIRED limits (never filled) are no trade: counted apart, never in the WR. L4H forward verdict (pre-registered 2026-10-28): none before 100
+// filled + resolved; then PASS = mean $ > 0 AND WR ≥ 33.3 % (the 1:2 break-even) — the study measured ≈ 40 %, a high WR is NOT expected here.
+const rAll = [...resolved.values(), ...res].filter((x) => ids.has(x.id)), expired = rAll.filter((x) => x.why === 'EXPIRED').length
+const rs = rAll.filter((x) => x.net != null), nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
+const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, bracket: BR, telegram: TELEGRAM, cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, expired,
+  open: all.filter((s) => filled.has(s.id)).length - rs.length, pending: all.length - rAll.length - (all.filter((s) => filled.has(s.id)).length - rs.length),
   wr: rs.length ? +(w / rs.length).toFixed(4) : null, wilson_lb: rs.length ? +wilsonLB(w, rs.length, 1.96).toFixed(4) : null, net_mean: rs.length ? +(nets.reduce((a, b) => a + b, 0) / rs.length).toFixed(3) : null,
-  verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 0.9 && wilsonLB(w, rs.length, 1.96) >= 0.88 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS (check bootstrap LB)' : 'FORWARD FAIL') }
+  verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 1 / 3 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS' : 'FORWARD FAIL') }
 fs.writeFileSync(path.join(AD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
 console.log(`forward ${ARMC.name}: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)
 // 📨 Telegram (2026-10-16): each NEW signal, once; tradeAlert skips anything recorded > TWIN_ALERT_MAX_LATE_MIN after its bar (backfill / catch-up)
-for (const s of ARM === 'freq' ? [] : add) { const r = await alertSetup(swingSetup(s, { arm: ARM, summary: sum })); console.log(`  📨 telegram SWING ${s.id}: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }
+for (const s of TELEGRAM && ARM !== 'freq' ? add : []) { const r = await alertSetup(swingSetup(s, { arm: ARM, summary: sum })); console.log(`  📨 telegram SWING ${s.id}: ${r.sent ? 'sent' : r.dryRun ? 'dry run (no TWIN_TELEGRAM_* in .env)' : r.skipped || r.error || 'not sent ' + r.status}`) }

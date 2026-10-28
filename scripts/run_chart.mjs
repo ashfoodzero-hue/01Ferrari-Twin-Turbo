@@ -415,11 +415,13 @@ function forward(arm) {   // arm 'freq' (2026-10-15) = the ≈ 1 trade/day arm i
   const dir = path.join(TURBO.root, 'data', 'inv90', arm === 'freq' ? 'forward_freq' : 'forward'); let lines = [], summary = null
   try { lines = fs.readFileSync(path.join(dir, 'ledger.jsonl'), 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l)) } catch {}
   try { summary = JSON.parse(fs.readFileSync(path.join(dir, 'forward_summary.json'), 'utf8')) } catch {}
-  const res = new Map(lines.filter((e) => e.type === 'resolve').map((e) => [e.id, e]))
-  const trades = lines.filter((e) => e.type === 'signal').map((s) => { const r = res.get(s.id)
+  const res = new Map(lines.filter((e) => e.type === 'resolve').map((e) => [e.id, e])), fill = new Map(lines.filter((e) => e.type === 'fill').map((e) => [e.id, e]))
+  // L4H (2026-10-28): a buy LIMIT — PENDING until filled, EXPIRED if never filled in 24 h (no trade), then OPEN / WIN / LOSS like the others
+  const trades = lines.filter((e) => e.type === 'signal').map((s) => { const r = res.get(s.id), f = fill.get(s.id), lim = s.bracket === 'L4H'
+    const status = r ? (r.why === 'EXPIRED' ? 'EXPIRED' : r.net > 0 ? 'WIN' : 'LOSS') : lim && !f ? 'PENDING' : 'OPEN'
     return { id: s.id, t: s.t, side: 'BUY', entry: s.entry_ask, target: s.target, stop: s.stop, score: s.score, thr: s.thr, late_min: s.late_min ?? 0, bracket: s.bracket ?? 'E0',
-      status: r ? (r.net > 0 ? 'WIN' : 'LOSS') : 'OPEN', why: r?.why ?? null, exit_t: r?.exit_t ?? null, exit: r?.exit ?? null, net: r?.net ?? null } })
-  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: arm === 'freq' ? 'paper forward test, RECORD ONLY (no Telegram) — 0.2×ATR1d target / 2×ATR1d stop; no reasonable-stop version passed (study bo)' : 'paper forward test — from 2026-10-16 bracket E3: target 0.5×ATR1d / stop 1×ATR1d, 7-day horizon (measured 73 % WR, +$3.76/t 2022-26); earlier signals used 0.2/2' }
+      limit: lim, valid_until: s.valid_until ?? null, fill_t: f?.fill_t ?? null, status, why: r?.why ?? null, exit_t: r?.exit_t ?? null, exit: r?.exit ?? null, net: r?.net ?? null } })
+  return { candidate: summary?.candidate ?? 'BUY_D1-x', summary, trades, note: 'paper forward test, RECORD ONLY (no Telegram) — from 2026-10-28 bracket L4H: BUY LIMIT at the 4 h low (valid 24 h), stop −$10, target +$20, 7-day horizon (measured ≈ 40 % WR, +$1.77/+$2.01 per trade 2022-26); earlier signals keep their own bracket (E3 / E0)' }
 }
 
 const server = http.createServer(async (req, res) => {
