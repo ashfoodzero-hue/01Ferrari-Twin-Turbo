@@ -52,7 +52,11 @@ const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.joi
 // stop level − $10 each; lot 1 exits at TP1 = level + $10; then lots 2-3 move to break-even from the next minute and exit at BE, at the cap
 // level + $50 (`target`), or at the 7-day time stop. net = $ for the whole setup (risk $30). No L4H (single-lot) signal was ever recorded.
 // Measured (L4H entry, TP1 $10): setups in profit 52-56 %, $/setup 13 y +5.23 / +6.02, 2 y live-rule +7.97 / +7.35 (arm 1 / arm 2).
-const BR = { name: 'L4H3', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tp1Usd: 10, capUsd: 50, lots: 3 }, TELEGRAM = false
+// ARM 1 BACK TO E0 (2026-10-28 ~08:20 UTC, Ashraf: "Yes, bring back swing arm 1 with the checkpoint bracket E0 (0.2× ATR target / 2× ATR stop) as the
+// only signal passing the 92% rule: show its box, record only, no Telegram"): arm 1 = E0 — market BUY at the ask, target + 0.2·ATR1d, stop − 2·ATR1d,
+// 7 days (the checkpoint-2026-10-16 bracket; study (bo) OOS 92.0 % WR +$3.30/t, TRAIN 92.3 % +$0.84, avg risk ≈ $94, losing years 2017 / 2020 / 2022).
+// Arm 2 stays L4H3. The chart box is allowed by src/master/wrGate.js ('SWING_E0'); Telegram stays OFF.
+const BR = ARM === 'freq' ? { name: 'L4H3', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tp1Usd: 10, capUsd: 50, lots: 3 } : { name: 'E0', tm: 0.2, sm: 2 }, TELEGRAM = false
 const readMeta = (d) => JSON.parse(fs.readFileSync(path.join(d, 'dataset_meta.json'), 'utf8'))
 const f32 = (f) => { const b = fs.readFileSync(f); return new Float32Array(b.buffer, b.byteOffset, b.length / 4) }
 
@@ -148,10 +152,13 @@ for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) cont
   const open = prior.filter((s) => s.t <= t && exitOf(s) > t).length   // a position closed before t is known closed at t (causal)
   if (today >= 5 || open >= 5 || t - lastSig < 3600000) continue
   const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) continue
-  let lvl = Infinity; for (let j = lb(t - BR.lookMs); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) continue
-  const sig = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3),
-    entry_limit: +lvl.toFixed(2), entry_ask: +lvl.toFixed(2), valid_until: t + BR.validMs, atr_1d: +Dv.toFixed(2), lots: BR.lots, tp1: +(lvl + BR.tp1Usd).toFixed(2), target: +(lvl + BR.capUsd).toFixed(2), stop: +(lvl - BR.stopUsd).toFixed(2),
-    recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
+  const head = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3), atr_1d: +Dv.toFixed(2) }
+  let sig
+  if (BR.name === 'E0') { const entry = c + spread(t)   // market BUY at the ask (the checkpoint bracket)
+    sig = { ...head, entry_ask: +entry.toFixed(2), target: +(entry + BR.tm * Dv).toFixed(2), stop: +(entry - BR.sm * Dv).toFixed(2), recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
+  } else { let lvl = Infinity; for (let j = lb(t - BR.lookMs); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) continue
+    sig = { ...head, entry_limit: +lvl.toFixed(2), entry_ask: +lvl.toFixed(2), valid_until: t + BR.validMs, lots: BR.lots, tp1: +(lvl + BR.tp1Usd).toFixed(2), target: +(lvl + BR.capUsd).toFixed(2), stop: +(lvl - BR.stopUsd).toFixed(2),
+      recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name } }
   add.push(sig); noteFill(sig); noteTp1(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
 }
 const lines = [...add, ...fills, ...res, { type: 'scan', from: lastDone, to: maxT, at: new Date(now).toISOString(), rows_scored: T.filter((t) => t > lastDone && t >= CUT).length }]
@@ -165,9 +172,11 @@ const inBr = (s) => (s.bracket ?? 'E0') === BR.name, all = [...signals, ...add].
 const rAll = [...resolved.values(), ...res].filter((x) => ids.has(x.id)), expired = rAll.filter((x) => x.why === 'EXPIRED').length
 const rs = rAll.filter((x) => x.net != null), nets = rs.map((x) => x.net), w = nets.filter((x) => x > 0).length
 const sum = { at: new Date(now).toISOString(), candidate: ARMC.name, arm: ARM, bracket: BR, telegram: TELEGRAM, cutoff: new Date(CUT).toISOString(), threshold: FM.thr, scanned_to: new Date(maxT).toISOString(), signals: all.length, resolved: rs.length, expired,
-  open: all.filter((s) => filled.has(s.id)).length - rs.length, pending: all.length - rAll.length - (all.filter((s) => filled.has(s.id)).length - rs.length),
+  open: all.filter((s) => !isLim(s) || filled.has(s.id)).length - rs.length, pending: all.length - rAll.length - (all.filter((s) => !isLim(s) || filled.has(s.id)).length - rs.length),
   wr: rs.length ? +(w / rs.length).toFixed(4) : null, wilson_lb: rs.length ? +wilsonLB(w, rs.length, 1.96).toFixed(4) : null, net_mean: rs.length ? +(nets.reduce((a, b) => a + b, 0) / rs.length).toFixed(3) : null,
-  verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : (w / rs.length >= 0.45 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS' : 'FORWARD FAIL') }
+  // E0 (arm 1): the original pre-registered forward verdict — WR ≥ 90 % with Wilson LB ≥ 88 % and mean $ > 0; L4H3 (arm 2): the 2026-10-28 rule above
+  verdict: rs.length < 100 ? `NO VERDICT YET (${rs.length}/100 resolved)` : BR.name === 'E0' ? (w / rs.length >= 0.9 && wilsonLB(w, rs.length, 1.96) >= 0.88 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS (check bootstrap LB)' : 'FORWARD FAIL')
+    : (w / rs.length >= 0.45 && nets.reduce((a, b) => a + b, 0) > 0 ? 'FORWARD PASS' : 'FORWARD FAIL') }
 fs.writeFileSync(path.join(AD, 'forward_summary.json'), JSON.stringify(sum, null, 1))
 console.log(`forward ${ARMC.name}: +${add.length} signals, +${res.length} resolved · total ${sum.signals} signals, ${sum.resolved} resolved, WR ${sum.wr} $/t ${sum.net_mean} · ${sum.verdict}`)
 // 📨 Telegram (2026-10-16): each NEW signal, once; tradeAlert skips anything recorded > TWIN_ALERT_MAX_LATE_MIN after its bar (backfill / catch-up)

@@ -488,11 +488,12 @@ function fwDraw() {
   const ts = p.ch.timeScale(), W = ts.width(), H = $('c0').clientHeight, ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v)
   const xOf = (t) => { const x = ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000)); return x }
   const head = document.createElement('div'); head.className = 'fwhead'
-  // L4H (2026-10-28): BUY LIMIT at the 4 h low, $10 stop / $20 target — the header counts the L4H trades only (old E3 / E0 trades still drawn)
-  const L4 = (FW) => FW.trades.filter((t) => t.bracket === 'L4H3')
-  head.textContent = FWS.map((FW) => { const done = L4(FW).filter((t) => t.status === 'WIN' || t.status === 'LOSS'), w = done.filter((t) => t.status === 'WIN').length
-    return `${FW.k === 'freq' ? 'SWING 1/day' : 'SWING arm 1'} (limit 4h low · 3 lots · SL $10 · TP1 $10 · runners BE→$50): ${L4(FW).length} sig · ${done.length} res${done.length ? ` · in profit ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · record only, no verdict before 100 resolved' + (shown('SWING') ? '' : gateNote('SWING'))
-  ov.appendChild(head); if (!shown('SWING')) return
+  // each arm's CURRENT bracket (2026-10-28): arm 1 = E0 (checkpoint bracket, gate 'SWING_E0'), arm 2 = L4H3 (gate 'SWING'); the header counts that bracket only
+  const ARMB = (FW) => FW.k === 'freq' ? { br: 'L4H3', gate: 'SWING', txt: 'limit 4h low · 3 lots · SL $10 · TP1 $10 · runners BE→$50' } : { br: 'E0', gate: 'SWING_E0', txt: 'checkpoint E0 · TP 0.2× daily ATR · SL 2× daily ATR' }
+  const inArm = (FW) => FW.trades.filter((t) => t.bracket === ARMB(FW).br)
+  head.textContent = FWS.map((FW) => { const A = ARMB(FW), done = inArm(FW).filter((t) => t.status === 'WIN' || t.status === 'LOSS'), w = done.filter((t) => t.status === 'WIN').length
+    return `${FW.k === 'freq' ? 'SWING 1/day' : 'SWING arm 1'} (${A.txt}): ${inArm(FW).length} sig · ${done.length} res${done.length ? ` · ${A.br === 'E0' ? 'WR' : 'in profit'} ${Math.round(100 * w / done.length)}%` : ''}${shown(A.gate) ? ' · ✅ passes the 92% rule' : gateNote(A.gate)}` }).join('  |  ') + ' · record only, no Telegram'
+  ov.appendChild(head)
   const stTxt = (t) => t.status === 'OPEN' ? (t.tp1_t ? 'TP1 hit · runners at BE' : 'OPEN') :t.status === 'PENDING' ? 'LIMIT waiting' : t.status === 'EXPIRED' ? 'EXPIRED (not filled)' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)
   const live = (t) => t.status === 'OPEN' || t.status === 'PENDING'
   // ONE full box per arm (2026-10-28, Ashraf: "i can not see a thing" — 9 open paper swings stacked full-height boxes over the candles):
@@ -501,9 +502,10 @@ function fwDraw() {
   // panel table; the full box only for the newest LIVE (pending / open) L4H trade; other L4H trades: small tag while live or ≤ 6 h after
   // closing; an EXPIRED limit is not drawn
   const RECENT = Date.now() - 6 * 3600000
-  for (const FW of FWS) { const main = FW.trades.filter((x) => x.bracket === 'L4H3' && live(x) && xOf(x.t) != null).at(-1)
+  for (const FW of FWS) { const A = ARMB(FW); if (!shown(A.gate)) continue   // THE 92 % WR RULE, per arm
+  const main = FW.trades.filter((x) => x.bracket === A.br && live(x) && xOf(x.t) != null).at(-1)
   for (const t of FW.trades) {
-    if (t.bracket !== 'L4H3' || t.status === 'EXPIRED' || (t !== main && !live(t) && !(t.exit_t >= RECENT))) continue
+    if (t.bracket !== A.br || t.status === 'EXPIRED' || (t !== main && !live(t) && !(t.exit_t >= RECENT))) continue
     let x0 = xOf(t.t); if (x0 == null) continue
     let x1 = t.exit_t ? xOf(t.exit_t) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 60)
     const ya = y(t.entry), yb = y(t.tp1 ?? t.target); if (ya == null || yb == null) continue
@@ -525,9 +527,10 @@ function fwDraw() {
     zone('risk', t.entry, t.stop, t.tp1_t ? `SL moved to BE ${fmt(t.entry)} (runners)` : `RISK PROTECTION ZONE (SL) ${fmt(t.stop)} (−${(t.entry - t.stop).toFixed(2)})`)
     const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = t.status === 'WIN' ? '#3fb950' : t.status === 'LOSS' ? '#f85149' : fr ? '#3ff0ff' : '#ffd23f'
     tag.style.left = x0 + 'px'; tag.style.top = (Math.min(ya, yb) - (fr ? 30 : 15)) + 'px'
-    const bt = fr ? 'bt 52% in profit +$6.02/setup' : 'bt 53% in profit +$5.23/setup'
     if (t.status === 'EXPIRED') tag.style.background = '#8b949e'
-    tag.textContent = `${fr ? 'SWING · 1/day' : 'SWING arm 1'} · LIMIT 4h low · 3 lots BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP1 ${fmt(t.tp1)} · runners → ${fmt(t.target)} · ${stTxt(t)} · ${bt} · ${liveTxt} · record only`
+    tag.textContent = t.bracket === 'E0'
+      ? `SWING arm 1 · checkpoint E0 BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} (−${(t.entry - t.stop).toFixed(2)}) · TP ${fmt(t.target)} (+${(t.target - t.entry).toFixed(2)}) · ${stTxt(t)} · bt 92.0% WR +$3.30/t · one loss ≈ 8 wins · losing years 2017/2020/2022 · ${liveTxt} · record only`
+      : `SWING · 1/day · LIMIT 4h low · 3 lots BUY ${fmt(t.entry)} · SL ${fmt(t.stop)} · TP1 ${fmt(t.tp1)} · runners → ${fmt(t.target)} · ${stTxt(t)} · bt 52% in profit +$6.02/setup · ${liveTxt} · record only`
     ov.appendChild(tag)
     // name badge on the arm's main box only (the latest DRAWABLE trade: a signal in the 21:00 UTC daily break has no candle on this timeframe)
     nameBox(ov, 'swing', x0, x1, [t.entry, t.target, t.stop], { done: !live(t), side: 'BUY', note: t.status === 'PENDING' ? 'limit waiting' : 'record only', lift: fr ? 30 : 15, badge: true })

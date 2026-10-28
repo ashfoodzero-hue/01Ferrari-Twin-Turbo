@@ -16,12 +16,14 @@ const minOf = (...xs) => { const v = xs.filter((x) => Number.isFinite(x)); retur
 
 /** The measured WR of every signal that can alert or draw a trade box (the lower of its measured windows). */
 export function measuredWr() {
-  const st = J('matrix_state.json'), s85 = J('matrix_85wr_study.json'), ml = J('scalp_sell_ml_study.json'), sw = J('swing_scalp_entry_lots3.json')
+  const st = J('matrix_state.json'), s85 = J('matrix_85wr_study.json'), ml = J('scalp_sell_ml_study.json'), sw = J('swing_scalp_entry_lots3.json'), br = J('swing_bracket_study.json')
   return {
     SCALP: { wr: st?.verdict?.oos_wr ?? null, source: 'matrix_state.json verdict (2 y with WTI, unseen data)' },
     SCALP85: { wr: minOf(s85?.primary_noWTI_13y?.['stop3r|tp0.25r']?.oos?.wr, s85?.report_WTI_2y?.['stop3r|tp0.25r']?.oos?.wr), source: 'matrix_85wr_study.json stop 3r / target 0.25r (13 y + 2 y)' },
     ML_SELL: { wr: minOf(ml?.cells?.X3?.P1?.wr, ml?.cells?.X3?.P2?.wr), source: 'scalp_sell_ml_study.json X3 P1 / P2 (after the 10-26 weekend fix)' },
     SWING: { wr: minOf(sw?.cells?.['arm1|P|L4H|tp1_10']?.oos?.wr, sw?.cells?.['arm2|P|L4H|tp1_10']?.oos?.wr), source: 'swing_scalp_entry_lots3.json L4H 3 lots TP1 $10 (setups in profit, 13 y OOS)' },
+    // swing ARM 1 with the checkpoint bracket E0 (target 0.2·ATR1d / stop 2·ATR1d — wide stop ≈ $94; Ashraf chose it 2026-10-28 as the one ≥ 92 % signal)
+    SWING_E0: { wr: minOf(br?.cells?.E0?.oos?.wr, br?.cells?.E0?.train?.wr), source: 'swing_bracket_study.json E0 arm 1 (TRAIN 2016-21 + OOS 2022-26)', stop_note: 'stop 2× daily ATR (avg risk ≈ $94; one loss ≈ 8 wins)' },
     IMPULSE_CONT: { wr: TIER_STATS.IMPULSE_CONT?.wr ?? null, source: 'tierStats.js IMPULSE_CONT' },
   }
 }
