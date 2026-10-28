@@ -21,9 +21,19 @@ const M = (await loadBars('XAUUSD', '1m', { from, to: TO })).bars, MT = Float64A
 const lb = (t) => { let lo = 0, hi = MT.length; while (lo < hi) { const m = (lo + hi) >> 1; if (MT[m] < t) lo = m + 1; else hi = m } return lo }
 const D1 = (await loadBars('XAUUSD', '1d', { from: from - 60 * DAY, to: TO })).bars, A1 = atr(D1, 14)
 const atrD = (t) => { let lo = 0, hi = D1.length; while (lo < hi) { const m = (lo + hi) >> 1; if (D1[m].t + DAY <= t) lo = m + 1; else hi = m } return lo - 1 >= 0 ? A1[lo - 1] : null }
-const BR = { E0: [0.2, 2], E1: [0.5, 0.5], E2: [1, 0.5], E3: [0.5, 1], E4: [1, 1] }
-function resolve(t, tm, sm) { const k0 = lb(t); if (k0 < 1) return null; const c = M[k0 - 1].c, D = atrD(t); if (!(D > 0)) return null
-  const entry = c + spreadAt(t), tgt = entry + tm * D, stop = entry - sm * D, slip = Math.min(0.3, 0.05 * D)
+// SWING_USD=1 (2026-10-28, Ashraf: "swing trade must have as min as possible SL not more than 10$"): the same signals with FIXED-DOLLAR brackets,
+// stop $10, targets $5/$10/$15/$20/$30 (pre-registered here before the run; K = 5; same KEEP rule, same random control) → *_usd10.json
+// SWING_LEVEL=1 (same day, Ashraf: "and must trigger at the correct level"): no market buy — a BUY LIMIT at the LOW OF THE LAST 4 HOURS before the
+// signal (the nearest support), valid 24 h; filled when the ask reaches it (bid low ≤ level − measured spread); stop $10 under the level, same
+// targets; not filled in 24 h → no trade (the random control uses the same limit rule). Pre-registered before the run → *_level4h.json
+const LEVEL = process.env.SWING_LEVEL === '1', USD = LEVEL || process.env.SWING_USD === '1'
+const BR = USD ? { U10_T5: [5, 10], U10_T10: [10, 10], U10_T15: [15, 10], U10_T20: [20, 10], U10_T30: [30, 10] } : { E0: [0.2, 2], E1: [0.5, 0.5], E2: [1, 0.5], E3: [0.5, 1], E4: [1, 1] }
+function resolve(t, tm, sm) { let k0 = lb(t); if (k0 < 1) return null; const c = M[k0 - 1].c, A = atrD(t); if (!(A > 0)) return null; const D = USD ? 1 : A
+  let entry = c + spreadAt(t)
+  if (LEVEL) { let lvl = Infinity; for (let j = lb(t - 4 * 3600000); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) return null
+    let f = -1; for (let k = k0; k < M.length && M[k].t < t + DAY; k++) if (M[k].l <= lvl - spreadAt(M[k].t)) { f = k; break }
+    if (f < 0) return null; entry = lvl; k0 = f; t = M[f].t }
+  const tgt = entry + tm * D, stop = entry - sm * D, slip = Math.min(0.3, 0.05 * A)
   for (let k = k0; k < M.length; k++) { const b = M[k]
     if (b.t >= t + 7 * DAY) { const z = M[k - 1]; return { net: z.c - entry, exitT: z.t + 60000, R: sm * D } }
     if (b.l <= stop) return { net: stop - entry - slip, exitT: b.t + 60000, R: sm * D }
@@ -57,12 +67,12 @@ for (const [name, [tm, sm]] of Object.entries(BR)) {
     const r = resolve(t, tm, sm); if (!r) continue; tr.push({ t, ...r }); opens.push(r.exitT); lastT = t }
   const TR = summ(tr.filter((x) => x.t < SPLIT)), O = summ(tr.filter((x) => x.t >= SPLIT)), years = {}
   for (const x of tr) { const y = new Date(x.t).getUTCFullYear(); years[y] = +((years[y] ?? 0) + x.net).toFixed(1) }
-  const verdict = name === 'E0' ? 'REFERENCE' : O.n >= 100 && O.net > 0 && O.net_lb > 0 && TR.net > 0 ? 'KEEP' : O.n < 100 ? 'UNDERPOWERED' : 'DROP'
+  const verdict = name === 'E0' && !USD ? 'REFERENCE' : O.n >= 100 && O.net > 0 && O.net_lb > 0 && TR.net > 0 ? 'KEEP' : O.n < 100 ? 'UNDERPOWERED' : 'DROP'
   const C = ctrl(tm, sm)
   res.cells[name] = { target_D: tm, stop_D: sm, random_control: C, model_minus_random_oos: +(O.net - C.oos_net).toFixed(2), model_minus_random_train: +(TR.net - C.train_net).toFixed(2), train: TR, oos: O, per_day: +(tr.length / ((TO - T[idx[0]]) / DAY * 5 / 7)).toFixed(2), year_net: years, verdict }
   console.log(`${name} tgt ${tm}D / stop ${sm}D: OOS n ${O.n} WR ${O.wr} $/t ${O.net} [LB ${O.net_lb}] R ${O.avg_R} risk $${O.avg_risk} max losses in a row ${O.max_losses_in_row} · TRAIN n ${TR.n} WR ${TR.wr} $/t ${TR.net} → ${verdict}`)
   console.log(`   per year $: ${JSON.stringify(years)}`)
   console.log(`   RANDOM BUY same bracket/policy: OOS WR ${C.oos_wr} $/t ${C.oos_net} · TRAIN WR ${C.train_wr} $/t ${C.train_net} → model − random: OOS ${(O.net - C.oos_net).toFixed(2)} · TRAIN ${(TR.net - C.train_net).toFixed(2)}`) }
 res.keep = Object.entries(res.cells).filter(([, c]) => c.verdict === 'KEEP').map(([k]) => k)
-res.arm = ARM; fs.writeFileSync(path.join(TURBO.master, ARM === 'freq' ? 'swing_bracket_study_arm2.json' : 'swing_bracket_study.json'), JSON.stringify(res, null, 1))
+res.arm = ARM; res.usd = USD; fs.writeFileSync(path.join(TURBO.master, (ARM === 'freq' ? 'swing_bracket_study_arm2' : 'swing_bracket_study') + (LEVEL ? '_level4h' : USD ? '_usd10' : '') + '.json'), JSON.stringify(res, null, 1))
 console.log(`\n=> reasonable-stop brackets KEPT: ${res.keep.join(', ') || 'none'}`)
