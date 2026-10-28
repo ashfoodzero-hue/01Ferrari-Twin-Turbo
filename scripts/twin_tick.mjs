@@ -21,6 +21,7 @@ import { liveReadiness, liveDensityRelative } from '../src/master/liveReadiness.
 import { sendText, formatTierAlert } from '../src/master/telegram.js'
 import { signalsHalted } from '../src/core/dataHealth.js'
 import { updateRefusalScores } from './lib/refusal_score.mjs'
+import { tradeAllowed } from '../src/master/wrGate.js'
 
 const STATIC = process.argv.includes('--static')
 const FILE = path.join(TURBO.paper, 'trades.jsonl')
@@ -93,6 +94,7 @@ for (const id of rec.ids) {
   const row = rows.find((r) => r.id === id)
   if (!row || row.state === 'REFUSED') { console.log(`  🚧 ${id} REFUSED — ${row?.why ?? '?'}`); continue }
   if (row.shadow || TIER_STATS[row.tier]?.tradeable === false) { console.log(`  📓 ${id} SHADOW — recorded as forward evidence, never alerted (${TIER_STATS[row.tier]?.shadowWhy ?? 'not tradeable'})`); continue }
+  if (!tradeAllowed('IMPULSE_CONT')) { console.log(`  📓 ${id} recorded — not alerted (below the 92 % WR rule, src/master/wrGate.js)`); continue }
   const text = formatTierAlert(roster.impulseCont)
   const sent = await sendText(text)
   console.log(`  📣 ${id} ${sent.sent ? 'sent' : sent.dryRun ? 'dry-run (no TWIN_TELEGRAM_* set)' : 'NOT sent'}`)

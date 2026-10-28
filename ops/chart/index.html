@@ -476,6 +476,13 @@ function fwList() {
     return `<div style="margin-bottom:8px"><b>${esc(FW.candidate)}</b> — <b>${esc(S?.verdict ?? '—')}</b> · signals ${FW.trades.length} · resolved ${S?.resolved ?? 0}${S?.resolved ? ` · WR ${Math.round(100 * S.wr)}% · avg ${S.net_mean >= 0 ? '+' : ''}${S.net_mean} $/oz` : ''}<br><span class="dim">scanned to ${S?.scanned_to ? S.scanned_to.slice(5, 16).replace('T', ' ') + ' UTC' : '—'}${FW.trades.some((t) => t.late_min > 30) ? ' · the first signals were recorded late (catch-up scan since the cutoff)' : ''}</span>`
       + (rows ? `<table style="margin-top:4px"><tr><th>UTC</th><th>entry</th><th>TP</th><th>SL</th><th>result $/oz</th></tr>${rows}</table>` : '<div class="dim">no signals yet</div>') + '</div>' }).join('')
 }
+// THE 92 % WR RULE (2026-10-28, Ashraf: "stop all Telegram trade alerts and trade boxes for anything measured below 92% WR, keep recording silently"):
+// /api/wrgate (src/master/wrGate.js) says per signal whether its MEASURED WR ≥ 92 %; a trade box is drawn only then. Not loaded yet = hidden (fail-closed).
+let GATE = null
+async function pollGate() { GATE = await fetch('/api/wrgate').then((x) => x.json()).catch(() => null) }
+setInterval(pollGate, 60000); pollGate()
+const shown = (k) => !!GATE?.signals?.[k]?.allowed
+const gateNote = (k) => GATE?.signals?.[k] ? ` · boxes hidden: measured ${Math.round(100 * GATE.signals[k].wr)}% WR < ${Math.round(100 * GATE.min_wr)}%` : ''
 function fwDraw() {
   const ov = $('fwOverlay'), p = panes[0]; ov.innerHTML = ''; if (!FWS.length || p.sym !== 'XAUUSD') return
   const ts = p.ch.timeScale(), W = ts.width(), H = $('c0').clientHeight, ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v)
@@ -484,8 +491,8 @@ function fwDraw() {
   // L4H (2026-10-28): BUY LIMIT at the 4 h low, $10 stop / $20 target — the header counts the L4H trades only (old E3 / E0 trades still drawn)
   const L4 = (FW) => FW.trades.filter((t) => t.bracket === 'L4H3')
   head.textContent = FWS.map((FW) => { const done = L4(FW).filter((t) => t.status === 'WIN' || t.status === 'LOSS'), w = done.filter((t) => t.status === 'WIN').length
-    return `${FW.k === 'freq' ? 'SWING 1/day' : 'SWING arm 1'} (limit 4h low · 3 lots · SL $10 · TP1 $10 · runners BE→$50): ${L4(FW).length} sig · ${done.length} res${done.length ? ` · in profit ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · record only, no verdict before 100 resolved'
-  ov.appendChild(head)
+    return `${FW.k === 'freq' ? 'SWING 1/day' : 'SWING arm 1'} (limit 4h low · 3 lots · SL $10 · TP1 $10 · runners BE→$50): ${L4(FW).length} sig · ${done.length} res${done.length ? ` · in profit ${Math.round(100 * w / done.length)}%` : ''}` }).join('  |  ') + ' · record only, no verdict before 100 resolved' + (shown('SWING') ? '' : gateNote('SWING'))
+  ov.appendChild(head); if (!shown('SWING')) return
   const stTxt = (t) => t.status === 'OPEN' ? (t.tp1_t ? 'TP1 hit · runners at BE' : 'OPEN') :t.status === 'PENDING' ? 'LIMIT waiting' : t.status === 'EXPIRED' ? 'EXPIRED (not filled)' : t.status + ' ' + (t.net >= 0 ? '+' : '') + t.net.toFixed(2)
   const live = (t) => t.status === 'OPEN' || t.status === 'PENDING'
   // ONE full box per arm (2026-10-28, Ashraf: "i can not see a thing" — 9 open paper swings stacked full-height boxes over the candles):
@@ -552,7 +559,7 @@ function rtDraw() {
 let S85 = null
 async function pollS85() { S85 = await fetch('/api/scalp85').then((x) => x.json()).catch(() => null); s85Draw() }
 function s85Draw() {
-  const ov = $('rtOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!S85?.boxes?.length || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
+  const ov = $('rtOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!shown('SCALP85')) return; if (!S85?.boxes?.length || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
   const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
   const a = S85.measured?.no_wti_13y, b2 = S85.measured?.wti_2y, L = S85.live
   const rec = `bt ${a ? Math.round(1000 * a.wr) / 10 + '% ' + a.net + '$/t (13y)' : '?'} · ${b2 ? Math.round(1000 * b2.wr) / 10 + '% ' + b2.net + '$/t (2y WTI)' : '?'} · live ${L.w}/${L.n} ${L.net >= 0 ? '+' : ''}${L.net}$/oz`
@@ -593,13 +600,13 @@ setInterval(pollMon, 5000)
 // ── FERRARI MATRIX paper trade: neon boxes on the main pane while a trade is open (data/master/matrix_state.json via /api/matrix) ──
 let MX = null, mxLines = [], mxKey = null, wLine = null, wKey = null
 // 👁 WATCH (chart only, 2026-10-16): BUY wall touched + context aligned, no trade — measured 82 % become a BUY signal within 60 min (post-hoc)
-function watchDraw() { const p = panes[0], full = !MX?.open && p.sym === 'XAUUSD' ? MX?.watch : null, wt = !MX?.open && !full && p.sym === 'XAUUSD' ? MX?.wallTouch : null, w = full || wt, key = w ? (full ? 'W' : 'T') + w.barT + '|' + w.line : null
+function watchDraw() { const p = panes[0], full = shown('SCALP') && !MX?.open && p.sym === 'XAUUSD' ? MX?.watch : null, wt = shown('SCALP') && !MX?.open && !full && p.sym === 'XAUUSD' ? MX?.wallTouch : null, w = full || wt, key = w ? (full ? 'W' : 'T') + w.barT + '|' + w.line : null
   if (key === wKey) return; wKey = key; if (wLine) { try { p.c.removePriceLine(wLine) } catch {} wLine = null }
   if (full) wLine = p.c.createPriceLine({ price: w.line, color: '#ffd166', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `👁 WATCH BUY ${Math.round(100 * w.measured.conversion)}% — waiting for trigger` })
   else if (wt) wLine = p.c.createPriceLine({ price: w.line, color: '#8b949e', lineWidth: 1, lineStyle: 2, axisLabelVisible: true, title: `🫴 wall touched ${Math.round(100 * w.measured.conversion)}% — waiting for WTI/DXY` }) }
 function mxDraw() {
   const ov = $('mxOverlay'), p = panes[0]; ov.innerHTML = ''
-  const o = MX?.open, key = o && p.sym === 'XAUUSD' ? `${o.id}|${!!o.progress?.tp1Hit}|${p.sym}` : null
+  const o = shown('SCALP') ? MX?.open : null, key = o && p.sym === 'XAUUSD' ? `${o.id}|${!!o.progress?.tp1Hit}|${p.sym}` : null
   if (key !== mxKey) { mxLines.forEach((l) => { try { p.c.removePriceLine(l) } catch {} }); mxLines = []; mxKey = key
     if (key) { const s = o.sig, pl = (price, color, title, style = 0, w = 1) => mxLines.push(p.c.createPriceLine({ price, color, lineWidth: w, lineStyle: style, axisLabelVisible: true, title }))
       pl(s.entry, '#e6edf3', 'ENTRY ' + s.side, 0, 2); pl(s.sl, '#ff2e63', 'SL'); pl(s.tp1, '#00ff9c', 'TP1 (½)', 2); pl(s.tp2, '#00ff9c', 'TP2 (½)', 0, 2)
@@ -695,7 +702,7 @@ const BLK_OUT = (b) => b.status === 'OPEN' ? ['still running', ''] : b.status ==
   : b.status === 'TP1+TP2' ? [`would have WON +${(+b.pnl).toFixed(2)} (TP1 + TP2)`, 'w'] : b.status === 'TP1+BE' ? [`would have won +${(+b.pnl).toFixed(2)} (TP1, rest closed at entry)`, 'w']
   : [`would have ${b.pnl >= 0 ? 'made +' : 'lost '}${(+b.pnl).toFixed(2)} (closed at the 24 h limit)`, b.pnl >= 0 ? 'w' : 'l']
 function blkDraw() {
-  const ov = $('blkOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''
+  const ov = $('blkOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!shown('SCALP')) return
   const R = MX?.structureGate?.recent; if (!R?.length || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
   const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
   const boxes = [], placed = []; let freeAt = -Infinity
@@ -721,13 +728,14 @@ function mlDraw() {
   const ov = $('mlOverlay'), p = panes[0]; if (!ov) return; ov.innerHTML = ''; if (!ML || p.sym !== 'XAUUSD' || !['1m', '3m', '5m', '15m'].includes(st.tf)) return
   const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
   const rv = ML.review, line = document.createElement('div'); line.className = 'fwhead'; line.style.bottom = '52px'; line.style.color = '#00ff9c'; line.style.borderColor = '#00ff9c66'
-  line.textContent = `ML SELL (paper): ${rv?.closed ?? 0} closed${rv?.closed ? ` · WR ${Math.round(100 * rv.wr)}% · ${rv.per_trade >= 0 ? '+' : ''}${rv.per_trade} $/t` : ''} · backtest 2021-26 95.8% +1.18 $/t${!ML.review && ML.stale ? ' · starts with the next market tick' : ML.stale ? ' · ⚠ not updating' : ''}${ML.state?.decision?.score != null ? ` · last score ${ML.state.decision.score} / ${ML.state.decision.threshold}` : ''}`
+  line.textContent = `ML SELL (paper): ${rv?.closed ?? 0} closed${rv?.closed ? ` · WR ${Math.round(100 * rv.wr)}% · ${rv.per_trade >= 0 ? '+' : ''}${rv.per_trade} $/t` : ''}${GATE?.signals?.ML_SELL ? ` · backtest (after the 10-26 fix) ${Math.round(100 * GATE.signals.ML_SELL.wr)}% WR, losing` : ''}${shown('ML_SELL') ? '' : ' · boxes hidden (< 92% WR rule)'}${!ML.review && ML.stale ? ' · starts with the next market tick' : ML.stale ? ' · ⚠ not updating' : ''}${ML.state?.decision?.score != null ? ` · last score ${ML.state.decision.score} / ${ML.state.decision.threshold}` : ''}`
   ov.appendChild(line)
   const box = (t, exitT, entry, tp, sl, done, label) => { const x0 = xOf(t); if (x0 == null) return; let x1 = exitT ? xOf(exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 40)
     const zone = (cls, a, b, txt) => { const za = y(a), zb = y(b); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (done ? ' fwdone' : '')
       d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(za, zb) + 'px'; d.style.height = Math.max(2, Math.abs(za - zb)) + 'px'; d.textContent = txt; ov.appendChild(d) }
     zone('tgt', entry, tp, `TP ${fmt(tp)} (−${(entry - tp).toFixed(2)})`); zone('risk', entry, sl, `SL ${fmt(sl)} (+${(sl - entry).toFixed(2)})`)
     nameBox(ov, 'scalp', x0, x1, [entry, tp, sl], { done, side: 'SELL', note: label }) }
+  if (!shown('ML_SELL')) return
   const o = ML.state?.open; if (o) box(o.sig.t, null, o.sig.entry, o.sig.tp1, o.sig.sl, false, `ML paper · ENTRY ${fmt(o.sig.entry)}`)
   for (const c of ML.closed || []) box(c.t, Date.parse(c.closedAt), c.entry, c.tp, c.sl, true, `ML paper · ${c.outcome} ${c.pnl >= 0 ? '+' : ''}${(+c.pnl).toFixed(2)}`)
 }

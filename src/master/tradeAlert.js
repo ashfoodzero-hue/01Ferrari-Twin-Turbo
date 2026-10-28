@@ -11,6 +11,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO } from '../core/paths.js'
 import { sendText } from './telegram.js'
+import { tradeAllowed, MIN_WR } from './wrGate.js'
+// THE 92 % WR RULE (2026-10-28, src/master/wrGate.js): every trade alert below is skipped unless its signal's MEASURED WR ≥ 92 %
+// (SCALP prepare / setup / blocked → 'SCALP', SWING TRADE → 'SWING'). The callers still record everything; only the message is not sent.
+const wrBlocked = (kind, allowed = tradeAllowed) => allowed(kind) ? null : { skipped: `below the ${Math.round(100 * MIN_WR)}% WR rule (${kind})` }
 
 const LEDGER = path.join(TURBO.data, 'telegram', 'alerted.json')
 const f2 = (x) => (x == null || !isFinite(x) ? '—' : Number(x).toFixed(2))
@@ -56,7 +60,8 @@ export function formatPrepareAlert(w, close) { const m = w.measured, pc = (x) =>
   return ['🏎🏎 <b>FERRARI TWIN TURBO</b> 🏎🏎', '👁 <b>SCALP PREPARE — WATCH BUY</b> · XAUUSD', `gold ${close != null ? Number(close).toFixed(2) + ' ' : ''}pushed through the Matrix BUY wall (~${w.line}) · waiting for the green trigger candle`,
     `measured: ${pc(m.conversion)} of these became a BUY signal within 60 min (median ${m.lead_min} min) · ⚠ only ${pc(m.recall)} of SCALP trades get this warning — many trigger with none`,
     '<i>Matrix SCALP = SHADOW (paper) · get ready — the TRADE SETUP READY message follows if it triggers</i>'].join('\n') }
-export async function alertPrepare(w, close, { now = Date.now(), send = sendText, ledger = LEDGER } = {}) {
+export async function alertPrepare(w, close, { now = Date.now(), send = sendText, ledger = LEDGER, allowed = tradeAllowed } = {}) {   // allowed: the 92 % rule (test seam)
+  const wb = wrBlocked('SCALP', allowed); if (wb) return wb
   try { const led = readLedger(ledger), last = led['PREPARE:last'] ? Date.parse(led['PREPARE:last'].at) : -Infinity
     if (now - last < 45 * 60000) return { skipped: 'same watch episode' }
     const r = await send(formatPrepareAlert(w, close))
@@ -65,8 +70,9 @@ export async function alertPrepare(w, close, { now = Date.now(), send = sendText
   } catch (e) { return { sent: false, error: e.message } } }
 const readLedger = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return {} } }
 /** Send once per setup id. Never throws (an alert must never break the tick that found the trade). Returns { sent, dryRun, skipped }. */
-export async function alertSetup(a, { now = Date.now(), dryRun = false, send = sendText, ledger = LEDGER } = {}) {
+export async function alertSetup(a, { now = Date.now(), dryRun = false, send = sendText, ledger = LEDGER, allowed = tradeAllowed } = {}) {
   try {
+    const wb = wrBlocked(a.kind === 'SWING TRADE' ? 'SWING' : a.kind, allowed); if (wb) return wb
     const cfg = alertSettings()
     if (a.kind === 'SCALP' && !cfg.scalp) return { skipped: 'TWIN_ALERT_SCALP off' }
     if (a.kind === 'SWING TRADE' && !cfg.swing) return { skipped: 'TWIN_ALERT_SWING off' }
@@ -88,8 +94,9 @@ export function formatBlockedAlert(s, g) {
     '<i>V1H measured 2 y + 13 y: the BUYs it skips lost more · Matrix SCALP = SHADOW (paper) · a notice, not an order</i>',
     `<code>${new Date(s.decisionT).toISOString().replace('.000Z', 'Z')}</code>`].join('\n')
 }
-export async function alertBlocked(s, g, { now = Date.now(), dryRun = false, send = sendText, ledger = LEDGER } = {}) {
+export async function alertBlocked(s, g, { now = Date.now(), dryRun = false, send = sendText, ledger = LEDGER, allowed = tradeAllowed } = {}) {
   try {
+    const wb = wrBlocked('SCALP', allowed); if (wb) return wb
     if (!alertSettings().scalp) return { skipped: 'TWIN_ALERT_SCALP off' }
     if (!g?.blockedSince) return { skipped: 'no blocked episode' }
     const key = `BLOCKED:${g.blockedSince}`, led = readLedger(ledger); if (led[key]) return { skipped: 'episode already notified' }

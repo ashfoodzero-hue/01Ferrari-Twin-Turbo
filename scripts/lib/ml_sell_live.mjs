@@ -63,11 +63,14 @@ export async function mlSellTick({ lastClose, dataLive, why = null, spreadAt, wr
     if (out.decision) fs.appendFileSync(ML_SELL.scores, JSON.stringify({ bar: out.bar, ...(out.decision.skipped ? { skipped: out.decision.skipped } : { s: out.decision.score, thr: out.decision.threshold, fires: out.decision.fires }) }) + '\n') }
   return out
 }
+const currentStudy = () => { try { const c = JSON.parse(fs.readFileSync(path.join(TURBO.master, 'scalp_sell_ml_study.json'), 'utf8')).cells.X3; return { P1: c.P1, P2: c.P2, source: 'scalp_sell_ml_study.json (after the 10-26 weekend fix)' } } catch { return null } }
 /** Paper review vs the measured backtest (scored like the other paper books: n, WR = $ > 0, $/t). */
 export function writeReview() {
   const C = rows(ML_SELL.journal).filter((r) => r.status === 'CLOSED'), n = C.length, w = C.filter((r) => r.pnl > 0).length, net = C.reduce((a, r) => a + r.pnl, 0)
   const m = loadModel(new Date().getUTCFullYear())
   const rv = { at: new Date().toISOString(), paper_since: rows(ML_SELL.journal)[0]?.opened ?? null, closed: n, wins: w, wr: n ? +(w / n).toFixed(4) : null, net: +net.toFixed(2), per_trade: n ? +(net / n).toFixed(3) : null,
-    outcomes: C.reduce((o, r) => ((o[r.outcome] = (o[r.outcome] ?? 0) + 1), o), {}), measured_backtest: m?.measured ?? null, verdict: n < 30 ? `NO VERDICT YET (${n}/30 closed)` : 'compare with the measured backtest' }
+    // measured_backtest = the CURRENT study (2026-10-28): the frozen model's `measured` block holds the pre-10-26 numbers that were WITHDRAWN
+    // (weekend resolver bug, §7 (ee)) — kept only as `frozen_measured_withdrawn`, never as the reference
+    outcomes: C.reduce((o, r) => ((o[r.outcome] = (o[r.outcome] ?? 0) + 1), o), {}), measured_backtest: currentStudy(), frozen_measured_withdrawn: m?.measured ?? null, verdict: n < 30 ? `NO VERDICT YET (${n}/30 closed)` : 'compare with the measured backtest' }
   fs.writeFileSync(ML_SELL.review + '.tmp', JSON.stringify(rv, null, 1)); fs.renameSync(ML_SELL.review + '.tmp', ML_SELL.review); return rv
 }

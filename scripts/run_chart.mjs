@@ -55,6 +55,7 @@ import { streamBars } from '../src/data/backfillReader.js'
 import { streamDxy1m } from '../src/data/dxy.js'
 import { formingScore } from '../src/master/macroMagnet.js'
 import { wallEvents, swingWallEvents, holdLabel } from '../src/master/wallDefense.js'
+import { wrGateState } from '../src/master/wrGate.js'
 import { confirmedPivots } from '../src/master/ferrariMatrix.js'
 import { signalsHalted } from '../src/core/dataHealth.js'
 
@@ -446,6 +447,7 @@ const server = http.createServer(async (req, res) => {
     if (u.pathname === '/api/forward') return send(res, 200, forward(u.searchParams.get('arm')))
     if (u.pathname === '/api/retest') return send(res, 200, await retestBoxes())
     if (u.pathname === '/api/scalp85') return send(res, 200, await scalp85())
+    if (u.pathname === '/api/wrgate') return send(res, 200, wrGateState())   // THE 92 % WR RULE (2026-10-28): which signals may draw a trade box
     // ML SELL X3 PAPER forward test (2026-10-25, scripts/lib/ml_sell_live.mjs written by matrix_tick): the open paper SELL, the last decision, the paper
     // trades of the last 48 h and the review vs the measured backtest. Display only — files are the source, nothing recomputed here.
     if (u.pathname === '/api/mlsell') { const st = J('ml_sell_state.json'), rv = J('ml_sell_review.json'); let L = []
