@@ -490,8 +490,13 @@ function fwDraw() {
   const live = (t) => t.status === 'OPEN' || t.status === 'PENDING'
   // ONE full box per arm (2026-10-28, Ashraf: "i can not see a thing" — 9 open paper swings stacked full-height boxes over the candles):
   // the newest drawable trade of each arm keeps the full neon box; every other trade is a small tag at its entry (like the S85 tags)
-  for (const FW of FWS) { const main = FW.trades.filter((x) => xOf(x.t) != null).at(-1)
+  // CLEARER (same day, Ashraf: "still screen very crowded"): old-bracket trades (E3 / E0, before L4H) are no longer drawn — they stay in the
+  // panel table; the full box only for the newest LIVE (pending / open) L4H trade; other L4H trades: small tag while live or ≤ 6 h after
+  // closing; an EXPIRED limit is not drawn
+  const RECENT = Date.now() - 6 * 3600000
+  for (const FW of FWS) { const main = FW.trades.filter((x) => x.bracket === 'L4H' && live(x) && xOf(x.t) != null).at(-1)
   for (const t of FW.trades) {
+    if (t.bracket !== 'L4H' || t.status === 'EXPIRED' || (t !== main && !live(t) && !(t.exit_t >= RECENT))) continue
     let x0 = xOf(t.t); if (x0 == null) continue
     let x1 = t.exit_t ? xOf(t.exit_t) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 60)
     const ya = y(t.entry), yb = y(t.target); if (ya == null || yb == null) continue
@@ -549,13 +554,16 @@ function s85Draw() {
   const ts = p.ch.timeScale(), W = ts.width(), ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v), xOf = (t) => ts.timeToCoordinate(Math.floor(Math.floor(t / ms) * ms / 1000))
   const a = S85.measured?.no_wti_13y, b2 = S85.measured?.wti_2y, L = S85.live
   const rec = `bt ${a ? Math.round(1000 * a.wr) / 10 + '% ' + a.net + '$/t (13y)' : '?'} · ${b2 ? Math.round(1000 * b2.wr) / 10 + '% ' + b2.net + '$/t (2y WTI)' : '?'} · live ${L.w}/${L.n} ${L.net >= 0 ? '+' : ''}${L.net}$/oz`
-  for (const b of S85.boxes) { const x0 = xOf(b.t); if (x0 == null) continue; let x1 = b.exitT ? xOf(b.exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 40)
+  // CLEARER (2026-10-28, "still screen very crowded"): zones + full label only for the OPEN trade (or the latest one ≤ 6 h after it closed);
+  // other trades: just the small "S85 W/L" tag, and only ≤ 6 h after closing
+  const RECENT = Date.now() - 6 * 3600000
+  for (const b of S85.boxes) { const full = b.status === 'OPEN' || (b === S85.boxes[S85.boxes.length - 1] && b.exitT >= RECENT); if (!full && !(b.exitT >= RECENT)) continue
+    const x0 = xOf(b.t); if (x0 == null) continue; let x1 = b.exitT ? xOf(b.exitT) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 40)
     const zone = (cls, p1, p2, label) => { const za = y(p1), zb = y(p2); if (za == null || zb == null) return; const d = document.createElement('div'); d.className = 'mxbox ' + cls + (b.status !== 'OPEN' ? ' fwdone' : '')
       d.style.left = x0 + 'px'; d.style.width = (x1 - x0) + 'px'; d.style.top = Math.min(za, zb) + 'px'; d.style.height = Math.max(2, Math.abs(za - zb)) + 'px'; d.textContent = label; ov.appendChild(d) }
-    zone('tgt', b.entry, b.tp, `TP ${fmt(b.tp)}`); zone('risk', b.entry, b.sl, `SL ${fmt(b.sl)}`)
+    if (full) { zone('tgt', b.entry, b.tp, `TP ${fmt(b.tp)}`); zone('risk', b.entry, b.sl, `SL ${fmt(b.sl)}`) }
     const ya = y(b.entry); if (ya == null) continue; const tag = document.createElement('div'); tag.className = 'ntag'; tag.style.background = b.status === 'WIN' ? '#3fb950' : b.status === 'LOSS' ? '#f85149' : '#00ff9c'
     tag.style.left = x0 + 'px'; tag.style.top = (ya - 26) + 'px'
-    const full = b.status === 'OPEN' || b === S85.boxes[S85.boxes.length - 1]   // only the open / latest trade carries the full label (no clutter)
     tag.textContent = full ? `SCALP 85% (paper) ${b.side} ENTRY ${fmt(b.entry)} · SL ${fmt(b.sl)} · TP ${fmt(b.tp)} · ${b.status}${b.net != null ? ' ' + (b.net >= 0 ? '+' : '') + b.net : ''} · ${rec}`
       : `S85 ${b.status === 'WIN' ? 'W' : b.status === 'LOSS' ? 'L' : b.status} ${b.net != null ? (b.net >= 0 ? '+' : '') + b.net : ''}`; ov.appendChild(tag)
     if (full) nameBox(ov, 'scalp', x0, x1, [b.entry, b.tp, b.sl], { done: b.status !== 'OPEN', side: b.side, note: '85% exit' }) }
