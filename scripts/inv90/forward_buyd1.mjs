@@ -103,7 +103,11 @@ const Xb = binAll(X, n, F, FM.edges), aCol = meta.features.indexOf('A')
 // ── 3. ledger: append new signals (D1 policy), resolve open trades ───────────────────────────────────────────────
 const L = fs.existsSync(LEDGER) ? fs.readFileSync(LEDGER, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []
 const signals = L.filter((e) => e.type === 'signal'), resolved = new Map(L.filter((e) => e.type === 'resolve').map((e) => [e.id, e]))
-const lastDone = L.filter((e) => e.type === 'scan').reduce((m, e) => Math.max(m, e.to), CUT)
+// --rescan-from=ISO (2026-10-28, one-off catch-up): re-score bars after ISO even if a scan already passed them. A bar whose signal id is already in
+// the ledger is never recorded twice; a caught-up signal keeps its true late_min (recorded late, never "live").
+const RESCAN = Date.parse(process.argv.find((a) => a.startsWith('--rescan-from='))?.slice(14) ?? '')
+const lastDone = Math.min(L.filter((e) => e.type === 'scan').reduce((m, e) => Math.max(m, e.to), CUT), Number.isFinite(RESCAN) ? RESCAN : Infinity)
+const knownIds = new Set(signals.map((s) => s.id))
 const M = (await loadBars('XAUUSD', '1m', { from: CUT - 2 * DAY, to: Date.now() })).bars, MT = Float64Array.from(M.map((b) => b.t))
 const lb = (t) => { let lo = 0, hi = MT.length; while (lo < hi) { const m = (lo + hi) >> 1; if (MT[m] < t) lo = m + 1; else hi = m } return lo }
 const live = loadLiveSpreads(path.join(TURBO.root, 'data', 'history', 'XAUUSD', 'quotes_1m.jsonl'), { from: CUT - DAY }), spread = makeSpreadAt({ live })
@@ -147,7 +151,11 @@ for (const s of signals) { noteFill(s); noteTp1(s) }
 let maxT = lastDone
 for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) continue; maxT = Math.max(maxT, t)
   const p = predict(FM.model, Xb, n, r); if (p < FM.thr) continue
-  const prior = [...signals, ...add], day = Math.floor(t / DAY)
+  if (knownIds.has(`${ARMC.idp}${new Date(t).toISOString()}`)) continue
+  // the D1 policy (≤ 5 open, ≤ 5 new/day, ≥ 1 h apart) counts ONLY the arm's CURRENT bracket (2026-10-28, Ashraf: "I think you have made something with the
+  // system it's not triggering anything"): measured — after the bracket switches, 5 still-open trades of the abandoned E3 / E0 brackets (far stops) and the
+  // night's 5/day filled every slot, so 13 arm-1 bars and ~40 arm-2 bars ≥ threshold after 07:00 were never recorded. Old-bracket trades still resolve.
+  const prior = [...signals, ...add].filter((s) => (s.bracket ?? 'E0') === BR.name), day = Math.floor(t / DAY)
   const today = prior.filter((s) => Math.floor(s.t / DAY) === day).length, lastSig = prior.reduce((m, s) => Math.max(m, s.t), -Infinity)
   const open = prior.filter((s) => s.t <= t && exitOf(s) > t).length   // a position closed before t is known closed at t (causal)
   if (today >= 5 || open >= 5 || t - lastSig < 3600000) continue
