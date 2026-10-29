@@ -32,6 +32,10 @@ export const HEALTH_RULE = Object.freeze({
   // analysis feeds (2026-10-18, Ashraf: "make sure we have no stales during feeding … monitor health feeding with zerostale"): DERIVED from the raw feeds
   // above (whose staleness is CRITICAL and halts every signal) → WARN here (Telegram after 3 checks); each feature refuses its own output when stale.
   srMaxAgeMs: 75 * MIN,                  // S/R refresh: every hour at :04, 4 assets one at a time (≈ 6 min) → 75 min tolerates one slow cycle
+  // CATCH-UP after a start / wake (2026-10-29 23:15, measured: the PC slept 21:08-23:00; after the 23:09 start the queued trendline + S/R refreshes need
+  // ≈ 15-20 min, one asset at a time, so SR_FEED_STALE fired on levels that were already queued). A feed last written BEFORE run_twin's catch_up_from is
+  // reported as "catching up" (no warning) for catchUpMs; after that, or for a feed that went stale AFTER the start, the normal warning applies.
+  catchUpMs: 30 * MIN,
   tlLinesMaxAgeMs: 4.5 * H,              // trendline line refresh: after each asset's 4H close
   tlTickMaxAgeMs: 5 * MIN,               // trendline minute check: every minute
   awakeMaxAgeMs: 3 * MIN,                // keep-awake request (scripts/keep_awake.ps1): re-asserted every 60 s
@@ -61,6 +65,7 @@ export function readHealthInputs(now = Date.now()) {
     calendar: readJ(path.join(TURBO.root, 'data', 'calendar', 'upcoming.json')),
     history: readJ(path.join(TURBO.root, 'data', 'calendar', 'history.json')),
     preopen: readJ(path.join(TURBO.master, 'preopen_check.json')),
+    catchUpFrom: readJ(path.join(TURBO.master, 'live_heartbeat.json'))?.catch_up_from ?? null,   // run_twin start / wake time (CATCH-UP rule)
     keepAwake: readJ(path.join(TURBO.master, 'keep_awake.json')),
     diskFreeGB: (() => { try { const s = fs.statfsSync(TURBO.root); return +(s.bavail * s.bsize / 1e9).toFixed(1) } catch { return null } })(),
     // analysis feeds (2026-10-18): S/R levels + major-trendline alerts, per asset — when each was last written, and the refresh children's exits
@@ -169,17 +174,19 @@ export function assessHealth(I, R = HEALTH_RULE) {
   // 9. ANALYSIS FEEDS (S/R levels hourly, trendline lines per 4H close, trendline minute check) — judged once the market has been open 40 min and is
   //    still open long enough for a refresh cycle; plus two failed refreshes in a row of the same asset (exit 2 = the refresh saw stale minutes).
   if (I.feeds && checks.app === 'running') {
-    const age = (t) => (t ? now - Date.parse(t) : Infinity), srOld = [], tlOld = [], failed = [], slow = []
+    const age = (t) => (t ? now - Date.parse(t) : Infinity), srOld = [], tlOld = [], failed = [], slow = [], catching = []
+    const cu = I.catchUpFrom ? Date.parse(I.catchUpFrom) : NaN, inCatchUp = (t) => Number.isFinite(cu) && now - cu < R.catchUpMs && (!t || Date.parse(t) < cu)
     const srJudged = settledOpen && marketOpen(now - R.srMaxAgeMs), tlJudged = settledOpen && marketOpen(now - R.tlLinesMaxAgeMs)
     for (const sh of ANALYSIS_ASSETS) { const f = I.feeds[sh] ?? {}
-      if (srJudged && age(f.sr) > R.srMaxAgeMs) srOld.push(`${SYM_OF[sh]} (${f.sr ? ago(age(f.sr)) + ' old' : 'never'})`)
-      if (TL_ASSETS.includes(sh) && tlJudged && age(f.tl) > R.tlLinesMaxAgeMs) tlOld.push(`${SYM_OF[sh]} (${f.tl ? ago(age(f.tl)) + ' old' : 'never'})`)
+      if (srJudged && age(f.sr) > R.srMaxAgeMs) (inCatchUp(f.sr) ? catching : srOld).push(`${inCatchUp(f.sr) ? 'S/R ' : ''}${SYM_OF[sh]} (${f.sr ? ago(age(f.sr)) + ' old' : 'never'})`)
+      if (TL_ASSETS.includes(sh) && tlJudged && age(f.tl) > R.tlLinesMaxAgeMs) (inCatchUp(f.tl) ? catching : tlOld).push(`${inCatchUp(f.tl) ? 'trendlines ' : ''}${SYM_OF[sh]} (${f.tl ? ago(age(f.tl)) + ' old' : 'never'})`)
       for (const kind of TL_ASSETS.includes(sh) ? ['sr_refresh', 'trendline_lines'] : ['sr_refresh']) { const rs = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}`).slice(-2)
         if (rs.length === 2 && rs.every((r) => r.exit !== 0)) failed.push(`${kind} ${SYM_OF[sh]} (exit ${rs.at(-1).exit}${rs.at(-1).exit === 2 ? ' = stale minutes' : ''})`)
         // FEED_SLOW (2026-10-19, "stales never happen again"): 2 of the last 3 timed runs used ≥ 80 % of their kill limit → warn BEFORE a kill
         const timed = (I.feedRuns ?? []).filter((r) => r.script === `${kind}.mjs ${SYM_OF[sh]}` && r.ms > 0 && r.limit_ms > 0).slice(-3)
         if (timed.filter((r) => r.ms >= 0.8 * r.limit_ms).length >= 2) slow.push(`${kind} ${SYM_OF[sh]} (${Math.round(timed.at(-1).ms / 1000)} s of ${Math.round(timed.at(-1).limit_ms / 1000)} s)`) } }
     if (slow.length) add('FEED_SLOW', 'WARN', `Analysis refresh close to its time limit: ${slow.join(', ')} — will be killed if it grows.`)
+    if (catching.length) checks.catch_up = `refreshing after the app start / wake at ${iso(cu).slice(11, 16)} UTC (queued, no warning for ${Math.round(R.catchUpMs / MIN)} min): ${catching.join(', ')}`
     if (srOld.length) add('SR_FEED_STALE', 'WARN', `S/R levels not refreshed: ${srOld.join(', ')} (every hour) — the S/R tab shows STALE.`)
     if (tlOld.length) add('TL_FEED_STALE', 'WARN', `Trendline lines not refreshed: ${tlOld.join(', ')} (after each 4H close) — trendline alerts wait.`)
     if (settledOpen && age(I.tlTick) > R.tlTickMaxAgeMs) add('TL_TICK_STALE', 'WARN', `Trendline alert check has not run for ${I.tlTick ? ago(age(I.tlTick)) : 'ever'} (every minute).`)

@@ -130,6 +130,12 @@ await ok('ANALYSIS FEEDS (S/R + trendlines, 2026-10-18): fresh → no issue; an 
   const fresh = (now) => ({ feeds: Object.fromEntries(['xau', 'xag', 'dxy_ice', 'wti', 'dxy'].map((s) => [s, { sr: new Date(now - 30 * MIN).toISOString(), tl: s === 'dxy' ? null : new Date(now - 2 * H).toISOString() }])), tlTick: new Date(now - MIN).toISOString(), feedRuns: [] })
   const a0 = assessHealth(healthy(TUE, fresh(TUE))); assert.equal(a0.state, 'OK'); assert.deepEqual(a0.issues, []); assert(/XAUUSD S\/R/.test(a0.checks.analysis_feeds) && / ok$/.test(a0.checks.analysis_feeds))
   const f1 = fresh(TUE); f1.feeds.xag.sr = new Date(TUE - 80 * MIN).toISOString(); let a = assessHealth(healthy(TUE, f1)); assert.equal(a.state, 'WARN'); assert.deepEqual(codes(a), ['SR_FEED_STALE']); assert(/XAGUSD/.test(a.issues[0].text))
+  // CATCH-UP (2026-10-29 23:15): S/R written BEFORE the app start / wake → "catching up", no warning for 30 min; after 30 min, or a feed that went stale
+  // AFTER the start, the warning returns
+  const fc = fresh(TUE); fc.feeds.xag.sr = new Date(TUE - 130 * MIN).toISOString(); fc.catchUpFrom = new Date(TUE - 6 * MIN).toISOString()
+  a = assessHealth(healthy(TUE, fc)); assert.deepEqual(codes(a), []); assert(/refreshing after the app start \/ wake/.test(a.checks.catch_up) && /XAGUSD/.test(a.checks.catch_up))
+  fc.catchUpFrom = new Date(TUE - 31 * MIN).toISOString(); a = assessHealth(healthy(TUE, fc)); assert.deepEqual(codes(a), ['SR_FEED_STALE'])
+  const fd = fresh(TUE); fd.feeds.xag.sr = new Date(TUE - 80 * MIN).toISOString(); fd.catchUpFrom = new Date(TUE - 90 * MIN).toISOString(); a = assessHealth(healthy(TUE, fd)); assert.deepEqual(codes(a), ['SR_FEED_STALE'])
   const f2 = fresh(TUE); f2.feeds.dxy_ice.tl = null; a = assessHealth(healthy(TUE, f2)); assert.deepEqual(codes(a), ['TL_FEED_STALE']); assert.equal(a.issues[0].sev, 'WARN')
   const f3 = fresh(TUE); f3.tlTick = new Date(TUE - 6 * MIN).toISOString(); a = assessHealth(healthy(TUE, f3)); assert.deepEqual(codes(a), ['TL_TICK_STALE'])
   const f4 = fresh(TUE); f4.feedRuns = [{ script: 'sr_refresh.mjs WTI', exit: 2 }, { script: 'sr_refresh.mjs WTI', exit: 2 }]; a = assessHealth(healthy(TUE, f4)); assert.deepEqual(codes(a), ['FEED_REFRESH_FAILED']); assert(/stale minutes/.test(a.issues[0].text))

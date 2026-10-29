@@ -88,7 +88,7 @@ let STARTED_AT = Date.now(), prevLoopAt = null   // STARTED_AT moves to the wake
 const readJson =(f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return null } }
 const beat = (extra = {}) => {
   const s = streamStatus({ pidAlive })
-  fs.writeFileSync(HB, JSON.stringify({ at: new Date().toISOString(), pid: process.pid, cycle, last_tick_bar: lastTickBar, mode: 'run_twin',
+  fs.writeFileSync(HB, JSON.stringify({ at: new Date().toISOString(), pid: process.pid, cycle, last_tick_bar: lastTickBar, mode: 'run_twin', catch_up_from: new Date(STARTED_AT).toISOString(),
     stream: { live: s.live, why: s.why, pid: s.hb?.pid ?? streamLockPid(), restarts: streamRestarts }, ...extra }, null, 1))
 }
 const tick = (barT) => new Promise((resolve) => {
