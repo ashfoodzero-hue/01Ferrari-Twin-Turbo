@@ -22,6 +22,9 @@ ok(st[6] === 'MISSED' && /not in the store/.test(R[6].reason), 'closed bar missi
 ok(st[7] === 'TICK_FAILED' && /no decision record/.test(R[7].reason), 'tick ran but wrote no record → TICK_FAILED')
 ok(st[8] === 'MISSED' && /every condition TRUE/.test(R[8].reason), 'live saw every condition true but opened nothing → MISSED')
 ok(classifyParity([sig(9)], { busy: [[T0, T0 + 3600000]] })[0].status === 'BUSY', 'no decision row (before the log) but inside a journaled trade → BUSY')
+ok(classifyParity([sig(10)], { appOff: () => true })[0].status === 'APP_OFF', 'no run, no record, and NO app job ran around it (PC asleep) → APP_OFF, not a fault')
+ok(classifyParity([sig(10)], { appOff: () => false })[0].status === 'TICK_FAILED', 'no run while the app WAS running → still TICK_FAILED')
+ok(classifyParity([sig(3)], { runs: new Map([[sig(3).decisionT, { exit: 'killed', killed: true, ms: 120000 }]]), appOff: () => true })[0].status === 'TICK_FAILED', 'a tick that ran and was killed is never excused as APP_OFF')
 ok(liveDiff('SELL', { sell: { wall: true, wti_bullish: true, dxy_bullish: false, close_below_swing_low: true } }).includes('dxy_bullish=false'), 'SELL checklist read the same way')
 // health rule
 const now = Date.parse('2026-10-27T15:00:00Z'), base = { now, feeds: null }

@@ -15,7 +15,7 @@ import { marketOpen, marketSession } from '../src/core/freshness.js'
 import { preopenSlot } from '../src/core/dataHealth.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { streamStatus } from '../src/data/tickStream.js'
-import { reconcilePlan } from '../src/core/reconcilePlan.js'
+import { reconcilePlan, isWake } from '../src/core/reconcilePlan.js'
 import { bucket4h } from '../src/master/macroMagnet.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
@@ -83,7 +83,8 @@ process.on('SIGINT', shutdown); process.on('SIGTERM', shutdown)
 
 // ── 2. the bar-aligned paper tick ───────────────────────────────────────────────────────────────────────────────
 let cycle = 0, lastTickBar = null, ticking = false, lastBeat = 0, lastReconcile = null, reconciling = false, reconAttempted = false
-const STARTED_AT = Date.now(), readJson = (f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return null } }
+let STARTED_AT = Date.now(), prevLoopAt = null   // STARTED_AT moves to the wake time after a sleep (reconcilePlan.js isWake)
+const readJson =(f) => { try { return JSON.parse(fs.readFileSync(f, 'utf8')) } catch { return null } }
 const beat = (extra = {}) => {
   const s = streamStatus({ pidAlive })
   fs.writeFileSync(HB, JSON.stringify({ at: new Date().toISOString(), pid: process.pid, cycle, last_tick_bar: lastTickBar, mode: 'run_twin',
@@ -123,6 +124,10 @@ ensureStream(); beat()
 for (;;) {
   cycle++
   const now = Date.now()
+  // WAKE FROM SLEEP → the same history check as an app start (stream refill on reconnect + full reconcile 2 min later), logged in child_runs
+  if (isWake(prevLoopAt, now)) { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date(now).toISOString(), script: 'run_twin.mjs', event: 'wake', slept_min: Math.round((now - prevLoopAt) / 60000), asleep_from: new Date(prevLoopAt).toISOString() }) + '\n')
+    STARTED_AT = now; reconAttempted = false; lastReconcile = null }
+  prevLoopAt = now
   const lastClose = Math.floor(now / 900000) * 900000, last3m = Math.floor(now / 180000) * 180000
   ensureStream(); await ensureChart(); await ensureSettings(); ensureAwake()
   // DATA HEALTH watcher (health_tick.mjs, 2026-10-18; rules src/core/dataHealth.js): every 2 min, always, + at start (FIRST, so the signal gate

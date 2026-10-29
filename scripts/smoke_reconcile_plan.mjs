@@ -1,9 +1,19 @@
 // smoke_reconcile_plan.mjs — the "refresh after every restart" rule (src/core/reconcilePlan.js) on scenarios, + the reconcile state contract.
 import assert from 'node:assert'
-import { reconcilePlan, RECON } from '../src/core/reconcilePlan.js'
+import { reconcilePlan, RECON, isWake } from '../src/core/reconcilePlan.js'
+import fs from 'node:fs'
 let n = 0; const ok = (name, fn) => { try { fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
 const H = 3600000, D = 86400000, now = Date.UTC(2026, 9, 14, 10, 0)
 console.log('\n██ RECONCILE PLAN SMOKE ██')
+ok('WAKE FROM SLEEP (2026-10-29): a ≥ 3 min pause of the 1 s loop = a wake → treated as an app start (refill + full reconcile 2 min later)', () => {
+  assert(!isWake(null, now) && !isWake(now - 5000, now) && !isWake(now - RECON.wakeGapMs + 1000, now) && isWake(now - RECON.wakeGapMs, now) && isWake(Date.UTC(2026, 9, 28, 22, 58), Date.UTC(2026, 9, 29, 8, 2)))
+  // after the wake the plan sees a fresh start: waits 2 min, then runs even though the last success was < 20 h ago
+  const st = { okAt: now - 10 * H, coveredTo: now - 10 * H }
+  assert.equal(reconcilePlan({ now, startedAt: now, state: st, running: false, attemptedThisStart: false, lastAttemptAt: null }).run, false)
+  assert.equal(reconcilePlan({ now: now + RECON.startDelayMs, startedAt: now, state: st, running: false, attemptedThisStart: false, lastAttemptAt: null }).run, true)
+  const src = fs.readFileSync(new URL('./run_twin.mjs', import.meta.url), 'utf8')
+  assert(src.includes('if (isWake(prevLoopAt, now))') && /STARTED_AT = now; reconAttempted = false; lastReconcile = null/.test(src) && src.includes('prevLoopAt = now'), 'run_twin wires the wake')
+})
 ok('app start: waits 2 min for the stream refill, then runs once even if a run succeeded 1 h ago', () => {
   const st = { okAt: now - H, coveredTo: now - H }
   assert.equal(reconcilePlan({ now, startedAt: now - 60000, state: st, running: false, attemptedThisStart: false }).run, false)

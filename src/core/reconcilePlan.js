@@ -8,7 +8,11 @@
 // RULE: run (a) once per app start, 2 min after it (the stream has refilled by then); (b) whenever the last SUCCESS is ≥ 20 h old;
 // (c) after a failure, again every 30 min until it succeeds. Window = days since the last successful run's end + 7, clamped to [7, 30].
 // ════════════════════════════════════════════════════════════════════════════════
-export const RECON = Object.freeze({ startDelayMs: 120000, dueMs: 20 * 3600000, retryMs: 30 * 60000, minDays: 7, maxDays: 30 })
+export const RECON = Object.freeze({ startDelayMs: 120000, dueMs: 20 * 3600000, retryMs: 30 * 60000, minDays: 7, maxDays: 30, wakeGapMs: 3 * 60000 })
+/** WAKE FROM SLEEP (2026-10-29, Ashraf: "make sure that every time pc restart or sleep check history automatic"): the app's 1-second loop did not run for
+ *  ≥ wakeGapMs → the PC slept (the processes survive a sleep, so no "app start" happens). The caller then treats the wake exactly like an app start:
+ *  the stream refills on its reconnect, and the full reconcile runs startDelayMs later. */
+export const isWake = (prevLoopAt, now) => prevLoopAt != null && now - prevLoopAt >= RECON.wakeGapMs
 const DAY = 86400000
 
 /** state = data/master/reconcile_state.json ({ okAt, coveredTo, failedAt }) or null. Returns { run, days, why }. */

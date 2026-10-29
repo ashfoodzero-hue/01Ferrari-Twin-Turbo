@@ -33,7 +33,9 @@ export function liveDiff(side, row) {
  * @param o.opened Set of decisionT · o.vetoed Set · o.busy [[openDecisionT, closedT]] · o.runs matrix_tick child_runs (bar ISO → exit)
  * @returns rows {t, decisionT, side, entry, status, reason}
  */
-export function classifyParity(sigs, { decisions = new Map(), opened = new Set(), vetoed = new Set(), busy = [], runs = new Map() } = {}) {
+// o.appOff(t) (2026-10-29, Ashraf's PC slept 22:58 → 08:02 UTC; 2 BUYs at 06:18 / 06:39 were flagged TICK_FAILED): true when NO scheduled job of the app ran
+// within ±10 min of t — the app / PC was off, not a fault → APP_OFF (reported, never a health warning). A real failed / missing tick keeps TICK_FAILED.
+export function classifyParity(sigs, { decisions = new Map(), opened = new Set(), vetoed = new Set(), busy = [], runs = new Map(), appOff = () => false } = {}) {
   return sigs.map((s) => {
     const base = { t: s.t, decisionT: s.decisionT, side: s.side, entry: +s.entry.toFixed(2) }
     if (opened.has(s.decisionT)) return { ...base, status: 'OPENED', reason: null }
@@ -41,7 +43,8 @@ export function classifyParity(sigs, { decisions = new Map(), opened = new Set()
     const row = decisions.get(s.t), run = runs.get(s.decisionT)
     if (row?.open || (!row && busy.some(([a, b]) => s.decisionT > a && s.decisionT <= b))) return { ...base, status: 'BUSY', reason: 'a SCALP trade was already open' }
     if (run && run.exit !== 0) return { ...base, status: 'TICK_FAILED', reason: `matrix_tick ${run.killed ? 'killed' : 'exit ' + run.exit} after ${Math.round((run.ms ?? 0) / 1000)} s — this bar was never evaluated` }
-    if (!row) return { ...base, status: 'TICK_FAILED', reason: run ? 'the tick ran but left no decision record' : 'no matrix_tick run for this bar' }
+    if (!row && !run && appOff(s.decisionT)) return { ...base, status: 'APP_OFF', reason: 'the app was not running (PC asleep / off) — no tick could run' }
+    if (!row) return { ...base, status: 'TICK_FAILED', reason: run ?'the tick ran but left no decision record' : 'no matrix_tick run for this bar' }
     if (row.halted || row.live === false) return { ...base, status: 'NOT_LIVE', reason: row.halted ? 'database STALE (health gate)' : `data not live: ${row.why}` }
     if (!row.barPresent) return { ...base, status: 'MISSED', reason: 'the closed 3m gold bar was not in the store at the decision' }
     return { ...base, status: 'MISSED', reason: liveDiff(s.side, row) }
@@ -54,15 +57,18 @@ export function runParity({ nowT, B, D, W }) {
   const sigs = i0 < 0 ? [] : matrixSignals(B, D, W, { from: i0 }).filter((s) => s.decisionT >= from && s.decisionT <= to)
   const J = rd(path.join(TURBO.paper, 'matrix_trades.jsonl')).filter((r) => r.sig?.decisionT >= from - 2 * 86400000)
   const decisions = new Map(rd(path.join(TURBO.paper, 'matrix_decisions.jsonl')).slice(-200).map((r) => [Date.parse(r.bar), r]))
-  const runs = new Map(rd(path.join(TURBO.master, 'child_runs.jsonl')).slice(-600).filter((r) => r.script === 'matrix_tick.mjs' && r.bar).map((r) => [Date.parse(r.bar), r]))
+  const CR = rd(path.join(TURBO.master, 'child_runs.jsonl')).slice(-1500)
+  const runs = new Map(CR.filter((r) => r.script === 'matrix_tick.mjs' && r.bar).map((r) => [Date.parse(r.bar), r]))
+  const runAt = CR.map((r) => Date.parse(r.at)).filter(Number.isFinite), appOff = (t) => !runAt.some((a) => Math.abs(a - t) <= 10 * 60000)
   const st = readJ(path.join(TURBO.master, 'matrix_state.json')), busy = J.filter((r) => r.status === 'CLOSED').map((r) => [r.sig.decisionT, Date.parse(r.closedAt)])
   if (st?.open?.sig) busy.push([st.open.sig.decisionT, Infinity])
   const rows = classifyParity(sigs, { decisions, opened: new Set(J.filter((r) => r.status === 'OPENED').map((r) => r.sig.decisionT)),
-    vetoed: new Set(rd(path.join(TURBO.paper, 'matrix_vetoed.jsonl')).map((r) => r.sig?.decisionT)), busy, runs })
+    vetoed: new Set(rd(path.join(TURBO.paper, 'matrix_vetoed.jsonl')).map((r) => r.sig?.decisionT)), busy, runs, appOff })
   const prev = readJ(PARITY_FILE()), known = new Set((prev?.problems ?? []).map((p) => p.decisionT)), fresh = rows.filter((r) => (r.status === 'MISSED' || r.status === 'TICK_FAILED') && !known.has(r.decisionT))
   for (const r of fresh) fs.appendFileSync(MISSED_FILE(), JSON.stringify({ ...r, found: new Date(nowT).toISOString(), live: decisions.get(r.t) ?? null }) + '\n')
-  const problems = [...(prev?.problems ?? []).filter((p) => p.decisionT >= nowT - PARITY.keepMs), ...fresh.map((r) => ({ ...r, found: new Date(nowT).toISOString() }))]
-  const counts = Object.fromEntries(['OPENED', 'VETOED', 'BUSY', 'NOT_LIVE', 'TICK_FAILED', 'MISSED'].map((k) => [k, rows.filter((r) => r.status === k).length]))
+  const offNow = new Set(rows.filter((r) => r.status === 'APP_OFF').map((r) => r.decisionT))   // a signal now known to fall while the app was off is not a problem
+  const problems = [...(prev?.problems ?? []).filter((p) => p.decisionT >= nowT - PARITY.keepMs && !offNow.has(p.decisionT)), ...fresh.map((r) => ({ ...r, found: new Date(nowT).toISOString() }))]
+  const counts = Object.fromEntries(['OPENED', 'VETOED', 'BUSY', 'NOT_LIVE', 'APP_OFF', 'TICK_FAILED', 'MISSED'].map((k) => [k, rows.filter((r) => r.status === k).length]))
   const out = { at: new Date(nowT).toISOString(), window: { from: new Date(from).toISOString(), to: new Date(to).toISOString() }, signals: rows.length, counts, rows, problems }
   fs.writeFileSync(PARITY_FILE() + '.tmp', JSON.stringify(out, null, 1)); fs.renameSync(PARITY_FILE() + '.tmp', PARITY_FILE())
   return { ...out, fresh }
