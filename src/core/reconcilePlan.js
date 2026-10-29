@@ -13,6 +13,12 @@ export const RECON = Object.freeze({ startDelayMs: 120000, dueMs: 20 * 3600000, 
  *  ≥ wakeGapMs → the PC slept (the processes survive a sleep, so no "app start" happens). The caller then treats the wake exactly like an app start:
  *  the stream refills on its reconnect, and the full reconcile runs startDelayMs later. */
 export const isWake = (prevLoopAt, now) => prevLoopAt != null && now - prevLoopAt >= RECON.wakeGapMs
+/** ORDER AFTER A START / WAKE (2026-10-29 23:00 UTC, measured: the PC woke at 23:00, twin_tick ran 23:00:3x on the pre-sleep store, the stream refill
+ *  of 21:08→23:00 landed at 23:01:07 → signal_tiers.json carried 20:45 data → FLOW_STALE CRITICAL "SIGNALS STOPPED"; the futures recorder waited for its
+ *  :08 slot → RECORDER_NOT_RUNNING). Rule: the 15m signal tick waits until the stream is settled to the last closed minute (streamStatus live) — at most
+ *  STARTUP.streamWaitMs after the bar, then it runs anyway (the data-health gate still guards every signal). */
+export const STARTUP = Object.freeze({ streamWaitMs: 5 * 60000 })
+export const tickReady = ({ now, barT, streamLive }) => !!streamLive || now - barT >= STARTUP.streamWaitMs
 const DAY = 86400000
 
 /** state = data/master/reconcile_state.json ({ okAt, coveredTo, failedAt }) or null. Returns { run, days, why }. */

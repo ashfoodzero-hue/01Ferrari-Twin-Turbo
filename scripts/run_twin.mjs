@@ -15,7 +15,7 @@ import { marketOpen, marketSession } from '../src/core/freshness.js'
 import { preopenSlot } from '../src/core/dataHealth.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { streamStatus } from '../src/data/tickStream.js'
-import { reconcilePlan, isWake } from '../src/core/reconcilePlan.js'
+import { reconcilePlan, isWake, tickReady } from '../src/core/reconcilePlan.js'
 import { makeRetry } from '../src/core/refreshRetry.js'
 import { bucket4h } from '../src/master/macroMagnet.js'
 
@@ -104,7 +104,7 @@ const tick = (barT) => new Promise((resolve) => {
 // ── 3. the FERRARI MATRIX scalp tick (matrix_tick.mjs) 4 s after every 3m close — non-blocking, one at a time, PAPER ONLY ──
 let lastMacro = null, macroRunning = false, lastLevel = null, levelRunning = false
 let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, calRetry = false, lastFwd = null, fwdRunning = false
-let lastRec = null, recRunning = false   // futures + GLD recorder (record_futures.mjs, 2026-10-17)
+let lastRec = null, recRunning = false, recNow = true   // futures + GLD recorder (record_futures.mjs, 2026-10-17); recNow = catch up at once after a start / wake (2026-10-29)
 let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
 let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
@@ -128,7 +128,7 @@ for (;;) {
   const now = Date.now()
   // WAKE FROM SLEEP → the same history check as an app start (stream refill on reconnect + full reconcile 2 min later), logged in child_runs
   if (isWake(prevLoopAt, now)) { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date(now).toISOString(), script: 'run_twin.mjs', event: 'wake', slept_min: Math.round((now - prevLoopAt) / 60000), asleep_from: new Date(prevLoopAt).toISOString() }) + '\n')
-    STARTED_AT = now; reconAttempted = false; lastReconcile = null }
+    STARTED_AT = now; reconAttempted = false; lastReconcile = null; recNow = true }
   prevLoopAt = now
   const lastClose = Math.floor(now / 900000) * 900000, last3m = Math.floor(now / 180000) * 180000
   ensureStream(); await ensureChart(); await ensureSettings(); ensureAwake()
@@ -139,7 +139,9 @@ for (;;) {
       if (err || /📨/.test(String(stdout))) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'health_tick.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n')
       if (err || /📨|STALE|WARN/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   if (marketOpen(last3m - 1) && now - last3m >= 4000 && !matrixTicking && (lastMatrixBar == null || lastMatrixBar < last3m)) matrixTick(last3m)
-  if (marketOpen(lastClose - 1) && now - lastClose >= TICK_OFFSET_MS && !ticking && (lastTickBar == null || Date.parse(lastTickBar) < lastClose)) await tick(lastClose)
+  // the 15m signal tick waits for the stream to be settled to the last closed minute (after a start / wake the refill lands ~1 min later) — reconcilePlan.js tickReady
+  if (marketOpen(lastClose - 1) && now - lastClose >= TICK_OFFSET_MS && !ticking && (lastTickBar == null || Date.parse(lastTickBar) < lastClose)
+    && tickReady({ now, barT: lastClose, streamLive: streamStatus({ pidAlive, symbols: ['XAUUSD', 'XAGUSD'] }).live })) await tick(lastClose)
   // reconciliation of the 1m store vs Polygon's current bars (corrections.js) — WHEN and HOW FAR BACK: src/core/reconcilePlan.js (every app
   // start, daily, retry after a failure; ≥ 7 days back). The exit code is real (1 = a symbol failed) and is logged.
   const rp = reconcilePlan({ now, startedAt: STARTED_AT, state: readJson(path.join(TURBO.master, 'reconcile_state.json')), running: reconciling, attemptedThisStart: reconAttempted, lastAttemptAt: lastReconcile })
@@ -223,7 +225,7 @@ for (;;) {
   // FUTURES + GLD RECORDER (record_futures.mjs, 2026-10-17, Ashraf: "the App … saves our database … so we build our own history for Future and
   // Spot for XAU, DXY, Silver"): every 15 min at 8 min past each 15m close, always (futures trade Sunday-Friday). Append-only, final minutes only,
   // catch-up by design (a missed run loses nothing). Spot is recorded by the stream itself.
-  if (now - qKey >= 8 * 60000 && lastRec !== qKey && !recRunning) { recRunning = true; lastRec = qKey
+  if (((now - qKey >= 8 * 60000 && lastRec !== qKey) || recNow) && !recRunning) { recRunning = true; recNow = false; lastRec = qKey
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'record_futures.mjs')], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { recRunning = false
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'record_futures.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // LADDER CONTEXT (ladder_tick.mjs, 2026-10-17, docs/LADDER_CONTEXT_SPEC.md; Ashraf approved "make it live"): the swing study's flip ladder per anchor,

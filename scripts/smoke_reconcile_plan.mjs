@@ -1,10 +1,19 @@
 // smoke_reconcile_plan.mjs — the "refresh after every restart" rule (src/core/reconcilePlan.js) on scenarios, + the reconcile state contract.
 import assert from 'node:assert'
-import { reconcilePlan, RECON, isWake } from '../src/core/reconcilePlan.js'
+import { reconcilePlan, RECON, isWake, tickReady, STARTUP } from '../src/core/reconcilePlan.js'
 import fs from 'node:fs'
 let n = 0; const ok = (name, fn) => { try { fn(); n++; console.log('  ✓ ' + name) } catch (e) { console.error('  ✗ ' + name + ' — ' + e.message); process.exitCode = 1 } }
 const H = 3600000, D = 86400000, now = Date.UTC(2026, 9, 14, 10, 0)
 console.log('\n██ RECONCILE PLAN SMOKE ██')
+ok('ORDER AFTER START / WAKE (2026-10-29 23:00): the 15m signal tick waits for the stream refill (≤ 5 min); the recorder catches up at once', () => {
+  const bar = Date.parse('2026-10-29T23:00:00Z')
+  assert.equal(tickReady({ now: bar + 30000, barT: bar, streamLive: false }), false, '23:00:30, refill not landed → wait (the 10-29 case ran here on stale data)')
+  assert.equal(tickReady({ now: bar + 67000, barT: bar, streamLive: true }), true, 'refill landed (23:01:07) → run')
+  assert.equal(tickReady({ now: bar + STARTUP.streamWaitMs, barT: bar, streamLive: false }), true, 'stream still not live after 5 min → run anyway (the health gate guards signals)')
+  const src = fs.readFileSync(new URL('./run_twin.mjs', import.meta.url), 'utf8')
+  assert(src.includes("tickReady({ now, barT: lastClose, streamLive: streamStatus({ pidAlive, symbols: ['XAUUSD', 'XAGUSD'] }).live })"), 'tick wired to tickReady')
+  assert(/let lastRec = null, recRunning = false, recNow = true/.test(src) && src.includes('lastReconcile = null; recNow = true }') && src.includes('|| recNow) && !recRunning)'), 'recorder catch-up at start + wake')
+})
 ok('WAKE FROM SLEEP (2026-10-29): a ≥ 3 min pause of the 1 s loop = a wake → treated as an app start (refill + full reconcile 2 min later)', () => {
   assert(!isWake(null, now) && !isWake(now - 5000, now) && !isWake(now - RECON.wakeGapMs + 1000, now) && isWake(now - RECON.wakeGapMs, now) && isWake(Date.UTC(2026, 9, 28, 22, 58), Date.UTC(2026, 9, 29, 8, 2)))
   // after the wake the plan sees a fresh start: waits 2 min, then runs even though the last success was < 20 h ago
