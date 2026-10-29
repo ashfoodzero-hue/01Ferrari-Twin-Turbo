@@ -1,5 +1,5 @@
-// score_nowcast_2026-10-29.mjs — scores the pre-registered nowcast check (docs/research/nowcast_check_2026-10-29.md, ADDENDUM 1) once the
-// official numbers and the full 12:30-13:30 UTC hour exist. Read-only on the app data; writes data/research/nowcast_check_2026-10-29.json.
+// score_nowcast_2026-10-29.mjs — scores the pre-registered nowcast check (docs/research/macro_nowcast/2026-10-29_GDP_PCE_check.md, ADDENDUM 1) once
+// the official numbers and the full 12:30-13:30 UTC hour exist. Read-only on the app data; writes data/research/macro_nowcast/scores/2026-10-29_GDP_PCE_check.json.
 import '../../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -28,5 +28,5 @@ const out = { at: new Date().toISOString(), spec: 'docs/research/nowcast_check_2
   gold: ev ? { range_usd: +ev.range.toFixed(2), move_usd: +ev.move.toFixed(2), high_at: new Date(ev.hiT).toISOString().slice(11, 16), low_at: new Date(ev.loT).toISOString().slice(11, 16),
     control_median_range_usd: cr == null ? null : +cr.toFixed(2), ratio_vs_control: cr ? +(ev.range / cr).toFixed(2) : null, control_days: ctrl.length, minutes: ev.n } : null,
   note: 'n = 1 release: a check of the process, not proof of the method; direction is descriptive only' }
-fs.mkdirSync(path.join(TURBO.data, 'research'), { recursive: true }); fs.writeFileSync(path.join(TURBO.data, 'research', 'nowcast_check_2026-10-29.json'), JSON.stringify(out, null, 1))
+const OUT = path.join(TURBO.data, 'research', 'macro_nowcast', 'scores'); fs.mkdirSync(OUT, { recursive: true }); fs.writeFileSync(path.join(OUT, '2026-10-29_GDP_PCE_check.json'), JSON.stringify(out, null, 1))
 console.log(JSON.stringify(out, null, 1))
