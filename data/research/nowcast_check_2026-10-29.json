@@ -1,0 +1,57 @@
+{
+ "at": "2026-10-29T13:32:25.237Z",
+ "spec": "docs/research/nowcast_check_2026-10-29.md (ADDENDUM 1)",
+ "releases": [
+  {
+   "name": "Advance GDP q/q",
+   "actual": "3.4%",
+   "consensus": "3.2%",
+   "nowcast": 3.3,
+   "surprise": 0.2,
+   "nowcast_error": 0.1,
+   "consensus_error": 0.2,
+   "closer": "NOWCAST"
+  },
+  {
+   "name": "Core PCE Price Index m/m",
+   "actual": "0.3%",
+   "consensus": "0.3%",
+   "nowcast": null,
+   "surprise": 0,
+   "nowcast_error": null,
+   "consensus_error": 0,
+   "closer": "no call"
+  },
+  {
+   "name": "Advance GDP Price Index q/q",
+   "actual": "2.3%",
+   "consensus": "3.2%",
+   "nowcast": null,
+   "surprise": -0.9,
+   "nowcast_error": null,
+   "consensus_error": -0.9,
+   "closer": "no call"
+  },
+  {
+   "name": "Unemployment Claims",
+   "actual": "194K",
+   "consensus": "198K",
+   "nowcast": null,
+   "surprise": -4,
+   "nowcast_error": null,
+   "consensus_error": -4,
+   "closer": "no call"
+  }
+ ],
+ "gold": {
+  "range_usd": 15.88,
+  "move_usd": 0.91,
+  "high_at": "12:38",
+  "low_at": "12:55",
+  "control_median_range_usd": 17.92,
+  "ratio_vs_control": 0.89,
+  "control_days": 20,
+  "minutes": 60
+ },
+ "note": "n = 1 release: a check of the process, not proof of the method; direction is descriptive only"
+}
