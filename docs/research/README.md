@@ -45,4 +45,5 @@ actual news + XAU reaction, … S/R level, order flow, volumes, smart money, liq
 | **self_learning** | the weekly loop: re-test every track on new data → proposals with evidence (never auto-enabled) | `self_learning/` | — | design: next week |
 
 ## Today's index (append one line per research item)
+- 2026-10-29 · loss_autopsy / opportunities · swing opportunity log `data/inv90/<arm>/decisions.jsonl` (every ≥ threshold bar: SIGNAL or BLOCKED + reason); SCALP: `data/master/matrix_parity.json` + `data/paper/matrix_missed.jsonl` + `matrix_decisions.jsonl`; MASTER §7 (ew).
 - 2026-10-29 · macro_nowcast · GDP / PCE / deflator / claims check — spec+result `docs/research/macro_nowcast/2026-10-29_GDP_PCE_check.md`, scorer `scripts/research/score_nowcast_2026-10-29.mjs`, score `data/research/macro_nowcast/scores/2026-10-29_GDP_PCE_check.json`, MASTER §7 (eu).

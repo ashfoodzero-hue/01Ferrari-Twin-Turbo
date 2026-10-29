@@ -149,6 +149,10 @@ const noteTp1 = (s) => { if (s.bracket !== 'L4H3' || tp1Done.has(s.id) || resolv
   const p = phase1(s, f, M[f].t); if (p?.tp1 != null) { tp1Done.add(s.id); fills.push({ type: 'tp1', id: s.id, tp1_t: M[p.tp1].t, tp1: s.tp1, recorded_at: new Date(now).toISOString() }) } }
 for (const s of signals) { noteFill(s); noteTp1(s) }
 let maxT = lastDone
+// OPPORTUNITY LOG (2026-10-29, Ashraf: "make sure we do not lose opportunities of trades"): EVERY bar scoring ≥ the threshold gets one line in
+// decisions.jsonl beside the ledger — SIGNAL, or BLOCKED with the exact rule (5/day, 5 open, 1 h spacing, no price / ATR, no 4 h level). A blocked
+// opportunity is never silent again (the 10-28 13 h of blocked signals were invisible). Record-only; it changes no decision.
+const decided = [], decide = (t, p, decision, why) => decided.push({ bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), bracket: BR.name, decision, why, at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000) })
 for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) continue; maxT = Math.max(maxT, t)
   const p = predict(FM.model, Xb, n, r); if (p < FM.thr) continue
   if (knownIds.has(`${ARMC.idp}${new Date(t).toISOString()}`)) continue
@@ -158,17 +162,18 @@ for (let r = 0; r < n; r++) { const t = T[r]; if (t <= lastDone || t < CUT) cont
   const prior = [...signals, ...add].filter((s) => (s.bracket ?? 'E0') === BR.name), day = Math.floor(t / DAY)
   const today = prior.filter((s) => Math.floor(s.t / DAY) === day).length, lastSig = prior.reduce((m, s) => Math.max(m, s.t), -Infinity)
   const open = prior.filter((s) => s.t <= t && exitOf(s) > t).length   // a position closed before t is known closed at t (causal)
-  if (today >= 5 || open >= 5 || t - lastSig < 3600000) continue
-  const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) continue
+  if (today >= 5 || open >= 5 || t - lastSig < 3600000) { decide(t, p, 'BLOCKED', today >= 5 ? `5 signals already today (${today})` : open >= 5 ? `5 trades already open (${open})` : `< 1 h after the last signal (${Math.round((t - lastSig) / 60000)} min)`); continue }
+  const k0 = lb(t), c = M[k0 - 1]?.c, Dv = atrD(t); if (c == null || !(Dv > 0)) { decide(t, p, 'BLOCKED', c == null ? 'no 1m price before the bar' : 'no daily ATR'); continue }
   const head = { type: 'signal', id: `${ARMC.idp}${new Date(t).toISOString()}`, t, bar: new Date(t).toISOString(), score: +p.toFixed(4), thr: +FM.thr.toFixed(4), close_bid: c, spread: +spread(t).toFixed(3), atr_1d: +Dv.toFixed(2) }
   let sig
   if (BR.name === 'E0') { const entry = c + spread(t)   // market BUY at the ask (the checkpoint bracket)
     sig = { ...head, entry_ask: +entry.toFixed(2), target: +(entry + BR.tm * Dv).toFixed(2), stop: +(entry - BR.sm * Dv).toFixed(2), recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name }
-  } else { let lvl = Infinity; for (let j = lb(t - BR.lookMs); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) continue
+  } else { let lvl = Infinity; for (let j = lb(t - BR.lookMs); j < k0; j++) lvl = Math.min(lvl, M[j].l); if (!Number.isFinite(lvl)) { decide(t, p, 'BLOCKED', 'no 4 h low to place the limit'); continue }
     sig = { ...head, entry_limit: +lvl.toFixed(2), entry_ask: +lvl.toFixed(2), valid_until: t + BR.validMs, lots: BR.lots, tp1: +(lvl + BR.tp1Usd).toFixed(2), target: +(lvl + BR.capUsd).toFixed(2), stop: +(lvl - BR.stopUsd).toFixed(2),
       recorded_at: new Date(now).toISOString(), late_min: Math.round((now - t) / 60000), bracket: BR.name } }
-  add.push(sig); noteFill(sig); noteTp1(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
+  decide(t, p, 'SIGNAL', null); add.push(sig); noteFill(sig); noteTp1(sig); const o = resolve(sig); if (o) res.push({ type: 'resolve', id: sig.id, ...o, resolved_at: new Date(now).toISOString() })
 }
+if (decided.length) fs.appendFileSync(path.join(AD, 'decisions.jsonl'), decided.map((x) => JSON.stringify(x)).join('\n') + '\n')
 const lines = [...add, ...fills, ...res, { type: 'scan', from: lastDone, to: maxT, at: new Date(now).toISOString(), rows_scored: T.filter((t) => t > lastDone && t >= CUT).length }]
 fs.appendFileSync(LEDGER, lines.map((x) => JSON.stringify(x)).join('\n') + '\n')
 // ── 4. summary ───────────────────────────────────────────────────────────────────────────────────────────────────
