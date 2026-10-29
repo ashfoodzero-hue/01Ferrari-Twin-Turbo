@@ -16,6 +16,7 @@ import { preopenSlot } from '../src/core/dataHealth.js'
 import { pidAlive } from '../src/core/pidAlive.js'
 import { streamStatus } from '../src/data/tickStream.js'
 import { reconcilePlan, isWake } from '../src/core/reconcilePlan.js'
+import { makeRetry } from '../src/core/refreshRetry.js'
 import { bucket4h } from '../src/master/macroMagnet.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
@@ -111,6 +112,7 @@ const TL_SYMS = ['XAUUSD', 'XAGUSD', 'DXY_ICE', 'WTI']   // major-trendline aler
 let lastTlHour = null, lastTl = null, tlRunning = false, tlRefreshing = null, tlQueue = [...TL_SYMS]   // every asset is refreshed once at start
 const SR_SYMS = [...TL_SYMS, 'DXY']   // + gold-grid DXY (2026-10-19): the S/R tab's DXY warning compares XAU and DXY on identical candle times
 let lastSr = null, srRefreshing = null, srQueue = [...SR_SYMS]   // S/R levels (sr_refresh.mjs, 2026-10-18): every asset at start + after each 1H close
+const refreshRetry = makeRetry()   // failed S/R / trendline refreshes → re-queued 5 min later until they succeed (src/core/refreshRetry.js)
 let lastPre = null, preRunning = false, sesAt = 0, ses = null   // pre-open readiness check (preopen_check.mjs, 2026-10-18)
 const calDone = new Set()
 const matrixTick = (barT) => { matrixTicking = true; lastMatrixBar = barT; const t0 = Date.now()
@@ -198,8 +200,13 @@ for (;;) {
         for (const [s, a] of Object.entries(st.assets ?? {})) if ((a.status?.startsWith('no lines file') || Object.values(a.tf ?? {}).some((x) => x.status?.startsWith('a newer candle closed'))) && tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) } catch { /* no state yet */ } }) }
   // ms + limit_ms on every refresh row (2026-10-19): a job creeping toward its kill limit is visible in child_runs BEFORE it fails (DXY took 190-306 s
   // of a 300 s limit and was killed 3× in 7 days); health FEED_SLOW warns at ≥ 80 % of the limit.
+  // RETRY (2026-10-29, src/core/refreshRetry.js): a failed S/R or trendline refresh is re-queued 5 min later until it succeeds — one network blip at
+  // the hourly run must not leave the levels stale for an hour or more
+  for (const k of refreshRetry.dueKeys(now)) { const [kind, s] = k.split(':')
+    if (kind === 'sr' && srRefreshing !== s && !srQueue.includes(s)) srQueue.push(s)
+    if (kind === 'tl' && tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) }
   if (!tlRefreshing && !srRefreshing && tlQueue.length) { const s = tlQueue.shift(); tlRefreshing = s; const t0 = Date.now()
-    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'trendline_lines.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { tlRefreshing = null
+    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'trendline_lines.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { tlRefreshing = null; refreshRetry.done(`tl:${s}`, !err, Date.now())
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `trendline_lines.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, ms: Date.now() - t0, limit_ms: 10 * 60000, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n')
       if (/📨/.test(String(stdout))) process.stdout.write(String(stdout || '')) }) }
   // S/R LEVELS (sr_refresh.mjs, 2026-10-18, Ashraf: "real strong S/R levels at 1H, 4H, 1D, 1W, 1Month … keep updating the strength … no stales"):
@@ -211,7 +218,7 @@ for (;;) {
   if (marketOpen(hKey - 1) && now - hKey >= 2 * 60000 && lastTlHour !== hKey) { lastTlHour = hKey; for (const s of TL_SYMS) if (tlRefreshing !== s && !tlQueue.includes(s)) tlQueue.push(s) }
   if (marketOpen(hKey - 1) && now - hKey >= 4 * 60000 && lastSr !== hKey) { lastSr = hKey; for (const s of SR_SYMS) if (srRefreshing !== s && !srQueue.includes(s)) srQueue.push(s) }
   if (!srRefreshing && !tlRefreshing && srQueue.length) { const s = srQueue.shift(); srRefreshing = s; const t0 = Date.now()
-    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'sr_refresh.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { srRefreshing = null
+    execFile(process.execPath, ['--max-old-space-size=8192', path.join(here, 'sr_refresh.mjs'), s], { timeout: 10 * 60000, windowsHide: true }, (err, stdout, stderr) => { srRefreshing = null; refreshRetry.done(`sr:${s}`, !err, Date.now())
       fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: `sr_refresh.mjs ${s}`, exit: err ? (err.code ?? 'killed') : 0, ms: Date.now() - t0, limit_ms: 10 * 60000, out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // FUTURES + GLD RECORDER (record_futures.mjs, 2026-10-17, Ashraf: "the App … saves our database … so we build our own history for Future and
   // Spot for XAU, DXY, Silver"): every 15 min at 8 min past each 15m close, always (futures trade Sunday-Friday). Append-only, final minutes only,
