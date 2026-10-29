@@ -24,6 +24,16 @@ what the bottom-up models said before the number came out, so the comparison aft
 ## 3. Advance GDP Price Index q/q — consensus 3.2 % (previous 6.2 %); no independent nowcast captured → no call.
 ## 4. Unemployment Claims — consensus 198K (previous 194K); no independent nowcast captured → no call.
 
+## ADDENDUM 1 — written 12:09 UTC, BEFORE the release (gold-measured-study skill: pre-register + control + no look-ahead)
+- Surprise = actual − consensus (consensus = the app calendar value above, as known before 12:30). Nowcast error = actual − GDPNow 3.3 %.
+  "Closer" = smaller absolute error. Actual = the official BEA / DOL release value read from the app calendar's `actual` (Forex Factory,
+  src/master/marketContext.js) AND checked against the BEA release page; first print only (revisions ignored).
+- Gold reaction (spot XAUUSD, Polygon 1m via loadBars, closed minutes only): range 12:30-13:30 UTC and close-to-close move, both in units of
+  the 60-min range of the SAME clock window (12:30-13:30 UTC) on the 20 previous weekdays WITHOUT a high-impact USD release at 12:30 (the
+  control = median of those 20). Report: ratio vs control, direction (DESCRIPTIVE ONLY — one event, n = 1, no claim), time of the 60-min high / low.
+- Power: n = 1 release → nothing here is "proven"; this is a calibration of the process, not a result. The method's accuracy needs the full
+  history study (next week, its own SPEC under docs/, gold-measured-study §1).
+
 ## After the release (to be filled from the official BEA / DOL numbers, not from news headlines)
 - GDP actual vs GDPNow 3.3 % vs consensus 3.2 % → which was closer; the size of each error.
 - Gold's reaction 12:30-13:30 UTC (Polygon 1m) — measured, no direction claim.
