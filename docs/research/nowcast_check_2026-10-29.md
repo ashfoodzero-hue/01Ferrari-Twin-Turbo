@@ -34,7 +34,24 @@ what the bottom-up models said before the number came out, so the comparison aft
 - Power: n = 1 release → nothing here is "proven"; this is a calibration of the process, not a result. The method's accuracy needs the full
   history study (next week, its own SPEC under docs/, gold-measured-study §1).
 
-## After the release (to be filled from the official BEA / DOL numbers, not from news headlines)
+## RESULT — scored 13:32 UTC by scripts/research/score_nowcast_2026-10-29.mjs (commit 105cef0, written before the release) → data/research/nowcast_check_2026-10-29.json
+Actuals = the app calendar's first-print values (Forex Factory); the BEA page check is still OPEN (not yet indexed at 13:35 UTC).
+
+| release | actual | consensus | bottom-up nowcast | surprise | result |
+|---|---|---|---|---|---|
+| Advance GDP q/q | **3.4 %** | 3.2 % | GDPNow **3.3 %** | +0.2 | **WIN (narrow): nowcast error 0.1 vs consensus 0.2**; both said "above 3.2", right sign |
+| Core PCE m/m | 0.3 % | 0.3 % | none | 0 | no call (in line) |
+| GDP Price Index q/q | **2.3 %** | 3.2 % | none | **−0.9** | **MISSED — the day's biggest surprise, and we had no call** |
+| Unemployment claims | 194K | 198K | none | −4K | no call |
+
+Gold 12:30-13:30 UTC: range $15.88 vs the control median $17.92 (same hour, 20 quiet weekdays) = **0.89× — QUIETER than a normal hour**; net +$0.91;
+high 12:38, low 12:55. n = 1: descriptive only.
+
+What we missed (loss autopsy, measured from what was on screen BEFORE 12:30): the Cleveland Fed table fetched at 12:05 already showed **2026:Q3 CPI
+annualized 1.97 % and core CPI 2.33 %** — far below the 3.2 % deflator consensus. The GDP price index is a different measure (it includes investment
+and government prices, excludes imports), so CPI is not the answer, but it pointed the right way (low) by a wide margin. We did not use it because
+there was no deflator model. Lesson for the deep study: build the deflator from Q3 CPI / PPI / import prices with GDP shares, and test on every past
+advance release whether that bottom-up deflator beats the consensus.
 - GDP actual vs GDPNow 3.3 % vs consensus 3.2 % → which was closer; the size of each error.
 - Gold's reaction 12:30-13:30 UTC (Polygon 1m) — measured, no direction claim.
 
