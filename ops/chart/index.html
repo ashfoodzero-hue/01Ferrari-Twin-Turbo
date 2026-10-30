@@ -481,11 +481,10 @@ function fwList() {
 let GATE = null
 async function pollGate() { GATE = await fetch('/api/wrgate').then((x) => x.json()).catch(() => null) }
 setInterval(pollGate, 60000); pollGate()
-// 2026-10-30, Ashraf: "make the Neon box appear when the trade is triggered as before" → NEON BOXES ARE BACK for every measured signal (the gate
-// still has to be loaded and the signal still needs a measured record = fail-closed). Only the chart boxes changed: TELEGRAM trade alerts stay
-// under the 92 % rule (src/master/wrGate.js tradeAllowed, untouched). A box below 92 % says so in its note.
-const shown = (k) => GATE?.signals?.[k] != null && Number.isFinite(GATE.signals[k].wr)
-const gateNote = (k) => GATE?.signals?.[k] && !GATE.signals[k].allowed ? ` · PAPER: measured ${Math.round(100 * GATE.signals[k].wr)}% WR (below ${Math.round(100 * GATE.min_wr)}%, no Telegram)` : ''
+// 2026-10-30, Ashraf, after seeing every box back: "very crowded … make sell only for the 92% WR if not do not trigger same for buy scalp" →
+// boxes BACK UNDER the 92 % rule (BUY and SELL alike): only a signal measured ≥ 92 % draws; scalp BUY / ML SELL / blocked tags are hidden again.
+const shown = (k) => !!GATE?.signals?.[k]?.allowed
+const gateNote = (k) => GATE?.signals?.[k] ? ` · boxes hidden: measured ${Math.round(100 * GATE.signals[k].wr)}% WR < ${Math.round(100 * GATE.min_wr)}%` : ''
 function fwDraw() {
   const ov = $('fwOverlay'), p = panes[0]; ov.innerHTML = ''; if (!FWS.length || p.sym !== 'XAUUSD') return
   const ts = p.ch.timeScale(), W = ts.width(), H = $('c0').clientHeight, ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v)
@@ -508,7 +507,9 @@ function fwDraw() {
   for (const FW of FWS) { const A = ARMB(FW); if (!shown(A.gate)) continue   // THE 92 % WR RULE, per arm
   const main = FW.trades.filter((x) => x.bracket === A.br && live(x) && xOf(x.t) != null).at(-1)
   for (const t of FW.trades) {
-    if (t.bracket !== A.br || t.status === 'EXPIRED' || (t !== main && !live(t) && !(t.exit_t >= RECENT))) continue
+    // ONLY THE CURRENT TRADE (2026-10-30, Ashraf: "very crowded only leave the valid current triggered trade and make the previous disappear"):
+    // the newest LIVE (open / pending) trade of the arm is drawn; every earlier or closed trade disappears (they stay in the panel / ledgers)
+    if (t !== main) continue
     let x0 = xOf(t.t); if (x0 == null) continue
     let x1 = t.exit_t ? xOf(t.exit_t) : W; if (x1 == null) x1 = W; x1 = Math.max(x1, x0 + 60)
     const ya = y(t.entry), yb = y(t.tp1 ?? t.target); if (ya == null || yb == null) continue

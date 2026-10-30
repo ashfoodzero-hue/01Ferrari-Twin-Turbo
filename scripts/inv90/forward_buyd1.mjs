@@ -55,8 +55,9 @@ const CUT = Date.parse('2026-10-09T06:00:00Z'), DAY = 86400000, MODEL = path.joi
 // ARM 1 BACK TO E0 (2026-10-28 ~08:20 UTC, Ashraf: "Yes, bring back swing arm 1 with the checkpoint bracket E0 (0.2× ATR target / 2× ATR stop) as the
 // only signal passing the 92% rule: show its box, record only, no Telegram"): arm 1 = E0 — market BUY at the ask, target + 0.2·ATR1d, stop − 2·ATR1d,
 // 7 days (the checkpoint-2026-10-16 bracket; study (bo) OOS 92.0 % WR +$3.30/t, TRAIN 92.3 % +$0.84, avg risk ≈ $94, losing years 2017 / 2020 / 2022).
-// Arm 2 stays L4H3. The chart box is allowed by src/master/wrGate.js ('SWING_E0'); Telegram stays OFF.
-const BR = ARM === 'freq' ? { name: 'L4H3', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tp1Usd: 10, capUsd: 50, lots: 3 } : { name: 'E0', tm: 0.2, sm: 2 }, TELEGRAM = false
+// Arm 2 stays L4H3. The chart box is allowed by src/master/wrGate.js ('SWING_E0').
+// TELEGRAM ON for arm 1 / E0 only (2026-10-30, Ashraf: "Yes, E0 alerts on"); still gated by the 92 % rule ('SWING_E0' in wrGate.js). Arm 2: OFF.
+const BR = ARM === 'freq' ? { name: 'L4H3', lookMs: 4 * 3600000, validMs: 86400000, stopUsd: 10, tp1Usd: 10, capUsd: 50, lots: 3 } : { name: 'E0', tm: 0.2, sm: 2 }, TELEGRAM = ARM !== 'freq'
 const readMeta = (d) => JSON.parse(fs.readFileSync(path.join(d, 'dataset_meta.json'), 'utf8'))
 const f32 = (f) => { const b = fs.readFileSync(f); return new Float32Array(b.buffer, b.byteOffset, b.length / 4) }
 

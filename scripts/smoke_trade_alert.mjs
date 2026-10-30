@@ -84,7 +84,9 @@ await ok('sendText RETRY: a network failure twice then OK → sent on attempt 3;
 })
 await ok('STATIC: both live hooks are wired (matrix_tick SCALP after the state write; forward arms SWING per new signal)', async () => {
   const m = fs.readFileSync(path.join(here, 'matrix_tick.mjs'), 'utf8'), f = fs.readFileSync(path.join(here, 'inv90', 'forward_buyd1.mjs'), 'utf8')
-  assert(m.indexOf('alertSetup(scalpSetup(') > m.indexOf('fs.renameSync(STATE + \'.tmp\', STATE)')); assert(f.includes("for (const s of TELEGRAM && ARM !== 'freq' ? add : []) { const r = await alertSetup(swingSetup(") && /TELEGRAM = false/.test(f), 'swing arms silent since 2026-10-28 (record only); the hook stays wired behind TELEGRAM')
+  assert(m.indexOf('alertSetup(scalpSetup(') > m.indexOf('fs.renameSync(STATE + \'.tmp\', STATE)')); assert(f.includes("for (const s of TELEGRAM && ARM !== 'freq' ? add : []) { const r = await alertSetup(swingSetup(") && /TELEGRAM = ARM !== 'freq'/.test(f), 'arm 1 / E0 Telegram ON since 2026-10-30 (Ashraf "Yes, E0 alerts on"), arm 2 silent; the hook stays wired behind TELEGRAM')
+  const g = await import('../src/master/tradeAlert.js'), s = { id: 'X', t: 0, entry_ask: 100, stop: 90, target: 101, bracket: 'E0' }
+  assert(g.swingSetup(s, { arm: 'p92' }).gate === 'SWING_E0' && g.swingSetup(s, { arm: 'freq' }).gate === 'SWING' && g.swingSetup({ ...s, bracket: 'L4H3' }, { arm: 'p92' }).gate === 'SWING', 'only arm 1 / E0 is judged on its own SWING_E0 record')
   assert(f.startsWith('// ') && f.includes("import '../../src/core/bootEnv.js'"))
 })
 await ok('SCALP LOUD WARNING (labels, never blocks): gate numbers on line 2, silver line info-only; a non-confirming silver still sends; matrix_tick passes gate + silver', async () => {
