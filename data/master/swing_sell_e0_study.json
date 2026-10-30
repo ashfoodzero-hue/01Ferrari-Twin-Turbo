@@ -1,0 +1,246 @@
+{
+ "at": "2026-10-30T15:00:47.576Z",
+ "spec": "docs/SWING_SELL_E0_SPEC.md",
+ "thresholds": {
+  "Q1": 0.9722060561180115,
+  "Q2": 0.9620558023452759,
+  "Q3": 0.9787177443504333
+ },
+ "cells": {
+  "Q1": {
+   "threshold": 0.9722060561180115,
+   "selected_bars": 6387,
+   "train": {
+    "n": 727,
+    "wr": 0.879,
+    "net": -0.7,
+    "net_lb": -1.62,
+    "avg_risk": 32.2,
+    "max_losses_in_row": 11
+   },
+   "oos": {
+    "n": 6,
+    "wr": 0.6667,
+    "net": -23.23,
+    "net_lb": -67.71,
+    "avg_risk": 71.5,
+    "max_losses_in_row": 2
+   },
+   "per_day": 0.26,
+   "random_sell": {
+    "oos_wr": 0.848,
+    "oos_net": -2.926,
+    "train_wr": 0.864,
+    "train_net": -0.702
+   },
+   "model_minus_random_oos": -20.3,
+   "model_minus_random_train": 0,
+   "year_net": {
+    "2016": -433.9,
+    "2017": 103.2,
+    "2018": 18,
+    "2019": -114.5,
+    "2020": 68.4,
+    "2021": -153.4,
+    "2022": 4.6,
+    "2023": 5.3,
+    "2025": -149.4
+   },
+   "verdict": "FAIL"
+  },
+  "Q2": {
+   "threshold": 0.9620558023452759,
+   "selected_bars": 13047,
+   "train": {
+    "n": 1250,
+    "wr": 0.864,
+    "net": -1.05,
+    "net_lb": -1.73,
+    "avg_risk": 31.3,
+    "max_losses_in_row": 8
+   },
+   "oos": {
+    "n": 72,
+    "wr": 0.8472,
+    "net": -5.29,
+    "net_lb": -13.43,
+    "avg_risk": 67.3,
+    "max_losses_in_row": 3
+   },
+   "per_day": 0.47,
+   "random_sell": {
+    "oos_wr": 0.856,
+    "oos_net": -2.402,
+    "train_wr": 0.861,
+    "train_net": -0.876
+   },
+   "model_minus_random_oos": -2.89,
+   "model_minus_random_train": -0.17,
+   "year_net": {
+    "2016": -732.4,
+    "2017": -90.6,
+    "2018": 68.8,
+    "2019": -47,
+    "2020": -265.1,
+    "2021": -243.9,
+    "2022": 54.3,
+    "2023": -21.3,
+    "2024": 24.2,
+    "2025": -327.1,
+    "2026": -111.6
+   },
+   "verdict": "FAIL"
+  },
+  "Q3": {
+   "threshold": 0.9787177443504333,
+   "selected_bars": 3186,
+   "train": {
+    "n": 433,
+    "wr": 0.8707,
+    "net": -1.22,
+    "net_lb": -2.52,
+    "avg_risk": 32.6,
+    "max_losses_in_row": 6
+   },
+   "oos": {
+    "n": 0,
+    "wr": null,
+    "net": null,
+    "net_lb": null,
+    "avg_risk": null,
+    "max_losses_in_row": 0
+   },
+   "per_day": 0.15,
+   "random_sell": {
+    "oos_wr": 0.851,
+    "oos_net": -2.386,
+    "train_wr": 0.862,
+    "train_net": -0.782
+   },
+   "model_minus_random_oos": 2.39,
+   "model_minus_random_train": -0.44,
+   "year_net": {
+    "2016": -361.8,
+    "2017": 49.6,
+    "2018": 10.7,
+    "2019": -41.6,
+    "2020": 20.8,
+    "2021": -206.7
+   },
+   "verdict": "FAIL"
+  }
+ },
+ "fill_check": [
+  {
+   "signal": "2016-01-04T15:15:00.000Z",
+   "entry_minute": "2016-01-04T15:14:00.000Z",
+   "entry": 1082.42,
+   "tgt": 1080.28,
+   "stop": 1103.82,
+   "exit_minute": "2016-01-04T15:21:00.000Z",
+   "how": "target",
+   "bar": {
+    "t": 1451920860000,
+    "o": 1080.04,
+    "h": 1080.3400000000001,
+    "l": 1079.74,
+    "c": 1080.13,
+    "v": 369,
+    "src": "unknown",
+    "ver": null,
+    "live": "HISTORICAL"
+   },
+   "spread": 0.42,
+   "net": 2.14
+  },
+  {
+   "signal": "2016-01-06T14:30:00.000Z",
+   "entry_minute": "2016-01-06T14:29:00.000Z",
+   "entry": 1090.87,
+   "tgt": 1088.61,
+   "stop": 1113.48,
+   "exit_minute": "2016-01-06T15:23:00.000Z",
+   "how": "target",
+   "bar": {
+    "t": 1452093780000,
+    "o": 1089.07,
+    "h": 1089.0900000000001,
+    "l": 1088.06,
+    "c": 1088.34,
+    "v": 664,
+    "src": "unknown",
+    "ver": null,
+    "live": "HISTORICAL"
+   },
+   "spread": 0.42,
+   "net": 2.26
+  },
+  {
+   "signal": "2016-01-06T16:30:00.000Z",
+   "entry_minute": "2016-01-06T16:29:00.000Z",
+   "entry": 1090.06,
+   "tgt": 1087.8,
+   "stop": 1112.67,
+   "exit_minute": "2016-01-08T00:08:00.000Z",
+   "how": "stop",
+   "bar": {
+    "t": 1452211680000,
+    "o": 1109.6699999999998,
+    "h": 1113.03,
+    "l": 1109.6699999999998,
+    "c": 1111.9,
+    "v": 594,
+    "src": "unknown",
+    "ver": null,
+    "live": "HISTORICAL"
+   },
+   "spread": 0.44,
+   "net": -22.91
+  },
+  {
+   "signal": "2016-01-06T17:30:00.000Z",
+   "entry_minute": "2016-01-06T17:29:00.000Z",
+   "entry": 1090.94,
+   "tgt": 1088.68,
+   "stop": 1113.55,
+   "exit_minute": "2016-01-12T12:43:00.000Z",
+   "how": "target",
+   "bar": {
+    "t": 1452602580000,
+    "o": 1088.8999999999999,
+    "h": 1088.94,
+    "l": 1086.15,
+    "c": 1086.25,
+    "v": 635,
+    "src": "unknown",
+    "ver": null,
+    "live": "HISTORICAL"
+   },
+   "spread": 0.42,
+   "net": 2.26
+  },
+  {
+   "signal": "2016-01-06T18:30:00.000Z",
+   "entry_minute": "2016-01-06T18:29:00.000Z",
+   "entry": 1092.01,
+   "tgt": 1089.75,
+   "stop": 1114.62,
+   "exit_minute": "2016-01-12T12:42:00.000Z",
+   "how": "target",
+   "bar": {
+    "t": 1452602520000,
+    "o": 1089.97,
+    "h": 1090.0900000000001,
+    "l": 1088.73,
+    "c": 1088.89,
+    "v": 641,
+    "src": "unknown",
+    "ver": null,
+    "live": "HISTORICAL"
+   },
+   "spread": 0.42,
+   "net": 2.26
+  }
+ ],
+ "pass": []
+}

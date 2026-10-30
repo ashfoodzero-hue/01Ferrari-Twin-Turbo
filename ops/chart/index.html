@@ -481,8 +481,11 @@ function fwList() {
 let GATE = null
 async function pollGate() { GATE = await fetch('/api/wrgate').then((x) => x.json()).catch(() => null) }
 setInterval(pollGate, 60000); pollGate()
-const shown = (k) => !!GATE?.signals?.[k]?.allowed
-const gateNote = (k) => GATE?.signals?.[k] ? ` · boxes hidden: measured ${Math.round(100 * GATE.signals[k].wr)}% WR < ${Math.round(100 * GATE.min_wr)}%` : ''
+// 2026-10-30, Ashraf: "make the Neon box appear when the trade is triggered as before" → NEON BOXES ARE BACK for every measured signal (the gate
+// still has to be loaded and the signal still needs a measured record = fail-closed). Only the chart boxes changed: TELEGRAM trade alerts stay
+// under the 92 % rule (src/master/wrGate.js tradeAllowed, untouched). A box below 92 % says so in its note.
+const shown = (k) => GATE?.signals?.[k] != null && Number.isFinite(GATE.signals[k].wr)
+const gateNote = (k) => GATE?.signals?.[k] && !GATE.signals[k].allowed ? ` · PAPER: measured ${Math.round(100 * GATE.signals[k].wr)}% WR (below ${Math.round(100 * GATE.min_wr)}%, no Telegram)` : ''
 function fwDraw() {
   const ov = $('fwOverlay'), p = panes[0]; ov.innerHTML = ''; if (!FWS.length || p.sym !== 'XAUUSD') return
   const ts = p.ch.timeScale(), W = ts.width(), H = $('c0').clientHeight, ms = TFMS[st.tf], y = (v) => p.c.priceToCoordinate(v)
