@@ -138,3 +138,11 @@ A lift < 1 that passes is reported as an "**anti-reason**": the item makes a tur
 - **No FF rows after 2026-10-16.** The calendar history file ends there.
 - **Few waves on 1W / 1M** (expected n < 100): DESCRIBED ONLY.
 - **A REASON is still not a signal.** It says a turn is more likely when the item is present. It says nothing about money. Money tests belong to T3 / T7.
+
+## ADDENDUM B — 2026-10-30, while writing the code, BEFORE any number
+
+- **c1 htf_with, text error corrected.** The table says "opposite type" but its own bracket gives the intent (the HTF leg points the same way as
+  the new wave). A higher-TF last swing that is a LOW means the HTF leg is UP, and a gold LOW turn starts an UP wave, so the intent is: the
+  higher-TF last confirmed swing is of the SAME type as the turn. The intent governs; the code uses SAME type.
+- **s1 open_hour, reading fixed:** "overlaps an NY-hour start of 03:00 / 08:00 / 09:00 / 18:00" is read as: the candle's time span overlaps the
+  hour that BEGINS at that NY time (e.g. [03:00, 04:00) NY). Otherwise only the one 1m candle at the exact minute could qualify.
