@@ -10,3 +10,4 @@ data/inv90/forward/*.bin
 INSTALL_PACKAGE/FerrariTwinTurbo/
 data/cache/dxy_1m.bin
 data/cache/dxy_1m.bin.*.tmp
+data/research/wave_reasons/*/

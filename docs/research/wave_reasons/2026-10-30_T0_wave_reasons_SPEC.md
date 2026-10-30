@@ -146,3 +146,25 @@ A lift < 1 that passes is reported as an "**anti-reason**": the item makes a tur
   higher-TF last confirmed swing is of the SAME type as the turn. The intent governs; the code uses SAME type.
 - **s1 open_hour, reading fixed:** "overlaps an NY-hour start of 03:00 / 08:00 / 09:00 / 18:00" is read as: the candle's time span overlaps the
   hour that BEGINS at that NY time (e.g. [03:00, 04:00) NY). Otherwise only the one 1m candle at the exact minute could qualify.
+
+## ADDENDUM C — 2026-10-30, after the first full run's AUDIT failed (audit method only; no statistic, threshold or item changed)
+- The first full run was VOID: swing-book equality failed on 1m (book 1 row, mine 0). MEASURED cause: Windows file names ignore case, so
+  `docs/swing_book/xau_1y_swings/1m.csv` and `1M.csv` are one file; the 1M table (1 row) overwrote the 1m table on 10-18 (same for all 4
+  assets: 5 such files). The 1M check passed against that same row.
+- 1m equality is therefore checked against the 1m numbers recorded at build time in `data/master/xau_1y_swings.json` (swings, highs, lows,
+  first, last, window), counting only swings confirmed before the book's build time. Measured before the rerun: 18,663 swings, 9,332 H /
+  9,331 L, first 2025-10-16T22:02Z, last 2026-10-16T20:29Z = identical; the one extra swing (LOW 2026-10-16T20:55Z) was confirmed
+  2026-10-18T22:30Z, after the book was built. This check is weaker than row-by-row and is labelled so.
+- Follow-up (separate, not part of T0): `scripts/swings_1y.mjs` must write the 1m and 1M tables under different names.
+
+## ADDENDUM D — 2026-10-30, diagnostics pre-registered BEFORE their numbers (the first run listed 41 REASON cells; these test what they mean)
+Rule from gold-measured-study 0b ("built-in-by-definition check") + Perfection-Gate (measure, not infer):
+- **D1 volatility confound.** A turn needs a later move of 3 × ATR measured BEFORE the turn; anything that comes with a volatility burst (news,
+  a climax candle) makes any extreme likelier to reach that size, regardless of cause. For every REASON cell: Mantel-Haenszel lift vs C1
+  within volatility strata of the turn candle (range(i) / ATR(i−1): < 1 · 1-1.5 · 1.5-2 · ≥ 2), OOS, with a week-block bootstrap (B = 500).
+  Label: **SURVIVES VOLATILITY** if the MH bootstrap LB > 1; otherwise **"volatility, not a reason of its own"**. (climax itself IS a stratum
+  variable → reported as "is the volatility burst".)
+- **D2 direction.** For the news items: among turns WITH a high/medium surprise in W, the share where the surprise SUPPORTS the new wave —
+  real vs C1 (two-proportion test, OOS). If equal, news tells WHEN a turn happens, not WHICH WAY. Same for dxy_sup: the share of real turns
+  with a big DXY move that was supporting vs against (needs the unsigned big-move flag, computed in the diagnostic).
+- The headline answer to Ashraf is the D1 / D2 label, never the raw lift alone.
