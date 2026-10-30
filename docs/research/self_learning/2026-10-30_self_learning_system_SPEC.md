@@ -1,6 +1,6 @@
 # SPEC: the self-learning system (all tracks). Pre-registered 2026-10-30, BEFORE any number
 
-Status: **DRAFT v1.0, for Ashraf's review.** No study in this file has been run. No result exists yet.
+Status: **v1.1. Agreed by Ashraf 2026-10-30 with ADDENDUM A (bottom of file), which adds track T0 and the full news / macro universe.** No study in this file has been run. No result exists yet.
 Changes made after any result is seen are dated ADDENDA, written before their numbers. A model change is a new version. Old versions and their results are kept.
 
 ## 0. The request, in Ashraf's words
@@ -347,3 +347,191 @@ Heavy computation runs as scripts on the PC, not in chat. Nothing in steps 2-8 t
 | never auto-enable, 92 % rule, Ashraf's yes | §1, T8 step 4 |
 | no paid data, cost surfaced | §2.1, T7 |
 | Turbo 2 untouched | T5, T6 |
+
+---
+
+## ADDENDUM A. 2026-10-30, Ashraf's answers to §7 (written BEFORE any number; the SPEC becomes v1.1)
+
+Ashraf's answers, in his words:
+- Q1: "ok but do the most best for best results, zero guessing".
+- Q2: "yes".
+- Q3: "private inside our folder as we use it for self learning".
+- Q4: "please do best of the best to make sure we understand the market in every step at each time frame and find the reason for each move and wave".
+- "note the news/macros must cover everything not only GDP".
+
+### A1. Split (Q1: agreed, strengthened)
+
+§2.3 stays the PRIMARY split. "The most best" means more than one cut, so the following are added. All are fixed now, before any result.
+
+- **Walk-forward:**
+  - rolling yearly folds: train on all years before Y, test on Y, for every Y from 2018 to the latest full year;
+  - a result must pass the primary OOS AND have the same sign in ≥ 80 % of the yearly folds;
+  - the worst fold is reported, never hidden.
+- **Stress sub-periods,** each reported separately:
+  - 2013-15 (bear);
+  - 2016-19 (range);
+  - 2020 (COVID);
+  - 2022 (rate hikes);
+  - 2023-26 (bull run).
+- **Bias audit** on every script before its result is reported:
+  - look-ahead check: every feature's `known_t` ≤ the decision time, asserted in code;
+  - fill-order check: stop first;
+  - survivorship check: nothing dropped after the fact; weekend and holiday trades included;
+  - a shuffled-label run that must come out at chance. If it does not, the pipeline leaks and the result is void.
+- **Zero guessing (all tracks):**
+  - a value that cannot be sourced with its publication time is NOT estimated or filled;
+  - the row is marked MISSING;
+  - the count of missing rows is part of the result.
+
+### A2. Weekly loop time (Q2: yes)
+
+Sunday 10:00 UTC is agreed. The loop still starts only after its dry run has been reported to Ashraf (T8), because it is a new scheduled job on the PC.
+
+### A3. Drift flags (Q3: inside our folder, NOT Telegram)
+
+This replaces the Telegram line in T8 step 3.
+
+- **Where drift flags are written:**
+  - `data/research/self_learning/drift/<date>_drift.json` (machine);
+  - the weekly report `data/research/self_learning/<date>_weekly.json` + `<date>_proposals.md` (human).
+- **Telegram:** nothing about the self-learning loop is sent there.
+- These files are inputs to the next week's loop: the loop reads its own past flags.
+
+### A4. NEW TRACK T0: wave reason ledger (every move, every timeframe, its measured reason) (Q4)
+
+**Question.** For EVERY swing (wave) on EVERY timeframe:
+- what started it;
+- what carried it;
+- what ended it;
+- and which of those reasons is real (more common at real waves than at matched non-waves), versus just present everywhere.
+
+**Waves:**
+- **Definition:** ZigZag swings from `src/master/swings.js`, the published 3 × ATR(14) definition. For the last year they are asserted equal to `docs/swing_book/*_1y_swings`.
+- **Timeframes:** all 16 (1m … 1M, including 9H / 2D / 3D), built with `nyCandles`.
+- **Assets:** XAU first, then XAG / DXY / WTI for comparison.
+- **Period:** 2013-07-14 → now. WTI and volume features run 2024-10 → only.
+- **Per wave:** start, end, size in ATR, duration, speed.
+
+**Reason candidates.** Each is a column with its `known_t`, built from data that exists. Nothing is inferred.
+1. Scheduled news / macro (the full universe in A5): surprise size and sign.
+2. Unscheduled headlines: Polygon news 2020-03 →. Before that the column is MISSING, not zero.
+3. Rates / dollar over the same window:
+   - 2y / 10y yield move;
+   - real-yield move (FRED);
+   - DXY move.
+4. Levels reached at the wave's start or end:
+   - S/R and walls;
+   - day / week / 4H levels;
+   - round numbers;
+   - trendlines;
+   - FVG.
+5. Liquidity:
+   - sweep of a prior swing extreme;
+   - stop-run speed;
+   - range compression before the start.
+6. Session / time:
+   - Asia / London / NY open;
+   - the 17:00 NY break;
+   - month / quarter end;
+   - holiday-thin days.
+7. Flows (2024-10 → only):
+   - CME volume and delta (footprints);
+   - GLD volume;
+   - positioning where a dated free source exists. CFTC COT is weekly, published Friday for Tuesday, so its `known_t` is the Friday release.
+8. Higher-timeframe context: where the wave sits inside the next timeframe's wave (start / middle / end).
+
+**Attribution rule (zero guessing).**
+- A reason is attached to a wave only if it was observable:
+  - at or before the wave's start (for "started by"); or
+  - inside the wave (for "carried by").
+- The window is fixed now: ≤ 1 bar of that timeframe before the start.
+- A wave with no attached reason is labelled **UNEXPLAINED**. The UNEXPLAINED share per timeframe is a headline number of the result.
+
+**Control.**
+- Each reason's rate at the start of real waves is compared with its rate at matched control points: failed extremes, plus random bars of the same hour, era and timeframe.
+- The result is a lift with an LB, with Holm across reasons × timeframes: K = 8 reason groups × 16 TFs = 128.
+- Only a reason with lift LB > 1 in TRAIN AND OOS is called a REASON. The rest are "present, not explanatory".
+
+**Two layers, kept apart:**
+- **DESCRIPTIVE:** the hindsight anatomy of the wave, labelled as such.
+- **KNOWABLE:** what was visible at the wave's confirmation bar.
+
+Only the knowable layer may feed T3, T7 or any signal.
+
+**Power.** 1W / 1M waves (and often 1D) are few. They are reported as "described only" when n < 100. This is said up front.
+
+**Output:**
+- `data/research/wave_reasons/<sym>/<tf>.jsonl`: one row per wave with every reason column;
+- a summary JSON.
+
+The weekly loop (T8) appends new waves every Sunday, so the ledger keeps growing and every past wave keeps its reasons.
+
+### A5. News / macro universe = EVERYTHING (not only GDP)
+
+T1 and T2 cover the whole calendar, not a short list.
+
+**Inventory, measured 2026-10-30 from `data/calendar/ff_history.jsonl`:**
+- 17,155 USD rows, 2013-07-15 → 2026-10-16 (later rows are in `history.json`);
+- **157 distinct event names, 85 of them with actual / forecast values.** The other 72 are speeches, auctions, holidays and testimony, with no number;
+- by impact:
+
+| impact | rows |
+|---|---|
+| high | 4,275 |
+| medium | 4,230 |
+| low | 8,489 |
+| holiday | 161 |
+
+**T2 (reaction) covers ALL 157 event types, at every impact level.**
+- Numbered releases are scored by surprise.
+- Non-numbered events (Fed speakers, FOMC minutes, testimony, auctions) are scored by time window only: size / direction vs matched control hours.
+- Event types with n < 100 are "described only".
+
+**T1 (nowcast) covers ALL 85 numbered releases.** Each gets one of three labels, fixed in T1's inventory step BEFORE any prediction. No release is silently skipped.
+
+| label | meaning | what is done |
+|---|---|---|
+| (a) BUILDABLE | buildable from dated components (agency method) | full blind nowcast |
+| (b) PUBLIC NOWCAST ONLY | e.g. GDPNow, Cleveland | scored as a competitor; no own model |
+| (c) NOT BUILDABLE | no free dated data to build it from | reaction only, and said so |
+
+**Beyond the calendar.** Dated, free sources only. Each gets a `known_t` column or is marked MISSING:
+- yields 2y / 10y, real yields and breakevens (FRED / Polygon);
+- the Fed funds futures path;
+- CFTC COT gold positioning;
+- central-bank gold purchases, only if a free dated monthly source exists (checked, never assumed);
+- ETF holdings (GLD);
+- oil (WTI);
+- other central banks' decisions (ECB, BoJ, PBoC), when they appear in a calendar source we hold;
+- geopolitical / unscheduled headlines (Polygon news 2020-03 →).
+
+Anything paid (e.g. a paid central-bank-flows feed) is listed with its cost, not bought.
+
+### A6. Order of execution (replaces §6 steps 2-8)
+
+| step | what | why at this point |
+|---|---|---|
+| 2 | **T0 wave reason ledger**: inventory, waves on 16 TFs, reason columns, control lift (XAU) | it is the "understand every move" base every other track uses |
+| 3 | **T1 inventory of all 85 numbered releases** (labels a / b / c), then a blind nowcast for the BUILDABLE ones | it feeds T0's news column with OUR predicted surprise |
+| 4 | **T2 reactions for all 157 event types** | |
+| 5 | T3 levels break vs bounce (sub-spec first) | it uses T0's level columns |
+| 6 | T4 loss autopsy + T5 coaching audit + T6 Turbo 2 monitor | T4 uses T0's reasons for every trade |
+| 7 | T7 cause research | its big moves = the largest T0 waves |
+| 8 | T8 weekly loop dry run → Ashraf's yes → Sunday 10:00 UTC | |
+| 9 | merge summary (§5) | |
+
+As before: one fresh chat per step (credit plan), heavy runs as scripts on the PC, and nothing touches the live app.
+
+### A7. Audit of this addendum
+
+Every answer is reflected:
+
+| Ashraf's answer | where |
+|---|---|
+| Q1 | A1 |
+| Q2 | A2 |
+| Q3 | A3 |
+| Q4 | A4 + A6 |
+| "news/macros everything" | A5 |
+
+No number has been computed for any track. The only figures above are the calendar inventory counts, which describe the data and are not a result.
