@@ -29,7 +29,7 @@ The self-learning SPEC v1.1 is agreed: `docs/research/self_learning/2026-10-30_s
 **It REPLACES the order below:**
 1. **T0: the wave reason ledger.** DONE 10-30 for XAU (MASTER §7 (fd)), audit VALID.
    - Result: on ≤ 3H, news / session opens / big candles show WHEN a turn is likelier; nothing shows WHICH WAY. ≥ 4H: nothing.
-   - Open: XAG / DXY / WTI (v2); fix `swings_1y.mjs` so 1m.csv and 1M.csv don't collide (Windows file names ignore case).
+   - Open: XAG / DXY / WTI (v2). The 1m / 1M file clash was FIXED 10-30 (MASTER §7 (fe)): monthly tables are now `1Mo.csv`.
    - NEXT: T1 inventory.
 2. T1 nowcast for all 85 numbered releases.
 3. T2 reactions for all 157 event types.
