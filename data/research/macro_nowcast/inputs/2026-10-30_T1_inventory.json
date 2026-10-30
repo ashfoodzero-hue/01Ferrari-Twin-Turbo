@@ -1,0 +1,2147 @@
+{
+ "at": "2026-10-30T11:27:37.317Z",
+ "spec": "docs/research/macro_nowcast/2026-10-30_T1_inventory_SPEC.md",
+ "releases": {
+  "Crude Oil Inventories": {
+   "rows": 692,
+   "first": "2013-07-17",
+   "last": "2026-10-15",
+   "impact": {
+    "medium": 257,
+    "high": 151,
+    "low": 284
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Unemployment Claims": {
+   "rows": 692,
+   "first": "2013-07-18",
+   "last": "2026-10-15",
+   "impact": {
+    "high": 390,
+    "medium": 202,
+    "low": 100
+   },
+   "route": "ii/iii",
+   "inputs": {
+    "ICSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 690,
+     "first_vintage": "2013-07-03",
+     "need": 553,
+     "title": "Initial Claims",
+     "frequency": "Weekly, Ending Saturday"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Natural Gas Storage": {
+   "rows": 692,
+   "first": "2013-07-18",
+   "last": "2026-10-15",
+   "impact": {
+    "low": 692
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Revised UoM Inflation Expectations": {
+   "rows": 161,
+   "first": "2013-07-26",
+   "last": "2026-09-25",
+   "impact": {
+    "low": 157,
+    "medium": 4
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim UoM Inflation Expectations": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 157,
+     "first": "2013-08-16"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Core Retail Sales m/m": {
+   "rows": 160,
+   "first": "2013-07-15",
+   "last": "2026-10-15",
+   "impact": {
+    "high": 156,
+    "medium": 4
+   },
+   "route": "iii",
+   "inputs": {
+    "TOTALSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 251,
+     "first_vintage": "2013-07-03",
+     "need": 128,
+     "title": "Total Vehicle Sales",
+     "frequency": "Monthly"
+    },
+    "GASREGW": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 9,
+     "title": "US Regular All Formulations Gas Price",
+     "frequency": "Weekly, Ending Monday"
+    }
+   },
+   "label": "c",
+   "why": "weight coverage: autos ≈ 20 % + gasoline ≈ 8-9 % < 50 % (core excludes autos); no free dated card-spending series known"
+  },
+  "Retail Sales m/m": {
+   "rows": 160,
+   "first": "2013-07-15",
+   "last": "2026-10-15",
+   "impact": {
+    "high": 155,
+    "medium": 5
+   },
+   "route": "iii",
+   "inputs": {
+    "TOTALSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 251,
+     "first_vintage": "2013-07-03",
+     "need": 128,
+     "title": "Total Vehicle Sales",
+     "frequency": "Monthly"
+    },
+    "GASREGW": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 9,
+     "title": "US Regular All Formulations Gas Price",
+     "frequency": "Weekly, Ending Monday"
+    }
+   },
+   "label": "c",
+   "why": "weight coverage: autos ≈ 20 % + gasoline ≈ 8-9 % < 50 %; no free dated card-spending series known"
+  },
+  "Empire State Manufacturing Index": {
+   "rows": 160,
+   "first": "2013-07-15",
+   "last": "2026-10-15",
+   "impact": {
+    "medium": 98,
+    "low": 39,
+    "high": 23
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Business Inventories m/m": {
+   "rows": 160,
+   "first": "2013-07-15",
+   "last": "2026-10-15",
+   "impact": {
+    "medium": 24,
+    "low": 136
+   },
+   "route": "i",
+   "inputs": {
+    "FF:Prelim Wholesale Inventories m/m": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 114,
+     "first": "2016-08-26"
+    },
+    "RETAILIMSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-15",
+     "need": 128,
+     "title": "Retailers Inventories",
+     "frequency": "Monthly, End of Period"
+    },
+    "AMTMTI": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 163,
+     "first_vintage": "2013-07-02",
+     "need": 128,
+     "title": "Manufacturers' Total Inventories: Total Manufacturing",
+     "frequency": "Monthly, End of Period"
+    },
+    "BUSINV": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-15",
+     "need": 128,
+     "title": "Total Business Inventories",
+     "frequency": "Monthly, End of Period"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "TIC Long-Term Purchases": {
+   "rows": 160,
+   "first": "2013-07-16",
+   "last": "2026-10-16",
+   "impact": {
+    "medium": 15,
+    "low": 145
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Capacity Utilization Rate": {
+   "rows": 160,
+   "first": "2013-07-16",
+   "last": "2026-10-16",
+   "impact": {
+    "medium": 61,
+    "low": 99
+   },
+   "route": "i",
+   "inputs": {
+    "INDPRO": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 169,
+     "first_vintage": "2013-07-16",
+     "need": 128,
+     "title": "Industrial Production: Total Index",
+     "frequency": "Monthly"
+    },
+    "TCU": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 169,
+     "first_vintage": "2013-07-16",
+     "need": 128,
+     "title": "Capacity Utilization: Total Index",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Industrial Production m/m": {
+   "rows": 160,
+   "first": "2013-07-16",
+   "last": "2026-10-16",
+   "impact": {
+    "medium": 87,
+    "high": 1,
+    "low": 72
+   },
+   "route": "i",
+   "inputs": {
+    "AWHMAN": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-05",
+     "need": 128,
+     "title": "Average Weekly Hours of Production and Nonsupervisory Employees, Manufacturing",
+     "frequency": "Monthly"
+    },
+    "MANEMP": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-05",
+     "need": 128,
+     "title": "All Employees, Manufacturing",
+     "frequency": "Monthly"
+    },
+    "INDPRO": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 169,
+     "first_vintage": "2013-07-16",
+     "need": 128,
+     "title": "Industrial Production: Total Index",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Philly Fed Manufacturing Index": {
+   "rows": 160,
+   "first": "2013-07-18",
+   "last": "2026-10-15",
+   "impact": {
+    "high": 52,
+    "medium": 107,
+    "low": 1
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Existing Home Sales": {
+   "rows": 160,
+   "first": "2013-07-22",
+   "last": "2026-10-13",
+   "impact": {
+    "high": 16,
+    "medium": 94,
+    "low": 50
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "10-y Bond Auction": {
+   "rows": 160,
+   "first": "2013-08-07",
+   "last": "2026-10-07",
+   "impact": {
+    "medium": 55,
+    "high": 2,
+    "low": 103
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Core CPI y/y": {
+   "rows": 159,
+   "first": "2013-07-16",
+   "last": "2026-10-14",
+   "impact": {
+    "high": 159
+   },
+   "route": "i+iii",
+   "inputs": {
+    "GASREGW": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 9,
+     "title": "US Regular All Formulations Gas Price",
+     "frequency": "Weekly, Ending Monday"
+    },
+    "PPIFIS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2014-02-19",
+     "need": 127,
+     "title": "Producer Price Index by Commodity: Final Demand",
+     "frequency": "Monthly"
+    },
+    "DCOILWTICO": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 45,
+     "title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+     "frequency": "Daily"
+    },
+    "CPIAUCSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPILFESL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIENGSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIUFDSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Food in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SAH1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SETA02": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Used Cars and Trucks in U.S. City Average",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "CPI y/y": {
+   "rows": 159,
+   "first": "2013-07-16",
+   "last": "2026-10-14",
+   "impact": {
+    "high": 159
+   },
+   "route": "i+iii",
+   "inputs": {
+    "GASREGW": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 9,
+     "title": "US Regular All Formulations Gas Price",
+     "frequency": "Weekly, Ending Monday"
+    },
+    "PPIFIS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2014-02-19",
+     "need": 127,
+     "title": "Producer Price Index by Commodity: Final Demand",
+     "frequency": "Monthly"
+    },
+    "DCOILWTICO": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 45,
+     "title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+     "frequency": "Daily"
+    },
+    "CPIAUCSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPILFESL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIENGSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIUFDSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Food in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SAH1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SETA02": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Used Cars and Trucks in U.S. City Average",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "NAHB Housing Market Index": {
+   "rows": 159,
+   "first": "2013-07-16",
+   "last": "2026-09-16",
+   "impact": {
+    "low": 136,
+    "medium": 23
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Building Permits": {
+   "rows": 159,
+   "first": "2013-07-17",
+   "last": "2026-09-17",
+   "impact": {
+    "high": 60,
+    "low": 58,
+    "medium": 41
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Housing Starts": {
+   "rows": 159,
+   "first": "2013-07-17",
+   "last": "2026-09-17",
+   "impact": {
+    "medium": 63,
+    "low": 95,
+    "high": 1
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "CB Leading Index m/m": {
+   "rows": 159,
+   "first": "2013-07-18",
+   "last": "2026-09-18",
+   "impact": {
+    "low": 152,
+    "medium": 7
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "HPI m/m": {
+   "rows": 159,
+   "first": "2013-07-23",
+   "last": "2026-09-29",
+   "impact": {
+    "low": 159
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Richmond Manufacturing Index": {
+   "rows": 159,
+   "first": "2013-07-23",
+   "last": "2026-09-22",
+   "impact": {
+    "low": 107,
+    "medium": 52
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Flash Manufacturing PMI": {
+   "rows": 159,
+   "first": "2013-07-24",
+   "last": "2026-09-23",
+   "impact": {
+    "medium": 64,
+    "low": 49,
+    "high": 46
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "New Home Sales": {
+   "rows": 159,
+   "first": "2013-07-24",
+   "last": "2026-09-24",
+   "impact": {
+    "high": 20,
+    "low": 58,
+    "medium": 81
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Core Durable Goods Orders m/m": {
+   "rows": 159,
+   "first": "2013-07-25",
+   "last": "2026-09-25",
+   "impact": {
+    "high": 75,
+    "medium": 68,
+    "low": 16
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Durable Goods Orders m/m": {
+   "rows": 159,
+   "first": "2013-07-25",
+   "last": "2026-09-25",
+   "impact": {
+    "medium": 139,
+    "high": 2,
+    "low": 18
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Revised UoM Consumer Sentiment": {
+   "rows": 159,
+   "first": "2013-07-26",
+   "last": "2026-09-25",
+   "impact": {
+    "medium": 128,
+    "low": 20,
+    "high": 11
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim UoM Consumer Sentiment": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 159,
+     "first": "2013-08-16"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Pending Home Sales m/m": {
+   "rows": 159,
+   "first": "2013-07-29",
+   "last": "2026-09-17",
+   "impact": {
+    "high": 20,
+    "medium": 103,
+    "low": 36
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "S&P/CS Composite-20 HPI y/y": {
+   "rows": 159,
+   "first": "2013-07-30",
+   "last": "2026-09-29",
+   "impact": {
+    "medium": 32,
+    "low": 126,
+    "high": 1
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "CB Consumer Confidence": {
+   "rows": 159,
+   "first": "2013-07-30",
+   "last": "2026-09-29",
+   "impact": {
+    "high": 112,
+    "medium": 46,
+    "low": 1
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Chicago PMI": {
+   "rows": 159,
+   "first": "2013-07-31",
+   "last": "2026-09-30",
+   "impact": {
+    "medium": 118,
+    "high": 4,
+    "low": 37
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Challenger Job Cuts y/y": {
+   "rows": 159,
+   "first": "2013-08-01",
+   "last": "2026-10-01",
+   "impact": {
+    "low": 158,
+    "medium": 1
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Final Manufacturing PMI": {
+   "rows": 159,
+   "first": "2013-08-01",
+   "last": "2026-10-01",
+   "impact": {
+    "low": 148,
+    "medium": 9,
+    "high": 2
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Flash Manufacturing PMI": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 159,
+     "first": "2013-07-24"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "ISM Manufacturing PMI": {
+   "rows": 159,
+   "first": "2013-08-01",
+   "last": "2026-10-01",
+   "impact": {
+    "high": 153,
+    "medium": 6
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Construction Spending m/m": {
+   "rows": 159,
+   "first": "2013-08-01",
+   "last": "2026-10-01",
+   "impact": {
+    "low": 159
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "ISM Manufacturing Prices": {
+   "rows": 159,
+   "first": "2013-08-01",
+   "last": "2026-10-01",
+   "impact": {
+    "low": 117,
+    "medium": 42
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Non-Farm Employment Change": {
+   "rows": 159,
+   "first": "2013-08-02",
+   "last": "2026-10-02",
+   "impact": {
+    "high": 158,
+    "medium": 1
+   },
+   "route": "iii",
+   "inputs": {
+    "FF:ADP Non-Farm Employment Change": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 157,
+     "first": "2013-07-31"
+    },
+    "ICSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 690,
+     "first_vintage": "2013-07-03",
+     "need": 553,
+     "title": "Initial Claims",
+     "frequency": "Weekly, Ending Saturday"
+    },
+    "CCSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 686,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Continued Claims (Insured Unemployment)",
+     "frequency": "Weekly, Ending Saturday"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Average Hourly Earnings m/m": {
+   "rows": 159,
+   "first": "2013-08-02",
+   "last": "2026-10-02",
+   "impact": {
+    "medium": 25,
+    "high": 134
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Core PCE Price Index m/m": {
+   "rows": 159,
+   "first": "2013-08-02",
+   "last": "2026-09-30",
+   "impact": {
+    "medium": 89,
+    "low": 8,
+    "high": 62
+   },
+   "route": "i",
+   "inputs": {
+    "CPILFESL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "PPIFIS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2014-02-19",
+     "need": 127,
+     "title": "Producer Price Index by Commodity: Final Demand",
+     "frequency": "Monthly"
+    },
+    "PCEPILFE": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-08-02",
+     "need": 127,
+     "title": "Personal Consumption Expenditures Excluding Food and Energy (Chain-Type Price Index)",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Personal Income m/m": {
+   "rows": 159,
+   "first": "2013-08-02",
+   "last": "2026-09-30",
+   "impact": {
+    "low": 159
+   },
+   "route": "i",
+   "inputs": {
+    "PAYEMS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-05",
+     "need": 127,
+     "title": "All Employees, Total Nonfarm",
+     "frequency": "Monthly"
+    },
+    "AWHI": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-05",
+     "need": 127,
+     "title": "Indexes of Aggregate Weekly Hours of Production and Nonsupervisory Employees, Total Private",
+     "frequency": "Monthly"
+    },
+    "CES0500000003": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-05",
+     "need": 127,
+     "title": "Average Hourly Earnings of All Employees, Total Private",
+     "frequency": "Monthly"
+    },
+    "PI": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-08-02",
+     "need": 127,
+     "title": "Personal Income",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Personal Spending m/m": {
+   "rows": 159,
+   "first": "2013-08-02",
+   "last": "2026-09-30",
+   "impact": {
+    "low": 73,
+    "medium": 84,
+    "high": 2
+   },
+   "route": "i",
+   "inputs": {
+    "RSAFS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 167,
+     "first_vintage": "2013-07-15",
+     "need": 127,
+     "title": "Advance Retail Sales: Retail Trade and Food Services",
+     "frequency": "Monthly"
+    },
+    "TOTALSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 251,
+     "first_vintage": "2013-07-03",
+     "need": 128,
+     "title": "Total Vehicle Sales",
+     "frequency": "Monthly"
+    },
+    "PCE": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-08-02",
+     "need": 127,
+     "title": "Personal Consumption Expenditures",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Factory Orders m/m": {
+   "rows": 159,
+   "first": "2013-08-02",
+   "last": "2026-10-02",
+   "impact": {
+    "medium": 52,
+    "low": 107
+   },
+   "route": "i",
+   "inputs": {
+    "FF:Durable Goods Orders m/m": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 159,
+     "first": "2013-07-25"
+    },
+    "DGORDER": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 326,
+     "first_vintage": "2013-07-02",
+     "need": 127,
+     "title": "Manufacturers' New Orders: Durable Goods",
+     "frequency": "Monthly"
+    },
+    "AMTMNO": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 163,
+     "first_vintage": "2013-07-02",
+     "need": 127,
+     "title": "Manufacturers' New Orders: Total Manufacturing",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "ISM Services PMI": {
+   "rows": 159,
+   "first": "2013-08-05",
+   "last": "2026-10-05",
+   "impact": {
+    "high": 143,
+    "medium": 16
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Trade Balance": {
+   "rows": 159,
+   "first": "2013-08-06",
+   "last": "2026-10-06",
+   "impact": {
+    "high": 28,
+    "medium": 23,
+    "low": 108
+   },
+   "route": "ii/i",
+   "inputs": {
+    "FF:Goods Trade Balance": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 132,
+     "first": "2015-07-30"
+    },
+    "BOPGSTB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Trade Balance: Goods and Services, Balance of Payments Basis",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "JOLTS Job Openings": {
+   "rows": 159,
+   "first": "2013-08-06",
+   "last": "2026-09-29",
+   "impact": {
+    "medium": 57,
+    "high": 58,
+    "low": 44
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "RCM/TIPP Economic Optimism": {
+   "rows": 159,
+   "first": "2013-08-06",
+   "last": "2026-10-06",
+   "impact": {
+    "low": 159
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Consumer Credit m/m": {
+   "rows": 159,
+   "first": "2013-08-07",
+   "last": "2026-10-07",
+   "impact": {
+    "low": 159
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "30-y Bond Auction": {
+   "rows": 159,
+   "first": "2013-08-08",
+   "last": "2026-10-08",
+   "impact": {
+    "low": 128,
+    "medium": 28,
+    "high": 3
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Final Wholesale Inventories m/m": {
+   "rows": 159,
+   "first": "2013-08-09",
+   "last": "2026-10-08",
+   "impact": {
+    "low": 159
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim Wholesale Inventories m/m": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 114,
+     "first": "2016-08-26"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Federal Budget Balance": {
+   "rows": 159,
+   "first": "2013-08-12",
+   "last": "2026-10-16",
+   "impact": {
+    "medium": 11,
+    "low": 148
+   },
+   "route": "iii",
+   "inputs": {
+    "DTS": {
+     "ok": true,
+     "kind": "Daily Treasury Statement",
+     "first_checked": "2013-07-31"
+    },
+    "MTSDS133FMS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 133,
+     "first_vintage": "2015-09-11",
+     "need": 127,
+     "title": "Federal Surplus or Deficit [-]",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "NFIB Small Business Index": {
+   "rows": 159,
+   "first": "2013-08-13",
+   "last": "2026-10-13",
+   "impact": {
+    "low": 159
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "PPI m/m": {
+   "rows": 159,
+   "first": "2013-08-14",
+   "last": "2026-10-15",
+   "impact": {
+    "high": 135,
+    "medium": 18,
+    "low": 6
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Core PPI m/m": {
+   "rows": 159,
+   "first": "2013-08-14",
+   "last": "2026-10-15",
+   "impact": {
+    "medium": 107,
+    "low": 6,
+    "high": 46
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Prelim UoM Consumer Sentiment": {
+   "rows": 159,
+   "first": "2013-08-16",
+   "last": "2026-10-09",
+   "impact": {
+    "high": 82,
+    "medium": 73,
+    "low": 4
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Core CPI m/m": {
+   "rows": 158,
+   "first": "2013-07-16",
+   "last": "2026-10-14",
+   "impact": {
+    "high": 151,
+    "medium": 7
+   },
+   "route": "i+iii",
+   "inputs": {
+    "GASREGW": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 9,
+     "title": "US Regular All Formulations Gas Price",
+     "frequency": "Weekly, Ending Monday"
+    },
+    "PPIFIS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2014-02-19",
+     "need": 127,
+     "title": "Producer Price Index by Commodity: Final Demand",
+     "frequency": "Monthly"
+    },
+    "DCOILWTICO": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 45,
+     "title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+     "frequency": "Daily"
+    },
+    "CPIAUCSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPILFESL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIENGSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIUFDSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Food in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SAH1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SETA02": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Used Cars and Trucks in U.S. City Average",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "CPI m/m": {
+   "rows": 158,
+   "first": "2013-07-16",
+   "last": "2026-10-14",
+   "impact": {
+    "medium": 19,
+    "high": 139
+   },
+   "route": "i+iii",
+   "inputs": {
+    "GASREGW": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 9,
+     "title": "US Regular All Formulations Gas Price",
+     "frequency": "Weekly, Ending Monday"
+    },
+    "PPIFIS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2014-02-19",
+     "need": 127,
+     "title": "Producer Price Index by Commodity: Final Demand",
+     "frequency": "Monthly"
+    },
+    "DCOILWTICO": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 45,
+     "title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+     "frequency": "Daily"
+    },
+    "CPIAUCSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPILFESL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIENGSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Energy in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CPIUFDSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Food in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SAH1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "CUSR0000SETA02": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: Used Cars and Trucks in U.S. City Average",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Unemployment Rate": {
+   "rows": 158,
+   "first": "2013-08-02",
+   "last": "2026-10-02",
+   "impact": {
+    "high": 158
+   },
+   "route": "iii",
+   "inputs": {
+    "CCSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 686,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Continued Claims (Insured Unemployment)",
+     "frequency": "Weekly, Ending Saturday"
+    },
+    "ICSA": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 690,
+     "first_vintage": "2013-07-03",
+     "need": 553,
+     "title": "Initial Claims",
+     "frequency": "Weekly, Ending Saturday"
+    },
+    "UNRATE": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-05",
+     "need": 126,
+     "title": "Unemployment Rate",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Import Prices m/m": {
+   "rows": 158,
+   "first": "2013-08-13",
+   "last": "2026-10-16",
+   "impact": {
+    "medium": 55,
+    "low": 103
+   },
+   "route": "iii",
+   "inputs": {
+    "DCOILWTICO": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 45,
+     "title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+     "frequency": "Daily"
+    },
+    "DTWEXBGS": {
+     "ok": true,
+     "kind": "market / weekly price (known_t = date + 1 day)",
+     "obs_in_2013_07_08": 45,
+     "title": "Nominal Broad U.S. Dollar Index",
+     "frequency": "Daily"
+    },
+    "IR": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-11",
+     "need": 126,
+     "title": "Import Price Index (End Use): All Commodities",
+     "frequency": "Monthly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "ADP Non-Farm Employment Change": {
+   "rows": 157,
+   "first": "2013-07-31",
+   "last": "2026-09-30",
+   "impact": {
+    "high": 133,
+    "medium": 24
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Prelim UoM Inflation Expectations": {
+   "rows": 157,
+   "first": "2013-08-16",
+   "last": "2026-10-09",
+   "impact": {
+    "low": 107,
+    "medium": 40,
+    "high": 10
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Flash Services PMI": {
+   "rows": 155,
+   "first": "2013-11-25",
+   "last": "2026-09-23",
+   "impact": {
+    "low": 91,
+    "medium": 18,
+    "high": 46
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Final Services PMI": {
+   "rows": 155,
+   "first": "2013-12-04",
+   "last": "2026-10-05",
+   "impact": {
+    "low": 141,
+    "medium": 14
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Flash Services PMI": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 155,
+     "first": "2013-11-25"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Goods Trade Balance": {
+   "rows": 132,
+   "first": "2015-07-30",
+   "last": "2026-09-30",
+   "impact": {
+    "high": 2,
+    "medium": 6,
+    "low": 124
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Omdia Total Vehicle Sales": {
+   "rows": 130,
+   "first": "2016-01-05",
+   "last": "2026-10-01",
+   "impact": {
+    "low": 130
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Prelim Wholesale Inventories m/m": {
+   "rows": 114,
+   "first": "2016-08-26",
+   "last": "2026-09-30",
+   "impact": {
+    "low": 114
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Federal Funds Rate": {
+   "rows": 107,
+   "first": "2013-07-31",
+   "last": "2026-09-16",
+   "impact": {
+    "medium": 22,
+    "high": 85
+   },
+   "route": "F",
+   "label": "F",
+   "why": "Fed decision → T1-F (surprise vs futures-implied path)"
+  },
+  "Total Vehicle Sales": {
+   "rows": 69,
+   "first": "2013-08-01",
+   "last": "2019-04-02",
+   "impact": {
+    "low": 69
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Employment Cost Index q/q": {
+   "rows": 53,
+   "first": "2013-07-31",
+   "last": "2026-07-31",
+   "impact": {
+    "medium": 28,
+    "high": 13,
+    "low": 12
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Mortgage Delinquencies": {
+   "rows": 53,
+   "first": "2013-08-08",
+   "last": "2026-08-13",
+   "impact": {
+    "medium": 20,
+    "low": 33
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Revised Nonfarm Productivity q/q": {
+   "rows": 53,
+   "first": "2013-09-05",
+   "last": "2026-09-03",
+   "impact": {
+    "medium": 16,
+    "low": 37
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim Nonfarm Productivity q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-08-16"
+    },
+    "FF:Prelim GDP q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-08-29"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Revised Unit Labor Costs q/q": {
+   "rows": 53,
+   "first": "2013-09-05",
+   "last": "2026-09-03",
+   "impact": {
+    "low": 53
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim Unit Labor Costs q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-08-16"
+    },
+    "FF:Prelim GDP q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-08-29"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Current Account": {
+   "rows": 53,
+   "first": "2013-09-19",
+   "last": "2026-09-24",
+   "impact": {
+    "medium": 20,
+    "low": 33
+   },
+   "route": "i",
+   "inputs": {
+    "BOPGSTB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Trade Balance: Goods and Services, Balance of Payments Basis",
+     "frequency": "Monthly"
+    },
+    "IEABC": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 50,
+     "first_vintage": "2014-06-18",
+     "need": 42,
+     "title": "Balance on current account",
+     "frequency": "Quarterly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Final GDP q/q": {
+   "rows": 53,
+   "first": "2013-09-26",
+   "last": "2026-09-30",
+   "impact": {
+    "medium": 17,
+    "high": 36
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim GDP q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-08-29"
+    },
+    "RSAFS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 167,
+     "first_vintage": "2013-07-15",
+     "need": 127,
+     "title": "Advance Retail Sales: Retail Trade and Food Services",
+     "frequency": "Monthly"
+    },
+    "PCE": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-08-02",
+     "need": 127,
+     "title": "Personal Consumption Expenditures",
+     "frequency": "Monthly"
+    },
+    "BOPGSTB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Trade Balance: Goods and Services, Balance of Payments Basis",
+     "frequency": "Monthly"
+    },
+    "BUSINV": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-15",
+     "need": 128,
+     "title": "Total Business Inventories",
+     "frequency": "Monthly, End of Period"
+    },
+    "TTLCONS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 156,
+     "first_vintage": "2013-07-01",
+     "need": 42,
+     "title": "Total Construction Spending: Total Construction in the United States",
+     "frequency": "Monthly"
+    },
+    "GDPC1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2013-07-31",
+     "need": 42,
+     "title": "Real Gross Domestic Product",
+     "frequency": "Quarterly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Final GDP Price Index q/q": {
+   "rows": 53,
+   "first": "2013-09-26",
+   "last": "2026-09-30",
+   "impact": {
+    "low": 38,
+    "medium": 15
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Prelim GDP Price Index q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-08-29"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Advance GDP q/q": {
+   "rows": 52,
+   "first": "2013-07-31",
+   "last": "2026-07-30",
+   "impact": {
+    "high": 52
+   },
+   "route": "i",
+   "inputs": {
+    "RSAFS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 167,
+     "first_vintage": "2013-07-15",
+     "need": 127,
+     "title": "Advance Retail Sales: Retail Trade and Food Services",
+     "frequency": "Monthly"
+    },
+    "PCE": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-08-02",
+     "need": 127,
+     "title": "Personal Consumption Expenditures",
+     "frequency": "Monthly"
+    },
+    "BOPGSTB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Trade Balance: Goods and Services, Balance of Payments Basis",
+     "frequency": "Monthly"
+    },
+    "BUSINV": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-15",
+     "need": 128,
+     "title": "Total Business Inventories",
+     "frequency": "Monthly, End of Period"
+    },
+    "TTLCONS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 156,
+     "first_vintage": "2013-07-01",
+     "need": 42,
+     "title": "Total Construction Spending: Total Construction in the United States",
+     "frequency": "Monthly"
+    },
+    "GDPC1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2013-07-31",
+     "need": 42,
+     "title": "Real Gross Domestic Product",
+     "frequency": "Quarterly"
+    }
+   },
+   "competitor": {
+    "id": "GDPNOW",
+    "ok": true,
+    "kind": "FRED / ALFRED vintages",
+    "vintages_since_2013_07": 821,
+    "first_vintage": "2016-05-17",
+    "need": 0,
+    "title": "GDPNow",
+    "frequency": "Quarterly"
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Advance GDP Price Index q/q": {
+   "rows": 52,
+   "first": "2013-07-31",
+   "last": "2026-07-30",
+   "impact": {
+    "medium": 52
+   },
+   "route": "i",
+   "inputs": {
+    "CPIAUCSL": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 168,
+     "first_vintage": "2013-07-16",
+     "need": 127,
+     "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+     "frequency": "Monthly"
+    },
+    "PPIFIS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2014-02-19",
+     "need": 127,
+     "title": "Producer Price Index by Commodity: Final Demand",
+     "frequency": "Monthly"
+    },
+    "IR": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-11",
+     "need": 126,
+     "title": "Import Price Index (End Use): All Commodities",
+     "frequency": "Monthly"
+    },
+    "GDPCTPI": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 156,
+     "first_vintage": "2013-07-31",
+     "need": 41,
+     "title": "Gross Domestic Product: Chain-type Price Index",
+     "frequency": "Quarterly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Prelim Nonfarm Productivity q/q": {
+   "rows": 52,
+   "first": "2013-08-16",
+   "last": "2026-08-06",
+   "impact": {
+    "medium": 20,
+    "low": 32
+   },
+   "route": "i",
+   "inputs": {
+    "FF:Advance GDP q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-07-31"
+    },
+    "OUTNFB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 106,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Real Value-Added Output for All Workers",
+     "frequency": "Quarterly"
+    },
+    "HOANBS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 105,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Hours Worked for All Workers",
+     "frequency": "Quarterly"
+    },
+    "OPHNFB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 105,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Labor Productivity (Output per Hour) for All Workers",
+     "frequency": "Quarterly"
+    },
+    "ULCNFB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 106,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Unit Labor Costs for All Workers",
+     "frequency": "Quarterly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Prelim Unit Labor Costs q/q": {
+   "rows": 52,
+   "first": "2013-08-16",
+   "last": "2026-08-06",
+   "impact": {
+    "medium": 18,
+    "high": 2,
+    "low": 32
+   },
+   "route": "i",
+   "inputs": {
+    "FF:Advance GDP q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-07-31"
+    },
+    "OUTNFB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 106,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Real Value-Added Output for All Workers",
+     "frequency": "Quarterly"
+    },
+    "HOANBS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 105,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Hours Worked for All Workers",
+     "frequency": "Quarterly"
+    },
+    "OPHNFB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 105,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Labor Productivity (Output per Hour) for All Workers",
+     "frequency": "Quarterly"
+    },
+    "ULCNFB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 106,
+     "first_vintage": "2013-08-16",
+     "need": 41,
+     "title": "Nonfarm Business Sector: Unit Labor Costs for All Workers",
+     "frequency": "Quarterly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Prelim GDP q/q": {
+   "rows": 52,
+   "first": "2013-08-29",
+   "last": "2026-08-26",
+   "impact": {
+    "high": 47,
+    "medium": 5
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Advance GDP q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-07-31"
+    },
+    "RSAFS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 167,
+     "first_vintage": "2013-07-15",
+     "need": 127,
+     "title": "Advance Retail Sales: Retail Trade and Food Services",
+     "frequency": "Monthly"
+    },
+    "PCE": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-08-02",
+     "need": 127,
+     "title": "Personal Consumption Expenditures",
+     "frequency": "Monthly"
+    },
+    "BOPGSTB": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 159,
+     "first_vintage": "2013-07-03",
+     "need": 127,
+     "title": "Trade Balance: Goods and Services, Balance of Payments Basis",
+     "frequency": "Monthly"
+    },
+    "BUSINV": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 160,
+     "first_vintage": "2013-07-15",
+     "need": 128,
+     "title": "Total Business Inventories",
+     "frequency": "Monthly, End of Period"
+    },
+    "TTLCONS": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 156,
+     "first_vintage": "2013-07-01",
+     "need": 42,
+     "title": "Total Construction Spending: Total Construction in the United States",
+     "frequency": "Monthly"
+    },
+    "GDPC1": {
+     "ok": true,
+     "kind": "FRED / ALFRED vintages",
+     "vintages_since_2013_07": 158,
+     "first_vintage": "2013-07-31",
+     "need": 42,
+     "title": "Real Gross Domestic Product",
+     "frequency": "Quarterly"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "Prelim GDP Price Index q/q": {
+   "rows": 52,
+   "first": "2013-08-29",
+   "last": "2026-08-26",
+   "impact": {
+    "low": 38,
+    "medium": 14
+   },
+   "route": "ii",
+   "inputs": {
+    "FF:Advance GDP Price Index q/q": {
+     "ok": true,
+     "kind": "FF earlier print",
+     "rows": 52,
+     "first": "2013-07-31"
+    }
+   },
+   "label": "a",
+   "why": "all inputs verified"
+  },
+  "ADP Weekly Employment Change": {
+   "rows": 50,
+   "first": "2025-10-28",
+   "last": "2026-10-13",
+   "impact": {
+    "medium": 7,
+    "high": 3,
+    "low": 40
+   },
+   "route": null,
+   "label": "c",
+   "why": "no earlier hard input (spec §2: every other numbered release → c)"
+  },
+  "Labor Market Conditions Index m/m": {
+   "rows": 34,
+   "first": "2014-10-06",
+   "last": "2017-07-10",
+   "impact": {
+    "low": 34
+   },
+   "route": null,
+   "label": "c",
+   "why": "only 34 rows (< 40)"
+  },
+  "Cleveland Fed Inflation Expectations": {
+   "rows": 14,
+   "first": "2023-05-22",
+   "last": "2026-08-10",
+   "impact": {
+    "low": 14
+   },
+   "route": null,
+   "label": "c",
+   "why": "only 14 rows (< 40)"
+  },
+  "Prelim Benchmark Payrolls Revision": {
+   "rows": 10,
+   "first": "2017-09-06",
+   "last": "2026-08-28",
+   "impact": {
+    "low": 1,
+    "medium": 4,
+    "high": 5
+   },
+   "route": null,
+   "label": "c",
+   "why": "only 10 rows (< 40)"
+  },
+  "Fed Chair Nomination Vote": {
+   "rows": 3,
+   "first": "2014-01-06",
+   "last": "2026-05-13",
+   "impact": {
+    "high": 3
+   },
+   "route": null,
+   "label": "c",
+   "why": "only 3 rows (< 40)"
+  }
+ },
+ "counts": {
+  "c": 51,
+  "a": 33,
+  "F": 1
+ }
+}

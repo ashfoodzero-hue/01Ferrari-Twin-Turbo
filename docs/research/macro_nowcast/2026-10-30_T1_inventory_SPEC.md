@@ -87,3 +87,11 @@ FRED IDs as published by FRED. "FF:<name>" = the actual of an EARLIER release in
 - **Weight coverage is a judgement per route.** It is written down here, before any number, and not tuned later.
 - **FF "forecast" = the consensus as published by Forex Factory at release time.** It is the baseline, never an input.
 - **GDPNow and Cleveland nowcast histories are competitors.** Their dated archives are verified in step 2.
+
+## ADDENDUM A — 2026-10-30, after the first inventory run, before any prediction or score (no actual value was read)
+- **NFP input list: duplicate removed.** The first run labelled NFP (c) only because FRED's ADP copy `ADPMNUSNERSA` has 50 vintages (first
+  2022-08-31). The SAME number is already an input as `FF:ADP Non-Farm Employment Change` (the ADP first print with its release time, 157
+  rows from 2013-07-31, verified). Two sources of one number; the duplicate is dropped. No other input or rule changes.
+- Facts from the run that limit later steps (recorded now): PPIFIS vintages start 2014-02-19, MTSDS133FMS 2015-09-11, GDPNOW 2016-05-17,
+  FF:Goods Trade Balance 2015-07-30, FF:Prelim Wholesale Inventories 2016-08-26, FF:Flash Services PMI 2013-11-25 → releases before those
+  dates get MISSING for that input in step 2 (never filled). "Unemployment Claims" (a) rests on its own weekly history only (the weakest route).
