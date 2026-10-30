@@ -1,5 +1,5 @@
 {
- "at": "2026-10-18T16:29:15.904Z",
+ "at": "2026-10-30T11:01:24.142Z",
  "rule": "ZigZag k = 3 × ATR(14) per timeframe, confirmed swings only",
  "window": [
   "2025-10-16T20:59:00Z",
@@ -10,17 +10,17 @@
  "tf": {
   "1m": {
    "candles_in_year": 353106,
-   "swings": 25011,
+   "swings": 25010,
    "highs": 12505,
-   "lows": 12506,
+   "lows": 12505,
    "first": "2025-10-16T22:19:00Z",
-   "last": "2026-10-16T20:46:00Z"
+   "last": "2026-10-16T20:35:00Z"
   },
   "3m": {
    "candles_in_year": 117754,
-   "swings": 7149,
-   "highs": 3574,
-   "lows": 3575,
+   "swings": 7151,
+   "highs": 3575,
+   "lows": 3576,
    "first": "2025-10-16T23:57:00Z",
    "last": "2026-10-16T20:03:00Z"
   },
@@ -30,7 +30,7 @@
    "highs": 2044,
    "lows": 2044,
    "first": "2025-10-17T00:50:00Z",
-   "last": "2026-10-16T16:35:00Z"
+   "last": "2026-10-16T16:40:00Z"
   },
   "15m": {
    "candles_in_year": 23560,

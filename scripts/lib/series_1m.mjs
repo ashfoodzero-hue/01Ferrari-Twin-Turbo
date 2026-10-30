@@ -14,6 +14,9 @@ import { HISTORY_CONTINUOUS_FROM } from '../../src/core/paths.js'
 
 export const TV_SYMBOL = Object.freeze({ XAUUSD: 'OANDA:XAUUSD', XAGUSD: 'OANDA:XAGUSD', DXY: 'TVC:DXY', DXY_ICE: 'TVC:DXY', WTI: 'NYMEX:CL1!' })
 export const SHORT = Object.freeze({ XAUUSD: 'xau', XAGUSD: 'xag', DXY: 'dxy', DXY_ICE: 'dxy_ice', WTI: 'wti' })
+// File-name form of a timeframe. Windows file names ignore case, so "1m" and "1M" are ONE file: the monthly table is written as "1Mo"
+// (2026-10-30: the 1M table had overwritten every 1m swing table since 10-18; MASTER §7 (fe)). Use for every per-TF file.
+export const tfFile = (tf) => (tf === '1M' ? '1Mo' : tf)
 export const REOPEN_CLAMP = new Set(['XAUUSD', 'XAGUSD'])   // XAGUSD measured 2026-10-18: low-diff p90 vs TradingView 15m $1.46 → $0.28, 1H $1.33 → $0.26, 4H $0.58 → $0.15
 const SES = { WTI: makeSession(SESSIONS.cme), DXY_ICE: makeSession(SESSIONS.dxyIce) }
 

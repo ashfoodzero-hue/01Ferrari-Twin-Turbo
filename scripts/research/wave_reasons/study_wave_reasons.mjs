@@ -12,7 +12,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO, HISTORY_CONTINUOUS_FROM } from '../../../src/core/paths.js'
 import { loadBars } from '../../../src/data/backfillReader.js'
-import { clean1m, kit, SHORT } from '../../lib/series_1m.mjs'
+import { clean1m, kit, SHORT, tfFile } from '../../lib/series_1m.mjs'
 import { TFS } from '../../../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../../../src/core/dataHoles.js'
 import { zigzag } from '../../../src/master/swings.js'
@@ -80,7 +80,7 @@ const D1T = Float64Array.from(D1.C.map((c) => c.t)), W1T = Float64Array.from(W1.
 const ORDER = [...TFS].reverse()   // 1M first, so each TF's higher TF is already done
 let htfIdx = null
 const summary = { at: new Date().toISOString(), symbol: SYM, spec: 'docs/research/wave_reasons/2026-10-30_T0_wave_reasons_SPEC.md (v1 + addendum B)', items: ITEMS, train_end: '2021-06-30', tf: {}, audit: { known_t_violations: 0, swing_book: {}, dropped: {} } }
-const swingBook = (tf) => { const f = path.join(TURBO.root, 'docs', 'swing_book', `${SHORT[SYM]}_1y_swings`, `${tf}.csv`); if (!fs.existsSync(f)) return null
+const swingBook = (tf) => { const f = path.join(TURBO.root, 'docs', 'swing_book', `${SHORT[SYM]}_1y_swings`, `${tfFile(tf)}.csv`); if (!fs.existsSync(f)) return null
   const L = fs.readFileSync(f, 'utf8').trim().split('\n'), H = L[0].split(','); return L.slice(1).map((l) => { const v = l.split(','), o = {}; H.forEach((h, i) => (o[h] = v[i])); return o }) }
 const iso = (t) => new Date(t).toISOString().replace('.000Z', 'Z')
 
@@ -89,8 +89,9 @@ for (const tf of ORDER) {
   const tT = Date.now(), G = tf === '1D' ? D1 : tf === '1W' ? W1 : tfSet(tf), { C, sw, failed } = G
   const A = atrArr(C, 14), A5 = atrArr(C, 5), A50 = atrArr(C, 50), R = rsiArr(C, 14), E = emaArr(C, 50), ownK = byKnown(sw), htf = htfIdx
   // swing-book equality (bias audit 2)
-  // 1m: on Windows 1m.csv and 1M.csv are the SAME file (case-insensitive), the 1M table overwrote it → check the recorded 1m counts instead (addendum C)
-  const rec = tf === '1m' ? JSON.parse(fs.readFileSync(path.join(TURBO.master, `${SHORT[SYM]}_1y_swings.json`), 'utf8')) : null
+  // addendum C fallback: only while the 1m table is still the old overwritten one (no 1Mo.csv yet) → check the recorded 1m counts
+  const hasMo = fs.existsSync(path.join(TURBO.root, 'docs', 'swing_book', `${SHORT[SYM]}_1y_swings`, '1Mo.csv'))
+  const rec = tf === '1m' && !hasMo ? JSON.parse(fs.readFileSync(path.join(TURBO.master, `${SHORT[SYM]}_1y_swings.json`), 'utf8')) : null
   if (rec) { const a = Date.parse(rec.window[0]), z = Date.parse(rec.window[1]), built = Date.parse(rec.at), x = rec.tf['1m']
     const mine = sw.filter((s) => C[s.i].t >= a && C[s.i].t <= z && s.knownT <= built), got = { swings: mine.length, highs: mine.filter((s) => s.type === 'H').length, lows: mine.filter((s) => s.type === 'L').length, first: mine[0] ? iso(C[mine[0].i].t) : null, last: mine.at(-1) ? iso(C[mine.at(-1).i].t) : null }
     summary.audit.swing_book[tf] = { method: 'recorded 1m counts in data/master/' + `${SHORT[SYM]}_1y_swings.json` + ' (1m.csv overwritten by 1M.csv)', book: x, mine: got, confirmed_after_book: sw.filter((s) => C[s.i].t >= a && C[s.i].t <= z && s.knownT > built).length,
@@ -161,7 +162,7 @@ for (const tf of ORDER) {
   const ok = (i) => { if (i < 51) { dropped.warmup++; return false } if (C[i].incomplete || C[i - 1].incomplete) { dropped.incomplete++; return false } if (C[i].t < START) { dropped.before_start++; return false } if (!(A[i - 1] > 0)) { dropped.warmup++; return false } return true }
   const valid = (i) => i >= 51 && !C[i].incomplete && !C[i - 1].incomplete && C[i].t >= START && A[i - 1] > 0   // controls: same rule, not counted as dropped turns
   // ── real turns + wave rows ──
-  const ws = fs.createWriteStream(path.join(ROWDIR, `${tf}.jsonl`)), rows = []   // rows: { set, t, it } compact for stats
+  const ws = fs.createWriteStream(path.join(ROWDIR, `${tfFile(tf)}.jsonl`)), rows = []   // rows: { set, t, it } compact for stats
   const pack = (r) => ITEMS.map((x) => (r[x] == null ? -1 : r[x] ? 1 : 0)), ext = (r) => [r._vb, r._sa == null ? -1 : +r._sa, r._db == null ? -1 : +r._db]
   for (let n = 0; n < sw.length; n++) { const s = sw[n]; if (!ok(s.i)) continue
     const r = items(s.i, s.type), nx = sw[n + 1], c = C[s.i]

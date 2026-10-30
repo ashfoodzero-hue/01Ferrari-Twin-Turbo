@@ -11,12 +11,14 @@ import '../src/core/bootEnv.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { TURBO, HISTORY_CONTINUOUS_FROM } from '../src/core/paths.js'
-import { clean1m, SHORT, kit } from './lib/series_1m.mjs'
+import { clean1m, SHORT, kit, tfFile } from './lib/series_1m.mjs'
 import { TFS } from '../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { zigzag } from '../src/master/swings.js'
 
-const SYM = process.argv[2] || 'XAUUSD', M = await clean1m(SYM), holes = findHoles(M)
+// --to=<ISO> pins the window end and cuts the data there (rebuilds an earlier published table exactly: no swing confirmed by later data)
+const TO = process.argv.find((a) => a.startsWith('--to='))?.slice(5)
+const SYM = process.argv[2] || 'XAUUSD', M = (await clean1m(SYM)).filter((b) => !TO || b.t <= Date.parse(TO)), holes = findHoles(M)
 const LAST = M.at(-1).t, FROM = LAST - 365 * 86400000, K = 3
 const dir = path.join(TURBO.root, 'docs', 'swing_book', `${SHORT[SYM]}_1y_swings`); fs.mkdirSync(dir, { recursive: true })
 const iso = (t) => new Date(t).toISOString().replace('.000Z', 'Z')
@@ -33,7 +35,7 @@ for (const tf of TFS) {
       leg_from_prev: prev && prev.type !== s.type ? +(s.px - prev.px).toFixed(2) : null, leg_atr: s.amp_atr != null ? +s.amp_atr.toFixed(2) : null,
       confirmed_by_candle: iso(conf.t), confirmed_at: iso(conf.close_t), confirm_lag_candles: s.knownI - s.i }) }
   const H = Object.keys(rows[0] ?? { type: 0 })
-  fs.writeFileSync(path.join(dir, `${tf}.csv`), [H.join(',')].concat(rows.map((r) => H.map((k) => r[k] ?? '').join(','))).join('\n') + '\n')
+  fs.writeFileSync(path.join(dir, `${tfFile(tf)}.csv`), [H.join(',')].concat(rows.map((r) => H.map((k) => r[k] ?? '').join(','))).join('\n') + '\n')
   summary.tf[tf] = { candles_in_year: C.filter((c) => c.t >= FROM).length, swings: rows.length, highs: rows.filter((r) => r.type === 'HIGH').length, lows: rows.filter((r) => r.type === 'LOW').length,
     first: rows[0]?.candle_open ?? null, last: rows.at(-1)?.candle_open ?? null }
   console.log(`  ${tf.padEnd(3)} candles ${String(summary.tf[tf].candles_in_year).padStart(7)} · swings ${String(rows.length).padStart(6)} (${summary.tf[tf].highs} H / ${summary.tf[tf].lows} L)`)

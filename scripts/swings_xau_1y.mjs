@@ -16,6 +16,7 @@ import { TFS, cleanForTv, buildCandles } from '../src/core/nyCandles.js'
 import { findHoles, markIncomplete } from '../src/core/dataHoles.js'
 import { zigzag } from '../src/master/swings.js'
 
+import { tfFile } from './lib/series_1m.mjs'
 const M = cleanForTv((await loadBars('XAUUSD', '1m', { from: HISTORY_CONTINUOUS_FROM })).bars, { reopenClamp: true }).bars, holes = findHoles(M)   // reopen clamp (nyCandles, measured)
 const LAST = M.at(-1).t, FROM = LAST - 365 * 86400000, K = 3
 const dir = path.join(TURBO.root, 'docs', 'swing_book', 'xau_1y_swings'); fs.mkdirSync(dir, { recursive: true })
@@ -33,7 +34,7 @@ for (const tf of TFS) {
       leg_from_prev: prev && prev.type !== s.type ? +(s.px - prev.px).toFixed(2) : null, leg_atr: s.amp_atr != null ? +s.amp_atr.toFixed(2) : null,
       confirmed_by_candle: iso(conf.t), confirmed_at: iso(conf.close_t), confirm_lag_candles: s.knownI - s.i }) }
   const H = Object.keys(rows[0] ?? { type: 0 })
-  fs.writeFileSync(path.join(dir, `${tf}.csv`), [H.join(',')].concat(rows.map((r) => H.map((k) => r[k] ?? '').join(','))).join('\n') + '\n')
+  fs.writeFileSync(path.join(dir, `${tfFile(tf)}.csv`),   // 1M → 1Mo (Windows: 1m.csv = 1M.csv) [H.join(',')].concat(rows.map((r) => H.map((k) => r[k] ?? '').join(','))).join('\n') + '\n')
   summary.tf[tf] = { candles_in_year: C.filter((c) => c.t >= FROM).length, swings: rows.length, highs: rows.filter((r) => r.type === 'HIGH').length, lows: rows.filter((r) => r.type === 'LOW').length,
     first: rows[0]?.candle_open ?? null, last: rows.at(-1)?.candle_open ?? null }
   console.log(`  ${tf.padEnd(3)} candles ${String(summary.tf[tf].candles_in_year).padStart(7)} · swings ${String(rows.length).padStart(6)} (${summary.tf[tf].highs} H / ${summary.tf[tf].lows} L)`)
