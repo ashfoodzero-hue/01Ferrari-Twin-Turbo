@@ -27,7 +27,10 @@ child_runs.jsonl, app processes).
 The self-learning SPEC v1.1 is agreed: `docs/research/self_learning/2026-10-30_self_learning_system_SPEC.md`, MASTER §7 (fb) + (fc).
 
 **It REPLACES the order below:**
-1. **T0: the wave reason ledger.** Every wave on 16 TFs gets its measured reasons. This is NEXT, in a fresh chat; follow SPEC Addendum A4.
+1. **T0: the wave reason ledger.** DONE 10-30 for XAU (MASTER §7 (fd)), audit VALID.
+   - Result: on ≤ 3H, news / session opens / big candles show WHEN a turn is likelier; nothing shows WHICH WAY. ≥ 4H: nothing.
+   - Open: XAG / DXY / WTI (v2); fix `swings_1y.mjs` so 1m.csv and 1M.csv don't collide (Windows file names ignore case).
+   - NEXT: T1 inventory.
 2. T1 nowcast for all 85 numbered releases.
 3. T2 reactions for all 157 event types.
 4. T3 levels.
