@@ -35,3 +35,11 @@ child_runs.jsonl, app processes).
 - BEA-page confirmation of the 10-29 actuals (GDP 3.4, deflator 2.3) — open.
 - N2 spike-BUY paper forward test awaits Ashraf's OK; V1H vetoed-BUYs review; matrix_trades-based studies before 10-26 need re-measuring.
 - Lost-trade source = PC sleep (Start → Sleep, lid); Windows power settings are Ashraf's.
+
+## 5. PRIORITY + CREDIT PLAN (Ashraf 10-29 night: the DATA CENTER project in Cowork comes FIRST next week; Ferrari on minimum credit)
+- **Stage 0 — zero Claude credit, runs by itself:** the app keeps recording everything (prices 1m, CME volume, calendar actuals, every SCALP /
+  swing decision and blocked opportunity, paper trades, health). Nothing to do. If Telegram reports a problem, one SHORT fresh chat with the screenshot.
+- **Stage 1 — small (when the data-center work leaves room):** the self-learning SPEC only (step 3.1), in its own fresh chat.
+- **Stage 2+ — after the data-center work is complete:** steps 3.2 → 3.5, ONE FRESH CHAT PER STEP (short context = far less credit).
+- Credit savers: fresh chat per step; heavy analysis as scripts that run on the PC (not in chat); routine checks with a smaller model; no long screenshots threads.
+- Full chat of build-03 saved: `C:\01Ferrari Twin Turbo CHECKPOINTS\chat_exports\2026-10-29_build-03_chat.zip` (+ the original in Downloads).
