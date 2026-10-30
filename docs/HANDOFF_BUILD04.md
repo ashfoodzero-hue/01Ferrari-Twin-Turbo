@@ -22,7 +22,21 @@ child_runs.jsonl, app processes).
 - Blind history check: predictions from vintage inputs committed BEFORE any actual is opened.
 - Ask before every app restart; nothing live without his OK; no paid data (surface costs).
 
-## 3. NEXT — the build-04 package (start Sunday after the credit reset), in this order
+## 3a. UPDATE 2026-10-30 — step 3.1 DONE
+
+The self-learning SPEC v1.1 is agreed: `docs/research/self_learning/2026-10-30_self_learning_system_SPEC.md`, MASTER §7 (fb) + (fc).
+
+**It REPLACES the order below:**
+1. **T0: the wave reason ledger.** Every wave on 16 TFs gets its measured reasons. This is NEXT, in a fresh chat; follow SPEC Addendum A4.
+2. T1 nowcast for all 85 numbered releases.
+3. T2 reactions for all 157 event types.
+4. T3 levels.
+5. T4-T6.
+6. T7.
+7. T8: weekly loop on Sunday 10:00 UTC. Drift flags are written to files only, with no Telegram.
+8. The merge summary.
+
+## 3. (superseded order, kept for the record) the build-04 package
 1. **SPEC** for the self-learning system (all tracks, questions, data, blind rules, pass bars) → `docs/research/` — committed before any number.
 2. **Blind nowcast history check** (macro_nowcast): Advance GDP 52 / GDP deflator 52 / core PCE 159 / CPI 158 / NFP 159 / claims 692 releases since
    2013-07 (FF consensus + actual in `data/calendar/ff_history.jsonl`); inputs as first published (ALFRED vintages, GDPNow + Cleveland nowcast histories,
