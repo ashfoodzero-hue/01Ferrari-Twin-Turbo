@@ -11,11 +11,12 @@ import { loadBars } from '../../../src/data/backfillReader.js'
 import { findHoles, markIncomplete } from '../../../src/core/dataHoles.js'
 import { zigzag } from '../../../src/master/swings.js'
 import { atr as atrArr, rsi as rsiArr, sma as smaArr } from '../../../src/core/indicators.js'
-import { normCdf, compareRates, holm, rng, blockBootstrapMean } from '../../../src/core/studyStats.js'
+import { normCdf, holm, rng, blockBootstrapMean } from '../../../src/core/studyStats.js'
+import { MODERN, r2, mkLegs, makeDFeat, rate } from './extreme_lib.mjs'
 
 const DAY = 86400000, ES = path.join(TURBO.root, 'data', 'research', 'extreme_swing'), RAW = path.join(ES, 'raw'), IN = path.join(ES, 'inputs')
-const MODERN = Date.parse('2020-01-01T00:00:00Z'), TRAIN_END = MODERN, FUT_FROM = Date.parse('2024-10-09T00:00:00Z'), NCTRL = 200, NSHUF = 1000
-const iso = (t) => (t == null ? null : new Date(t).toISOString().replace('.000Z', 'Z')), r2 = (x, d = 2) => (x == null || !Number.isFinite(x) ? null : +x.toFixed(d))
+const TRAIN_END = MODERN, FUT_FROM = Date.parse('2024-10-09T00:00:00Z'), NCTRL = 200, NSHUF = 1000
+const iso = (t) => (t == null ? null : new Date(t).toISOString().replace('.000Z', 'Z'))
 const q = (arr, p) => { const s = arr.filter(Number.isFinite).sort((a, b) => a - b); if (!s.length) return null; const k = (s.length - 1) * p, lo = Math.floor(k); return s[lo] + (s[Math.min(lo + 1, s.length - 1)] - s[lo]) * (k - lo) }
 const last = (A, cut, key) => { let lo = 0, hi = A.length - 1, r = -1; while (lo <= hi) { const m = (lo + hi) >> 1; if (key(A[m]) <= cut) { r = m; lo = m + 1 } else hi = m - 1 } return r }
 const audit = { known_violations: 0 }
@@ -38,15 +39,6 @@ console.log(`weekly ${W.length} candles, ${SWW.length} pivots · daily ${D.lengt
   console.log('PIVOT AUDIT', JSON.stringify(audit.pivots_vs_published_1W)) }
 
 // ── legs (addendum B.3) ──
-const mkLegs = (SW, C, breaks, A) => { const out = []
-  for (let n = 0; n + 1 < SW.length; n++) { const s = SW[n], e = SW[n + 1]; if (s.type === e.type) continue
-    let br = false; for (let i = s.i + 1; i <= e.i; i++) if (breaks.has(i)) { br = true; break } if (br) continue
-    const dir = s.type === 'L' ? 1 : -1, atrS = A[s.i] ?? s.atr
-    let ext = dir > 0 ? -Infinity : Infinity, adverse = 0
-    for (let i = s.i; i <= e.i; i++) { const c = C[i]; if (dir > 0) { ext = Math.max(ext, c.h); adverse = Math.max(adverse, ext - c.l) } else { ext = Math.min(ext, c.l); adverse = Math.max(adverse, c.h - ext) } }
-    out.push({ n, dir, si: s.i, ei: e.i, sT: s.t, eT: e.t, sPx: s.px, ePx: e.px, startKnownT: C[s.knownI].close_t, endKnownT: C[e.knownI].close_t, atrStart: atrS,
-      size: Math.abs(e.px - s.px), pct: (e.px - s.px) / s.px * 100, sizeAtr: Math.abs(e.px - s.px) / atrS, candles: e.i - s.i, adverseAtr: adverse / atrS, era: s.t >= MODERN ? 'MODERN' : 'OLD' }) }
-  return out }
 const legs = mkLegs(SWW, W, bW, AW), legsD = mkLegs(SWD, D, bD, AD)
 const robust = legsD.filter((l) => l.sizeAtr >= 10)
 console.log(`weekly legs ${legs.length} (MODERN ${legs.filter((l) => l.era === 'MODERN').length}) · robust 1D legs ${robust.length}`)
@@ -134,19 +126,9 @@ const BR = await testB(robust, D, AD, 'B robust 1D')
 // ── C + D: ends vs in-leg weeks (addendum B.8-B.9) ──
 const thr = {}; for (const k of Object.keys(ITEMS)) { const v = W.map((w, i) => (w.close_t < TRAIN_END ? weekVals[i][k] : null)).filter((x) => x != null && Number.isFinite(x)); thr[k] = { n_train_weeks: v.length, p05: q(v, 0.05), p95: q(v, 0.95) } }
 const isExt = (k, v) => (v == null || !Number.isFinite(v) ? null : v <= thr[k].p05 ? 'LOW' : v >= thr[k].p95 ? 'HIGH' : '')
-const dFeat = (leg, w) => { const c = W[w], a = AW[w], ap = AW[w - 1]; if (!a || !ap) return null
-  let newExt = true; for (let i = leg.si + 1; i < w; i++) if (leg.dir > 0 ? W[i].h >= c.h : W[i].l <= c.l) { newExt = false; break } if (w === leg.si) newExt = false
-  let lastExtRsi = null; for (let i = leg.si + 1; i < w; i++) { let ne = true; for (let k = leg.si + 1; k < i; k++) if (leg.dir > 0 ? W[k].h >= W[i].h : W[k].l <= W[i].l) { ne = false; break } if (ne) lastExtRsi = RW[i] }
-  let run = 0; for (let i = w; i > 0; i--) { if (leg.dir > 0 ? W[i].c > W[i - 1].c : W[i].c < W[i - 1].c) run++; else break }
-  return { newExt, D1_rsi_divergence: newExt && lastExtRsi != null && RW[w] != null && (leg.dir > 0 ? RW[w] < lastExtRsi : RW[w] > lastExtRsi), D2_vol_climax: c.h - c.l >= 2 * ap,
-    D3_stretch: SW20[w] != null && Math.abs(c.c - SW20[w]) >= 3 * a, D4_run6: run >= 6 } }
+const dFeat = makeDFeat({ W, AW, RW, SW20 })
 const WK = []   // one row per (leg, week): end or in-leg control
 for (const leg of legs) for (let w = leg.si + 1; w <= leg.ei; w++) WK.push({ leg, w, end: w === leg.ei, era: leg.era, vals: weekVals[w], feat: dFeat(leg, w) })
-const rate = (rows, key, getter) => { const E = rows.filter((r) => r.end), Cc = rows.filter((r) => !r.end)
-  const ok = (r) => getter(r) != null, kE = E.filter((r) => ok(r) && getter(r)), kC = Cc.filter((r) => ok(r) && getter(r)), nE = E.filter(ok).length, nC = Cc.filter(ok).length
-  const cr = compareRates(kE.length, nE, kC.length, nC)
-  return { key, n_end: nE, k_end: kE.length, n_ctrl: nC, k_ctrl: kC.length, rate_end: r2(cr.p1, 3), rate_ctrl: r2(cr.p2, 3), ratio: r2(cr.ratio, 2), p: cr.p == null ? null : +cr.p.toPrecision(3),
-    precision: kE.length + kC.length ? r2(kE.length / (kE.length + kC.length), 3) : null, recall: nE ? r2(kE.length / nE, 3) : null } }
 const CD = { C: {}, D: {} }
 for (const k of Object.keys(ITEMS)) { const g = (r) => { const e = isExt(k, r.vals[k]); return e == null ? null : e !== '' }
   CD.C[k] = { ALL: rate(WK, k, g), MODERN: rate(WK.filter((r) => r.era === 'MODERN'), k, g), OLD: rate(WK.filter((r) => r.era === 'OLD'), k, g), threshold: thr[k],

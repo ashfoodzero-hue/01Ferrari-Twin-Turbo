@@ -1308,3 +1308,16 @@ without duplications … only use the real Win results, and ignore the rest."
     - Of the 15 completed down legs at least this big, the final size quartiles were 3.97 / 4.37 / 5.46 ATR, i.e. ≈ 3,717 / 3,618 / 3,350. Descriptive, n 15, not a level.
     - Known now: COT percentile 0.24 (not extreme) · GLD −1.5 % over 4 weeks · real yield −0.25 · DXY flat · VIX 17.2.
     - Last week: no D sign.
+- **(fu) 2026-11-01 — EXTREME SWING addendum C: SILVER replication of the two gold exhaustion hypotheses → BOTH PASS (Ashraf: "Yes, test on silver").** Spec addendum C was committed before any silver number (e519e10). `scripts/research/extreme_swing/replicate_d_silver.mjs` → `data/research/extreme_swing/2026-11-01_silver_d_replication.json`. The leg and D rules moved unchanged to `scripts/research/extreme_swing/extreme_lib.mjs`; the gold study was re-run on it and its result is byte-IDENTICAL to (ft) (refactor-then-diff).
+  - **Silver data and audit:** XAGUSD has 679 weekly candles, 40 pivots, 36 legs (20 MODERN). Pivot audit = the published silver 1W table, 2/2 EQUAL.
+  - **PRIMARY test:** end weeks vs fair controls (in-leg weeks that were also a new extreme, 247 weeks).
+
+    | sign | at ends | at fair controls | ratio | p | precision | recall | 2013-19 / 2020→ |
+    |---|---|---|---|---|---|---|---|
+    | D1 weekly RSI divergence | 54.3 % | 17.0 % | ×3.19 | 5e-7 | 31 % | 54 % | ×2.77 / ×3.97 |
+    | D2 weekly range ≥ 2 ATR | 25.7 % | 7.7 % | ×3.34 | 8e-4 | 32 % | 26 % | ×8.0 / ×2.12 (the 2020→ part alone p 0.11) |
+
+    Both pass Holm K = 2, n_end 35 ≥ 30, same sign in both eras → PASS by addendum C.
+  - **Independence, measured:** 17 of 36 silver leg ends fall within 1 week of a gold end in the same direction. Of the 19 silver-only ends, 15 showed D1 or D2 (D1 14, D2 4), so the effect is not just gold's own weeks repeated.
+  - **What it means (addendum C.8):** a measured EXHAUSTION WARNING on two metals. About 1 in 3 alerts is the real end and 2 in 3 are not. It is NOT a trade rule and NOT an alert (92 % rule). The gold run (ft) itself stays VOID.
+  - **Next:** a pre-registered warning spec with what happens AFTER a warning (how far the leg runs on after a false one; $ for a trader who tightens or exits), then a forward record, then Ashraf's OK for any live display.
