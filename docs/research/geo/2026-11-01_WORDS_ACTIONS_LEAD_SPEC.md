@@ -211,3 +211,19 @@ Any change is a dated ADDENDUM below, written before the numbers it affects.
    - WTI and Brent spot: 14:30 New York;
    - GVZ / OVX / VIX: 16:15 New York.
 6. **G0.4** (`smoke_ny_candles`) runs as its own command. Its result is recorded next to Part 0.
+
+## ADDENDUM C — 2026-11-01, after the first Part 0 run (G0.5 assert failed), before any Part A / B number
+
+- **Part 0, first full run:**
+  - G0.1 passed: 99.51 %.
+  - G0.2 passed: 9 / 9 anchors; the placebo hit rate was 12.8 %.
+  - G0.3 passed: correlation 0.9036 on 504 days.
+  - G0.4 passed: `smoke_ny_candles` 17 / 17.
+  - G0.5 failed. The shuffle part was clean: 0 passes in each of the 20 runs. But **144 of 569,408 predictor rows had a GDELT day whose known time was not before close(T).**
+- **Cause, measured:** three gold daily candles are 2-hour data-hole stubs: 2019-09-03, 2020-10-13 and 2026-05-07, 119-120 minutes each, last minute at 00:00 UTC. Their "close" is not a session close. 3 candles × 16 predictors × 3 gold targets = 144.
+  - A fourth stub, 2021-12-24 (65 minutes, last minute 08:14 New York), passed the assert, but it is the same kind of false close.
+- **Rule:** a gold daily close counts only if its last minute is at or after 12:00 New York on its date.
+  - The earliest real early close in the data is 14:30 New York (Labor Day, MLK).
+  - Failing candles get no close, so every row whose target or controls touch them is dropped.
+  - This removes exactly the four stubs above.
+- **Part 0 is re-run in full,** shuffle included, with the rule in place. G0.5 must show 0 assert failures.
