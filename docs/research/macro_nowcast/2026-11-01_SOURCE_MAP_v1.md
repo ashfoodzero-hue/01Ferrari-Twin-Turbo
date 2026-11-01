@@ -194,6 +194,30 @@ Countries covered: US, UK, EU, Turkey, Israel, Iran, Saudi, Egypt, Jordan, Syria
 
 ---
 
+## 5c. Big-money layer: do the largest investors' moves confirm our reading? (Ashraf 2026-11-01, third message)
+
+**Ashraf:** "BlackRock … big whales … we need to follow their moves which confirms the analysis that we are doing in the politics economy."
+
+**Fact check, for the record:**
+- BlackRock is a public company (NYSE: BLK); its biggest owners are other funds.
+- It does not own central banks. The Federal Reserve's regional banks are owned by their member commercial banks.
+- That ownership story is not used anywhere in the map.
+
+What CAN be measured is what the big holders publicly report they hold, with the delay each report has:
+
+| source | what it shows | delay | status |
+|---|---|---|---|
+| SEC 13F filings (EDGAR, free) | every large manager's US stock / ETF holdings (BlackRock, Vanguard, State Street, hedge funds) | quarterly, up to 45 days late | **TO VERIFY** (EDGAR API) |
+| GLD / IAU holdings (tonnes of gold), daily | gold ETF buying / selling | 1 day | **TO VERIFY** (GLD 1m prices are already in our data) |
+| CFTC COT, gold + crude: managed money vs producers | speculators' positioning | Friday for Tuesday | reachable (section 5) |
+| Central-bank gold purchases (IMF / World Gold Council) | official-sector buying | 1-2 months | **TO VERIFY** (free source or KEY) |
+| BlackRock Investment Institute weekly commentary | their stated views (words, not trades) | weekly | **TO VERIFY**; goes into the L1 ledger as a WORDS row |
+| Real CME volume / footprint for GC (Databento, 2024-10 → 2026-10-08) | big-lot buying / selling in gold futures | live / 1 minute | DATED (already measured: memory says wall / order-flow studies gave no money edge, so this is CONTEXT) |
+
+**Test:** a "confirmation" counts only if, on dated history, our geopolitics / macro number + the big-money move together beat our number alone (same rules as L4). The delays above mean 13F can only confirm months later, never in real time. That is stated, not hidden.
+
+---
+
 ## 6. Daily collector (design only; it would be a new background job → needs Ashraf's OK before it runs)
 
 - **One job, once a day** (proposed 23:00 UTC, after US and Europe close), research only, separate from the trading app: `scripts/research/macro_nowcast/collect_daily.mjs`.
