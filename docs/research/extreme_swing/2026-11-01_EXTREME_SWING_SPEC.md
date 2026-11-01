@@ -93,3 +93,31 @@ Depth of each 1D pullback as a fraction of the leg so far (distribution per era)
 1. Verify the C1 / C2 histories (dated, free); record the status; anything not verifiable → MISSING, the cell is dropped and said so.
 2. Build the script; run the A catalog; audit the pivots against the published `docs/swing_book/xau_1y_swings/1W.csv` for the overlapping year (must be equal).
 3. Run B, C, D, E; audits; report.
+
+## ADDENDUM A — 2026-11-01, step 1 done: C1 / C2 inputs VERIFIED (before any study number)
+
+Script `scripts/research/extreme_swing/build_step1_inputs.mjs`. Proof: `data/research/extreme_swing/2026-11-01_step1_inputs_verification.json`. Files: `data/research/extreme_swing/inputs/cot_gold_088691.jsonl`, `gld_holdings.jsonl`. Raw downloads under `raw/` (gitignored).
+
+**C1 COT (CFTC disaggregated futures-only, gold 088691), status DATED:**
+- 721 weekly reports, 2013-01-08 → 2026-10-27;
+- 0 duplicates, 0 missing weeks;
+- the CFTC open-interest identity holds on all 721;
+- 0 values known before their report date.
+
+**C1 known_t rules:**
+
+| case | known_t |
+|---|---|
+| normal | report Tuesday + 7 days 00:00 UTC (CFTC publishes Friday 15:30 ET; holiday delays move it to Monday 15:30 ET) |
+| 2025 shutdown (14 reports) | the latest new publish date in the CFTC special-announcement tables + 1 day |
+| no exact CFTC catch-up dates found | MISSING, 33 reports, never filled: 2013-09-24 … 2013-11-26 (2013 shutdown), 2018-12-18 … 2019-03-12 (2018-19 shutdown), 2023-01-31 … 2023-04-04 (ION cyber incident) |
+
+**C2 GLD holdings (SPDR historical archive), status HIST:**
+- 5,520 trading days, 2004-11-18 → 2026-10-29 (3,345 since 2013-07);
+- 205 "US Holiday" rows carry no values and are skipped;
+- 0 unparsed, 0 duplicates.
+- known_t = date + 1 day 14:30 UTC.
+- It is a single current snapshot with no vintages, so it is labelled HIST: possible later corrections cannot be seen.
+- IAU is not added: no verified free history.
+
+The study (§6 steps 2-3) uses exactly these files and rules.

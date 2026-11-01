@@ -1,0 +1,31 @@
+{
+ "at": "2026-11-01T08:09:44.279Z",
+ "check": {
+  "cot": {
+   "rows": 721,
+   "unique_dates": 721,
+   "first": "2013-01-08",
+   "last": "2026-10-27",
+   "missing_rows": 33,
+   "delayed_2025_rows": 14,
+   "gaps_over_8d": [],
+   "known_before_report": 0,
+   "nan_fields": 0,
+   "oi_identity_fail": 0
+  },
+  "gld": {
+   "rows": 5520,
+   "first": "2004-11-18",
+   "last": "2026-10-29",
+   "us_holiday_rows": 205,
+   "unparsed_rows": 0,
+   "duplicate_dates": 0,
+   "gaps_over_5d": [],
+   "rows_since_2013": 3345,
+   "tonnes_range": [
+    8.09,
+    1353.35
+   ]
+  }
+ }
+}
