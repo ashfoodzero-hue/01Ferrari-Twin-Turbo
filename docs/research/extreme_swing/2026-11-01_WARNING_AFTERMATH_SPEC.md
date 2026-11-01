@@ -97,3 +97,18 @@ For every warning week w (each a row; rows of the same leg are clustered):
 2. Part 1 on both metals.
 3. Part 2 (only the sets that passed Part 1 are tested; the others are described).
 4. Audits, report, records.
+
+## ADDENDUM A — 2026-11-01, before any number
+
+1. **Silver cost:** there is no measured silver spread (the spread model is gold-only and never borrows, R0). Silver policy values are therefore shown WITHOUT cost and labelled so. Gold uses `makeSpreadAt` at each exit minute. The run reports gold's median cost in ATR(1W) units, so the size of this omission can be judged.
+2. **Causal-leg details:**
+   - "Every candle since that pivot" = candles p.i + 1 … w − 1, the same as the hindsight rule.
+   - The causal leg starts at p's confirmation candle, so new-extreme weeks before `p.knownI` are not part of it.
+   - A break between p and w, or between w and the exit, drops the row.
+   - Rows of the current open leg (no end yet) are excluded from the statistics and shown as the current state.
+3. **P2 / counter-trade walk:** on weekly candles from w + 1 to the leg-end confirmation candle. A gap through the stop fills at the open; otherwise the stop is hit at its price when the candle's range reaches it; else the exit is the confirmation candle's close.
+4. **Bootstrap:**
+   - leg-cluster resampling, B = 5,000, one-sided p = share of bootstrap differences ≤ 0 (floor 1 / B), LB = the α/K quantile (K = 6);
+   - placebo draws use B = 400 inside each draw;
+   - placebo limit: 5 % + 3 × √(0.05 × 0.95 / 1000) = 7.07 % per cell.
+5. **n rule of Part 1:** n_TRUE = the TRUE rows in the population.
