@@ -11,6 +11,7 @@ import path from 'node:path'
 import zlib from 'node:zlib'
 import crypto from 'node:crypto'
 import { TURBO } from '../../../src/core/paths.js'
+import { catchUp } from '../geo/gdelt_events.mjs'
 
 const E = process.env, DIR = path.join(TURBO.root, 'data', 'research', 'macro_nowcast', 'daily'), DAY = new Date().toISOString().slice(0, 10)
 const ONLY = (process.argv.find((a) => a.startsWith('--only=')) ?? '').slice(7).split(',').filter(Boolean)
@@ -28,7 +29,8 @@ const SOURCES = [
   { name: 'manheim_index', url: 'https://site.manheim.com/en/services/consulting/used-vehicle-value-index.html', kind: 'raw' },
   { name: 'cleveland_nowcast', url: 'https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting', kind: 'raw' },
   { name: 'nyfed_staff_nowcast', url: 'https://www.newyorkfed.org/research/policy/nowcast', kind: 'raw' },
-  { name: 'gpr_daily', url: 'https://www.matteoiacoviello.com/gpr_files/data_gpr_daily_recent.xls', kind: 'raw' },
+  // .dta, not .xls (2026-11-01): the .dta is what gpr_dta_to_jsonl.py reads; we have no .xls reader. Each daily copy = one vintage (GPR revises)
+  { name: 'gpr_daily', url: 'https://www.matteoiacoviello.com/gpr_files/data_gpr_daily_recent.dta', kind: 'raw' },
   { name: 'nyfed_gscpi', url: 'https://www.newyorkfed.org/medialibrary/research/interactives/gscpi/downloads/gscpi_data.xlsx', kind: 'raw' },
   { name: 'nyfed_acm_termpremium', url: 'https://www.newyorkfed.org/medialibrary/media/research/data_indicators/ACMTermPremium.xls', kind: 'raw' },
   { name: 'eurostat_hicp', url: 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/prc_hicp_manr?geo=EA&coicop=CP00&coicop=TOT_X_NRG_FOOD&lastTimePeriod=3', kind: 'json' },
@@ -54,8 +56,12 @@ const SOURCES = [
           ...Object.fromEntries(Object.entries(m).filter(([k]) => /price|bid|ask|volume|open_interest/i.test(k))) })   // every price field as Kalshi names it
       cursor = j.cursor; if (!cursor) break }
     return out } },
-  ...Object.entries(GEO).map(([k, q]) => ({ name: `gdelt_${k}`, gdelt: true,
+  // GDELT doc API = headlines only, OPTIONAL: its per-address budget is shared with Turbo 2's live news backfill (measured 11-01: 429s here while Turbo 2 ran)
+  ...Object.entries(GEO).map(([k, q]) => ({ name: `gdelt_${k}`, gdelt: true, optional: true,
     url: `https://api.gdeltproject.org/api/v2/doc/doc?query=${encodeURIComponent(q)}&mode=artlist&maxrecords=250&timespan=1d&format=json&sort=datedesc`, kind: 'json' })),
+  // GDELT daily EVENT files (words vs actions by country) replace ACLED (11-01: a Gmail myACLED account = Open level = no API data). Its own dated store:
+  // data/research/geo/gdelt_events_daily.jsonl (scripts/research/geo/gdelt_events.mjs) — nothing is snapshotted here
+  { name: 'gdelt_events', url: 'https://data.gdeltproject.org/events/', store: async () => { const s = await catchUp(); if (Object.keys(s.errors).length) throw new Error(`days failed ${JSON.stringify(s.errors)}`); return s } },
 ]
 
 async function fetchOne(s) {
@@ -66,30 +72,20 @@ async function fetchOne(s) {
   if (s.kind === 'json' && r.ok) { const j = JSON.parse(buf.toString('utf8')); body = JSON.stringify(s.pick ? s.pick(j) : j) }
   return { status: r.status, ok: r.ok, ctype: r.headers.get('content-type'), encoding, body }
 }
-async function acled() {   // ACLED: OAuth token from the myACLED account Ashraf stores in .env (ACLED_EMAIL / ACLED_PASSWORD); last 7 days, Middle East + watch list
-  if (!E.ACLED_EMAIL || !E.ACLED_PASSWORD) return { status: 0, ok: false, skipped: 'ACLED_EMAIL / ACLED_PASSWORD not in .env' }
-  const tok = await (await fetch('https://acleddata.com/oauth/token', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ username: E.ACLED_EMAIL, password: E.ACLED_PASSWORD, grant_type: 'password', client_id: 'acled' }) })).json()
-  if (!tok.access_token) return { status: 401, ok: false, skipped: 'token refused: ' + JSON.stringify(tok).slice(0, 160) }
-  const from = new Date(Date.now() - 7 * 86400000).toISOString().slice(0, 10)
-  const u = `https://acleddata.com/api/acled/read?_format=json&event_date=${from}|${DAY}&event_date_where=BETWEEN&region=Middle%20East&limit=5000`
-  const r = await fetch(u, { headers: { Authorization: `Bearer ${tok.access_token}`, 'content-type': 'application/json' } }), t = await r.text()
-  return { status: r.status, ok: r.ok, ctype: r.headers.get('content-type'), encoding: 'utf8', body: t, url: u }
-}
-
 fs.mkdirSync(DIR, { recursive: true })
-const log = { at: new Date().toISOString(), day: DAY, ok: [], same: [], failed: {}, skipped: {} }
-const list = [...SOURCES, { name: 'acled_mideast_7d', acled: true, url: 'https://acleddata.com/api/acled/read' }].filter((s) => !ONLY.length || ONLY.includes(s.name))
+const log = { at: new Date().toISOString(), day: DAY, ok: [], same: [], failed: {}, failed_optional: {}, skipped: {} }
+const list = SOURCES.filter((s) => !ONLY.length || ONLY.includes(s.name))
 for (const s of list) {
   try {
     if (s.needs && !E[s.needs]) { log.skipped[s.name] = `${s.needs} missing in .env`; continue }
+    if (s.store) { const r = await s.store(); log.ok.push(s.name); log[s.name] = r; continue }
     if (s.name === 'bea_gdp_t10101') s.url = s.url.replace('Year=X', `Year=${new Date().getUTCFullYear() - 1},${new Date().getUTCFullYear()}`)
     let res = null   // 3 tries: timeouts and 429 are transient (first run 11-01: EIA / BEA ETIMEDOUT that had answered 200 an hour earlier)
-    for (let k = 0; k < 3; k++) { try { res = s.acled ? await acled() : await fetchOne(s) } catch (e) { res = { ok: false, status: String(e.cause?.code || e.message).slice(0, 80) } }
+    for (let k = 0; k < 3; k++) { try { res = await fetchOne(s) } catch (e) { res = { ok: false, status: String(e.cause?.code || e.message).slice(0, 80) } }
       if (res.ok || res.skipped || (typeof res.status === 'number' && res.status !== 429 && res.status < 500 && res.status !== 0)) break
       await new Promise((r) => setTimeout(r, (s.gdelt ? 30000 : 10000) * (k + 1))) }
     if (res.skipped) { log.skipped[s.name] = res.skipped; continue }
-    if (!res.ok) { log.failed[s.name] = `HTTP ${res.status}`; continue }
+    if (!res.ok) { (s.optional ? log.failed_optional : log.failed)[s.name] = `HTTP ${res.status}`; continue }
     const sha = crypto.createHash('sha256').update(res.body).digest('hex'), d = path.join(DIR, s.name); fs.mkdirSync(d, { recursive: true })
     const prev = fs.readdirSync(d).filter((f) => f.endsWith('.json.gz') && !f.startsWith(DAY)).sort().at(-1)
     const prevSha = prev ? JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(d, prev))).toString()).sha256 : null
@@ -97,10 +93,10 @@ for (const s of list) {
     const rec = { fetched_at: new Date().toISOString(), source: s.name, url: redact(res.url ?? s.url), status: res.status, ctype: res.ctype, sha256: sha, same_as_previous: same ? prev : null, encoding: res.encoding, body: same ? null : res.body }
     fs.writeFileSync(path.join(d, `${DAY}.json.gz`), zlib.gzipSync(JSON.stringify(rec)))
     ;(same ? log.same : log.ok).push(s.name)
-  } catch (e) { log.failed[s.name] = String(e.cause?.code || e.message).slice(0, 160) }
+  } catch (e) { (s.optional ? log.failed_optional : log.failed)[s.name] = String(e.cause?.code || e.message).slice(0, 160) }
   if (s.gdelt) await new Promise((r) => setTimeout(r, 15000))   // GDELT: ≥ 5 s between requests; 15 s measured safe margin
 }
 fs.appendFileSync(path.join(DIR, 'collect_log.jsonl'), JSON.stringify(log) + '\n')
 fs.writeFileSync(path.join(DIR, 'last_run.json'), JSON.stringify(log, null, 1))
-console.log(`collect_daily ${DAY}: new ${log.ok.length} · unchanged ${log.same.length} · failed ${Object.keys(log.failed).length} ${JSON.stringify(log.failed)} · skipped ${JSON.stringify(log.skipped)}`)
+console.log(`collect_daily ${DAY}: new ${log.ok.length} · unchanged ${log.same.length} · failed ${Object.keys(log.failed).length} ${JSON.stringify(log.failed)} · optional failed ${JSON.stringify(log.failed_optional)} · skipped ${JSON.stringify(log.skipped)}`)
 process.exit(Object.keys(log.failed).length ? 1 : 0)

@@ -137,7 +137,7 @@
 | **Geopolitics / uncertainty** | Geopolitical Risk index (Caldara-Iacoviello), daily | daily | reachable (xls); HIST |
 | | Economic Policy Uncertainty, daily USEPUINDXD | daily | DATED 2014-03 |
 | | Polygon news headlines | live | DATED 2020-03 → |
-| | GDELT world events | live | BLOCKED (memory: backfill never ran) |
+| | GDELT world events (daily EVENT files: who did what to whom, by country) | daily | DATED 2013-07 → (2026-11-01: `data/research/geo/gdelt_events_daily.jsonl`, §5b update) |
 | | VIX VIXCLS | daily | DATED 2013-07 |
 | **Supply chains** | NY Fed supply-chain pressure index | monthly | reachable (xlsx); HIST |
 | **Dollar, rates, inflation expectations** | broad dollar DTWEXBGS, real 10y DFII10, breakevens T5YIE / T10YIE, our Treasury yields | daily | DATED |
@@ -180,13 +180,14 @@ Countries covered: US, UK, EU, Turkey, Israel, Iran, Saudi, Egypt, Jordan, Syria
 
 | source | what | status (checked today) |
 |---|---|---|
-| GDELT document API (world news, 65 languages, by time) | events + tone, every 15 min | reachable today (200, returned an Iran article); earlier bulk backfill was rate-limited → slow polite collection |
+| GDELT document API (world news, 65 languages, by time) | headlines + tone | throttled per address (2026-11-01: 429; the budget is shared with Turbo 2's live news backfill, which ran at 12:05 UTC) → OPTIONAL in the collector (a failure no longer fails the run) |
 | Polygon news (any ticker: USO, XLE, GLD …) | headlines with publish time | reachable; DATED 2020-03 → |
 | UN News Middle East feed | official statements | reachable (RSS) |
 | US State Department press feed | official statements | BLOCKED (403) → via GDELT / Polygon instead |
-| ACLED (armed conflict events, verified, weekly) | troop moves, strikes, by country | site reachable; data needs a free KEY |
+| ACLED (armed conflict events, verified, weekly) | troop moves, strikes, by country | **NOT AVAILABLE** (2026-11-01, measured): a Gmail myACLED account = "Open" level; the API answers 403 "Access denied" (API starts at Research = organisation e-mail; commercial use = paid licence). Replaced by the GDELT event files below |
+| **GDELT daily EVENT files** (data.gdeltproject.org/events/, CAMEO-coded) | per country and country pair: WORDS (QuadClass 3 verbal conflict: threats, demands) vs ACTIONS (QuadClass 4: assault, fight, force posture = troop / ship moves, coercion), cooperation, Goldstein, tone, articles | **LIVE 2026-11-01**: static files, no request budget, 2013-07 → (backfill); `scripts/research/geo/gdelt_events.mjs`, daily via the collector; known_t = day + 1 08:00 UTC (measured publish 07:00 UTC). Machine-coded, not verified like ACLED; coverage grows over the years → shares / own z-scores only |
 | Polymarket, Kalshi (prediction markets) | market-implied % for peace / war questions | APIs reachable; dated price history **TO VERIFY** |
-| Geopolitical Risk index daily (threats vs acts) | published index | reachable; HIST |
+| Geopolitical Risk index daily (threats vs acts) | published index | reachable; HIST; collected daily as the `.dta` file (2026-11-01; each day's copy = one vintage; read by `gpr_dta_to_jsonl.py`) |
 | OVXCLS, GVZCLS | oil / gold implied volatility | DATED 2014-04 |
 | Brent, WTI, our WTI 1m | oil price reaction | DATED |
 
@@ -264,7 +265,7 @@ The question asked here: what moves gold / DXY that sections 1-5c did not cover?
 ## 7. Decisions needed from Ashraf
 
 1. **Approve this map format.** I then build the same tree for the other 81 releases + the Fed.
-2. **Free keys** (all free, registration by Ashraf): EIA, BEA, Census, BLS, ACLED. They unlock EIA detail, the BEA weights / source data, the Census services survey and higher BLS API limits.
+2. **Free keys** (all free, registration by Ashraf): EIA, BEA, Census, BLS (ACLED dropped 2026-11-01: no API data for a Gmail account; GDELT event files used instead). They unlock EIA detail, the BEA weights / source data, the Census services survey and higher BLS API limits.
 3. **Daily collector:** OK to build it and start it (a new scheduled job).
 4. **What happens to the step-2 thin model** (spec 2026-11-01, inputs already extracted and filled): keep it as the BASELINE the full trees must beat, or drop it.
 

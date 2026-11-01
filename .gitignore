@@ -15,3 +15,4 @@ data/research/macro_nowcast/inputs/raw/
 data/research/macro_nowcast/inputs/rows/
 data/research/macro_nowcast/daily/
 data/research/extreme_swing/raw/
+data/research/geo/gdelt_events_daily.jsonl

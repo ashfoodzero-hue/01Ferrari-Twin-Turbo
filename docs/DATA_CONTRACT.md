@@ -62,7 +62,8 @@ Futures ≠ spot: match futures to spot by TIME only, never by price (basis and 
 | Gold-related news headlines (GLD IAU GDX NEM SLV) | `data/news/polygon_news.jsonl` | **2020-03 → now only** (Polygon's archive has nothing earlier) | at `published_utc` |
 
 **Gaps:**
-- **No news before 2020-03.** The GDELT backfill is blocked on this machine (see memory).
+- **No news HEADLINES before 2020-03.** The GDELT doc-API headline backfill is throttled on this machine (see memory).
+- **Geopolitical EVENTS from 2013-07 (added 2026-11-01):** `data/research/geo/gdelt_events_daily.jsonl` (GDELT daily event files, counts by country / country pair, words vs actions), known at day + 1 08:00 UTC. Machine-coded; coverage grows over the years → compare shares / own z-scores, never raw counts across years. GPR daily (threats vs acts) = one current snapshot + daily vintages from 2026-11-01.
 - Consensus forecasts come only from Forex Factory (Polygon has none).
 - Only USD events are kept (Ashraf's calendar rule).
 

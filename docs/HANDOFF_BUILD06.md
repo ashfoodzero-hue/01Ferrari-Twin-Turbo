@@ -137,7 +137,7 @@
 **Keys (tested with real calls):**
 - EIA / BEA / Census: OK.
 - BLS: "invalid" → Ashraf must activate it from the BLS email.
-- ACLED: needs ACLED_EMAIL + ACLED_PASSWORD in .env (Ashraf types them himself); the collector then gets the OAuth token. Never handle his password in chat.
+- ACLED: ~~needs ACLED_EMAIL + ACLED_PASSWORD~~ → **DROPPED 2026-11-01 (§11)**: Ashraf's Gmail account logs in but the API answers 403 "Access denied" (Open level has no API). Never handle his password in chat.
 
 **Source Map:** §5d gap check added (dollar / Treasury demand, Fed liquidity, rates, credit, flows, Fed words, prediction markets, social). Open TO VERIFY items: GLD holdings address, WGC (KEY), fed-funds futures (none free found), copper / BTC on Polygon, calendar effects.
 
@@ -171,4 +171,13 @@
 
 **Ashraf actions pending:**
 - activate the BLS key (email link);
-- add ACLED_EMAIL / ACLED_PASSWORD to `.env`.
+- ~~add ACLED_EMAIL / ACLED_PASSWORD to `.env`~~ (done by Ashraf; ACLED then refused API data → dropped, §11).
+
+## 11. UPDATE 2026-11-01 (afternoon): GPR + GDELT replace ACLED (MASTER §7 (fx)); research collector only
+
+- **ACLED measured:** login OK, `/api/acled/read` → 403 `{"message":"Access denied"}`; myACLED FAQ: a gmail.com address = Open level, API from Research (organisation e-mail) up. Ashraf: "Use GPR + GDELT".
+- **NEW `scripts/research/geo/gdelt_events.mjs`:** GDELT 1.0 daily event files (static, no budget) → `data/research/geo/gdelt_events_daily.jsonl` (gitignored, rebuildable): per day, per watch-list country (28, ISO 3) and conflict country pair, WORDS (QuadClass 3) vs ACTIONS (QuadClass 4), root codes 13-20 (15 = troop / ship moves), Goldstein, tone, articles; fresh events only (event date ≥ day − 7). known_t = day + 1 08:00 UTC. Smoke `smoke_gdelt_events.mjs` 5/5 (in smoke:all); 2026-10-31 equals an independent awk count (Iran actions 166, stale 562).
+- **Collector (`collect_daily.mjs`, runs inside the live app at 23:00 UTC as a fresh process → no restart needed):** ACLED removed; `gdelt_events` catch-up added; GPR now the `.dta` file; the 4 GDELT doc-API headline queries are OPTIONAL (their 429s go to `failed_optional`, the run no longer exits 1 for them).
+- **Measured:** Turbo 2's live app still runs its GDELT doc-API news backfill (child_runs 12:05 UTC, 63/365 days) on the same address → it shares the doc-API budget. Not touched (Turbo 2 = separate app).
+- **Backfill:** 2013-07-14 → 2026-10-24 started 12:22 UTC (~2 s/day, ~3 h). Check: `wc -l data/research/geo/gdelt_events_daily.jsonl` ≈ 4,860 rows, and no `error` rows.
+- **NEXT:** a pre-registered study "do GDELT words / actions (or GPR acts / threats) lead oil or gold?" — spec FIRST, controls vs the market's own pricing (Source Map §5b L3/L4).

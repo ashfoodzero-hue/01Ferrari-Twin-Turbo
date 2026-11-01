@@ -1357,3 +1357,31 @@ without duplications … only use the real Win results, and ignore the rest."
     - gold: down leg from 4,696.56; the weeks of 10-18 and 10-25 were causal new lows with NO warning;
     - silver: down leg from 121.618; recent new lows without a warning.
   - **Status:** D1 = a measured "the end is more likely near" CONTEXT flag only. No exit rule, no trade, no alert.
+- **(fx) 2026-11-01 — GEOPOLITICS SOURCES: ACLED refused (Gmail = Open level, API 403 "Access denied") → GPR + GDELT daily EVENT files (Ashraf: "Use GPR + GDELT").** Research collector only; nothing feeds a signal.
+  - **ACLED, measured:**
+    - Ashraf's `fetch_data.py` (with my change to print the server's reply) shows the login is OK, but the read endpoint answers 403 `{"message":"Access denied"}`.
+    - The myACLED FAQ says a gmail.com address gets Open level, and API access starts at Research level (an organisation e-mail).
+    - Commercial use needs a paid licence (not bought).
+  - **NEW `scripts/research/geo/gdelt_events.mjs`:**
+    - Source: the GDELT 1.0 daily event files. They are static files with no request budget and a dated archive from 2013-04.
+    - Output: `data/research/geo/gdelt_events_daily.jsonl`, one row per day.
+    - Each row counts, for each of 28 watch-list countries (by where the event happened, FIPS → ISO 3) and for each conflict country pair:
+      - WORDS = QuadClass 3 (verbal conflict);
+      - ACTIONS = QuadClass 4 (material conflict);
+      - root codes 13-20 (15 = force posture: troop / ship moves);
+      - Goldstein, tone and articles.
+    - Only FRESH events count (event date ≥ day − 7). GDELT re-codes old events when an article mentions them; 562 of the 73,394 events on 10-31 were such stale ones.
+    - known_t = day + 1 at 08:00 UTC. Measured: the 10-31 file was published 2026-11-01 07:00:06 UTC; archive files carry 2014 re-upload dates.
+  - **Proof:**
+    - `smoke_gdelt_events.mjs` passes 5/5 (it is in smoke:all). It covers the zip reader, the fresh/stale/other-day rules, the FIPS map, the dyad rule, and the stored 10-31 row = an independent awk count of the raw file (Iran material conflict 166, stale 562).
+    - 7 test days 10-25…10-31 had 0 bad rows.
+  - **Collector (`collect_daily.mjs`):**
+    - ACLED removed.
+    - `gdelt_events` catch-up added.
+    - GPR is now the `.dta` file. The stored snapshot converts with `gpr_dta_to_jsonl.py` (15,274 days, last 10-26).
+    - The 4 GDELT doc-API headline queries are now OPTIONAL: their 429s go to `failed_optional` and no longer make the run exit 1.
+    - The live app starts the collector as a fresh process at 23:00 UTC → no restart.
+  - **Measured side fact:** Turbo 2's live app still runs its GDELT doc-API news backfill on the same address (child_runs 12:05 UTC, 63/365 days). This is why the doc API answers 429 here. Turbo 2 not touched.
+  - **Backfill** 2013-07-14 → 2026-10-24 started 12:22 UTC (~2 s/day).
+  - **Caveats:** GDELT is machine-coded (not verified like ACLED), and its source coverage grows over the years → any study uses shares or own-history z-scores only.
+  - **NEXT:** a spec-first study of whether words / actions (GDELT) or threats / acts (GPR) lead oil or gold, against the market's own pricing (Source Map §5b L3/L4).
