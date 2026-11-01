@@ -87,3 +87,22 @@ A checkpoint passes only if ALL hold:
 - Result `data/master/down_day_detector_study.json`.
 - MASTER §7 entry, memory topic (PASS or REFUTED with numbers).
 - If it passes, a separate step: the gate shown on the chart as information, then a live paper record. Each needs Ashraf's OK.
+
+## ADDENDUM A — 2026-11-01, before the first run (no number seen). Implementation details the spec left open; nothing in §1-§5 changes
+
+1. **Days** = the TradingView-exact 1D candles `kit('XAUUSD').build(M, '1D')` (t = session open 17:00 NY, `td` = trading date). ATR(14, 1D) = the Wilder ATR of the 14 days completed before the day.
+2. **F4 / F5 structure:**
+   - F4 = `makeAligned` stateAt('1H' | '4H', checkpoint), the live V1H state machine.
+   - F5 = `findChochs` on the 1D candles, the state of the last day whose `close_t` ≤ checkpoint.
+3. **F6 DXY:** rebuilt DXY 3m (`loadDxyBars('3m')`); the value at a time = close of the last 3m bar ending ≤ that time; change in % (log × 100).
+4. **F7 real 10y (DFII10):** a daily market series. Rule of the T1 extractor: an observation dated D is usable from D + 1 day (UTC midnight) ≤ the session open. Feature = the last usable value minus the one before it. Fetched once from FRED and cached under `data/research/down_day/raw/`.
+5. **F8 high-impact release later today:** `ff_history.jsonl` rows with impact = high (to 2026-10-16), plus `data/calendar/history.json` events (official times, all years) after that; count > 0 in [checkpoint, session close). Times only; no value is read.
+6. **Logistic fit:**
+   - IRLS (Newton steps, ≤ 50, tolerance 1e-8) with ridge λ = 1e-4 on the standardised features, for numerical stability only;
+   - missing feature → that TRAIN day is dropped from the fit; at prediction time → gate closed (counted).
+7. **Trades:**
+   - the no-wall rule moves unchanged into ONE shared file `scripts/lib/matrix_nowall.mjs`; `study_matrix_nowall_sell.mjs` imports it.
+   - Each NW signal is resolved ONCE with `resolveMatrixTrade` on the same 1m path slice as `matrixTrades`; a fast sequencer then applies one-trade-at-a-time (busy until exit + 1 min, unfinished trades dropped) for every gate, including the 1,000 random gates.
+   - **Audit 4:** the ungated sequence must equal the (fo) results (n and total $ per window) exactly.
+8. **Random gate:** per checkpoint, 1,000 draws of a random set of OOS days of the same size as the real gate's OOS open days (seed 7); statistic = OOS $/trade; the real gate must exceed the 95th percentile.
+9. **Day split:** TRAIN = days with session open < 2021-06-30 12:00 UTC; OOS = the rest up to 2026-10-30. The 2-year window (2024-10-10 →) is entirely OOS for the model.
