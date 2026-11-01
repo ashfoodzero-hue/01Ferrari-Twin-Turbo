@@ -143,4 +143,4 @@
 
 **Decision:** the T1 thin model is KEPT as the baseline until the full trees are compared (Ashraf).
 
-**Down-day detector DONE 11-01 (§7 (fr)): money REFUTED 0/4, classifier VOID.** NEXT: check the first automatic collector run (23:00 UTC), then Extreme Swing step 1 (COT + GLD history), then the bond-demand layer.
+**Down-day detector DONE 11-01 (§7 (fr)): money REFUTED 0/4, classifier VOID. Extreme Swing step 1 DONE (§7 (fs)): COT + GLD histories verified.** NEXT: check the first automatic collector run (23:00 UTC), then Extreme Swing steps 2-3 (`scripts/research/extreme_swing/study_extreme_swing.mjs`), then the bond-demand layer.
