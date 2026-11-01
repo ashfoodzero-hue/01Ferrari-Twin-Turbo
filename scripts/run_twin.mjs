@@ -105,7 +105,8 @@ const tick = (barT) => new Promise((resolve) => {
 let lastMacro = null, macroRunning = false, lastLevel = null, levelRunning = false
 let lastMatrixBar = null, matrixTicking = false, lastGamma = null, gammaRunning = false, lastCal = 0, calRunning = false, calRetry = false, lastFwd = null, fwdRunning = false
 let lastRec = null, recRunning = false, recNow = true   // futures + GLD recorder (record_futures.mjs, 2026-10-17); recNow = catch up at once after a start / wake (2026-10-29)
-let lastAudit = null, auditRunning = false   // daily recording audit (audit_recording.mjs, 2026-10-17)
+let lastCollect = null, collectRunning = false, collectCatchUp = true   // Source Map daily collector (research/macro_nowcast/collect_daily.mjs, 2026-11-01)
+let lastAudit = null, auditRunning = false, auditCatchUp = true   // daily recording audit (audit_recording.mjs, 2026-10-17); auditCatchUp = check once after a start / wake (2026-11-01)
 let lastLadder = null, ladderRunning = false   // ladder context, information only (ladder_tick.mjs, 2026-10-17)
 let lastHealth = null, healthRunning = false, lastVerify = null, verifyRunning = false, verifyRetryAt = 0   // data health watcher + weekly full check (2026-10-18)
 const TL_SYMS = ['XAUUSD', 'XAGUSD', 'DXY_ICE', 'WTI']   // major-trendline alerts (2026-10-18): minute tick + per-asset line refresh queue
@@ -128,7 +129,7 @@ for (;;) {
   const now = Date.now()
   // WAKE FROM SLEEP → the same history check as an app start (stream refill on reconnect + full reconcile 2 min later), logged in child_runs
   if (isWake(prevLoopAt, now)) { fs.appendFileSync(RUNS, JSON.stringify({ at: new Date(now).toISOString(), script: 'run_twin.mjs', event: 'wake', slept_min: Math.round((now - prevLoopAt) / 60000), asleep_from: new Date(prevLoopAt).toISOString() }) + '\n')
-    STARTED_AT = now; reconAttempted = false; lastReconcile = null; recNow = true }
+    STARTED_AT = now; reconAttempted = false; lastReconcile = null; recNow = true; auditCatchUp = true; collectCatchUp = true }
   prevLoopAt = now
   const lastClose = Math.floor(now / 900000) * 900000, last3m = Math.floor(now / 180000) * 180000
   ensureStream(); await ensureChart(); await ensureSettings(); ensureAwake()
@@ -235,9 +236,25 @@ for (;;) {
       if (err) fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'ladder_tick.mjs', exit: err.code ?? 'killed', out: String(stdout || '').slice(-300), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // DAILY RECORDING AUDIT (audit_recording.mjs, 2026-10-17): once per UTC day at/after 21:30 UTC (after the New York close) — every in-session
   // hole classified against Polygon (provider outage vs OUR miss), duplicates, staleness → data/master/recording_audit.json
-  if (mins >= 21 * 60 + 30 && lastAudit !== day && !auditRunning) { auditRunning = true; lastAudit = day
+  // CATCH-UP (2026-11-01, Ashraf: "yes fix the missed daily audit after the PC sleeps"): the PC slept over 21:30 UTC on 10-30 and 10-31 → AUDIT_OLD.
+  // Once after every start / wake: if the last audit (recording_audit.json `at`) is > 24 h old, run it now instead of waiting for 21:30.
+  let auditStale = false
+  if (auditCatchUp && !auditRunning) { auditCatchUp = false
+    const au = readJson(path.join(TURBO.master, 'recording_audit.json')), auT = Date.parse(au?.at ?? '')
+    auditStale = !Number.isFinite(auT) || now - auT > 24 * 3600000 }
+  if ((auditStale || (mins >= 21 * 60 + 30 && lastAudit !== day)) && !auditRunning) { auditRunning = true; if (!auditStale) lastAudit = day
     execFile(process.execPath, ['--max-old-space-size=4096', path.join(here, 'audit_recording.mjs'), '3'], { timeout: 15 * 60000, windowsHide: true }, (err, stdout, stderr) => { auditRunning = false
-      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'audit_recording.mjs', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-500), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'audit_recording.mjs', why: auditStale ? 'catch-up after start / wake (> 24 h old)' : 'daily 21:30', exit: err ? (err.code ?? 'killed') : 0, out: String(stdout || '').slice(-500), tail: String(stderr || '').slice(-300) }) + '\n') }) }
+  // SOURCE MAP DAILY COLLECTOR (2026-11-01, Ashraf: "yes build the daily collector"; docs/research/macro_nowcast/2026-11-01_SOURCE_MAP_v1.md §6):
+  // once per UTC day at/after 23:00 UTC, + once after a start / wake when its last run (daily/last_run.json) is > 24 h old. Research only (no signal
+  // reads it); failures stay in its own folder log (no Telegram, Ashraf Q3).
+  let collectStale = false
+  if (collectCatchUp && !collectRunning) { collectCatchUp = false
+    const lr = readJson(path.join(TURBO.root, 'data', 'research', 'macro_nowcast', 'daily', 'last_run.json')), lrT = Date.parse(lr?.at ?? '')
+    collectStale = !Number.isFinite(lrT) || now - lrT > 24 * 3600000 }
+  if ((collectStale || (mins >= 23 * 60 && lastCollect !== day)) && !collectRunning) { collectRunning = true; if (!collectStale) lastCollect = day; const t0 = Date.now()
+    execFile(process.execPath, ['--max-old-space-size=2048', path.join(here, 'research', 'macro_nowcast', 'collect_daily.mjs')], { timeout: 40 * 60000, windowsHide: true }, (err, stdout, stderr) => { collectRunning = false
+      fs.appendFileSync(RUNS, JSON.stringify({ at: new Date().toISOString(), script: 'research/macro_nowcast/collect_daily.mjs', why: collectStale ? 'catch-up after start / wake (> 24 h old)' : 'daily 23:00', exit: err ? (err.code ?? 'killed') : 0, ms: Date.now() - t0, limit_ms: 40 * 60000, out: String(stdout || '').slice(-400), tail: String(stderr || '').slice(-300) }) + '\n') }) }
   // PRE-OPEN READINESS (preopen_check.mjs, 2026-10-18; Ashraf approved "Pre-open readiness check"): 60 and 15 min before every open
   // (marketSession.next_open — New York hours + measured holidays). The 1-hour daily break gets only the T-15 run, which reports NOT READY only.
   if (now - sesAt >= 30000) { ses = marketOpen(now) ? null : marketSession(now); sesAt = now }

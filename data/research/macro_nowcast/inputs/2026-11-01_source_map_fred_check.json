@@ -658,5 +658,90 @@
   "end": "2026-10-29",
   "vintages": 3134,
   "first_vintage": "2014-04-17"
+ },
+ "WALCL": {
+  "ok": true,
+  "title": "Assets: Total Assets: Total Assets (Less Eliminations from Consolidation): Wednesday Level",
+  "freq": "W",
+  "start": "2002-12-18",
+  "end": "2026-10-28",
+  "vintages": 695,
+  "first_vintage": "2013-07-05"
+ },
+ "WTREGEN": {
+  "ok": true,
+  "title": "Liabilities and Capital: Liabilities: Deposits with F.R. Banks, Other Than Reserve Balances: U.S. Treasury, General Account: Week Average",
+  "freq": "W",
+  "start": "2002-12-18",
+  "end": "2026-10-28",
+  "vintages": 693,
+  "first_vintage": "2013-07-05"
+ },
+ "RRPONTSYD": {
+  "ok": true,
+  "title": "Overnight Reverse Repurchase Agreements: Treasury Securities Sold by the Federal Reserve in the Temporary Open Market Operations",
+  "freq": "D",
+  "start": "2003-02-07",
+  "end": "2026-10-30",
+  "vintages": 2634,
+  "first_vintage": "2016-03-28"
+ },
+ "WMTSECL1": {
+  "ok": true,
+  "title": "Memorandum Items: Custody Holdings: Marketable U.S. Treasury Securities: Wednesday Level",
+  "freq": "W",
+  "start": "2002-12-18",
+  "end": "2026-10-28",
+  "vintages": 695,
+  "first_vintage": "2013-07-05"
+ },
+ "BAMLH0A0HYM2": {
+  "ok": true,
+  "title": "ICE BofA US High Yield Index Option-Adjusted Spread",
+  "freq": "D",
+  "start": "2023-10-31",
+  "end": "2026-10-29",
+  "vintages": 786,
+  "first_vintage": "2023-10-31"
+ },
+ "DGS2": {
+  "ok": true,
+  "title": "Market Yield on U.S. Treasury Securities at 2-Year Constant Maturity, Quoted on an Investment Basis",
+  "freq": "D",
+  "start": "1976-06-01",
+  "end": "2026-10-29",
+  "vintages": 3288,
+  "first_vintage": "2013-07-01"
+ },
+ "DGS10": {
+  "ok": true,
+  "title": "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity, Quoted on an Investment Basis",
+  "freq": "D",
+  "start": "1962-01-02",
+  "end": "2026-10-29",
+  "vintages": 3287,
+  "first_vintage": "2013-07-01"
+ },
+ "SOFR": {
+  "ok": true,
+  "title": "Secured Overnight Financing Rate",
+  "freq": "D",
+  "start": "2018-04-03",
+  "end": "2026-10-29",
+  "vintages": 1895,
+  "first_vintage": "2019-03-29"
+ },
+ "THREEFYTP10": {
+  "ok": true,
+  "title": "Term Premium on a 10 Year Zero Coupon Bond",
+  "freq": "D",
+  "start": "1990-01-02",
+  "end": "2026-10-23",
+  "vintages": 364,
+  "first_vintage": "2016-05-27"
+ },
+ "FDHBFIN": {
+  "ok": false,
+  "why": "SyntaxError: Unexpected token '<', \"<?xml vers\"... is not valid JSON"
  }
 }

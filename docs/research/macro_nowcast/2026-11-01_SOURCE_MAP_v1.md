@@ -218,6 +218,41 @@ What CAN be measured is what the big holders publicly report they hold, with the
 
 ---
 
+## 5d. GAP CHECK (Ashraf 2026-11-01: "please check if we are missing anything else … make sure nothing is missing to reach our target")
+
+The question asked here: what moves gold / DXY that sections 1-5c did not cover? Every row was checked today. Proof: `inputs/2026-11-01_source_map_fred_check.json` and `scripts/research/macro_nowcast/probe_gap_sites.mjs`.
+
+| missing layer | why it matters for gold | sources | status (checked 2026-11-01) |
+|---|---|---|---|
+| **Dollar / Treasury demand** (Ashraf: "are people selling bonds or buying bonds") | weak foreign demand for Treasuries = loss of trust in the dollar = gold bid | Treasury auction results (bid-to-cover, indirect = foreign bidders), fiscaldata API | reachable; per-auction, dated → DATED |
+| | | Fed custody holdings for foreign officials, weekly, WMTSECL1 | DATED 2013-07 |
+| | | 10y term premium THREEFYTP10 (FRED) + NY Fed ACM file | FRED DATED 2016-05; ACM xls reachable (HIST) |
+| | | TIC foreign holdings (monthly; FF has the release) | FF DATED; detail **TO VERIFY** |
+| **Fed liquidity** | balance sheet − Treasury cash − reverse repo = "net liquidity"; drains hurt risk assets and can force gold selling | Fed total assets WALCL | DATED 2013-07 |
+| | | Treasury General Account WTREGEN | re-checked: DATED 2013-07 |
+| | | reverse repo RRPONTSYD | re-checked: DATED 2016-03 |
+| **Rates and the Fed path** | the real driver of gold vs the dollar | 2y DGS2 | DATED 2013-07 |
+| | | 10y DGS10 | re-checked: DATED 2013-07 |
+| | | SOFR | DATED 2019-03 |
+| | | fed-funds futures path | NOT FOUND free (Polygon futures search returned none for ZQ) → T1-F stays "description only" unless a free dated source is found |
+| **Credit stress** | a liquidity crisis makes gold fall first (the 09-25 scenario C) | high-yield spread BAMLH0A0HYM2 | re-checked: FRED now holds only 2023-10 → (ICE licence) = 3 years, not 13 |
+| **Gold flows / physical demand** | the "whales" Ashraf wants to see | COT history zip files (CFTC) | reachable → DATED (weekly, Friday) |
+| | | GLD holdings history | the CSV address now returns a PDF → **TO VERIFY** the new address |
+| | | World Gold Council (central-bank buying, ETF flows) | site reachable; data needs a free account → **KEY** |
+| | | India / China premiums | PAID or news only |
+| **Fed words** | the speeches move the rate path | Fed speeches RSS | reachable → collected daily (DATED from today) |
+| **Prediction markets** | the market's own % on war / peace / Fed | Polymarket, Kalshi | reachable → collected daily (DATED from today) |
+| **Social media** | crowd sentiment | Reddit | BLOCKED (403) |
+| | | X / Twitter API | PAID |
+| | | news tone instead | GDELT (collected daily) |
+| **Other metals and risk** | silver, copper, BTC as a rival store of value, equities | Polygon (silver already in the app; copper / BTC / SPX **TO VERIFY** on our plan) | partly DATED |
+| **Calendar effects** | options expiry, futures first-notice / roll, month / quarter end, Chinese New Year, Indian festivals | exchange calendars (public) | **TO VERIFY** |
+
+**Rule kept (Ashraf: "we need a real results not a guess"):**
+- a leaf counts only after a real fetch;
+- "FRED busy" is NOT "exists": all 4 busy rows were re-checked the same day (results above);
+- nothing is filled in.
+
 ## 6. Daily collector (design only; it would be a new background job → needs Ashraf's OK before it runs)
 
 - **One job, once a day** (proposed 23:00 UTC, after US and Europe close), research only, separate from the trading app: `scripts/research/macro_nowcast/collect_daily.mjs`.

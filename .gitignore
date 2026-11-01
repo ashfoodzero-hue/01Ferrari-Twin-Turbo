@@ -13,3 +13,4 @@ data/cache/dxy_1m.bin.*.tmp
 data/research/wave_reasons/*/
 data/research/macro_nowcast/inputs/raw/
 data/research/macro_nowcast/inputs/rows/
+data/research/macro_nowcast/daily/
