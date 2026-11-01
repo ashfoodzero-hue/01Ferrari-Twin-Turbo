@@ -1,0 +1,126 @@
+# HANDOFF: Ferrari Twin Turbo build-06 (written 2026-11-01, end of build-05)
+
+**Resume phrase: "Ferrari Twin Turbo build-06".** It runs skill `twin-turbo-continuity` §A:
+1. Read THIS file first.
+2. Then MASTER §7 (fk) … (fp), `docs/research/README.md`, `docs/DATA_CONTRACT.md`.
+3. Load `gold-measured-study`, plus `geopolitics-macro-analysis` (NEW skill, made this build).
+4. Check reality read-only.
+
+## 1. Live state (checked 2026-11-01, Sunday)
+
+- **The app is running:**
+  - run_twin, stream, chart, settings;
+  - restarted by the watchdog on wake 11-01 05:56 UTC;
+  - **nothing live was changed in build-05.**
+- **Health: WARN `AUDIT_OLD`.** The daily recording audit misses when the PC sleeps over 21:30 UTC (§7 (fj)). The fix ("catch up on wake when > 24 h old") still awaits Ashraf's OK + a restart.
+- **Rules carried over:**
+  - 92 % rule;
+  - E0 swing BUY Telegram ON;
+  - chart shows only the current SWING_E0 trade;
+  - all other books record silently.
+
+## 2. Done in build-05 (MASTER §7 letters; all research, nothing live)
+
+| § | what | key result |
+|---|---|---|
+| (fk) | T1 step 2 blind-nowcast sub-spec, plus addendum A (103e8ed) | `docs/research/macro_nowcast/2026-11-01_T1_step2_blind_nowcast_SPEC.md` |
+| (fl) | T1 extractor built + run, then paused | `t1_extract.mjs`, 4,605 schedule rows, 33 row files, Treasury DTS 155/155. Predictor + audits 2/3 NOT built. |
+| (fl) | **SOURCE MAP v1** (Ashraf: "a plan first, an approved map") | `docs/research/macro_nowcast/2026-11-01_SOURCE_MAP_v1.md`, see below |
+| (fm) | **EXTREME SWING study spec** | `docs/research/extreme_swing/2026-11-01_EXTREME_SWING_SPEC.md`, see below |
+| (fn) | **Friday 10-30 drop autopsy** | see below |
+| (fo) | **No-wall continuation SELL: REFUTED 0/4** | see below |
+| (fp) | **EARLY DOWN-DAY DETECTOR spec**, pre-registered, NOT run | `docs/DOWN_DAY_DETECTOR_SPEC.md` (e5dfa19) |
+
+**Source Map v1:**
+- Trees for CPI, NFP, Advance GDP and Core PCE, plus a world layer (oil, Europe, China, uncertainty, supply chains, dollar).
+- §5b geopolitics: a daily event ledger per country, WORDS vs ACTIONS; competing hypotheses; the market as the baseline (prediction markets, oil volatility OVX, gold volatility GVZ, the GPR index); no "%" shown until calibrated.
+- §5c big money: 13F (45-day lag), GLD holdings, COT, central-bank gold. The BlackRock / Rothschild premise was corrected.
+- Every leaf is status-coded, with proof in `inputs/2026-11-01_source_map_fred_check.json` (76 FRED series) and `2026-11-01_source_map_sites_check.txt`.
+
+**Extreme Swing study spec:**
+- Three trade types named: SCALP / SWING (1-2 days) / EXTREME SWING (weekly ZigZag k = 3 legs).
+- Tests: leg ends vs magnets (CME volume nodes, prior pivots, $100 levels, retracements), checked against the leg's own path; COT / ETF / yields / DXY / VIX / GPR at leg ends; exhaustion signs; pullback depths.
+- Holm K = 18; n < 30 = described only. **Not run.** Step 1 = verify COT and GLD-holdings dated history.
+
+**Friday 10-30 autopsy:**
+- Gold 4,021 → 3,875 (−$146), a steady slide.
+- Matrix SELL: all three conditions held on 35 bars (34 unique), the first at 23:06 UTC @ 4,014, **blocked ONLY by the ceiling-wall rule**.
+- IMPULSE_CONT recorded 3 SELLs (2 TARGET) and ML SELL 7, all silent under the 92 % rule.
+- The 4H macro magnet said SHORT all day.
+- V1H vetoed 35 floor BUYs correctly.
+
+**No-wall continuation SELL test** (`docs/MATRIX_NOWALL_SELL_SPEC.md`, `scripts/study_matrix_nowall_sell.mjs`, `data/master/matrix_nowall_sell_study.json`):
+
+| cell | period | trades | WR | $/trade | per day |
+|---|---|---|---|---|---|
+| NW | 2 y | 2,046 | 27 % | −$0.26 | 3.8 |
+| NW-1H | 2 y | 613 | 31 % | +$0.82 (TRAIN −$0.33, LB < 0) | 1.1 |
+| NW13 | 13 y | — | — | −$0.57 | — |
+| NW13-1H | 13 y | — | — | −$0.24 | — |
+
+- **Big DOWN days +$7.75/t vs big UP days −$5.95/t** (13 y: +$3.35 vs −$3.41).
+- Friday: 5 trades, +$84.
+- Audits clean: parity 34/34, 0 look-ahead, deterministic.
+
+## 3. Answers / refuted (never re-quote without context)
+
+- **The plain no-wall SELL is REFUTED 0/4.**
+  - It is a low-WR (27-31 %) high-R rule: judge it by money, never by the 92 % rule.
+  - Its value depends entirely on the DAY regime → the detector.
+- Everything from build-04 still holds (T0: news times a turn but never its direction; SELL E0 refuted 0/3; etc.).
+
+## 4. Ashraf's binding decisions (this build)
+
+1. **"An approved map first":** no T1 / T2 math until he approves Source Map v1. The T1 step-2 predictor is paused.
+2. **Extreme Swing is a separate module** (May rule); three trade types named.
+3. **PROACTIVE PARTNER (memory `feedback_proactive_partner_full_mind.md`):**
+   - bring my own full analysis + ranked recommendations unasked;
+   - say what he is missing;
+   - push back with measurements;
+   - watch DXY + bond demand (auctions, TIC, custody, term premium, gold vs real yields).
+4. **Standing:** nothing live without his OK; ask before restarts; no paid data; no buy levels or personal advice; the 92 % rule for alerts.
+
+## 5. NEXT (my ranked recommendation)
+
+1. **Build + run `scripts/study_down_day_detector.mjs`** exactly per `docs/DOWN_DAY_DETECTOR_SPEC.md`.
+   - Reuse `nwSignals` / `matrixTrades` from `scripts/study_matrix_nowall_sell.mjs` (parity audit 4 requires identical ungated trades).
+   - Use `makeAligned` stateAt for 1H / 4H, and `findChochs` on 1D.
+   - FRED DFII10 vintages via ALFRED (the `t1_extract.mjs` helpers show the as-of pattern).
+2. **Ashraf's open answers:**
+   - Source Map format OK?
+   - free keys (EIA, BEA, Census, ACLED; BLS optional);
+   - daily-collector OK;
+   - keep the T1 thin model as the baseline or drop it;
+   - the audit-on-wake fix + restart.
+3. **Extreme Swing step 1:** verify COT / GLD dated history, then the study.
+4. **Add a dollar / bond-demand layer to the Source Map** (Treasury auctions via the fiscaldata API, TIC, custody holdings, term premium).
+5. **Source Map trees for the other 81 releases + the Fed** (after approval).
+
+## 6. Open items (carried)
+
+- Audit-on-wake fix (needs OK + restart).
+- BEA confirmation of the 10-29 actuals.
+- N2 spike-BUY paper test (awaiting OK).
+- V1H review.
+- Re-measure matrix_trades studies from before 10-26.
+- TradingView recheck of the swing tables for 10-15 / 16.
+- Untracked, not this build's, left as is: `scripts/diag_scalp_sell_ml_weekday.mjs`, `docs/research/charts/`.
+
+## 7. Where everything is
+
+| what | where |
+|---|---|
+| Source Map | `docs/research/macro_nowcast/2026-11-01_SOURCE_MAP_v1.md` (+ verify / probe scripts in `scripts/research/macro_nowcast/`) |
+| T1 step 2 | spec `docs/research/macro_nowcast/2026-11-01_T1_step2_blind_nowcast_SPEC.md`; inputs `data/research/macro_nowcast/inputs/` (rows + raw gitignored; MANIFEST committed) |
+| Extreme Swing | `docs/research/extreme_swing/` |
+| No-wall SELL | `docs/MATRIX_NOWALL_SELL_SPEC.md`, `scripts/study_matrix_nowall_sell.mjs`, `data/master/matrix_nowall_sell_study.json` |
+| Down-day detector | `docs/DOWN_DAY_DETECTOR_SPEC.md` |
+| New skill | `C:\Users\Ashraf\.claude\skills\geopolitics-macro-analysis\SKILL.md` |
+
+## 8. Working rules (unchanged)
+
+- Spec before numbers; an audit failure voids the run.
+- Measure, never infer.
+- Explicit-path commits as Ashraf; never `git add -A`.
+- Edit tool for code; heavy runs in the background.
+- One fresh chat per step.
