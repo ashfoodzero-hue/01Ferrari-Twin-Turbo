@@ -42,18 +42,20 @@ const fin = (b) => { const { gs, ts, ...o } = b; return { ...o, g: b.n ? +(gs / 
 /** Aggregate one day's export text (pure: used by the smoke test). */
 export function aggregateDay(day, text) {
   const ymd = day.replaceAll('-', ''), freshFrom = +new Date(Date.parse(day) - 7 * 86400000).toISOString().slice(0, 10).replaceAll('-', '')
-  const world = blank(), by = {}, dy = {}; let rows = 0, bad = 0, stale = 0, other_day = 0
+  const world = blank(), by = {}, dy = {}; let rows = 0, bad = 0, stale = 0, other_day = 0, centuryFix = 0
   for (const line of text.split('\n')) { if (!line) continue; rows++
     const f = line.split('\t'); if (f.length !== 58) { bad++; continue }
     if (f[C.ADDED] !== ymd) { other_day++; continue }
-    if (+f[C.SQLDATE] < freshFrom) { stale++; continue }
+    // GDELT century bug (measured 2026-11-01): files 2020-01-01…05 write SQLDATE 1920MMDD for 2020MMDD (20200103: 153,043 of 157,403 rows) → +100 years
+    let sql = +f[C.SQLDATE]; if (Math.floor(sql / 10000) === Math.floor(+ymd / 10000) - 100) { sql += 1000000; centuryFix++ }
+    if (sql < freshFrom) { stale++; continue }
     const quad = +f[C.QUAD], gold = +f[C.GOLD], art = +f[C.ART] || 0, tone = +f[C.TONE] || 0, root = f[C.ROOT]
     if (!(quad >= 1 && quad <= 4) || !Number.isFinite(gold)) { bad++; continue }
     add(world, root, quad, gold, art, tone)
     const g = FIPS[f[C.GEO]]; if (g) add(by[g] ??= blank(), root, quad, gold, art, tone)
     const a1 = f[C.A1C], a2 = f[C.A2C]
     if (quad >= 3 && ISO.has(a1) && ISO.has(a2) && a1 !== a2) add(dy[`${a1}>${a2}`] ??= blank(), root, quad, gold, art, tone) }
-  return { day, rows, bad, stale, other_day, world: fin(world), by_country: Object.fromEntries(Object.entries(by).sort().map(([k, v]) => [k, fin(v)])),
+  return { day, rows, bad, stale, other_day, ...(centuryFix ? { century_fix: centuryFix } : {}), world: fin(world), by_country: Object.fromEntries(Object.entries(by).sort().map(([k, v]) => [k, fin(v)])),
     dyads: Object.fromEntries(Object.entries(dy).sort().map(([k, v]) => [k, fin(v)])) } }
 
 async function fetchDay(day) {
@@ -90,6 +92,10 @@ export async function catchUp({ from, to, par = 4 } = {}) {
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   const arg = (k) => (process.argv.find((a) => a.startsWith(`--${k}=`)) ?? '').split('=')[1]
+  if (arg('redo')) {   // --redo=YYYY-MM-DD,… re-fetch stored days after a builder fix (appended; last write wins)
+    let bad = 0; for (const d of arg('redo').split(',')) { const r = await fetchDay(d); if (r.error) { bad++; console.log(d, r.error); continue }
+      fs.appendFileSync(OUT, JSON.stringify(r) + '\n'); console.log(d, r.missing ? 'missing' : `rows ${r.rows} stale ${r.stale} century_fix ${r.century_fix ?? 0} world ${r.world.n}`) }
+    process.exit(bad ? 1 : 0) }
   const sum = await catchUp({ from: arg('from'), to: arg('to'), par: +(arg('par') ?? 4) })
   console.log(JSON.stringify(sum))
   process.exit(Object.keys(sum.errors).length ? 1 : 0) }

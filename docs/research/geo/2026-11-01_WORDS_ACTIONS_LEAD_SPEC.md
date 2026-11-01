@@ -190,3 +190,24 @@ Any change is a dated ADDENDUM below, written before the numbers it affects.
   3. The z-score windows simply have fewer days. The "≥ 60 of the previous 90" rule decides, so the first days after the hole stay valid, with 72 or more stored days.
   4. Anchor 2025-06-13 (Israel strikes Iran) is tested on day d only, because d+1 and d+2 are missing. It counts as a miss if zACTS < 2 on 06-13. The pass mark stays 8 of 9.
   5. The report states that OOS has no GDELT data for the war's 18 days. This is a known blind spot in Part B, the same one the live collector would have had.
+
+## ADDENDUM B — 2026-11-01, while building the study script, before any Part 0 / A / B number
+
+1. **GDELT century bug, measured and fixed in the builder.**
+   - The daily files for 2020-01-01 … 2020-01-05 write the event date as 1920MMDD instead of 2020MMDD. For 20200103 that is 153,043 of 157,403 rows. So 99 % of those days' events were wrongly counted as stale.
+   - `gdelt_events.mjs` now adds 100 years when the event-date year equals the file year − 100 (`century_fix` on the row). The 5 days were re-fetched.
+   - No other day has a stale share above 10 % (scan of all 4,834 days).
+   - This touches the 2020-01-03 anchor (Soleimani). The fix was decided from the raw file, before any z-score was computed.
+2. **Part A windows.**
+   - Target A7 / A30 = the mean zACTS over the stored days of d+1 … d+h. It needs at least half of them (4 of 7, 15 of 30).
+   - Controls: zACTS(d) must exist; the mean of d−6 … d needs ≥ 4 days, and d−29 … d needs ≥ 15.
+3. **Bootstrap blocks** are fixed calendar blocks (epoch weeks, starting Thursday) of 7 days for 1-day targets and 14 days for 5-, 7- and 30-day targets. TRAIN and OOS are bootstrapped separately.
+4. **Week shuffle (G0.5):**
+   - The rows of each 7-day block take the predictor values of a randomly chosen block, in order, cycled when the counts differ.
+   - Each shuffle run applies the full pass rule, including Holm.
+   - The Brent cells are described only, so they are left out of the shuffle count.
+5. **Close times used for the look-ahead assert:**
+   - gold: the daily candle's last minute + 1;
+   - WTI and Brent spot: 14:30 New York;
+   - GVZ / OVX / VIX: 16:15 New York.
+6. **G0.4** (`smoke_ny_candles`) runs as its own command. Its result is recorded next to Part 0.

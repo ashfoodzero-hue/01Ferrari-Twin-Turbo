@@ -23,6 +23,10 @@ await ok('fresh / stale / other-day / bad rows are separated; only fresh rows ar
   const d = aggregateDay('2026-10-31', t)
   assert.deepEqual([d.rows, d.stale, d.other_day, d.bad, d.world.n], [6, 1, 1, 2, 2])   // 10-24 = day − 7 is fresh, 10-23 stale
 })
+await ok('century bug: SQLDATE 1920MMDD in a 2020 file is read as 2020MMDD (fresh); a real one-year-old 2019 event stays stale', () => {
+  const d = aggregateDay('2020-01-03', [row({ sql: '19200103', added: '20200103' }), row({ sql: '19200102', added: '20200103' }), row({ sql: '20190103', added: '20200103' })].join('\n'))
+  assert.deepEqual([d.world.n, d.stale, d.century_fix], [2, 1, 2])
+})
 await ok('country by ActionGeo FIPS → ISO 3 (Gaza + West Bank = PSE); off-list places count in world only', () => {
   const d = aggregateDay('2026-10-31', [row({ geo: 'GZ' }), row({ geo: 'WE', quad: 3, root: '13' }), row({ geo: 'FR' }), row({ geo: 'IR', quad: 1, root: '04', gold: 4, art: 6, tone: 1 })].join('\n'))
   assert.deepEqual(Object.keys(d.by_country), ['IRN', 'PSE'])
