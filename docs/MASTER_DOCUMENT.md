@@ -1385,3 +1385,7 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Backfill** 2013-07-14 → 2026-10-24 started 12:22 UTC (~2 s/day).
   - **Caveats:** GDELT is machine-coded (not verified like ACLED), and its source coverage grows over the years → any study uses shares or own-history z-scores only.
   - **NEXT:** a spec-first study of whether words / actions (GDELT) or threats / acts (GPR) lead oil or gold, against the market's own pricing (Source Map §5b L3/L4).
+- **(fy) 2026-11-01 — SPEC pre-registered: "WORDS vs ACTIONS: do they lead oil and gold?" (Ashraf: "Yes, write the spec").** `docs/research/geo/2026-11-01_WORDS_ACTIONS_LEAD_SPEC.md`. No study number exists yet.
+  - Part 0 gates (coverage ≥ 98 %, 8/9 dated anchor events seen by zACTS/zPOSTURE, FRED-vs-Polygon WTI corr ≥ 0.90, look-ahead asserts + week-shuffle, freeze commit) → Part A words → actions inside a region (K = 24) and Part B GDELT → gold / oil / GVZ / OVX beyond the market (own vol, GVZ/OVX/VIX) AND GPR threat/act (K = 128).
+  - Pass = TRAIN p ≤ 0.05, same sign OOS (2022 →), frozen-TRAIN OOS ΔMSE > 0 surviving Holm, still > 0 without the top 1 % days, ≥ 500 OOS obs. A size pass = CONTEXT only; any trade use = new spec + money test + 92 % rule.
+  - NEXT: when the GDELT backfill finishes, build `study_words_actions.mjs` + `smoke_words_actions.mjs`, run Part 0 first.

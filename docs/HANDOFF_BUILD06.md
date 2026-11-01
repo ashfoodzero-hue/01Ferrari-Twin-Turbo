@@ -181,3 +181,4 @@
 - **Measured:** Turbo 2's live app still runs its GDELT doc-API news backfill (child_runs 12:05 UTC, 63/365 days) on the same address → it shares the doc-API budget. Not touched (Turbo 2 = separate app).
 - **Backfill:** 2013-07-14 → 2026-10-24 started 12:22 UTC (~2 s/day, ~3 h). Check: `wc -l data/research/geo/gdelt_events_daily.jsonl` ≈ 4,860 rows, and no `error` rows.
 - **NEXT:** a pre-registered study "do GDELT words / actions (or GPR acts / threats) lead oil or gold?" — spec FIRST, controls vs the market's own pricing (Source Map §5b L3/L4).
+- **Spec written (MASTER §7 (fy)):** `docs/research/geo/2026-11-01_WORDS_ACTIONS_LEAD_SPEC.md` — Part 0 gates → Part A words → actions (K 24) → Part B GDELT → gold/oil/GVZ/OVX beyond market + GPR (K 128). Next: study script after the backfill finishes; Part 0 first.
