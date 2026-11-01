@@ -144,3 +144,31 @@
 **Decision:** the T1 thin model is KEPT as the baseline until the full trees are compared (Ashraf).
 
 **Down-day detector DONE 11-01 (§7 (fr)): money REFUTED 0/4, classifier VOID. Extreme Swing step 1 DONE (§7 (fs)): COT + GLD histories verified.** NEXT: check the first automatic collector run (23:00 UTC), then Extreme Swing steps 2-3 (`scripts/research/extreme_swing/study_extreme_swing.mjs`), then the bond-demand layer.
+
+## 10. UPDATE 2026-11-01 (late): Extreme Swing steps 2-3 + silver + warning aftermath (MASTER §7 (ft) (fu) (fv) (fw)); all research, nothing live
+
+| letter | what | result |
+|---|---|---|
+| (ft) | `scripts/research/extreme_swing/study_extreme_swing.mjs` (spec addendum B before numbers): 34 gold weekly legs since 2013 | **VOID** by the pre-registered audit. Measured cause = audit design (the B2 shuffle put 48.5 % of ends on the donor leg's own pivot; the B3 placebo hit 6.1 % vs a 5 % knife-edge). Descriptive: NO magnets (volume nodes / prior pivots / retracements sit FARTHER from ends than random: 0.71 / 0.70 / 0.84); no positioning / flow lift (COT best p 0.086); pullbacks median 47 % of the leg; the current down leg from 4,696.56 is 3.35 ATR / 9 weeks |
+| (fu) | Silver replication (addendum C) of D1 RSI divergence + D2 range ≥ 2 ATR; shared `extreme_lib.mjs` (gold re-run byte-identical) | **both PASS** on silver vs fair new-extreme controls (×3.2 / ×3.3) |
+| (fv) | `docs/research/extreme_swing/2026-11-01_WARNING_AFTERMATH_SPEC.md` (+ addendum A) | pre-registered |
+| (fw) | `study_warning_aftermath.mjs` (`causalWarnings` in `extreme_lib.mjs`) | **Part 1 CAUSAL:** D1 PASS on gold (34.8 % vs 12.9 %) and silver (41.7 % vs 16.9 %); ANY PASS; D2 FAIL. **Part 2 (exit / tighten at a warning vs the same action at any new extreme): FAIL 0/6.** Warnings are early (gold median 4 weeks to the end); a false warning still runs a median 2 ATR. Counter-trade WR 31-44 %, ≈ 0 ATR. Audits clean |
+
+**Binding:**
+- D1 = a CONTEXT flag only ("the end is more likely near"): no exit rule, no trade, no alert (92 % rule).
+- Never call a level a "magnet" or a "whale level": measured, none.
+
+**Current (data to 2026-10-30):**
+- Gold: down leg from 4,696.56; the weeks of 10-18 and 10-25 were new lows with NO warning.
+- Silver: down leg from 121.618, no warning.
+
+**NEXT (ranked):**
+1. Check the first automatic daily-collector run (≥ 23:00 UTC 11-01) in `data/master/child_runs.jsonl` + `data/research/macro_nowcast/daily/last_run.json`.
+2. T1 step 2 blind nowcast: predictor + audits 2/3 (the extractor is done; T1 math was paused for the Source Map).
+3. The dollar / Treasury-demand layer (auctions, custody, term premium) in the Source Map + collector.
+4. Optional, needs Ashraf's OK (live change): a record-only weekly D1 context logger.
+5. Source Map trees for the other 81 releases + the Fed (after map approval).
+
+**Ashraf actions pending:**
+- activate the BLS key (email link);
+- add ACLED_EMAIL / ACLED_PASSWORD to `.env`.
