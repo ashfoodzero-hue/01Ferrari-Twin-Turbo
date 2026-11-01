@@ -159,3 +159,22 @@ Script `scripts/research/extreme_swing/study_extreme_swing.mjs`. Every choice be
 11. **Robustness (beside, not in Holm):** 1D legs with |Δ| ≥ 10 × ATR(14, 1D) at the start. B2-B4 only, the cut at the end DAY's open, distances in ATR(14, 1D).
 12. **Leave-one-era-out:** B mean percentile and C / D ratios are reported for legs (weeks) of 2013-2019 and 2020 → separately. Opposite sides of 0.5 / 1 between eras → labelled **era-dependent**.
 13. **Holm family K = 18:** B1-B4 × ALL / MODERN (8), C1-C6 ALL (6), D1-D4 ALL (4). MODERN C / D are reported beside.
+
+## ADDENDUM C — 2026-11-01, independent replication on SILVER of the two D hypotheses (written BEFORE any silver number)
+
+**Ashraf:** "Yes, test on silver". The gold run (§7 (ft)) is VOID, so its D1 / D2 lifts are only hypotheses. This addendum tests them once on an independent asset.
+
+1. **Data:** XAGUSD 1m, `kit('XAGUSD')` (its own measured session + reopen clamp), `1W` candles, `markIncomplete` breaks, `zigzag(k = 3, atrLen = 14)`. These are exactly the gold rules (B.1, B.3).
+2. **Pivot audit (void if not equal):** rebuilt pivots = `docs/swing_book/xag_1y_swings/1W.csv` (type, candle_open, price to 0.001).
+3. **One place for the rules:** the leg builder and the D features move unchanged to `scripts/research/extreme_swing/extreme_lib.mjs`. The gold study is re-run and must reproduce its D table exactly (refactor-then-diff), or the replication waits.
+4. **Tested items:** D1 (weekly RSI divergence) and D2 (range ≥ 2 × ATR of the prior candle) only, with the definitions of B.9 unchanged.
+5. **PRIMARY comparison:** end weeks vs FAIR controls, i.e. in-leg weeks that were also a new in-leg extreme (every end week is one). The comparison with all in-leg weeks is reported beside.
+6. **Pass (each item):**
+   - ratio > 1;
+   - Holm K = 2 at α 0.05 on the `compareRates` two-sided p;
+   - n_end ≥ 30;
+   - the same sign (ratio > 1) in the 2013-2019 and 2020 → legs.
+
+   If n_end < 30, the item is DESCRIBED ONLY.
+7. **Reported:** n, rates, ratio, p, precision, recall, the era split, and gold's numbers beside.
+8. **What a pass means:** a measured exhaustion WARNING on two metals. It is not a trade rule and not an alert. With precision near 30 %, it stays under the 92 % rule; anything live needs Ashraf's OK and a forward test.
