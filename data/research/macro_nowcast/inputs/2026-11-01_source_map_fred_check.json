@@ -1,0 +1,662 @@
+{
+ "GASREGW": {
+  "ok": true,
+  "title": "US Regular All Formulations Gas Price",
+  "freq": "W",
+  "start": "1990-08-20",
+  "end": "2026-10-26",
+  "vintages": 694,
+  "first_vintage": "2013-07-01"
+ },
+ "DGASNYH": {
+  "ok": true,
+  "title": "Conventional Gasoline Prices: New York Harbor, Regular",
+  "freq": "D",
+  "start": "1986-06-02",
+  "end": "2026-10-27",
+  "vintages": 687,
+  "first_vintage": "2013-07-03"
+ },
+ "DHHNGSP": {
+  "ok": true,
+  "title": "Henry Hub Natural Gas Spot Price",
+  "freq": "D",
+  "start": "1997-01-07",
+  "end": "2026-10-27",
+  "vintages": 613,
+  "first_vintage": "2014-12-10"
+ },
+ "DJFUELUSGULF": {
+  "ok": true,
+  "title": "Kerosene-Type Jet Fuel Prices: U.S. Gulf Coast",
+  "freq": "D",
+  "start": "1990-04-02",
+  "end": "2026-10-27",
+  "vintages": 687,
+  "first_vintage": "2013-07-03"
+ },
+ "DCOILWTICO": {
+  "ok": true,
+  "title": "Crude Oil Prices: West Texas Intermediate (WTI) - Cushing, Oklahoma",
+  "freq": "D",
+  "start": "1986-01-02",
+  "end": "2026-10-27",
+  "vintages": 688,
+  "first_vintage": "2013-07-03"
+ },
+ "DCOILBRENTEU": {
+  "ok": true,
+  "title": "Crude Oil Prices: Brent - Europe",
+  "freq": "D",
+  "start": "1987-05-20",
+  "end": "2026-10-27",
+  "vintages": 690,
+  "first_vintage": "2013-07-03"
+ },
+ "CUSR0000SAF11": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Food at Home in U.S. City Average",
+  "freq": "M",
+  "start": "1952-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SEFV": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Food Away from Home in U.S. City Average",
+  "freq": "M",
+  "start": "1953-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SEHA": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Rent of Primary Residence in U.S. City Average",
+  "freq": "M",
+  "start": "1981-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SEHC": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Owners' Equivalent Rent of Residences in U.S. City Average",
+  "freq": "M",
+  "start": "1983-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SETA01": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: New Vehicles in U.S. City Average",
+  "freq": "M",
+  "start": "1953-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SETA02": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Used Cars and Trucks in U.S. City Average",
+  "freq": "M",
+  "start": "1953-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SETG01": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Airline Fares in U.S. City Average",
+  "freq": "M",
+  "start": "1989-01-01",
+  "end": "2026-09-01",
+  "vintages": 166,
+  "first_vintage": "2013-09-17"
+ },
+ "CUSR0000SAH1": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Shelter in U.S. City Average",
+  "freq": "M",
+  "start": "1953-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "PPIFIS": {
+  "ok": true,
+  "title": "Producer Price Index by Commodity: Final Demand",
+  "freq": "M",
+  "start": "2009-11-01",
+  "end": "2026-09-01",
+  "vintages": 158,
+  "first_vintage": "2014-02-19"
+ },
+ "WPU5111": {
+  "ok": true,
+  "title": "Producer Price Index by Commodity: Health Care Services: Outpatient Care (Partial)",
+  "freq": "M",
+  "start": "2009-06-01",
+  "end": "2026-09-01",
+  "vintages": 139,
+  "first_vintage": "2015-03-13"
+ },
+ "PCU5239252392": {
+  "ok": true,
+  "title": "Producer Price Index by Industry: Portfolio Management",
+  "freq": "M",
+  "start": "2003-12-01",
+  "end": "2022-12-01",
+  "vintages": 93,
+  "first_vintage": "2015-04-14"
+ },
+ "ADPWNUSNERSA": {
+  "ok": true,
+  "title": "Total Nonfarm Private Payroll Employment",
+  "freq": "W",
+  "start": "2010-01-09",
+  "end": "2026-08-15",
+  "vintages": 50,
+  "first_vintage": "2022-08-31"
+ },
+ "IHLIDXUS": {
+  "ok": true,
+  "title": "Job Postings on Indeed in the United States",
+  "freq": "D",
+  "start": "2020-02-01",
+  "end": "2026-10-23",
+  "vintages": 175,
+  "first_vintage": "2023-02-17"
+ },
+ "JTSJOL": {
+  "ok": true,
+  "title": "Job Openings: Total Nonfarm",
+  "freq": "M",
+  "start": "2000-12-01",
+  "end": "2026-08-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-09"
+ },
+ "USGOVT": {
+  "ok": true,
+  "title": "All Employees, Government",
+  "freq": "M",
+  "start": "1939-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-05"
+ },
+ "USCONS": {
+  "ok": true,
+  "title": "All Employees, Construction",
+  "freq": "M",
+  "start": "1939-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-05"
+ },
+ "USPRIV": {
+  "ok": true,
+  "title": "All Employees, Total Private",
+  "freq": "M",
+  "start": "1939-01-01",
+  "end": "2026-09-01",
+  "vintages": 160,
+  "first_vintage": "2013-07-05"
+ },
+ "CES0500000003": {
+  "ok": true,
+  "title": "Average Hourly Earnings of All Employees, Total Private",
+  "freq": "M",
+  "start": "2006-03-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-05"
+ },
+ "AWHAETP": {
+  "ok": true,
+  "title": "Average Weekly Hours of All Employees, Total Private",
+  "freq": "M",
+  "start": "2006-03-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-05"
+ },
+ "GDPNOW": {
+  "ok": true,
+  "title": "GDPNow",
+  "freq": "Q",
+  "start": "2011-07-01",
+  "end": "2026-10-01",
+  "vintages": 821,
+  "first_vintage": "2016-05-17"
+ },
+ "STLENI": {
+  "ok": true,
+  "title": "St. Louis Fed Economic News Index: Real GDP Nowcast",
+  "freq": "Q",
+  "start": "2013-04-01",
+  "end": "2026-07-01",
+  "vintages": 426,
+  "first_vintage": "2017-02-10"
+ },
+ "NEWORDER": {
+  "ok": true,
+  "title": "Manufacturers' New Orders: Nondefense Capital Goods Excluding Aircraft",
+  "freq": "M",
+  "start": "1992-02-01",
+  "end": "2026-09-01",
+  "vintages": 326,
+  "first_vintage": "2013-07-02"
+ },
+ "ANXAVS": {
+  "ok": true,
+  "title": "Manufacturers' Value of Shipments: Nondefense Capital Goods Excluding Aircraft",
+  "freq": "M",
+  "start": "1992-01-01",
+  "end": "2026-09-01",
+  "vintages": 326,
+  "first_vintage": "2013-07-02"
+ },
+ "TTLCONS": {
+  "ok": true,
+  "title": "Total Construction Spending: Total Construction in the United States",
+  "freq": "M",
+  "start": "1993-01-01",
+  "end": "2026-08-01",
+  "vintages": 156,
+  "first_vintage": "2013-07-01"
+ },
+ "HOUST": {
+  "ok": true,
+  "title": "New Privately-Owned Housing Units Started: Total Units",
+  "freq": "M",
+  "start": "1959-01-01",
+  "end": "2026-09-01",
+  "vintages": 156,
+  "first_vintage": "2013-07-17"
+ },
+ "AITGCBS": {
+  "ok": true,
+  "title": "Advance U.S. International Trade in Goods: Balance",
+  "freq": "M",
+  "start": "2026-09-01",
+  "end": "2026-09-01",
+  "vintages": 100,
+  "first_vintage": "2017-11-28"
+ },
+ "MTSO133FMS": {
+  "ok": true,
+  "title": "Total Federal Outlays",
+  "freq": "M",
+  "start": "1980-10-01",
+  "end": "2026-09-01",
+  "vintages": 133,
+  "first_vintage": "2015-09-11"
+ },
+ "MTSR133FMS": {
+  "ok": true,
+  "title": "Total Federal Receipts",
+  "freq": "M",
+  "start": "1980-10-01",
+  "end": "2026-09-01",
+  "vintages": 133,
+  "first_vintage": "2015-09-11"
+ },
+ "PCEPI": {
+  "ok": true,
+  "title": "Personal Consumption Expenditures: Chain-type Price Index",
+  "freq": "M",
+  "start": "1959-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-08-02"
+ },
+ "PCEPILFE": {
+  "ok": true,
+  "title": "Personal Consumption Expenditures Excluding Food and Energy (Chain-Type Price Index)",
+  "freq": "M",
+  "start": "1959-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-08-02"
+ },
+ "PCE": {
+  "ok": true,
+  "title": "Personal Consumption Expenditures",
+  "freq": "M",
+  "start": "1959-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-08-02"
+ },
+ "RSAFS": {
+  "ok": true,
+  "title": "Advance Retail Sales: Retail Trade and Food Services",
+  "freq": "M",
+  "start": "1992-01-01",
+  "end": "2026-09-01",
+  "vintages": 167,
+  "first_vintage": "2013-07-15"
+ },
+ "TOTALSA": {
+  "ok": true,
+  "title": "Total Vehicle Sales",
+  "freq": "M",
+  "start": "1976-01-01",
+  "end": "2026-09-01",
+  "vintages": 251,
+  "first_vintage": "2013-07-03"
+ },
+ "BUSINV": {
+  "ok": true,
+  "title": "Total Business Inventories",
+  "freq": "M",
+  "start": "1992-01-01",
+  "end": "2026-08-01",
+  "vintages": 160,
+  "first_vintage": "2013-07-15"
+ },
+ "BOPGSTB": {
+  "ok": true,
+  "title": "Trade Balance: Goods and Services, Balance of Payments Basis",
+  "freq": "M",
+  "start": "1992-01-01",
+  "end": "2026-08-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-03"
+ },
+ "IR": {
+  "ok": true,
+  "title": "Import Price Index (End Use): All Commodities",
+  "freq": "M",
+  "start": "1982-09-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-11"
+ },
+ "MANEMP": {
+  "ok": true,
+  "title": "All Employees, Manufacturing",
+  "freq": "M",
+  "start": "1939-01-01",
+  "end": "2026-09-01",
+  "vintages": 159,
+  "first_vintage": "2013-07-05"
+ },
+ "SP500": {
+  "ok": true,
+  "title": "S&P 500",
+  "freq": "D",
+  "start": "2016-10-31",
+  "end": "2026-10-28",
+  "vintages": 0,
+  "first_vintage": null
+ },
+ "USEPUINDXD": {
+  "ok": true,
+  "title": "Economic Policy Uncertainty Index for United States",
+  "freq": "D",
+  "start": "1985-01-01",
+  "end": "2026-10-29",
+  "vintages": 3139,
+  "first_vintage": "2014-03-27"
+ },
+ "CP0000EZ19M086NEST": {
+  "ok": true,
+  "title": "Harmonized Index of Consumer Prices: Total for Euro Area (19 Countries)",
+  "freq": "M",
+  "start": "1996-12-01",
+  "end": "2026-09-01",
+  "vintages": 136,
+  "first_vintage": "2015-02-24"
+ },
+ "ECBDFR": {
+  "ok": true,
+  "title": "ECB Deposit Facility Rate for Euro Area",
+  "freq": "D",
+  "start": "1999-01-01",
+  "end": "2026-10-30",
+  "vintages": 1396,
+  "first_vintage": "2021-03-11"
+ },
+ "DEXCHUS": {
+  "ok": true,
+  "title": "Chinese Yuan Renminbi to U.S. Dollar Spot Exchange Rate",
+  "freq": "D",
+  "start": "1981-01-02",
+  "end": "2026-10-23",
+  "vintages": 658,
+  "first_vintage": "2014-03-18"
+ },
+ "VIXCLS": {
+  "ok": true,
+  "title": "CBOE Volatility Index: VIX",
+  "freq": "D",
+  "start": "1990-01-02",
+  "end": "2026-10-29",
+  "vintages": 3335,
+  "first_vintage": "2013-07-01"
+ },
+ "DTWEXBGS": {
+  "ok": true,
+  "title": "Nominal Broad U.S. Dollar Index",
+  "freq": "D",
+  "start": "2006-01-02",
+  "end": "2026-10-23",
+  "vintages": 404,
+  "first_vintage": "2019-02-04"
+ },
+ "T5YIE": {
+  "ok": true,
+  "title": "5-Year Breakeven Inflation Rate",
+  "freq": "D",
+  "start": "2003-01-02",
+  "end": "2026-10-30",
+  "vintages": 3157,
+  "first_vintage": "2014-01-27"
+ },
+ "T10YIE": {
+  "ok": true,
+  "title": "10-Year Breakeven Inflation Rate",
+  "freq": "D",
+  "start": "2003-01-02",
+  "end": "2026-10-30",
+  "vintages": 3157,
+  "first_vintage": "2014-01-27"
+ },
+ "DFII10": {
+  "ok": true,
+  "title": "Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity, Quoted on an Investment Basis, Inflation-Indexed",
+  "freq": "D",
+  "start": "2003-01-02",
+  "end": "2026-10-29",
+  "vintages": 3291,
+  "first_vintage": "2013-07-01"
+ },
+ "CCSA": {
+  "ok": true,
+  "title": "Continued Claims (Insured Unemployment)",
+  "freq": "W",
+  "start": "1967-01-07",
+  "end": "2026-10-17",
+  "vintages": 686,
+  "first_vintage": "2013-07-03"
+ },
+ "ICSA": {
+  "ok": true,
+  "title": "Initial Claims",
+  "freq": "W",
+  "start": "1967-01-07",
+  "end": "2026-10-24",
+  "vintages": 690,
+  "first_vintage": "2013-07-03"
+ },
+ "IC4WSA": {
+  "ok": true,
+  "title": "4-Week Moving Average of Initial Claims",
+  "freq": "W",
+  "start": "1967-01-28",
+  "end": "2026-10-24",
+  "vintages": 690,
+  "first_vintage": "2013-07-03"
+ },
+ "PRRESCONS": {
+  "ok": true,
+  "title": "Total Private Construction Spending: Residential in the United States",
+  "freq": "M",
+  "start": "1993-01-01",
+  "end": "2026-08-01",
+  "vintages": 156,
+  "first_vintage": "2013-07-01"
+ },
+ "CUSR0000SACL1E": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Commodities Less Food and Energy Commodities in U.S. City Average",
+  "freq": "M",
+  "start": "1957-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CPIMEDSL": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Medical Care in U.S. City Average",
+  "freq": "M",
+  "start": "1947-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CPIAPPSL": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Apparel in U.S. City Average",
+  "freq": "M",
+  "start": "1947-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SAS": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Services in U.S. City Average",
+  "freq": "M",
+  "start": "1956-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CUSR0000SASLE": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Services Less Energy Services in U.S. City Average",
+  "freq": "M",
+  "start": "1967-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "WPU3012": {
+  "ok": true,
+  "title": "Producer Price Index by Commodity: Transportation Services: Truck Transportation of Freight",
+  "freq": "M",
+  "start": "2009-06-01",
+  "end": "2026-09-01",
+  "vintages": 142,
+  "first_vintage": "2015-03-13"
+ },
+ "WPU3022": {
+  "ok": true,
+  "title": "Producer Price Index by Commodity: Transportation Services: Airline Passenger Services",
+  "freq": "M",
+  "start": "2008-12-01",
+  "end": "2026-09-01",
+  "vintages": 141,
+  "first_vintage": "2015-03-13"
+ },
+ "PCU524126524126": {
+  "ok": true,
+  "title": "Producer Price Index by Industry: Direct Property and Casualty Insurers",
+  "freq": "M",
+  "start": "1998-06-01",
+  "end": "2026-09-01",
+  "vintages": 137,
+  "first_vintage": "2015-04-14"
+ },
+ "CPIENGSL": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Energy in U.S. City Average",
+  "freq": "M",
+  "start": "1957-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CPIUFDSL": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: Food in U.S. City Average",
+  "freq": "M",
+  "start": "1947-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CPILFESL": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: All Items Less Food and Energy in U.S. City Average",
+  "freq": "M",
+  "start": "1957-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "CPIAUCSL": {
+  "ok": true,
+  "title": "Consumer Price Index for All Urban Consumers: All Items in U.S. City Average",
+  "freq": "M",
+  "start": "1947-01-01",
+  "end": "2026-09-01",
+  "vintages": 168,
+  "first_vintage": "2013-07-16"
+ },
+ "OPHNFB": {
+  "ok": true,
+  "title": "Nonfarm Business Sector: Labor Productivity (Output per Hour) for All Workers",
+  "freq": "Q",
+  "start": "1947-01-01",
+  "end": "2026-04-01",
+  "vintages": 105,
+  "first_vintage": "2013-08-16"
+ },
+ "CUSR0000SAM": {
+  "ok": false,
+  "why": "Bad Request.  The series does not exist."
+ },
+ "CUSR0000SETE": {
+  "ok": false,
+  "why": "Bad Request.  The series does not exist."
+ },
+ "WCESTUS1": {
+  "ok": false,
+  "why": "Bad Request.  The series does not exist."
+ },
+ "OVXCLS": {
+  "ok": true,
+  "title": "CBOE Crude Oil ETF Volatility Index",
+  "freq": "D",
+  "start": "2007-05-10",
+  "end": "2026-10-29",
+  "vintages": 3134,
+  "first_vintage": "2014-04-17"
+ },
+ "GVZCLS": {
+  "ok": true,
+  "title": "CBOE Gold ETF Volatility Index",
+  "freq": "D",
+  "start": "2008-06-03",
+  "end": "2026-10-29",
+  "vintages": 3134,
+  "first_vintage": "2014-04-17"
+ }
+}

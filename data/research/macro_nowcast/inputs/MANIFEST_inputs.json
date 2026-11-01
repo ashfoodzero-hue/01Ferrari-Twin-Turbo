@@ -1,0 +1,344 @@
+{
+ "at": "2026-11-01T06:15:44.110Z",
+ "spec": "docs/research/macro_nowcast/2026-11-01_T1_step2_blind_nowcast_SPEC.md + addendum A",
+ "ff_end": "2026-10-16T20:00:00.000Z",
+ "files": {
+  "unemployment_claims.jsonl": {
+   "sha256": "d0eecd7653df9e63037f280b8df8848a39330a9a1ef4919f811ced69852d257c",
+   "rows": 692,
+   "ref_missing": 0,
+   "feature_null": {
+    "icsa_last": 9,
+    "icsa_4wk": 10
+   },
+   "mean_inputs": 1.97
+  },
+  "non_farm_employment_change.jsonl": {
+   "sha256": "5922ca83e9cb82454ae8029ebf05f8e685519417c8cea5e89228b55906d22bff",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "icsa_sw_chg": 0,
+    "ccsa_sw_chg": 0,
+    "adp": 6
+   },
+   "mean_inputs": 3.96
+  },
+  "unemployment_rate.jsonl": {
+   "sha256": "2825f104d0ddc22dcb0c5bdc6f45bd5eac9bb6e5ee0a0890b96f8c9f2da13006",
+   "rows": 158,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "icsa_sw_chg": 0,
+    "ccsa_sw_chg": 0
+   },
+   "mean_inputs": 2.99
+  },
+  "personal_income_m_m.jsonl": {
+   "sha256": "632518136f1ffebbe4bbb871d2273f6971ca16f2b2158dc89386761fd9cce26a",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "wagebill_mm": 0
+   },
+   "mean_inputs": 1.99
+  },
+  "personal_spending_m_m.jsonl": {
+   "sha256": "d3285974f84732199ddba409340d80e0dadb0a059f81397c05a7e93266babba9",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "rsafs_mm": 0,
+    "totalsa_mm": 10
+   },
+   "mean_inputs": 2.93
+  },
+  "industrial_production_m_m.jsonl": {
+   "sha256": "1407193b1437dd6f79e22599dfbb6c81e5f4fdc4b19fc2a0beca8ab3536f099c",
+   "rows": 160,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "mfg_hours_mm": 0
+   },
+   "mean_inputs": 1.99
+  },
+  "capacity_utilization_rate.jsonl": {
+   "sha256": "4fcc9dbd4a5af0e10eec68931a78ea2bcb10038be6f1fd7bb04b7ca0b8279ac9",
+   "rows": 160,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "mfg_hours_mm": 0
+   },
+   "mean_inputs": 1.99
+  },
+  "factory_orders_m_m.jsonl": {
+   "sha256": "baa1b835af616a876a6f23e9777f0a0d023a4803fc740c0478049f7ff4ac81b3",
+   "rows": 159,
+   "ref_missing": 2,
+   "feature_null": {
+    "own_1": 1,
+    "durables": 4
+   },
+   "mean_inputs": 1.97
+  },
+  "business_inventories_m_m.jsonl": {
+   "sha256": "62133ab90011fe2da76927f37b62f4d92cb107f68817d911cd9421ab15e224ad",
+   "rows": 160,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "prelim_wholesale": 45,
+    "amtmti_mm": 2
+   },
+   "mean_inputs": 2.7
+  },
+  "final_wholesale_inventories_m_m.jsonl": {
+   "sha256": "46b8403291abb53265d28c11e1b5a98f05421dc382a786e0656fa000f71d9680",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 44,
+   "mean_inputs": 0.72
+  },
+  "trade_balance.jsonl": {
+   "sha256": "35408a2cce8773b88133138ec8b4a0a9f77a7b6f21f48457c65ad23265bd3efa",
+   "rows": 159,
+   "ref_missing": 1,
+   "feature_null": {
+    "own_1": 1,
+    "goods_adv": 29
+   },
+   "mean_inputs": 1.81
+  },
+  "current_account.jsonl": {
+   "sha256": "45d8e462cdc8b5f8da4e6d30c63292d863e3df89cacc72b4c149fbfb34f86dd7",
+   "rows": 53,
+   "ref_missing": 1,
+   "feature_null": {
+    "own_1": 1,
+    "trade_q_sum": 1
+   },
+   "mean_inputs": 1.96
+  },
+  "import_prices_m_m.jsonl": {
+   "sha256": "27d96402c4135441a31ca005df945d5256b48047da2a9025a666b0de9f255e49",
+   "rows": 158,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "wti_mm": 0,
+    "usd_mm": 0
+   },
+   "mean_inputs": 2.99
+  },
+  "federal_budget_balance.jsonl": {
+   "sha256": "ca57fbf19827e14e9b6da6d0bfe5e6b7f9ff7bd7fc6ebf7b4488ae7bf44a039e",
+   "rows": 159,
+   "ref_missing": 4,
+   "feature_null": {
+    "dts_net": 4,
+    "own_12": 18
+   },
+   "mean_inputs": 1.86
+  },
+  "cpi_m_m.jsonl": {
+   "sha256": "e5d23711f50f2151025533115e44561a4aa6b8ab2ddf3ef950e9ded4204f5398",
+   "rows": 158,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "gas_mm": 0,
+    "food_3m": 3,
+    "core_3m": 3
+   },
+   "mean_inputs": 3.96
+  },
+  "core_cpi_m_m.jsonl": {
+   "sha256": "9617c9cb8215b6a25952c4827d233b05f6476662e4f02ed5d087674d693106ab",
+   "rows": 158,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "core_3m": 3,
+    "shelter_3m": 3,
+    "ppi_mm": 8
+   },
+   "mean_inputs": 3.91
+  },
+  "cpi_y_y.jsonl": {
+   "sha256": "083ef694610131e612d25ff6007321c9a8e125455fac70bd65890de4f142e35d",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "base_mm": 0
+   },
+   "mean_inputs": 1.99
+  },
+  "core_cpi_y_y.jsonl": {
+   "sha256": "1d28d57456ed7c332a033c9301a407c57c57444e99870c552ea03709eb80b06b",
+   "rows": 159,
+   "ref_missing": 2,
+   "feature_null": {
+    "own_1": 3,
+    "base_mm": 2
+   },
+   "mean_inputs": 1.97
+  },
+  "core_pce_price_index_m_m.jsonl": {
+   "sha256": "ee409e96e216611177699c678e5e6edf1990f4bdbcc6c1508bc9a8d3ca948b25",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "corecpi_mm": 2,
+    "ppi_mm": 7
+   },
+   "mean_inputs": 2.94
+  },
+  "advance_gdp_q_q.jsonl": {
+   "sha256": "4a1c8a0c12f3d8a62eca6d2d0ccb45590201e3052bc4b24ba2d7e23d58a9509f",
+   "rows": 52,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "rsafs_qq": 0,
+    "trade_q_chg": 0,
+    "businv_chg": 0
+   },
+   "mean_inputs": 3.98
+  },
+  "advance_gdp_price_index_q_q.jsonl": {
+   "sha256": "9f8eade27e256844e845b8d57377736fb7024cb20ca8090a041cbc286da40270",
+   "rows": 52,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "cpi_qq": 2,
+    "import_qq": 2
+   },
+   "mean_inputs": 2.9
+  },
+  "prelim_gdp_q_q.jsonl": {
+   "sha256": "e1b369885c23c959d0f79fcd2f78138af778d85e77df255acb87cb4e66ed6ab5",
+   "rows": 52,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 1,
+   "mean_inputs": 0.98
+  },
+  "final_gdp_q_q.jsonl": {
+   "sha256": "c007fc61dc795766f86a78aba2390ab84fe955f6863e6b18060b9708ec5650b8",
+   "rows": 53,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 1,
+   "mean_inputs": 0.98
+  },
+  "prelim_gdp_price_index_q_q.jsonl": {
+   "sha256": "8d9ab738e570ead17b3a61fa3b6c0bef99f8472c6ffd8ed0165f55a56be0ffc4",
+   "rows": 52,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 1,
+   "mean_inputs": 0.98
+  },
+  "final_gdp_price_index_q_q.jsonl": {
+   "sha256": "5a9d45cc80e7930634e68ac7f3aa02a2d0196e660dc39e03628ddc1872315303",
+   "rows": 53,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 1,
+   "mean_inputs": 0.98
+  },
+  "prelim_nonfarm_productivity_q_q.jsonl": {
+   "sha256": "4c9463bae72c6d95e502eb254e067f8dbbdc74e8f15bbad87f345ae3ca092aec",
+   "rows": 52,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "adv_gdp": 1,
+    "hours_qq": 1
+   },
+   "mean_inputs": 2.94
+  },
+  "prelim_unit_labor_costs_q_q.jsonl": {
+   "sha256": "7307e87c9f110cc342dc36bcbfdd67813d06ec6b8036ad9bae9f8f3652222f61",
+   "rows": 52,
+   "ref_missing": 0,
+   "feature_null": {
+    "own_1": 1,
+    "adv_gdp": 1,
+    "hours_qq": 1,
+    "ahe_qq": 1
+   },
+   "mean_inputs": 3.92
+  },
+  "revised_nonfarm_productivity_q_q.jsonl": {
+   "sha256": "e7ea276db44856bd6de3b22256dcbc937dffa7f6c761e689967311a7f58ca445",
+   "rows": 53,
+   "ref_missing": 0,
+   "feature_null": {
+    "gdp_rev": 1
+   },
+   "earlier_null": 1,
+   "mean_inputs": 1.96
+  },
+  "revised_unit_labor_costs_q_q.jsonl": {
+   "sha256": "f0342e6a5a1efefc05480d8487fb7dc9d34e4417f3b289466877d13e60fe3ea3",
+   "rows": 53,
+   "ref_missing": 0,
+   "feature_null": {
+    "gdp_rev": 1
+   },
+   "earlier_null": 1,
+   "mean_inputs": 1.96
+  },
+  "revised_uom_consumer_sentiment.jsonl": {
+   "sha256": "a06d1dc8952608845459a00451b77708fa1485f8f7db7e277b6d0f692e5e658c",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 1,
+   "mean_inputs": 0.99
+  },
+  "revised_uom_inflation_expectations.jsonl": {
+   "sha256": "753975df6fbc0f8490f71dd980183d388b7bb3d57eb52a7305cbb8eca1f351be",
+   "rows": 161,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 1,
+   "mean_inputs": 0.99
+  },
+  "final_manufacturing_pmi.jsonl": {
+   "sha256": "6f998140f45c17a7952f71a88ae1fc6ea995f435c9b0ff3439b9c30749885f55",
+   "rows": 159,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 0,
+   "mean_inputs": 1
+  },
+  "final_services_pmi.jsonl": {
+   "sha256": "e3b6999f5625b6f9665f86a2534600820114d38bdf82f3bbf98b65678befc784",
+   "rows": 155,
+   "ref_missing": 0,
+   "feature_null": {},
+   "earlier_null": 0,
+   "mean_inputs": 1
+  }
+ },
+ "release_schedule": {
+  "sha256": "568c844ecf3620d8f43c9a0f43846d20b1fdf245efe76da55501d38a1dd88765",
+  "rows": 4605
+ },
+ "dts_months": {
+  "n": 155,
+  "null": []
+ }
+}
