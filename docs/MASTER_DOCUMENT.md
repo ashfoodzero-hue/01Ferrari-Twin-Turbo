@@ -1394,3 +1394,26 @@ without duplications … only use the real Win results, and ignore the rest."
   - 24 days are missing at GDELT itself (404 + not in GDELT's index; GDELT 2.0 also 404), incl. **2025-06-14 → 07-01** = the Israel–Iran war window.
   - Addendum A fixes how the gap is handled (no fill, skipped in fit/score, anchor 2025-06-13 tested on day d only), written before any study number.
   - Sanity glance (raw counts, not a result): RUS material-conflict events 4,497 on 2022-02-24 vs ~490 on ordinary days; PSE 713 on 2023-10-07 vs ~113.
+- **(ga) 2026-11-01 — WORDS vs ACTIONS study RUN (Ashraf: "Yes, build and run"). RESULT: 0 / 152 pass → NO EDGE.** Spec `docs/research/geo/2026-11-01_WORDS_ACTIONS_LEAD_SPEC.md` + Addenda A-C.
+  - Code: `scripts/research/geo/study_words_actions.mjs`, frozen at 48ee884. Smoke: `smoke_words_actions.mjs` 9/9, in smoke:all.
+  - Output: `data/research/geo/words_actions_part0.json` + `words_actions_study.json`.
+  - **Fixes found while building:**
+    - GDELT century bug: 2020-01-01…05 files write 1920 → fixed in the builder, 5 days re-fetched (Addendum B).
+    - 4 gold daily candles are data-hole stubs (2019-09-03, 2020-10-13, 2021-12-24, 2026-05-07) → not closes (Addendum C, caught by the G0.5 assert).
+  - **Part 0 PASS:**
+    - coverage 99.51 %;
+    - 9/9 dated anchors, zACTS / zPOSTURE 2.2-8.2 (placebo 12.8 %);
+    - FRED vs Polygon WTI correlation 0.9036 (n 504; bar 0.90, only just);
+    - `smoke_ny_candles` 17/17;
+    - look-ahead 0 / 554,896;
+    - week-shuffle 0 passes in 20 / 20 runs.
+  - **Part A (words → actions inside a region, K 24): 0 pass.**
+    - A consistent but SMALL link: threats in MIDEAST, RU_UA and EAST_ASIA come before more attack news.
+    - The coefficient is positive in both 2013-21 and 2022-26 (OOS coefficient p 0.001-0.03), but the frozen OOS forecast gain is only 1-3 % of MSE. Best one-sided p 0.015 (EAST_ASIA zWORDS A7), Holm 0.35.
+    - Not a usable forecast.
+  - **Part B (→ gold / WTI / GVZ / OVX beyond own vol + GVZ / OVX / VIX + GPR + calendar, K 128): 0 pass.**
+    - 104 / 128 not visible in TRAIN; 8 sign flips; 16 visible-then-gone.
+    - Where TRAIN did show something, it was mostly the WRONG way (more conflict news → SMALLER next-day oil moves; RU_UA → OVX falling), and it vanished in 2022-26.
+    - Best OOS one-sided p 0.003 (WORLD zWORDS → gold 5-day direction, Holm 0.37) was invisible in TRAIN.
+    - Brent (described): 0.
+  - **Meaning:** daily GDELT conflict counts add nothing to what oil / gold prices, their fear gauges and GPR already show. The collector keeps running for the forward check; nothing is wired.

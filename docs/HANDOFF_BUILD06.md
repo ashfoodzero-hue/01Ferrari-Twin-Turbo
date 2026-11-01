@@ -183,3 +183,4 @@
 - **NEXT:** a pre-registered study "do GDELT words / actions (or GPR acts / threats) lead oil or gold?" — spec FIRST, controls vs the market's own pricing (Source Map §5b L3/L4).
 - **Spec written (MASTER §7 (fy)):** `docs/research/geo/2026-11-01_WORDS_ACTIONS_LEAD_SPEC.md` — Part 0 gates → Part A words → actions (K 24) → Part B GDELT → gold/oil/GVZ/OVX beyond market + GPR (K 128). Next: study script after the backfill finishes; Part 0 first.
 - **Backfill finished (MASTER §7 (fz)):** 4,834/4,858 days, 0 errors; GDELT itself has no files 2025-06-14 → 07-01 (Israel–Iran war) + 6 other days; spec Addendum A fixes the handling.
+- **Words vs actions study RUN (MASTER §7 (ga)): 0/152 pass, no edge.** Part 0 passed (9/9 anchors, look-ahead 0, shuffle 0/20). Part A = small consistent threats → attacks link (1-3 % forecast gain, fails Holm). Part B = nothing beyond market + GPR. Fixes: GDELT 1920 bug (2020-01-01…05), 4 gold data-hole stub candles.
