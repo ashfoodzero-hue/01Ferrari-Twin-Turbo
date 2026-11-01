@@ -10,8 +10,8 @@ import { clean1m, kit } from './lib/series_1m.mjs'
 import { makeSpreadAt } from '../src/master/spreadModel.js'
 import { matrixTrades, wti1m } from './lib/matrix_trades.mjs'
 import { makeAligned } from './lib/matrix_aligned.mjs'
-import { MATRIX, confirmedPivots, emaSeries, wtiHourAt } from '../src/master/ferrariMatrix.js'
-import { atr as atrArr } from '../src/core/indicators.js'
+import { MATRIX } from '../src/master/ferrariMatrix.js'
+import { makeNowall } from './lib/matrix_nowall.mjs'
 import { tradingDate } from '../src/core/nyCandles.js'
 import { blockBootstrapMean } from '../src/core/studyStats.js'
 
@@ -24,27 +24,8 @@ const { stateAt } = makeAligned(M, KT)
 const WT = wti1m(TO)
 const audit = { lookahead_violations: 0 }
 
-// ONE place for the rule (spec §1). wti: require WTI hour bullish; struct: require 1H DOWN; mode 'choch' = the control (choch alone)
-function nwSignals({ wti, struct, mode = 'nw' }) {
-  return (B, D, startI) => {
-    const A = atrArr(B, 14), dEma = emaSeries(D, MATRIX.dxyEma), dByT = new Map(D.map((b) => [b.t, b])), PL = confirmedPivots(B).lastLowAt, out = []
-    for (let i = Math.max(startI, MATRIX.look + 20); i < B.length; i++) {
-      const b = B[i], a = A[i]; if (!a) continue
-      const decisionT = b.t + MATRIX.tfMs
-      if (!(Number.isFinite(PL[i]) && b.c < PL[i])) continue
-      if (mode === 'nw') {
-        const d = dByT.get(b.t), de = dEma.get(b.t); if (!d || de == null || !(d.c > de)) continue
-        if (wti) { const w = wtiHourAt(WT, decisionT); if (!w || !w.bullish) continue
-          if (w.lastMinuteT + 60000 > decisionT - MATRIX.wtiDelayMs) audit.lookahead_violations++ }
-        if (struct && stateAt('1H', decisionT) !== -1) continue
-      }
-      let hi5 = -Infinity; for (let k = i - 4; k <= i; k++) if (B[k].h > hi5) hi5 = B[k].h
-      const entry = b.c, sl = hi5 + MATRIX.slPad, risk = Math.abs(entry - sl), reward = Math.max(MATRIX.minReward, MATRIX.rr * risk)
-      out.push({ i, t: b.t, decisionT, side: 'SELL', entry, sl, tp1: entry - reward, tp2: entry - MATRIX.tp2Mult * reward, risk, reward, atr: a, ctx: { mode, wti, struct } })
-    }
-    return out
-  }
-}
+// ONE place for the rule (spec §1, moved 2026-11-01 to scripts/lib/matrix_nowall.mjs): wti = WTI hour bullish; struct = 1H DOWN; mode 'choch' = control
+const nwSignals = makeNowall({ stateAt, WT, audit })
 
 const stat = (F, days) => { const n = F.length, s = F.reduce((a, f) => a + f.net, 0), oc = {}; for (const f of F) oc[f.outcome] = (oc[f.outcome] || 0) + 1
   return { n, wr: n ? +(F.filter((f) => f.net > 0).length / n).toFixed(3) : null, usd: n ? +(s / n).toFixed(3) : null, total: +s.toFixed(1), per_day: days ? +(n / days).toFixed(2) : null, outcomes: oc } }

@@ -1,0 +1,873 @@
+{
+ "spec": "docs/DOWN_DAY_DETECTOR_SPEC.md + ADDENDUM A",
+ "built_at": "2026-11-01T08:02:52.950Z",
+ "tape_to": "2026-10-30T21:00:00.000Z",
+ "K": 12,
+ "thresholds": {
+  "down": -0.446512575486854,
+  "up": 0.47922587360556396
+ },
+ "features": [
+  "F1_day_so_far",
+  "F2_prev_day",
+  "F3_below_prev_low",
+  "F3_dist_prev_low",
+  "F4_1H",
+  "F4_4H",
+  "F5_1D",
+  "F6_dxy_session",
+  "F6_dxy_24h",
+  "F7_real10y_chg",
+  "F8_release_later",
+  "F9_friday"
+ ],
+ "checkpoints": {
+  "4": {
+   "n_train": 1990,
+   "n_oos": 1376,
+   "base_rate_train": 0.2005,
+   "gate_threshold": 0.2278,
+   "coefs": {
+    "intercept": -1.4373,
+    "F1_day_so_far": -0.2637,
+    "F2_prev_day": 0.0819,
+    "F3_below_prev_low": -0.1143,
+    "F3_dist_prev_low": -0.0919,
+    "F4_1H": 0.0167,
+    "F4_4H": 0.0288,
+    "F5_1D": 0.0759,
+    "F6_dxy_session": 0.2617,
+    "F6_dxy_24h": -0.0214,
+    "F7_real10y_chg": 0.0313,
+    "F8_release_later": 0.0912,
+    "F9_friday": -0.127
+   },
+   "TA": {
+    "brier_oos": 0.15559,
+    "brier_climatology": 0.15643,
+    "skill": 0.0054,
+    "diff_lb": -0.004544,
+    "precision_open": 0.247,
+    "precision_wilson_lb": 0.21,
+    "recall": 0.427,
+    "open_days_oos": 461
+   },
+   "audit_leak_futureF1_skill": 0.0448,
+   "audit_shuffle_no_skill_share": 0.67,
+   "TB13": {
+    "TRAIN": {
+     "n": 1964,
+     "wr": 0.176,
+     "usd": -0.412,
+     "total": -810.1,
+     "lb": -0.808
+    },
+    "OOS": {
+     "n": 1805,
+     "wr": 0.237,
+     "usd": -0.687,
+     "total": -1240.5,
+     "lb": -1.561
+    }
+   },
+   "TB2": {
+    "n": 636,
+    "wr": 0.27,
+    "usd": -0.848,
+    "total": -539.3,
+    "lb": -2.89
+   },
+   "random_gate_oos_usd_p95": 0.023,
+   "up_day_cost_13y": {
+    "n": 582,
+    "wr": 0.04,
+    "usd": -3.086,
+    "total": -1796.1
+   },
+   "down_day_13y": {
+    "n": 949,
+    "wr": 0.409,
+    "usd": 3.253,
+    "total": 3087
+   },
+   "per_year": {
+    "2013": {
+     "n": 140,
+     "wr": 0.179,
+     "usd": -0.507,
+     "total": -71
+    },
+    "2014": {
+     "n": 301,
+     "wr": 0.14,
+     "usd": -0.61,
+     "total": -183.7
+    },
+    "2015": {
+     "n": 236,
+     "wr": 0.203,
+     "usd": -0.17,
+     "total": -40.2
+    },
+    "2016": {
+     "n": 294,
+     "wr": 0.177,
+     "usd": -0.324,
+     "total": -95.2
+    },
+    "2017": {
+     "n": 260,
+     "wr": 0.165,
+     "usd": -0.138,
+     "total": -35.8
+    },
+    "2018": {
+     "n": 174,
+     "wr": 0.161,
+     "usd": -0.291,
+     "total": -50.7
+    },
+    "2019": {
+     "n": 186,
+     "wr": 0.161,
+     "usd": -0.737,
+     "total": -137
+    },
+    "2020": {
+     "n": 226,
+     "wr": 0.235,
+     "usd": -0.548,
+     "total": -123.8
+    },
+    "2021": {
+     "n": 308,
+     "wr": 0.162,
+     "usd": -0.632,
+     "total": -194.7
+    },
+    "2022": {
+     "n": 352,
+     "wr": 0.23,
+     "usd": -0.39,
+     "total": -137.4
+    },
+    "2023": {
+     "n": 196,
+     "wr": 0.209,
+     "usd": -0.229,
+     "total": -44.8
+    },
+    "2024": {
+     "n": 389,
+     "wr": 0.234,
+     "usd": -0.576,
+     "total": -224
+    },
+    "2025": {
+     "n": 378,
+     "wr": 0.238,
+     "usd": -1.326,
+     "total": -501.1
+    },
+    "2026": {
+     "n": 329,
+     "wr": 0.298,
+     "usd": -0.642,
+     "total": -211.2
+    }
+   },
+   "friday_gate": {
+    "4": {
+     "open": false,
+     "p": 0.098
+    },
+    "8": {
+     "open": true,
+     "p": 0.28
+    },
+    "12": {
+     "open": true,
+     "p": 0.318
+    },
+    "16": {
+     "open": true,
+     "p": 0.883
+    }
+   },
+   "friday_trades_2y": [],
+   "checks": {
+    "TA_skill_lb_pos": false,
+    "TB13_train_pos": false,
+    "TB13_oos_pos": false,
+    "TB13_oos_lb_pos": false,
+    "beats_random_p95": false,
+    "TB2_pos": false,
+    "oos_n30": true
+   },
+   "pass": false
+  },
+  "8": {
+   "n_train": 1990,
+   "n_oos": 1376,
+   "base_rate_train": 0.2005,
+   "gate_threshold": 0.2379,
+   "coefs": {
+    "intercept": -1.5593,
+    "F1_day_so_far": -0.7407,
+    "F2_prev_day": 0.1618,
+    "F3_below_prev_low": -0.0033,
+    "F3_dist_prev_low": -0.1101,
+    "F4_1H": -0.073,
+    "F4_4H": 0.0037,
+    "F5_1D": 0.095,
+    "F6_dxy_session": 0.1877,
+    "F6_dxy_24h": 0.0147,
+    "F7_real10y_chg": 0.0146,
+    "F8_release_later": 0.105,
+    "F9_friday": -0.1188
+   },
+   "TA": {
+    "brier_oos": 0.14049,
+    "brier_climatology": 0.15643,
+    "skill": 0.1019,
+    "diff_lb": 0.007246,
+    "precision_open": 0.35,
+    "precision_wilson_lb": 0.307,
+    "recall": 0.588,
+    "open_days_oos": 449
+   },
+   "audit_leak_futureF1_skill": 0.1245,
+   "audit_shuffle_no_skill_share": 0.605,
+   "TB13": {
+    "TRAIN": {
+     "n": 1736,
+     "wr": 0.192,
+     "usd": -0.325,
+     "total": -564.2,
+     "lb": -0.682
+    },
+    "OOS": {
+     "n": 1534,
+     "wr": 0.271,
+     "usd": -0.258,
+     "total": -396.4,
+     "lb": -1.172
+    }
+   },
+   "TB2": {
+    "n": 568,
+    "wr": 0.287,
+    "usd": -0.162,
+    "total": -91.8,
+    "lb": -2.432
+   },
+   "random_gate_oos_usd_p95": -0.099,
+   "up_day_cost_13y": {
+    "n": 332,
+    "wr": 0.051,
+    "usd": -2.924,
+    "total": -970.8
+   },
+   "down_day_13y": {
+    "n": 1153,
+    "wr": 0.391,
+    "usd": 2.614,
+    "total": 3014.4
+   },
+   "per_year": {
+    "2013": {
+     "n": 95,
+     "wr": 0.232,
+     "usd": 0.278,
+     "total": 26.5
+    },
+    "2014": {
+     "n": 234,
+     "wr": 0.209,
+     "usd": -0.078,
+     "total": -18.3
+    },
+    "2015": {
+     "n": 189,
+     "wr": 0.228,
+     "usd": 0.119,
+     "total": 22.5
+    },
+    "2016": {
+     "n": 278,
+     "wr": 0.194,
+     "usd": -0.342,
+     "total": -95
+    },
+    "2017": {
+     "n": 239,
+     "wr": 0.151,
+     "usd": -0.502,
+     "total": -120.1
+    },
+    "2018": {
+     "n": 207,
+     "wr": 0.184,
+     "usd": -0.332,
+     "total": -68.7
+    },
+    "2019": {
+     "n": 206,
+     "wr": 0.121,
+     "usd": -1.062,
+     "total": -218.7
+    },
+    "2020": {
+     "n": 196,
+     "wr": 0.224,
+     "usd": -0.89,
+     "total": -174.3
+    },
+    "2021": {
+     "n": 194,
+     "wr": 0.247,
+     "usd": 0.469,
+     "total": 90.9
+    },
+    "2022": {
+     "n": 298,
+     "wr": 0.258,
+     "usd": -0.383,
+     "total": -114.1
+    },
+    "2023": {
+     "n": 214,
+     "wr": 0.206,
+     "usd": -0.528,
+     "total": -113
+    },
+    "2024": {
+     "n": 240,
+     "wr": 0.292,
+     "usd": 0.109,
+     "total": 26.2
+    },
+    "2025": {
+     "n": 334,
+     "wr": 0.269,
+     "usd": -0.645,
+     "total": -215.6
+    },
+    "2026": {
+     "n": 346,
+     "wr": 0.318,
+     "usd": 0.032,
+     "total": 11.2
+    }
+   },
+   "friday_gate": {
+    "4": {
+     "open": false,
+     "p": 0.098
+    },
+    "8": {
+     "open": true,
+     "p": 0.28
+    },
+    "12": {
+     "open": true,
+     "p": 0.318
+    },
+    "16": {
+     "open": true,
+     "p": 0.883
+    }
+   },
+   "friday_trades_2y": [
+    {
+     "t": "2026-10-30T07:54:00.000Z",
+     "entry": 3966.6,
+     "raw": "SL",
+     "net": -18.88
+    },
+    {
+     "t": "2026-10-30T10:39:00.000Z",
+     "entry": 3980.03,
+     "raw": "TP1+TP2",
+     "net": 12.5
+    },
+    {
+     "t": "2026-10-30T12:54:00.000Z",
+     "entry": 3954.98,
+     "raw": "TP1+TP2",
+     "net": 22
+    },
+    {
+     "t": "2026-10-30T13:42:00.000Z",
+     "entry": 3931.61,
+     "raw": "TP1+TP2",
+     "net": 38.33
+    }
+   ],
+   "checks": {
+    "TA_skill_lb_pos": true,
+    "TB13_train_pos": false,
+    "TB13_oos_pos": false,
+    "TB13_oos_lb_pos": false,
+    "beats_random_p95": false,
+    "TB2_pos": false,
+    "oos_n30": true
+   },
+   "pass": false
+  },
+  "12": {
+   "n_train": 1990,
+   "n_oos": 1376,
+   "base_rate_train": 0.2005,
+   "gate_threshold": 0.2454,
+   "coefs": {
+    "intercept": -1.7812,
+    "F1_day_so_far": -1.2567,
+    "F2_prev_day": 0.0631,
+    "F3_below_prev_low": -0.0654,
+    "F3_dist_prev_low": -0.0718,
+    "F4_1H": -0.1417,
+    "F4_4H": 0.0566,
+    "F5_1D": 0.1354,
+    "F6_dxy_session": 0.1431,
+    "F6_dxy_24h": -0.0484,
+    "F7_real10y_chg": 0.028,
+    "F8_release_later": 0.1219,
+    "F9_friday": -0.1005
+   },
+   "TA": {
+    "brier_oos": 0.12379,
+    "brier_climatology": 0.15643,
+    "skill": 0.2086,
+    "diff_lb": 0.021219,
+    "precision_open": 0.426,
+    "precision_wilson_lb": 0.38,
+    "recall": 0.67,
+    "open_days_oos": 420
+   },
+   "audit_leak_futureF1_skill": 0.2176,
+   "audit_shuffle_no_skill_share": 0.635,
+   "TB13": {
+    "TRAIN": {
+     "n": 1432,
+     "wr": 0.193,
+     "usd": -0.493,
+     "total": -705.8,
+     "lb": -0.858
+    },
+    "OOS": {
+     "n": 1164,
+     "wr": 0.278,
+     "usd": -0.301,
+     "total": -350.8,
+     "lb": -1.319
+    }
+   },
+   "TB2": {
+    "n": 447,
+    "wr": 0.295,
+    "usd": -0.363,
+    "total": -162.1,
+    "lb": -2.735
+   },
+   "random_gate_oos_usd_p95": -0.19,
+   "up_day_cost_13y": {
+    "n": 159,
+    "wr": 0.05,
+    "usd": -3.2,
+    "total": -508.8
+   },
+   "down_day_13y": {
+    "n": 1084,
+    "wr": 0.369,
+    "usd": 2.061,
+    "total": 2234.2
+   },
+   "per_year": {
+    "2013": {
+     "n": 111,
+     "wr": 0.261,
+     "usd": 0.34,
+     "total": 37.8
+    },
+    "2014": {
+     "n": 179,
+     "wr": 0.184,
+     "usd": -0.552,
+     "total": -98.8
+    },
+    "2015": {
+     "n": 184,
+     "wr": 0.201,
+     "usd": -0.138,
+     "total": -25.3
+    },
+    "2016": {
+     "n": 188,
+     "wr": 0.186,
+     "usd": -0.649,
+     "total": -122
+    },
+    "2017": {
+     "n": 194,
+     "wr": 0.149,
+     "usd": -0.578,
+     "total": -112.2
+    },
+    "2018": {
+     "n": 191,
+     "wr": 0.188,
+     "usd": -0.434,
+     "total": -82.8
+    },
+    "2019": {
+     "n": 156,
+     "wr": 0.109,
+     "usd": -1.193,
+     "total": -186.1
+    },
+    "2020": {
+     "n": 144,
+     "wr": 0.25,
+     "usd": -1.204,
+     "total": -173.4
+    },
+    "2021": {
+     "n": 173,
+     "wr": 0.272,
+     "usd": 0.292,
+     "total": 50.5
+    },
+    "2022": {
+     "n": 206,
+     "wr": 0.272,
+     "usd": -0.145,
+     "total": -29.8
+    },
+    "2023": {
+     "n": 165,
+     "wr": 0.261,
+     "usd": 0.051,
+     "total": 8.5
+    },
+    "2024": {
+     "n": 188,
+     "wr": 0.261,
+     "usd": -0.193,
+     "total": -36.4
+    },
+    "2025": {
+     "n": 237,
+     "wr": 0.283,
+     "usd": -0.722,
+     "total": -171.2
+    },
+    "2026": {
+     "n": 280,
+     "wr": 0.307,
+     "usd": -0.412,
+     "total": -115.3
+    }
+   },
+   "friday_gate": {
+    "4": {
+     "open": false,
+     "p": 0.098
+    },
+    "8": {
+     "open": true,
+     "p": 0.28
+    },
+    "12": {
+     "open": true,
+     "p": 0.318
+    },
+    "16": {
+     "open": true,
+     "p": 0.883
+    }
+   },
+   "friday_trades_2y": [
+    {
+     "t": "2026-10-30T10:39:00.000Z",
+     "entry": 3980.03,
+     "raw": "TP1+TP2",
+     "net": 12.5
+    },
+    {
+     "t": "2026-10-30T12:54:00.000Z",
+     "entry": 3954.98,
+     "raw": "TP1+TP2",
+     "net": 22
+    },
+    {
+     "t": "2026-10-30T13:42:00.000Z",
+     "entry": 3931.61,
+     "raw": "TP1+TP2",
+     "net": 38.33
+    }
+   ],
+   "checks": {
+    "TA_skill_lb_pos": true,
+    "TB13_train_pos": false,
+    "TB13_oos_pos": false,
+    "TB13_oos_lb_pos": false,
+    "beats_random_p95": false,
+    "TB2_pos": false,
+    "oos_n30": true
+   },
+   "pass": false
+  },
+  "16": {
+   "n_train": 1990,
+   "n_oos": 1375,
+   "base_rate_train": 0.2005,
+   "gate_threshold": 0.2187,
+   "coefs": {
+    "intercept": -2.3382,
+    "F1_day_so_far": -2.4288,
+    "F2_prev_day": 0.0442,
+    "F3_below_prev_low": -0.0489,
+    "F3_dist_prev_low": -0.0003,
+    "F4_1H": 0.0635,
+    "F4_4H": 0.0502,
+    "F5_1D": 0.1194,
+    "F6_dxy_session": 0.0479,
+    "F6_dxy_24h": 0.0333,
+    "F7_real10y_chg": -0.0153,
+    "F8_release_later": 0.0381,
+    "F9_friday": -0.179
+   },
+   "TA": {
+    "brier_oos": 0.09829,
+    "brier_climatology": 0.15652,
+    "skill": 0.372,
+    "diff_lb": 0.044138,
+    "precision_open": 0.532,
+    "precision_wilson_lb": 0.483,
+    "recall": 0.772,
+    "open_days_oos": 387
+   },
+   "audit_leak_futureF1_skill": 0.4808,
+   "audit_shuffle_no_skill_share": 0.55,
+   "TB13": {
+    "TRAIN": {
+     "n": 997,
+     "wr": 0.224,
+     "usd": -0.329,
+     "total": -328.3,
+     "lb": -0.727
+    },
+    "OOS": {
+     "n": 703,
+     "wr": 0.277,
+     "usd": -0.312,
+     "total": -219.2,
+     "lb": -1.741
+    }
+   },
+   "TB2": {
+    "n": 235,
+    "wr": 0.311,
+    "usd": -0.432,
+    "total": -101.6,
+    "lb": -3.189
+   },
+   "random_gate_oos_usd_p95": 0.357,
+   "up_day_cost_13y": {
+    "n": 30,
+    "wr": 0.067,
+    "usd": -3.837,
+    "total": -115.1
+   },
+   "down_day_13y": {
+    "n": 894,
+    "wr": 0.37,
+    "usd": 1.697,
+    "total": 1517.5
+   },
+   "per_year": {
+    "2013": {
+     "n": 58,
+     "wr": 0.328,
+     "usd": 0.363,
+     "total": 21.1
+    },
+    "2014": {
+     "n": 116,
+     "wr": 0.19,
+     "usd": -0.365,
+     "total": -42.3
+    },
+    "2015": {
+     "n": 135,
+     "wr": 0.267,
+     "usd": 0.077,
+     "total": 10.3
+    },
+    "2016": {
+     "n": 126,
+     "wr": 0.222,
+     "usd": -0.33,
+     "total": -41.6
+    },
+    "2017": {
+     "n": 155,
+     "wr": 0.174,
+     "usd": -0.592,
+     "total": -91.7
+    },
+    "2018": {
+     "n": 120,
+     "wr": 0.267,
+     "usd": 0.06,
+     "total": 7.2
+    },
+    "2019": {
+     "n": 122,
+     "wr": 0.164,
+     "usd": -0.8,
+     "total": -97.6
+    },
+    "2020": {
+     "n": 106,
+     "wr": 0.236,
+     "usd": -0.864,
+     "total": -91.6
+    },
+    "2021": {
+     "n": 117,
+     "wr": 0.248,
+     "usd": 0.094,
+     "total": 11
+    },
+    "2022": {
+     "n": 122,
+     "wr": 0.287,
+     "usd": -0.002,
+     "total": -0.3
+    },
+    "2023": {
+     "n": 143,
+     "wr": 0.245,
+     "usd": -0.431,
+     "total": -61.7
+    },
+    "2024": {
+     "n": 111,
+     "wr": 0.261,
+     "usd": -0.332,
+     "total": -36.8
+    },
+    "2025": {
+     "n": 127,
+     "wr": 0.283,
+     "usd": -0.363,
+     "total": -46.1
+    },
+    "2026": {
+     "n": 142,
+     "wr": 0.317,
+     "usd": -0.615,
+     "total": -87.4
+    }
+   },
+   "friday_gate": {
+    "4": {
+     "open": false,
+     "p": 0.098
+    },
+    "8": {
+     "open": true,
+     "p": 0.28
+    },
+    "12": {
+     "open": true,
+     "p": 0.318
+    },
+    "16": {
+     "open": true,
+     "p": 0.883
+    }
+   },
+   "friday_trades_2y": [
+    {
+     "t": "2026-10-30T13:00:00.000Z",
+     "entry": 3954.14,
+     "raw": "TP1+TP2",
+     "net": 14.4
+    },
+    {
+     "t": "2026-10-30T13:42:00.000Z",
+     "entry": 3931.61,
+     "raw": "TP1+TP2",
+     "net": 38.33
+    }
+   ],
+   "checks": {
+    "TA_skill_lb_pos": true,
+    "TB13_train_pos": false,
+    "TB13_oos_pos": false,
+    "TB13_oos_lb_pos": false,
+    "beats_random_p95": false,
+    "TB2_pos": false,
+    "oos_n30": true
+   },
+   "pass": false
+  }
+ },
+ "audits": {
+  "lookahead_violations": 0,
+  "parity_ungated": {
+   "y13": {
+    "mine": {
+     "n": 10997,
+     "wr": 0.215,
+     "usd": -0.569,
+     "total": -6259.8
+    },
+    "fo": {
+     "n": 10997,
+     "wr": 0.215,
+     "usd": -0.569,
+     "total": -6259.8,
+     "per_day": 2.98,
+     "outcomes": {
+      "LOSS": 8636,
+      "WIN": 1890,
+      "SCRATCH": 471
+     },
+     "lb": -0.792
+    }
+   },
+   "y2": {
+    "mine": {
+     "n": 2046,
+     "wr": 0.274,
+     "usd": -0.263,
+     "total": -538
+    },
+    "fo": {
+     "n": 2046,
+     "wr": 0.274,
+     "usd": -0.263,
+     "total": -538,
+     "per_day": 3.82,
+     "outcomes": {
+      "LOSS": 1485,
+      "WIN": 395,
+      "SCRATCH": 166
+     },
+     "lb": -1.134
+    }
+   }
+  },
+  "parity_ok": true,
+  "deterministic_4": true,
+  "deterministic_8": true,
+  "deterministic_12": true,
+  "deterministic_16": true
+ },
+ "passes": [],
+ "audits_ok": false
+}
