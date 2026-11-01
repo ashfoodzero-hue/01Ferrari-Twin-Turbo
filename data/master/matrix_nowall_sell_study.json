@@ -1,0 +1,1419 @@
+{
+ "spec": "docs/MATRIX_NOWALL_SELL_SPEC.md",
+ "built_at": "2026-11-01T06:41:48.055Z",
+ "tape_to": "2026-10-30T21:00:00.000Z",
+ "K": 4,
+ "windows": {
+  "PRIMARY": {
+   "split": "2025-12-26T03:00:00.000Z",
+   "days": 536,
+   "control_choch": {
+    "TRAIN": {
+     "n": 1411,
+     "wr": 0.259,
+     "usd": -1.173,
+     "total": -1655.2,
+     "per_day": 4.48,
+     "outcomes": {
+      "LOSS": 1046,
+      "WIN": 261,
+      "SCRATCH": 104
+     },
+     "lb": -1.924
+    },
+    "OOS": {
+     "n": 1183,
+     "wr": 0.319,
+     "usd": -0.566,
+     "total": -669.2,
+     "per_day": 5.35,
+     "outcomes": {
+      "LOSS": 806,
+      "SCRATCH": 110,
+      "WIN": 267
+     },
+     "lb": -2.097
+    },
+    "ALL": {
+     "n": 2594,
+     "wr": 0.286,
+     "usd": -0.896,
+     "total": -2324.4,
+     "per_day": 4.84,
+     "outcomes": {
+      "LOSS": 1852,
+      "WIN": 528,
+      "SCRATCH": 214
+     },
+     "lb": -1.746
+    },
+    "per_year": {
+     "2024": {
+      "n": 233,
+      "wr": 0.232,
+      "usd": -0.289,
+      "total": -67.3,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 179,
+       "WIN": 44,
+       "SCRATCH": 10
+      }
+     },
+     "2025": {
+      "n": 1197,
+      "wr": 0.266,
+      "usd": -1.267,
+      "total": -1517.2,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 878,
+       "WIN": 224,
+       "SCRATCH": 95
+      }
+     },
+     "2026": {
+      "n": 1164,
+      "wr": 0.317,
+      "usd": -0.636,
+      "total": -739.9,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 795,
+       "WIN": 260,
+       "SCRATCH": 109
+      }
+     }
+    },
+    "big_down_days": {
+     "n": 566,
+     "wr": 0.479,
+     "usd": 7.595,
+     "total": 4298.9,
+     "per_day": null,
+     "outcomes": {
+      "LOSS": 295,
+      "WIN": 227,
+      "SCRATCH": 44
+     }
+    },
+    "big_up_days": {
+     "n": 544,
+     "wr": 0.169,
+     "usd": -6.744,
+     "total": -3668.9,
+     "per_day": null,
+     "outcomes": {
+      "LOSS": 452,
+      "SCRATCH": 45,
+      "WIN": 47
+     }
+    },
+    "friday_2026_10_30": [
+     {
+      "t": "2026-10-30T04:12:00.000Z",
+      "entry": 3990.24,
+      "sl": 3995.28,
+      "tp1": 3980.16,
+      "outcome": "SL",
+      "net": -5.18
+     },
+     {
+      "t": "2026-10-30T06:06:00.000Z",
+      "entry": 3988.73,
+      "sl": 4000.31,
+      "tp1": 3965.57,
+      "outcome": "TP1+TP2",
+      "net": 28.95
+     },
+     {
+      "t": "2026-10-30T13:03:00.000Z",
+      "entry": 3952.63,
+      "sl": 3959.71,
+      "tp1": 3938.47,
+      "outcome": "TP1+TP2",
+      "net": 17.7
+     },
+     {
+      "t": "2026-10-30T13:36:00.000Z",
+      "entry": 3929.06,
+      "sl": 3948.34,
+      "tp1": 3890.5,
+      "outcome": "TP1+TP2",
+      "net": 48.2
+     },
+     {
+      "t": "2026-10-30T19:48:00.000Z",
+      "entry": 3873.46,
+      "sl": 3879.49,
+      "tp1": 3861.4,
+      "outcome": "SL",
+      "net": -6.18
+     }
+    ]
+   },
+   "cells": {
+    "NW": {
+     "TRAIN": {
+      "n": 1089,
+      "wr": 0.238,
+      "usd": -0.85,
+      "total": -926,
+      "per_day": 3.46,
+      "outcomes": {
+       "LOSS": 830,
+       "WIN": 174,
+       "SCRATCH": 85
+      },
+      "lb": -1.638
+     },
+     "OOS": {
+      "n": 957,
+      "wr": 0.316,
+      "usd": 0.405,
+      "total": 388,
+      "per_day": 4.33,
+      "outcomes": {
+       "LOSS": 655,
+       "WIN": 221,
+       "SCRATCH": 81
+      },
+      "lb": -1.155
+     },
+     "ALL": {
+      "n": 2046,
+      "wr": 0.274,
+      "usd": -0.263,
+      "total": -538,
+      "per_day": 3.82,
+      "outcomes": {
+       "LOSS": 1485,
+       "WIN": 395,
+       "SCRATCH": 166
+      },
+      "lb": -1.134
+     },
+     "per_year": {
+      "2024": {
+       "n": 208,
+       "wr": 0.192,
+       "usd": -0.824,
+       "total": -171.3,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 168,
+        "WIN": 31,
+        "SCRATCH": 9
+       }
+      },
+      "2025": {
+       "n": 893,
+       "wr": 0.25,
+       "usd": -0.785,
+       "total": -701.3,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 670,
+        "WIN": 147,
+        "SCRATCH": 76
+       }
+      },
+      "2026": {
+       "n": 945,
+       "wr": 0.315,
+       "usd": 0.354,
+       "total": 334.7,
+       "per_day": null,
+       "outcomes": {
+        "WIN": 217,
+        "LOSS": 647,
+        "SCRATCH": 81
+       }
+      }
+     },
+     "big_down_days": {
+      "n": 476,
+      "wr": 0.454,
+      "usd": 7.749,
+      "total": 3688.5,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 260,
+       "WIN": 175,
+       "SCRATCH": 41
+      }
+     },
+     "big_up_days": {
+      "n": 385,
+      "wr": 0.166,
+      "usd": -5.948,
+      "total": -2290.1,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 321,
+       "SCRATCH": 26,
+       "WIN": 38
+      }
+     },
+     "friday_2026_10_30": [
+      {
+       "t": "2026-10-29T23:09:00.000Z",
+       "entry": 4014.0499999999997,
+       "sl": 4026.05,
+       "tp1": 3990.05,
+       "outcome": "TP1+TP2",
+       "net": 30
+      },
+      {
+       "t": "2026-10-30T07:54:00.000Z",
+       "entry": 3966.6,
+       "sl": 3985.29,
+       "tp1": 3929.22,
+       "outcome": "SL",
+       "net": -18.88
+      },
+      {
+       "t": "2026-10-30T10:39:00.000Z",
+       "entry": 3980.03,
+       "sl": 3984.41,
+       "tp1": 3970.03,
+       "outcome": "TP1+TP2",
+       "net": 12.5
+      },
+      {
+       "t": "2026-10-30T12:54:00.000Z",
+       "entry": 3954.98,
+       "sl": 3963.78,
+       "tp1": 3937.38,
+       "outcome": "TP1+TP2",
+       "net": 22
+      },
+      {
+       "t": "2026-10-30T13:42:00.000Z",
+       "entry": 3931.61,
+       "sl": 3946.94,
+       "tp1": 3900.95,
+       "outcome": "TP1+TP2",
+       "net": 38.33
+      }
+     ],
+     "checks": {
+      "train_pos": false,
+      "oos_pos": true,
+      "train_lb_pos": false,
+      "oos_lb_pos": false,
+      "oos_n30": true,
+      "beats_control_train": true,
+      "beats_control_oos": true,
+      "robust13y_all_pos": false
+     },
+     "pass": false
+    },
+    "NW-1H": {
+     "TRAIN": {
+      "n": 283,
+      "wr": 0.272,
+      "usd": -0.331,
+      "total": -93.8,
+      "per_day": 0.9,
+      "outcomes": {
+       "LOSS": 206,
+       "WIN": 50,
+       "SCRATCH": 27
+      },
+      "lb": -1.804
+     },
+     "OOS": {
+      "n": 330,
+      "wr": 0.336,
+      "usd": 1.81,
+      "total": 597.4,
+      "per_day": 1.49,
+      "outcomes": {
+       "WIN": 83,
+       "LOSS": 219,
+       "SCRATCH": 28
+      },
+      "lb": -1.468
+     },
+     "ALL": {
+      "n": 613,
+      "wr": 0.307,
+      "usd": 0.822,
+      "total": 503.6,
+      "per_day": 1.14,
+      "outcomes": {
+       "LOSS": 425,
+       "WIN": 133,
+       "SCRATCH": 55
+      },
+      "lb": -1.07
+     },
+     "per_year": {
+      "2024": {
+       "n": 50,
+       "wr": 0.18,
+       "usd": -1.468,
+       "total": -73.4,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 41,
+        "WIN": 8,
+        "SCRATCH": 1
+       }
+      },
+      "2025": {
+       "n": 241,
+       "wr": 0.299,
+       "usd": 0.099,
+       "total": 23.8,
+       "per_day": null,
+       "outcomes": {
+        "WIN": 46,
+        "LOSS": 169,
+        "SCRATCH": 26
+       }
+      },
+      "2026": {
+       "n": 322,
+       "wr": 0.332,
+       "usd": 1.718,
+       "total": 553.3,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 215,
+        "WIN": 79,
+        "SCRATCH": 28
+       }
+      }
+     },
+     "big_down_days": {
+      "n": 245,
+      "wr": 0.424,
+      "usd": 5.744,
+      "total": 1407.4,
+      "per_day": null,
+      "outcomes": {
+       "WIN": 83,
+       "LOSS": 141,
+       "SCRATCH": 21
+      }
+     },
+     "big_up_days": {
+      "n": 60,
+      "wr": 0.167,
+      "usd": -6.651,
+      "total": -399.1,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 50,
+       "SCRATCH": 5,
+       "WIN": 5
+      }
+     },
+     "friday_2026_10_30": [
+      {
+       "t": "2026-10-30T00:09:00.000Z",
+       "entry": 4006.23,
+       "sl": 4010.58,
+       "tp1": 3996.23,
+       "outcome": "SL",
+       "net": -4.47
+      },
+      {
+       "t": "2026-10-30T03:24:00.000Z",
+       "entry": 3995.28,
+       "sl": 3997.77,
+       "tp1": 3985.28,
+       "outcome": "SL",
+       "net": -2.64
+      },
+      {
+       "t": "2026-10-30T04:21:00.000Z",
+       "entry": 3991.38,
+       "sl": 3993.16,
+       "tp1": 3981.38,
+       "outcome": "SL",
+       "net": -1.91
+      },
+      {
+       "t": "2026-10-30T07:54:00.000Z",
+       "entry": 3966.6,
+       "sl": 3985.29,
+       "tp1": 3929.22,
+       "outcome": "SL",
+       "net": -18.88
+      },
+      {
+       "t": "2026-10-30T10:39:00.000Z",
+       "entry": 3980.03,
+       "sl": 3984.41,
+       "tp1": 3970.03,
+       "outcome": "TP1+TP2",
+       "net": 12.5
+      },
+      {
+       "t": "2026-10-30T12:54:00.000Z",
+       "entry": 3954.98,
+       "sl": 3963.78,
+       "tp1": 3937.38,
+       "outcome": "TP1+TP2",
+       "net": 22
+      },
+      {
+       "t": "2026-10-30T13:42:00.000Z",
+       "entry": 3931.61,
+       "sl": 3946.94,
+       "tp1": 3900.95,
+       "outcome": "TP1+TP2",
+       "net": 38.33
+      }
+     ],
+     "checks": {
+      "train_pos": false,
+      "oos_pos": true,
+      "train_lb_pos": false,
+      "oos_lb_pos": false,
+      "oos_n30": true,
+      "beats_control_train": true,
+      "beats_control_oos": true,
+      "robust13y_all_pos": false
+     },
+     "pass": false
+    }
+   }
+  },
+  "ROBUST_13Y": {
+   "split": "2021-06-30T12:36:00.000Z",
+   "days": 3690,
+   "control_choch": {
+    "TRAIN": {
+     "n": 6330,
+     "wr": 0.184,
+     "usd": -0.521,
+     "total": -3297.8,
+     "per_day": 3.09,
+     "outcomes": {
+      "LOSS": 5163,
+      "WIN": 1015,
+      "SCRATCH": 152
+     },
+     "lb": -0.668
+    },
+    "OOS": {
+     "n": 5343,
+     "wr": 0.254,
+     "usd": -0.702,
+     "total": -3753.2,
+     "per_day": 3.26,
+     "outcomes": {
+      "LOSS": 3986,
+      "WIN": 1003,
+      "SCRATCH": 354
+     },
+     "lb": -1.128
+    },
+    "ALL": {
+     "n": 11673,
+     "wr": 0.216,
+     "usd": -0.604,
+     "total": -7051.1,
+     "per_day": 3.16,
+     "outcomes": {
+      "LOSS": 9149,
+      "WIN": 2018,
+      "SCRATCH": 506
+     },
+     "lb": -0.807
+    },
+    "per_year": {
+     "2013": {
+      "n": 398,
+      "wr": 0.209,
+      "usd": -0.34,
+      "total": -135.4,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 315,
+       "WIN": 68,
+       "SCRATCH": 15
+      }
+     },
+     "2014": {
+      "n": 791,
+      "wr": 0.181,
+      "usd": -0.393,
+      "total": -311,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 648,
+       "WIN": 124,
+       "SCRATCH": 19
+      }
+     },
+     "2015": {
+      "n": 734,
+      "wr": 0.196,
+      "usd": -0.177,
+      "total": -129.7,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 590,
+       "WIN": 132,
+       "SCRATCH": 12
+      }
+     },
+     "2016": {
+      "n": 873,
+      "wr": 0.173,
+      "usd": -0.599,
+      "total": -523.1,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 722,
+       "WIN": 135,
+       "SCRATCH": 16
+      }
+     },
+     "2017": {
+      "n": 763,
+      "wr": 0.147,
+      "usd": -0.455,
+      "total": -347,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 651,
+       "SCRATCH": 5,
+       "WIN": 107
+      }
+     },
+     "2018": {
+      "n": 723,
+      "wr": 0.187,
+      "usd": -0.311,
+      "total": -224.9,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 588,
+       "WIN": 128,
+       "SCRATCH": 7
+      }
+     },
+     "2019": {
+      "n": 686,
+      "wr": 0.175,
+      "usd": -0.606,
+      "total": -416,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 566,
+       "WIN": 109,
+       "SCRATCH": 11
+      }
+     },
+     "2020": {
+      "n": 942,
+      "wr": 0.193,
+      "usd": -1.195,
+      "total": -1125.9,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 760,
+       "WIN": 136,
+       "SCRATCH": 46
+      }
+     },
+     "2021": {
+      "n": 844,
+      "wr": 0.212,
+      "usd": -0.538,
+      "total": -454.3,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 665,
+       "WIN": 138,
+       "SCRATCH": 41
+      }
+     },
+     "2022": {
+      "n": 881,
+      "wr": 0.225,
+      "usd": -0.418,
+      "total": -368.6,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 683,
+       "WIN": 161,
+       "SCRATCH": 37
+      }
+     },
+     "2023": {
+      "n": 722,
+      "wr": 0.244,
+      "usd": -0.186,
+      "total": -134.1,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 546,
+       "WIN": 135,
+       "SCRATCH": 41
+      }
+     },
+     "2024": {
+      "n": 955,
+      "wr": 0.223,
+      "usd": -0.654,
+      "total": -624.1,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 742,
+       "WIN": 161,
+       "SCRATCH": 52
+      }
+     },
+     "2025": {
+      "n": 1197,
+      "wr": 0.266,
+      "usd": -1.267,
+      "total": -1517.2,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 878,
+       "WIN": 224,
+       "SCRATCH": 95
+      }
+     },
+     "2026": {
+      "n": 1164,
+      "wr": 0.317,
+      "usd": -0.636,
+      "total": -739.9,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 795,
+       "WIN": 260,
+       "SCRATCH": 109
+      }
+     }
+    },
+    "big_down_days": {
+     "n": 2589,
+     "wr": 0.417,
+     "usd": 3.2,
+     "total": 8284.8,
+     "per_day": null,
+     "outcomes": {
+      "LOSS": 1510,
+      "WIN": 937,
+      "SCRATCH": 142
+     }
+    },
+    "big_up_days": {
+     "n": 3052,
+     "wr": 0.117,
+     "usd": -3.317,
+     "total": -10123.9,
+     "per_day": null,
+     "outcomes": {
+      "LOSS": 2696,
+      "WIN": 214,
+      "SCRATCH": 142
+     }
+    },
+    "friday_2026_10_30": [
+     {
+      "t": "2026-10-30T04:12:00.000Z",
+      "entry": 3990.24,
+      "sl": 3995.28,
+      "tp1": 3980.16,
+      "outcome": "SL",
+      "net": -5.18
+     },
+     {
+      "t": "2026-10-30T06:06:00.000Z",
+      "entry": 3988.73,
+      "sl": 4000.31,
+      "tp1": 3965.57,
+      "outcome": "TP1+TP2",
+      "net": 28.95
+     },
+     {
+      "t": "2026-10-30T13:03:00.000Z",
+      "entry": 3952.63,
+      "sl": 3959.71,
+      "tp1": 3938.47,
+      "outcome": "TP1+TP2",
+      "net": 17.7
+     },
+     {
+      "t": "2026-10-30T13:36:00.000Z",
+      "entry": 3929.06,
+      "sl": 3948.34,
+      "tp1": 3890.5,
+      "outcome": "TP1+TP2",
+      "net": 48.2
+     },
+     {
+      "t": "2026-10-30T19:48:00.000Z",
+      "entry": 3873.46,
+      "sl": 3879.49,
+      "tp1": 3861.4,
+      "outcome": "SL",
+      "net": -6.18
+     }
+    ]
+   },
+   "cells": {
+    "NW13": {
+     "TRAIN": {
+      "n": 5933,
+      "wr": 0.183,
+      "usd": -0.533,
+      "total": -3163.4,
+      "per_day": 2.89,
+      "outcomes": {
+       "LOSS": 4850,
+       "WIN": 938,
+       "SCRATCH": 145
+      },
+      "lb": -0.692
+     },
+     "OOS": {
+      "n": 5064,
+      "wr": 0.252,
+      "usd": -0.611,
+      "total": -3096.4,
+      "per_day": 3.09,
+      "outcomes": {
+       "LOSS": 3786,
+       "WIN": 952,
+       "SCRATCH": 326
+      },
+      "lb": -1.037
+     },
+     "ALL": {
+      "n": 10997,
+      "wr": 0.215,
+      "usd": -0.569,
+      "total": -6259.8,
+      "per_day": 2.98,
+      "outcomes": {
+       "LOSS": 8636,
+       "WIN": 1890,
+       "SCRATCH": 471
+      },
+      "lb": -0.792
+     },
+     "per_year": {
+      "2013": {
+       "n": 395,
+       "wr": 0.2,
+       "usd": -0.376,
+       "total": -148.5,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 316,
+        "WIN": 65,
+        "SCRATCH": 14
+       }
+      },
+      "2014": {
+       "n": 752,
+       "wr": 0.174,
+       "usd": -0.418,
+       "total": -314.6,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 621,
+        "WIN": 112,
+        "SCRATCH": 19
+       }
+      },
+      "2015": {
+       "n": 712,
+       "wr": 0.197,
+       "usd": -0.131,
+       "total": -92.9,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 572,
+        "WIN": 126,
+        "SCRATCH": 14
+       }
+      },
+      "2016": {
+       "n": 855,
+       "wr": 0.166,
+       "usd": -0.674,
+       "total": -576.1,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 713,
+        "WIN": 128,
+        "SCRATCH": 14
+       }
+      },
+      "2017": {
+       "n": 758,
+       "wr": 0.148,
+       "usd": -0.462,
+       "total": -350.5,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 646,
+        "SCRATCH": 5,
+        "WIN": 107
+       }
+      },
+      "2018": {
+       "n": 697,
+       "wr": 0.192,
+       "usd": -0.296,
+       "total": -206,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 563,
+        "WIN": 127,
+        "SCRATCH": 7
+       }
+      },
+      "2019": {
+       "n": 657,
+       "wr": 0.178,
+       "usd": -0.566,
+       "total": -371.7,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 540,
+        "WIN": 106,
+        "SCRATCH": 11
+       }
+      },
+      "2020": {
+       "n": 787,
+       "wr": 0.188,
+       "usd": -1.434,
+       "total": -1128.8,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 639,
+        "WIN": 107,
+        "SCRATCH": 41
+       }
+      },
+      "2021": {
+       "n": 719,
+       "wr": 0.217,
+       "usd": -0.405,
+       "total": -291,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 563,
+        "WIN": 118,
+        "SCRATCH": 38
+       }
+      },
+      "2022": {
+       "n": 855,
+       "wr": 0.225,
+       "usd": -0.417,
+       "total": -356.4,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 663,
+        "WIN": 152,
+        "SCRATCH": 40
+       }
+      },
+      "2023": {
+       "n": 692,
+       "wr": 0.241,
+       "usd": -0.247,
+       "total": -170.8,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 525,
+        "WIN": 124,
+        "SCRATCH": 43
+       }
+      },
+      "2024": {
+       "n": 933,
+       "wr": 0.221,
+       "usd": -0.71,
+       "total": -662.6,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 727,
+        "WIN": 161,
+        "SCRATCH": 45
+       }
+      },
+      "2025": {
+       "n": 1119,
+       "wr": 0.265,
+       "usd": -1.083,
+       "total": -1212.3,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 822,
+        "WIN": 211,
+        "SCRATCH": 86
+       }
+      },
+      "2026": {
+       "n": 1066,
+       "wr": 0.319,
+       "usd": -0.354,
+       "total": -377.2,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 726,
+        "WIN": 246,
+        "SCRATCH": 94
+       }
+      }
+     },
+     "big_down_days": {
+      "n": 2467,
+      "wr": 0.419,
+      "usd": 3.354,
+      "total": 8274.4,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 1434,
+       "WIN": 888,
+       "SCRATCH": 145
+      }
+     },
+     "big_up_days": {
+      "n": 2777,
+      "wr": 0.11,
+      "usd": -3.41,
+      "total": -9470.4,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 2472,
+       "WIN": 186,
+       "SCRATCH": 119
+      }
+     },
+     "friday_2026_10_30": [
+      {
+       "t": "2026-10-29T23:06:00.000Z",
+       "entry": 4017.12,
+       "sl": 4026.44,
+       "tp1": 3998.48,
+       "outcome": "TP1+TP2",
+       "net": 23.3
+      },
+      {
+       "t": "2026-10-30T04:21:00.000Z",
+       "entry": 3991.38,
+       "sl": 3993.16,
+       "tp1": 3981.38,
+       "outcome": "SL",
+       "net": -1.91
+      },
+      {
+       "t": "2026-10-30T06:48:00.000Z",
+       "entry": 3983.36,
+       "sl": 3991.26,
+       "tp1": 3967.56,
+       "outcome": "TP1+BE",
+       "net": 7.81
+      },
+      {
+       "t": "2026-10-30T10:39:00.000Z",
+       "entry": 3980.03,
+       "sl": 3984.41,
+       "tp1": 3970.03,
+       "outcome": "TP1+TP2",
+       "net": 12.5
+      },
+      {
+       "t": "2026-10-30T12:03:00.000Z",
+       "entry": 3963.61,
+       "sl": 3969.39,
+       "tp1": 3952.05,
+       "outcome": "SL",
+       "net": -5.95
+      },
+      {
+       "t": "2026-10-30T12:45:00.000Z",
+       "entry": 3957.42,
+       "sl": 3971.27,
+       "tp1": 3929.72,
+       "outcome": "TP1+TP2",
+       "net": 34.63
+      },
+      {
+       "t": "2026-10-30T14:18:00.000Z",
+       "entry": 3904.88,
+       "sl": 3916.53,
+       "tp1": 3881.58,
+       "outcome": "SL",
+       "net": -11.93
+      },
+      {
+       "t": "2026-10-30T17:21:00.000Z",
+       "entry": 3889.77,
+       "sl": 3895.14,
+       "tp1": 3879.03,
+       "outcome": "TP1+TP2",
+       "net": 13.43
+      }
+     ],
+     "checks": {
+      "train_pos": false,
+      "oos_pos": false,
+      "train_lb_pos": false,
+      "oos_lb_pos": false,
+      "oos_n30": true,
+      "beats_control_train": false,
+      "beats_control_oos": true
+     },
+     "pass": false
+    },
+    "NW13-1H": {
+     "TRAIN": {
+      "n": 2420,
+      "wr": 0.179,
+      "usd": -0.356,
+      "total": -861.3,
+      "per_day": 1.18,
+      "outcomes": {
+       "LOSS": 1987,
+       "WIN": 375,
+       "SCRATCH": 58
+      },
+      "lb": -0.575
+     },
+     "OOS": {
+      "n": 1770,
+      "wr": 0.255,
+      "usd": -0.089,
+      "total": -158,
+      "per_day": 1.08,
+      "outcomes": {
+       "LOSS": 1319,
+       "WIN": 330,
+       "SCRATCH": 121
+      },
+      "lb": -1.019
+     },
+     "ALL": {
+      "n": 4190,
+      "wr": 0.211,
+      "usd": -0.243,
+      "total": -1019.3,
+      "per_day": 1.14,
+      "outcomes": {
+       "LOSS": 3306,
+       "WIN": 705,
+       "SCRATCH": 179
+      },
+      "lb": -0.659
+     },
+     "per_year": {
+      "2013": {
+       "n": 169,
+       "wr": 0.201,
+       "usd": -0.131,
+       "total": -22.2,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 135,
+        "WIN": 27,
+        "SCRATCH": 7
+       }
+      },
+      "2014": {
+       "n": 329,
+       "wr": 0.164,
+       "usd": -0.346,
+       "total": -113.7,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 275,
+        "SCRATCH": 7,
+        "WIN": 47
+       }
+      },
+      "2015": {
+       "n": 319,
+       "wr": 0.179,
+       "usd": -0.196,
+       "total": -62.7,
+       "per_day": null,
+       "outcomes": {
+        "WIN": 50,
+        "LOSS": 262,
+        "SCRATCH": 7
+       }
+      },
+      "2016": {
+       "n": 348,
+       "wr": 0.167,
+       "usd": -0.604,
+       "total": -210.2,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 290,
+        "WIN": 52,
+        "SCRATCH": 6
+       }
+      },
+      "2017": {
+       "n": 288,
+       "wr": 0.142,
+       "usd": -0.42,
+       "total": -120.9,
+       "per_day": null,
+       "outcomes": {
+        "SCRATCH": 2,
+        "LOSS": 247,
+        "WIN": 39
+       }
+      },
+      "2018": {
+       "n": 310,
+       "wr": 0.165,
+       "usd": -0.305,
+       "total": -94.4,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 259,
+        "WIN": 47,
+        "SCRATCH": 4
+       }
+      },
+      "2019": {
+       "n": 255,
+       "wr": 0.137,
+       "usd": -0.808,
+       "total": -206.1,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 220,
+        "WIN": 34,
+        "SCRATCH": 1
+       }
+      },
+      "2020": {
+       "n": 262,
+       "wr": 0.237,
+       "usd": -0.619,
+       "total": -162.3,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 200,
+        "WIN": 47,
+        "SCRATCH": 15
+       }
+      },
+      "2021": {
+       "n": 286,
+       "wr": 0.248,
+       "usd": 0.229,
+       "total": 65.6,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 215,
+        "WIN": 53,
+        "SCRATCH": 18
+       }
+      },
+      "2022": {
+       "n": 329,
+       "wr": 0.216,
+       "usd": -0.467,
+       "total": -153.7,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 258,
+        "WIN": 55,
+        "SCRATCH": 16
+       }
+      },
+      "2023": {
+       "n": 265,
+       "wr": 0.234,
+       "usd": -0.07,
+       "total": -18.5,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 203,
+        "WIN": 48,
+        "SCRATCH": 14
+       }
+      },
+      "2024": {
+       "n": 296,
+       "wr": 0.206,
+       "usd": -0.716,
+       "total": -211.9,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 235,
+        "SCRATCH": 16,
+        "WIN": 45
+       }
+      },
+      "2025": {
+       "n": 341,
+       "wr": 0.299,
+       "usd": -0.428,
+       "total": -146.1,
+       "per_day": null,
+       "outcomes": {
+        "WIN": 72,
+        "LOSS": 239,
+        "SCRATCH": 30
+       }
+      },
+      "2026": {
+       "n": 393,
+       "wr": 0.318,
+       "usd": 1.114,
+       "total": 437.8,
+       "per_day": null,
+       "outcomes": {
+        "LOSS": 268,
+        "WIN": 89,
+        "SCRATCH": 36
+       }
+      }
+     },
+     "big_down_days": {
+      "n": 1272,
+      "wr": 0.388,
+      "usd": 2.994,
+      "total": 3807.9,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 778,
+       "WIN": 421,
+       "SCRATCH": 73
+      }
+     },
+     "big_up_days": {
+      "n": 686,
+      "wr": 0.089,
+      "usd": -3.313,
+      "total": -2272.9,
+      "per_day": null,
+      "outcomes": {
+       "LOSS": 625,
+       "WIN": 35,
+       "SCRATCH": 26
+      }
+     },
+     "friday_2026_10_30": [
+      {
+       "t": "2026-10-30T00:00:00.000Z",
+       "entry": 4007.6800000000003,
+       "sl": 4011.35,
+       "tp1": 3997.68,
+       "outcome": "SL",
+       "net": -3.78
+      },
+      {
+       "t": "2026-10-30T03:24:00.000Z",
+       "entry": 3995.28,
+       "sl": 3997.77,
+       "tp1": 3985.28,
+       "outcome": "SL",
+       "net": -2.64
+      },
+      {
+       "t": "2026-10-30T03:57:00.000Z",
+       "entry": 3990.24,
+       "sl": 3994.56,
+       "tp1": 3980.24,
+       "outcome": "SL",
+       "net": -4.45
+      },
+      {
+       "t": "2026-10-30T04:21:00.000Z",
+       "entry": 3991.38,
+       "sl": 3993.16,
+       "tp1": 3981.38,
+       "outcome": "SL",
+       "net": -1.91
+      },
+      {
+       "t": "2026-10-30T06:48:00.000Z",
+       "entry": 3983.36,
+       "sl": 3991.26,
+       "tp1": 3967.56,
+       "outcome": "TP1+BE",
+       "net": 7.81
+      },
+      {
+       "t": "2026-10-30T10:39:00.000Z",
+       "entry": 3980.03,
+       "sl": 3984.41,
+       "tp1": 3970.03,
+       "outcome": "TP1+TP2",
+       "net": 12.5
+      },
+      {
+       "t": "2026-10-30T12:03:00.000Z",
+       "entry": 3963.61,
+       "sl": 3969.39,
+       "tp1": 3952.05,
+       "outcome": "SL",
+       "net": -5.95
+      },
+      {
+       "t": "2026-10-30T12:45:00.000Z",
+       "entry": 3957.42,
+       "sl": 3971.27,
+       "tp1": 3929.72,
+       "outcome": "TP1+TP2",
+       "net": 34.63
+      },
+      {
+       "t": "2026-10-30T14:18:00.000Z",
+       "entry": 3904.88,
+       "sl": 3916.53,
+       "tp1": 3881.58,
+       "outcome": "SL",
+       "net": -11.93
+      },
+      {
+       "t": "2026-10-30T17:21:00.000Z",
+       "entry": 3889.77,
+       "sl": 3895.14,
+       "tp1": 3879.03,
+       "outcome": "TP1+TP2",
+       "net": 13.43
+      }
+     ],
+     "checks": {
+      "train_pos": false,
+      "oos_pos": false,
+      "train_lb_pos": false,
+      "oos_lb_pos": false,
+      "oos_n30": true,
+      "beats_control_train": true,
+      "beats_control_oos": true
+     },
+     "pass": false
+    }
+   }
+  }
+ },
+ "audits": {
+  "lookahead_violations": 0,
+  "deterministic": true,
+  "friday_parity": {
+   "live_bars": 34,
+   "study_bars": 34,
+   "only_live": [],
+   "only_study": []
+  }
+ },
+ "passes": []
+}
