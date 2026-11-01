@@ -121,3 +121,41 @@ Script `scripts/research/extreme_swing/build_step1_inputs.mjs`. Proof: `data/res
 - IAU is not added: no verified free history.
 
 The study (§6 steps 2-3) uses exactly these files and rules.
+
+## ADDENDUM B — 2026-11-01, steps 2-3 implementation rules (written BEFORE any study number)
+
+Script `scripts/research/extreme_swing/study_extreme_swing.mjs`. Every choice below is fixed now.
+
+1. **Candles:** `kit('XAUUSD')` (gold session + reopen clamp, the same as the published swing book) → `1W` and `1D`, `markIncomplete` → incomplete candles are ZigZag breaks (same as `scripts/swings_1y.mjs`).
+2. **Pivot audit (must be equal or the run is void):** the rebuilt weekly pivots whose candle is on or after the first row of `docs/swing_book/xau_1y_swings/1W.csv` and whose confirmation is on or before its last `confirmed_at` = the 6 rows (type, candle_open, price to the cent).
+3. **Legs:** consecutive weekly pivots. Size in ATR = |Δ| / ATR at the start pivot. The **end-week cut**: a candidate counts only if known (the close of the candle that confirmed it, or its `known_t`) at or before the OPEN of the end-pivot week.
+4. **B distances** in ATR(14, 1W) of the candle before the end week. Controls: 200 prices uniform over the leg's range minus the last 10 % at the end, seeded `rng(1000 + leg index)`. Percentile = (controls closer + ½ ties) / 200.
+5. **B statistic:** p = one-sided normal test of the mean percentile against the uniform null (variance 1 / (12 n)); UB = `blockBootstrapMean` 95 % two-sided upper bound (7-day blocks = legs). A cell PASSES only if mean < 0.5, UB < 0.5, Holm pass and n ≥ 30.
+6. **B1 volume nodes:** GOLD_FUT minutes (real CME volume) priced at the SAME-minute spot close (basis removed). Bins are 0.05 × ATR(14, 1W) wide. The top 5 % of non-empty bins by volume, over the 60 trading days before the end week, are the candidates. A leg is eligible only if those 60 days lie wholly after 2024-10-09.
+7. **Audits:**
+   - shuffle (as in §4): 1,000 permutations of end prices across the legs. A shuffle "passes" if mean < 0.5 and p < 0.05 (uniform-null shortcut, no bootstrap). Void if more than 5 % pass.
+   - placebo end (added because the cross-leg shuffle is weak when price levels differ between eras): each leg's end is replaced by one random control-range price, 1,000 times, same pass definition, void if more than 5 % pass.
+   - known-time smoke: every candidate and item value is known at or before its cut.
+8. **C items** are known by the week's close (`close_t`):
+
+   | item | value |
+   |---|---|
+   | C1 | COT `mm_net` percentile among the trailing 156 known reports (needs ≥ 104; MISSING reports are skipped; null if the latest known report is more than 21 days old) |
+   | C2 | GLD tonnes % change: latest known vs latest known 28 days earlier |
+   | C3 | DFII10 change over 28 days (FRED current snapshot, known date + 1 day, labelled HIST) |
+   | C4 | DXY % change over 28 days, from the DXY 1m rebuild (last minute at or before the cut) |
+   | C5 | VIXCLS level (FRED, known date + 1 day) |
+   | C6 | mean GPRD of the last 7 known days (`inputs/gpr_daily.jsonl`, known date + 1 day, HIST) |
+
+   **Extreme** = beyond the 5th / 95th percentile of the item over the TRAIN weeks (week close before 2020-01-01), either tail, so the base is about 10 %. Ends are compared with in-leg weeks (strictly between the start and end pivot weeks) using `compareRates` (two-sided p). PASS = ratio > 1, Holm pass, n_ends ≥ 30. Which tail was hit is reported, as description only.
+9. **D items:**
+   - D1: the week makes a new in-leg extreme, and RSI(14, 1W) is below the RSI of the latest earlier in-leg week that was itself a new extreme.
+   - D2: range ≥ 2 × ATR of the prior candle.
+   - D3: |close − SMA20| ≥ 3 × ATR.
+   - D4: ≥ 6 consecutive closes in the leg's direction ending at the week.
+
+   Same comparison as C; precision = k_end / (k_end + k_ctrl), recall = k_end / n_end.
+10. **E pullbacks:** 1D ZigZag k = 3 legs opposite to the extreme leg, with both pivots inside the extreme leg's pivot candles. Depth = |pullback| / |pullback start − extreme leg start|. Duration is in daily candles.
+11. **Robustness (beside, not in Holm):** 1D legs with |Δ| ≥ 10 × ATR(14, 1D) at the start. B2-B4 only, the cut at the end DAY's open, distances in ATR(14, 1D).
+12. **Leave-one-era-out:** B mean percentile and C / D ratios are reported for legs (weeks) of 2013-2019 and 2020 → separately. Opposite sides of 0.5 / 1 between eras → labelled **era-dependent**.
+13. **Holm family K = 18:** B1-B4 × ALL / MODERN (8), C1-C6 ALL (6), D1-D4 ALL (4). MODERN C / D are reported beside.
