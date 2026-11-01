@@ -1330,3 +1330,30 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Counter-trend trade at the warning:** described only (cannot meet the 92 % rule).
   - **Audits:** causal smoke test; reproduce (ft)/(fu); placebo limit 5 % + 3 SE fixed in advance.
   - No live change. A forward recorder only with Ashraf's OK.
+- **(fw) 2026-11-01 — EXHAUSTION WARNING aftermath RUN: warning is REAL causally (D1, ANY), but ACTING on it pays NO better than acting at any new extreme → Part 2 FAIL 0/6 (Ashraf: "Yes, build and run").**
+  - **Code:** `scripts/research/extreme_swing/study_warning_aftermath.mjs`; causal builder `causalWarnings` in `extreme_lib.mjs`.
+  - **Result:** `data/research/extreme_swing/2026-11-01_warning_aftermath.json` + `warnings.jsonl`. Spec + addendum A were committed before any number (a03ac1f, 0ac15f9).
+  - **Audits clean:**
+    - the hindsight D tables reproduce (ft)/(fu) exactly on both metals;
+    - 0 causal violations;
+    - placebo pass rate max 2.9 % (limit 7.07 %);
+    - gold median cost 0.008 ATR (silver uncosted, addendum A.1).
+  - **Part 1 (causal, the leg since the last CONFIRMED pivot; gold 185 / silver 154 new-extreme weeks with outcome):**
+
+    | set | gold: precision vs non-warning | silver: precision vs non-warning | verdict |
+    |---|---|---|---|
+    | D1 RSI divergence | 34.8 % vs 12.9 %, ×2.69, p 0.0009 | 41.7 % vs 16.9 %, ×2.46, p 0.002 | **PASS** (both eras on both metals) |
+    | ANY | 33.3 % vs 10.1 %, ×3.31 | 34.5 % vs 16.2 %, ×2.14 | **PASS** |
+    | D2 range ≥ 2 ATR | ×2.30 | ×1.70, p 0.11, Holm fail; gold 2013-19 ×1.0 | **FAIL** |
+
+    The warning marks real leg ends in real time: about 35-42 % of warnings vs a base of 18-23 %.
+  - **Part 2 (hold P0 / exit P1 / tighten P2, against the same action at non-warning new extremes): 0/6 pass.** Every control-adjusted lift has its LB < 0, and D1|P1 is gold −0.10 / silver +0.21 ATR.
+  - **Why (descriptive):**
+    - Warnings come early: gold D1 median 4 weeks to the end, p75 15.5 weeks; silver 1.5 / 7 weeks.
+    - After a FALSE warning the leg runs on a median 2.0 ATR (gold) / 1.6 ATR (silver), p75 3.9 / 6.6 ATR.
+    - Exiting at ANY new extreme already beats holding to the ZigZag-confirmed exit: P1 lift at the controls is +0.19…+0.28 ATR on gold. So the warning adds nothing on top of the ZigZag lag. This lag effect was itself not tested.
+  - **Counter-trend trade at the warning (described only):** WR 31-44 %, mean −0.32…+0.24 ATR, about 0. Not tradeable; far below the 92 % rule.
+  - **CURRENT state:**
+    - gold: down leg from 4,696.56; the weeks of 10-18 and 10-25 were causal new lows with NO warning;
+    - silver: down leg from 121.618; recent new lows without a warning.
+  - **Status:** D1 = a measured "the end is more likely near" CONTEXT flag only. No exit rule, no trade, no alert.

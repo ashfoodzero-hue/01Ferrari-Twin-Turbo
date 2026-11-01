@@ -31,3 +31,27 @@ export function rate(rows, key, getter) { const E = rows.filter((r) => r.end), C
   const cr = compareRates(kE.length, nE, kC.length, nC)
   return { key, n_end: nE, k_end: kE.length, n_ctrl: nC, k_ctrl: kC.length, rate_end: r2(cr.p1, 3), rate_ctrl: r2(cr.p2, 3), ratio: r2(cr.ratio, 2), p: cr.p == null ? null : +cr.p.toPrecision(3),
     precision: kE.length + kC.length ? r2(kE.length / (kE.length + kC.length), 3) : null, recall: nE ? r2(kE.length / nE, 3) : null } }
+
+/** CAUSAL warning rows (docs/research/extreme_swing/2026-11-01_WARNING_AFTERMATH_SPEC.md §1 + addendum A.2): for every week w that is a causal new
+ *  extreme — a new high (low) since the last pivot CONFIRMED by w's close, in the direction away from it — the D1 / D2 flags from candles ≤ w only,
+ *  plus the outcome (TRUE = w is the candle of the pivot that ends this causal leg; exit = close of that pivot's confirming candle). SW = zigzag swings. */
+export function causalWarnings({ W, AW, RW, SW, breaks }) {
+  const rows = [], audit = { causal_violations: 0 }, brk = [...breaks].sort((a, b) => a - b)
+  const hasBreak = (a, b) => brk.some((i) => i > a && i <= b)
+  let k = -1, lastRsi = null, prevKey = null
+  for (let w = 0; w < W.length; w++) {
+    while (k + 1 < SW.length && SW[k + 1].knownI <= w) k++
+    if (k < 0) continue
+    const p = SW[k], dir = p.type === 'L' ? 1 : -1
+    if (prevKey !== k) { lastRsi = null; prevKey = k }
+    if (w <= p.i || hasBreak(p.i, w) || !AW[w] || !AW[w - 1]) continue
+    let newExt = true; for (let i = p.i + 1; i < w; i++) if (dir > 0 ? W[i].h >= W[w].h : W[i].l <= W[w].l) { newExt = false; break }
+    if (!newExt) continue
+    if (W[p.knownI].close_t > W[w].close_t) audit.causal_violations++
+    const D1 = lastRsi != null && RW[w] != null && (dir > 0 ? RW[w] < lastRsi : RW[w] > lastRsi), D2 = W[w].h - W[w].l >= 2 * AW[w - 1]
+    lastRsi = RW[w]
+    const e = SW[k + 1] && SW[k + 1].type !== p.type ? SW[k + 1] : null
+    const known = e && !hasBreak(w, e.knownI) && e.knownI < W.length
+    rows.push({ w, t: W[w].t, legKey: k, dir, pivot: { i: p.i, px: p.px, knownI: p.knownI }, era: p.t >= MODERN ? 'MODERN' : 'OLD', atr: AW[w], D1, D2, ANY: D1 || D2,
+      known: !!known, TRUE: known ? e.i === w : null, end: known ? { i: e.i, px: e.px, knownI: e.knownI } : null }) }
+  return { rows, audit } }
