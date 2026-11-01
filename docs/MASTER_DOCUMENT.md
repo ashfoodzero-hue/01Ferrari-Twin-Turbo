@@ -1389,3 +1389,8 @@ without duplications … only use the real Win results, and ignore the rest."
   - Part 0 gates (coverage ≥ 98 %, 8/9 dated anchor events seen by zACTS/zPOSTURE, FRED-vs-Polygon WTI corr ≥ 0.90, look-ahead asserts + week-shuffle, freeze commit) → Part A words → actions inside a region (K = 24) and Part B GDELT → gold / oil / GVZ / OVX beyond the market (own vol, GVZ/OVX/VIX) AND GPR threat/act (K = 128).
   - Pass = TRAIN p ≤ 0.05, same sign OOS (2022 →), frozen-TRAIN OOS ΔMSE > 0 surviving Holm, still > 0 without the top 1 % days, ≥ 500 OOS obs. A size pass = CONTEXT only; any trade use = new spec + money test + 92 % rule.
   - NEXT: when the GDELT backfill finishes, build `study_words_actions.mjs` + `smoke_words_actions.mjs`, run Part 0 first.
+- **(fz) 2026-11-01 — GDELT event backfill FINISHED + spec Addendum A.**
+  - Coverage: 4,834 / 4,858 days (99.51 %), 0 errors, 0 bad rows.
+  - 24 days are missing at GDELT itself (404 + not in GDELT's index; GDELT 2.0 also 404), incl. **2025-06-14 → 07-01** = the Israel–Iran war window.
+  - Addendum A fixes how the gap is handled (no fill, skipped in fit/score, anchor 2025-06-13 tested on day d only), written before any study number.
+  - Sanity glance (raw counts, not a result): RUS material-conflict events 4,497 on 2022-02-24 vs ~490 on ordinary days; PSE 713 on 2023-10-07 vs ~113.

@@ -176,3 +176,17 @@ All targets use log changes from close(T).
 ## 9. Changes after this point
 
 Any change is a dated ADDENDUM below, written before the numbers it affects.
+
+## ADDENDUM A — 2026-11-01, after the GDELT backfill finished, before any study number
+
+- **Coverage measured:** 2013-07-14 … 2026-10-31 = 4,858 calendar days, 4,834 stored (99.51 %), 0 error rows, 0 bad rows. G0.1 (≥ 98 %) is therefore met on coverage alone. It is still re-checked by the study script.
+- **24 days are missing at GDELT itself:**
+  - 2014-01-23/24/25, 2014-03-19, 2022-11-10, 2023-03-23;
+  - **2025-06-14 → 2025-07-01 (18 days in a row).**
+  - Checked at the source: the daily file answers 404, and GDELT's own index lists nothing from 2025-06-13 to 2025-07-02. The GDELT 2.0 15-minute files also answer 404 in that window. It is a GDELT outage, not our download.
+- **Why it matters:** the 18-day hole is the 2025 Israel–Iran war, which falls in the OOS period. Rules fixed now:
+  1. The missing days stay missing. There is no fill and no other source spliced in.
+  2. A missing day still advances the clock. Its market days get no predictor value and are left out of the fit and of the OOS score.
+  3. The z-score windows simply have fewer days. The "≥ 60 of the previous 90" rule decides, so the first days after the hole stay valid, with 72 or more stored days.
+  4. Anchor 2025-06-13 (Israel strikes Iran) is tested on day d only, because d+1 and d+2 are missing. It counts as a miss if zACTS < 2 on 06-13. The pass mark stays 8 of 9.
+  5. The report states that OOS has no GDELT data for the war's 18 days. This is a known blind spot in Part B, the same one the live collector would have had.
