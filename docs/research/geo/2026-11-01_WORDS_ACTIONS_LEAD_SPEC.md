@@ -227,3 +227,4 @@ Any change is a dated ADDENDUM below, written before the numbers it affects.
   - Failing candles get no close, so every row whose target or controls touch them is dropped.
   - This removes exactly the four stubs above.
 - **Part 0 is re-run in full,** shuffle included, with the rule in place. G0.5 must show 0 assert failures.
+- **Addendum C, second run:** still 144 failures, because the assert counted rows *before* invalid rows were dropped. So the 4 stubs never entered a fit, but they were still counted. The assert now runs on every row that enters a fit (the spec says "every GDELT day *used*"). Dropped rows are counted separately (`rows_dropped_before_fit`). Part 0 is re-run in full.
