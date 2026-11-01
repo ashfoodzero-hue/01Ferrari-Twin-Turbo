@@ -11,3 +11,5 @@ INSTALL_PACKAGE/FerrariTwinTurbo/
 data/cache/dxy_1m.bin
 data/cache/dxy_1m.bin.*.tmp
 data/research/wave_reasons/*/
+data/research/macro_nowcast/inputs/raw/
+data/research/macro_nowcast/inputs/rows/
