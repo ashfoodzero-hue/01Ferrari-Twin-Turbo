@@ -1321,3 +1321,12 @@ without duplications … only use the real Win results, and ignore the rest."
   - **Independence, measured:** 17 of 36 silver leg ends fall within 1 week of a gold end in the same direction. Of the 19 silver-only ends, 15 showed D1 or D2 (D1 14, D2 4), so the effect is not just gold's own weeks repeated.
   - **What it means (addendum C.8):** a measured EXHAUSTION WARNING on two metals. About 1 in 3 alerts is the real end and 2 in 3 are not. It is NOT a trade rule and NOT an alert (92 % rule). The gold run (ft) itself stays VOID.
   - **Next:** a pre-registered warning spec with what happens AFTER a warning (how far the leg runs on after a false one; $ for a trader who tightens or exits), then a forward record, then Ashraf's OK for any live display.
+- **(fv) 2026-11-01 — EXHAUSTION WARNING aftermath SPEC pre-registered (Ashraf: "Yes, write the spec").** `docs/research/extreme_swing/2026-11-01_WARNING_AFTERMATH_SPEC.md`, written before any number.
+  - **Part 1:** rebuild D1 / D2 CAUSALLY (the leg = since the last CONFIRMED weekly pivot; (ft)/(fu) used the finished ZigZag) and re-measure precision vs the base rate on gold AND silver (Holm K 3). This is the gate.
+  - **Part 2:**
+    - after each warning: weeks to the end, further run, adverse move;
+    - policies for a holder in ATR: P0 hold to the ZigZag-confirmed exit · P1 exit at the warning close · P2 tighten the stop to the warning-week low/high;
+    - each judged against the same policy at non-warning new-extreme weeks; Holm K 6 per metal; leg-block bootstrap; pass needs both metals, both eras and n ≥ 30.
+  - **Counter-trend trade at the warning:** described only (cannot meet the 92 % rule).
+  - **Audits:** causal smoke test; reproduce (ft)/(fu); placebo limit 5 % + 3 SE fixed in advance.
+  - No live change. A forward recorder only with Ashraf's OK.
