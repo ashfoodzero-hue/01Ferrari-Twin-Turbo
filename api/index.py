@@ -4,7 +4,6 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Clean up the key directly from the cloud environment variables
 bls_key = os.environ.get("BLS_API_KEY", "").replace('"', '').replace("'", "").strip()
 
 @app.route('/api')
@@ -14,9 +13,10 @@ def get_bls_data():
         "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
     }
+    # Changed timeline metrics to active present constraints
     payload = {
-        "seriesid": ["LNS14000000"],  # US Unemployment Rate
-        "startyear": "2025",
+        "seriesid": ["LNS14000000"],
+        "startyear": "2024",
         "endyear": "2026",
         "registrationkey": bls_key
     }
