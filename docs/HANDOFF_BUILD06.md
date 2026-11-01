@@ -124,3 +124,23 @@
 - Explicit-path commits as Ashraf; never `git add -A`.
 - Edit tool for code; heavy runs in the background.
 - One fresh chat per step.
+
+## 9. UPDATE 2026-11-01 07:48 UTC: Ashraf's answers + live changes (MASTER §7 (fq))
+
+**APP RESTARTED 07:48:29 UTC (Ashraf OK).** Two live changes in `scripts/run_twin.mjs`:
+1. **Audit catch-up:** once after every start / wake, the recording audit runs at once if its last run is > 24 h old. Verified: it ran 07:48:46, ok, 0 misses.
+2. **Daily collector:** `scripts/research/macro_nowcast/collect_daily.mjs` runs daily ≥ 23:00 UTC, plus a catch-up after start / wake when its last run is > 24 h old.
+   - 24 sources → `data/research/macro_nowcast/daily/`.
+   - Research only; failures go to its folder log, no Telegram.
+   - **Check the first automatic 23:00 UTC run**, in child_runs and `daily/last_run.json`.
+
+**Keys (tested with real calls):**
+- EIA / BEA / Census: OK.
+- BLS: "invalid" → Ashraf must activate it from the BLS email.
+- ACLED: needs ACLED_EMAIL + ACLED_PASSWORD in .env (Ashraf types them himself); the collector then gets the OAuth token. Never handle his password in chat.
+
+**Source Map:** §5d gap check added (dollar / Treasury demand, Fed liquidity, rates, credit, flows, Fed words, prediction markets, social). Open TO VERIFY items: GLD holdings address, WGC (KEY), fed-funds futures (none free found), copper / BTC on Polygon, calendar effects.
+
+**Decision:** the T1 thin model is KEPT as the baseline until the full trees are compared (Ashraf).
+
+**NEXT is unchanged:** build + run the down-day detector first.
