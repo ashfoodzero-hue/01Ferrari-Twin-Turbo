@@ -84,7 +84,40 @@
 4. Then T3 → T4-T6 → T7 → T8 (dry run → Ashraf's yes → Sunday 10:00 UTC) → merge summary.
 5. **T0 v2:** XAG / DXY / WTI with the same script (`study_wave_reasons.mjs XAGUSD` etc.).
 
+## 5b. UPDATE 2026-10-30 afternoon → 11-01 (after this file was first written; MASTER §7 (fg)(fh)(fi))
+
+**LIVE CHANGES, Ashraf approved each:**
+
+| item | change |
+|---|---|
+| E0 swing BUY | **TELEGRAM ON**: "Yes, E0 alerts on". `scripts/inv90/forward_buyd1.mjs` TELEGRAM = arm 1 only. `src/master/tradeAlert.js` judges E0 on its own `SWING_E0` gate (92.0 %); before, it was judged on `SWING` (52 %) and could never send. The message states the wide stop (one loss ≈ 8-10 wins). `smoke_trade_alert` 12/12 passed. Confirmed live: `forward_summary.telegram = true` from the 10-30 15:24 run. |
+| Chart `ops/chart/index.html` | Boxes back under the 92 % rule, BUY and SELL alike. Only SWING_E0 draws, and only its newest OPEN / PENDING trade; past trades disappear. Ashraf: "very crowded only leave the valid current triggered trade … make sell only for the 92% WR". (fh, all boxes back, was reverted the same hour.) |
+
+**Results from the same afternoon:**
+- **(fg) SELL E0 swing test REFUTED 0/3.** Spec `docs/SWING_SELL_E0_SPEC.md`, result `data/master/swing_sell_e0_study.json`.
+  - Q1 OOS: n 6, 66.7 %, −$23/t. Q2 OOS: n 72, 84.7 %, −$5.29/t. Q3 OOS: n 0.
+  - Random SELL with the same bracket: about 85 % WR, still losing.
+  - Conclusion: no SELL ≥ 89 % with money > 0 exists.
+- **E0 scores:** last over the threshold 10-28 09:30 (0.950); 10-29 max 0.810; 10-30 max 0.720 (threshold 0.9394). No E0 signal through the Friday close.
+- **Ashraf asked for a buy-limit level:** I declined to pick a price (not personal advice). I gave the measured facts:
+  - supports hold 55.0 % vs 55.1 % placebo;
+  - 3,849 is not on any app level or trendline;
+  - the nearest levels were 3,819, 3,791-3,793 and 3,761 (price 3,875 on 10-30 19:39 UTC).
+
+**PC SLEEP, measured 11-01 from the Windows event log (Kernel-Power 42 / 107; local time = UTC + 2):**
+
+| slept (UTC) | woke (UTC) |
+|---|---|
+| 10-30 21:23 | 10-31 05:22 |
+| 10-31 20:35 | 11-01 05:56 (watchdog restart, heartbeat 562 min old) |
+
+- **Effect:** health WARN `AUDIT_OLD`. The daily recording audit (`run_twin.mjs` line ~238) runs only at or after 21:30 UTC on the same day. The PC slept 7 min before the Friday run, so the audit last ran 10-29 23:10.
+- **Proposed fix (needs Ashraf's OK + an app restart):** the audit catches up on wake when the last run is more than 24 h old.
+- Windows power settings are Ashraf's.
+
 ## 6. Open items
+
+- Audit catch-up on wake (see 5b): awaiting Ashraf's OK + restart.
 
 - BEA confirmation of the 10-29 actuals (GDP 3.4, deflator 2.3): still open.
 - N2 spike-BUY paper forward test awaits Ashraf's OK. V1H vetoed-BUYs review. matrix_trades studies before 10-26 need re-measuring.
